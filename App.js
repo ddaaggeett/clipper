@@ -1,9 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useCallback, useRef } from 'react';
-import { StyleSheet, Text, View, Button, Alert, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, Dimensions, TextInput } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 
 export default function App() {
+
+    const [videoID, setVideoID] = useState(true)
 
     const playerWidth = Dimensions.get('window').width;
     const playerHeight = playerWidth * 3 / 4;
@@ -21,15 +23,50 @@ export default function App() {
         setPlaying((prev) => !prev);
     });
 
+    const getVideoID = (address) => {
+        var video_id = ''
+        try {
+            setVideoID(getYoutubeID(address))
+        }
+        catch(e) {
+            return address
+        }
+    }
+
+    const getYoutubeID = (address) => {
+        if(address.includes(".be/")) { // copied from YouTube mobile app
+            var video_id = address.split('.be/')[1]
+            return video_id
+        }
+        else if(address.includes("v=")) { // copied from YouTube bowser site
+            var video_id = address.split('v=')[1]
+            var cut = video_id.indexOf('&')
+            if(cut != -1) {
+                video_id = video_id.substring(0, cut)
+            }
+            return video_id;
+        }
+        else {
+            return null
+        }
+    }
+
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
+            <TextInput
+                style={styles.urlText}
+                onChangeText={text => getVideoID(text)}
+                value={videoID}
+                placeholder={"paste YouTube address"}
+                placeholderTextColor={"white"}
+                />
             <YoutubePlayer
                 style={styles.player}
                 height={playerHeight}
                 width={playerWidth}
                 play={playing}
-                videoId={"aWy5pMx-LLA"}
+                videoId={videoID}
                 onChangeState={onStateChange}
                 controls={true}
                 />
@@ -47,5 +84,11 @@ const styles = StyleSheet.create({
     },
     player: {
         top: 100,
+    },
+    urlText: {
+        borderColor: 'white',
+        borderWidth: 1,
+        color: 'white',
+        padding: 10,
     },
 });
