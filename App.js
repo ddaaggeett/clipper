@@ -2,26 +2,20 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useCallback, useRef } from 'react';
 import { StyleSheet, Text, View, Button, Alert, Dimensions, TextInput } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
+import Controls from "./src/Controls"
+import { styles } from "./src/styles"
 
 export default function App() {
 
-    const [videoID, setVideoID] = useState(true)
+    const [videoID, setVideoID] = useState('')
+    const [speed, setSpeed] = useState(1)
+
+    const handleSetSpeed = (speed) => {
+        setSpeed(speed)
+    }
 
     const playerWidth = Dimensions.get('window').width;
     const playerHeight = playerWidth * 3 / 4;
-
-    const [playing, setPlaying] = useState(false);
-
-    const onStateChange = useCallback((state) => {
-        if (state === "ended") {
-            setPlaying(false);
-            Alert.alert("video has finished playing!");
-        }
-    });
-
-    const togglePlaying = useCallback(() => {
-        setPlaying((prev) => !prev);
-    });
 
     const getVideoID = (address) => {
         var video_id = ''
@@ -62,33 +56,15 @@ export default function App() {
                 placeholderTextColor={"white"}
                 />
             <YoutubePlayer
-                style={styles.player}
                 height={playerHeight}
                 width={playerWidth}
-                play={playing}
+                play={true}
+                onReady={() => this.play=true}
                 videoId={videoID}
-                onChangeState={onStateChange}
-                controls={true}
+                playbackRate={speed}
+                onPlaybackRateChange={() => this.play=true}
                 />
-            <Button title={playing ? "pause" : "play"} onPress={togglePlaying} />
+            <Controls speed={speed} setSpeed={handleSetSpeed}/>
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    player: {
-        top: 100,
-    },
-    urlText: {
-        borderColor: 'white',
-        borderWidth: 1,
-        color: 'white',
-        padding: 10,
-    },
-});
