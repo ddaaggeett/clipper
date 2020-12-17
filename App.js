@@ -4,12 +4,12 @@ import { StyleSheet, Text, View, Button, Alert, Dimensions, TextInput } from 're
 import YoutubePlayer from "react-native-youtube-iframe";
 import Controls from "./src/Controls"
 import { styles } from "./src/styles"
-import getVideoID from './src/getVideoID'
+import getContentID from './src/getContentID'
 
 export default function App() {
 
     const playerRef = useRef()
-    const [videoID, setVideoID] = useState('')
+    const [contentID, setContentID] = useState('')
     const [speed, setSpeed] = useState(1)
     const [clipTime, setClipTime] = useState(0)
 
@@ -25,8 +25,8 @@ export default function App() {
         })
     }
 
-    const handleGetVideoID = (copiedText) => {
-        setVideoID(getVideoID(copiedText))
+    const handleGetPlayContent = (copiedText) => {
+        setContentID(getContentID(copiedText))
     }
 
     const playerWidth = Dimensions.get('window').width;
@@ -37,8 +37,8 @@ export default function App() {
             <StatusBar style="auto" />
             <TextInput
                 style={styles.urlText}
-                onChangeText={text => handleGetVideoID(text)}
-                value={videoID}
+                onChangeText={text => handleGetPlayContent(text)}
+                value={contentID}
                 placeholder={"paste YouTube address"}
                 placeholderTextColor={"white"}
                 />
@@ -48,9 +48,10 @@ export default function App() {
                 width={playerWidth}
                 play={true}
                 onReady={() => this.play=true}
-                videoId={videoID}
+                videoId={contentID}
+                playList={contentID}
                 playbackRate={speed}
-                onPlaybackRateChange={() => this.play=true}
+                onPlaybackRateChange={() => playerRef.current.play=true}
                 />
             <Controls
                 speed={speed}
