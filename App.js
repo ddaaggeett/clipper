@@ -1,6 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useCallback, useRef } from 'react';
-import { StyleSheet, Text, View, Button, Alert, Dimensions, TextInput } from 'react-native';
+import React, {
+    useState,
+    useRef,
+} from 'react';
+import { StyleSheet,
+    View,
+    Button,
+    Dimensions,
+    TextInput,
+    NativeModules,
+} from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 import Controls from "./src/Controls"
 import { styles } from "./src/styles"
@@ -34,7 +43,7 @@ export default function App() {
 
     return (
         <View style={styles.container}>
-            <StatusBar style="auto" />
+            <StatusBar style="light" />
             <TextInput
                 style={styles.urlText}
                 onChangeText={text => handleGetPlayContent(text)}
