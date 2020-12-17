@@ -8,11 +8,21 @@ import getVideoID from './src/getVideoID'
 
 export default function App() {
 
+    const playerRef = useRef()
     const [videoID, setVideoID] = useState('')
     const [speed, setSpeed] = useState(1)
+    const [clipTime, setClipTime] = useState(0)
 
     const handleSetSpeed = (speed) => {
         setSpeed(speed)
+    }
+
+    const handleRewind = (seconds) => {
+        playerRef.current.getCurrentTime().then(time => {
+            const seekTime = time - seconds
+            setClipTime(seekTime)
+            playerRef.current.seekTo(seekTime)
+        })
     }
 
     const handleGetVideoID = (copiedText) => {
@@ -33,6 +43,7 @@ export default function App() {
                 placeholderTextColor={"white"}
                 />
             <YoutubePlayer
+                ref={playerRef}
                 height={playerHeight}
                 width={playerWidth}
                 play={true}
@@ -41,7 +52,11 @@ export default function App() {
                 playbackRate={speed}
                 onPlaybackRateChange={() => this.play=true}
                 />
-            <Controls speed={speed} setSpeed={handleSetSpeed}/>
+            <Controls
+                speed={speed}
+                setSpeed={handleSetSpeed}
+                rewind={handleRewind}
+                />
         </View>
     );
 }
