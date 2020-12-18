@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
         padding: 10,
     },
     controlButton: {
-        margin:1,
         borderColor: 'white',
         borderWidth: 1,
         padding: 20,
@@ -26,4 +25,7 @@ export const styles = StyleSheet.create({
         color: 'white',
         fontWeight:"bold",
     },
+    buttonRow: {
+        flexDirection:"row",
+    }
 });
