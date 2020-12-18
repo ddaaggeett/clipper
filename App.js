@@ -20,17 +20,17 @@ export default function App() {
     const playerRef = useRef()
     const [contentID, setContentID] = useState('')
     const [speed, setSpeed] = useState(1)
-    const [clipTime, setClipTime] = useState(0)
+    const [cursor, setCursor] = useState(0)
 
     const handleSetSpeed = (speed) => {
         setSpeed(speed)
     }
 
-    const handleRewind = (seconds) => {
+    const handleSetCursor = (seconds) => {
         playerRef.current.getCurrentTime().then(time => {
-            const seekTime = time - seconds
-            setClipTime(seekTime)
-            playerRef.current.seekTo(seekTime)
+            const cursorTime = time + seconds
+            setCursor(cursorTime)
+            playerRef.current.seekTo(cursorTime)
         })
     }
 
@@ -65,7 +65,7 @@ export default function App() {
             <Controls
                 speed={speed}
                 setSpeed={handleSetSpeed}
-                rewind={handleRewind}
+                setCursor={handleSetCursor}
                 />
         </View>
     );
