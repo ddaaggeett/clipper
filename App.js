@@ -26,11 +26,22 @@ export default function App() {
         setSpeed(speed)
     }
 
-    const handleSetCursor = (seconds) => {
-        playerRef.current.getCurrentTime().then(time => {
-            const cursorTime = time + seconds
-            setCursor(cursorTime)
-            playerRef.current.seekTo(cursorTime)
+    const playFromTime = (time) => {
+        playerRef.current.seekTo(time)
+    }
+
+    const handleSetCursorOffset = (seconds) => {
+        playerRef.current.getCurrentTime().then(time => { // time when button is pressed
+            if(seconds == 0) {
+                setCursor(time) // handleInitClipping
+                console.log("cursor init \t\t\t", time)
+            }
+            else { // <CursorShifts />
+                const playFrom = cursor + seconds
+                setCursor(playFrom)
+                playFromTime(playFrom)
+                console.log("shifing cursor to \t\t",playFrom)
+            }
         })
     }
 
@@ -65,7 +76,9 @@ export default function App() {
             <Controls
                 speed={speed}
                 setSpeed={handleSetSpeed}
-                setCursor={handleSetCursor}
+                cursor={cursor}
+                setCursorOffset={handleSetCursorOffset}
+                playFromTime={playFromTime}
                 />
         </View>
     );
