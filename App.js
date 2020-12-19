@@ -21,6 +21,11 @@ export default function App() {
     const [contentID, setContentID] = useState('')
     const [speed, setSpeed] = useState(1)
     const [cursor, setCursor] = useState(0)
+    const [clipStart, setClipStart] = useState(0)
+
+    const handleSetClipStart = () => {
+        setClipStart(cursor)
+    }
 
     const handleSetSpeed = (speed) => {
         setSpeed(speed)
@@ -32,15 +37,11 @@ export default function App() {
 
     const handleSetCursorOffset = (seconds) => {
         playerRef.current.getCurrentTime().then(time => { // time when button is pressed
-            if(seconds == 0) {
-                setCursor(time) // handleInitClipping
-                console.log("cursor init \t\t\t", time)
-            }
+            if(seconds == 0) setCursor(time) // handleInitClipping
             else { // <CursorShifts />
                 const playFrom = cursor + seconds
                 setCursor(playFrom)
                 playFromTime(playFrom)
-                console.log("shifing cursor to \t\t",playFrom)
             }
         })
     }
@@ -79,6 +80,7 @@ export default function App() {
                 cursor={cursor}
                 setCursorOffset={handleSetCursorOffset}
                 playFromTime={playFromTime}
+                handleSetClipStart={handleSetClipStart}
                 />
         </View>
     );
