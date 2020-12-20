@@ -21,29 +21,10 @@ export default function App() {
     const [contentID, setContentID] = useState('')
     const [speed, setSpeed] = useState(1)
     const [cursor, setCursor] = useState(0)
-    const [clipStart, setClipStart] = useState(0)
-
-    const handleSetClipStart = () => {
-        setClipStart(cursor)
-    }
+    const [leftBound, setLeftBound] = useState(0)
 
     const handleSetSpeed = (speed) => {
         setSpeed(speed)
-    }
-
-    const playFromTime = (time) => {
-        playerRef.current.seekTo(time)
-    }
-
-    const handleSetCursorOffset = (seconds) => {
-        playerRef.current.getCurrentTime().then(time => { // time when button is pressed
-            if(seconds == 0) setCursor(time) // handleInitClipping
-            else { // <CursorShifts />
-                const playFrom = cursor + seconds
-                setCursor(playFrom)
-                playFromTime(playFrom)
-            }
-        })
     }
 
     const handleGetPlayContent = (copiedText) => {
@@ -52,6 +33,15 @@ export default function App() {
 
     const playerWidth = Dimensions.get('window').width;
     const playerHeight = playerWidth * 3 / 4;
+
+    const handleFinishClip = (rightBound) => {
+        const clipDuration = rightBound - leftBound
+        const clipObject = {
+            start: leftBound,
+            duration: clipDuration
+        }
+        // TODO: socket.io clipObject to server
+    }
 
     return (
         <View style={styles.container}>
@@ -75,12 +65,13 @@ export default function App() {
                 onPlaybackRateChange={() => playerRef.current.play=true}
                 />
             <Controls
+                playerRef={playerRef}
                 speed={speed}
                 setSpeed={handleSetSpeed}
                 cursor={cursor}
-                setCursorOffset={handleSetCursorOffset}
-                playFromTime={playFromTime}
-                handleSetClipStart={handleSetClipStart}
+                setCursor={setCursor}
+                setLeftBound={setLeftBound}
+                setRightBound={handleFinishClip}
                 />
         </View>
     );
