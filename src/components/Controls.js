@@ -4,7 +4,7 @@ import {
     TouchableOpacity,
 } from "react-native"
 import React from 'react'
-import { styles } from "./styles"
+import { styles } from "../styles"
 import ClippingButtons from './ClippingButtons'
 import PlaybackSpeed from './PlaybackSpeed'
 

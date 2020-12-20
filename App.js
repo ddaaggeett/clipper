@@ -11,7 +11,7 @@ import { StyleSheet,
     NativeModules,
 } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
-import Controls from "./src/Controls"
+import Controls from "./src/components/Controls"
 import { styles } from "./src/styles"
 import getContentID from './src/getContentID'
 
