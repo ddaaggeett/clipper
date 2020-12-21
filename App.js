@@ -36,10 +36,13 @@ export default function App() {
 
     const handleFinishClip = (rightBound) => {
         const clipDuration = rightBound - leftBound
-        const clipObject = {
-            start: leftBound,
-            duration: clipDuration
-        }
+        playerRef.current.getVideoUrl().then(videoUrl => {
+            const clipObject = {
+                start: leftBound,
+                duration: clipDuration,
+                videoId: getContentID(videoUrl),
+            }
+        })
         // TODO: socket.io clipObject to server
     }
 
