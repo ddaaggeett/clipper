@@ -14,6 +14,9 @@ import YoutubePlayer from "react-native-youtube-iframe";
 import Controls from "./src/components/Controls"
 import { styles } from "./src/styles"
 import getContentID from './src/getContentID'
+import { io } from 'socket.io-client'
+
+const socket = io('http://192.168.0.5:3000')
 
 export default function App() {
 
@@ -44,8 +47,8 @@ export default function App() {
                 duration: clipDuration,
                 videoId: getContentID(videoUrl),
             }
+            socket.emit('clip', clipObject)
         })
-        // TODO: socket.io clipObject to server
     }
 
     return (
