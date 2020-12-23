@@ -24,8 +24,8 @@ export default (props) => {
         <View>
             {
                 props.clipInitiated
-                ? <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"orange"}]} onPress={() => handleRightBound()}><Text style={styles.controlButtonText} >{"CLIP END"}</Text></TouchableOpacity>
-                : <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"green"}]} onPress={() => handleLeftBound()}><Text style={styles.controlButtonText} >{"CLIP START"}</Text></TouchableOpacity>
+                ? <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"orange"}]} onPress={() => handleRightBound()}><Text style={styles.controlButtonText} >{"CLIP RIGHT"}</Text></TouchableOpacity>
+                : <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"green"}]} onPress={() => handleLeftBound()}><Text style={styles.controlButtonText} >{"CLIP LEFT"}</Text></TouchableOpacity>
             }
         </View>
     )

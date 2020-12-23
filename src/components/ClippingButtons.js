@@ -55,8 +55,8 @@ const ClipType = (props) => {
         <View>
             {
                 props.clipInitiated
-                ? <TouchableOpacity style={[styles.controlButton, {backgroundColor:"orange",}]} onPress={() => handleClip()}><Text style={styles.controlButtonText}>{"END CLIPPING"}</Text></TouchableOpacity>
-                : <TouchableOpacity style={[styles.controlButton, {backgroundColor:"green",}]} onPress={() => handleClip()}><Text style={styles.controlButtonText}>{"START CLIPPING"}</Text></TouchableOpacity>
+                ? <TouchableOpacity style={[styles.controlButton, {backgroundColor:"orange",}]} onPress={() => handleClip()}><Text style={styles.controlButtonText}>{"PLACE RIGHT BOUND"}</Text></TouchableOpacity>
+                : <TouchableOpacity style={[styles.controlButton, {backgroundColor:"green",}]} onPress={() => handleClip()}><Text style={styles.controlButtonText}>{"PLACE LEFT BOUND"}</Text></TouchableOpacity>
             }
         </View>
     )

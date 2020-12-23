@@ -22,6 +22,7 @@ export default function App() {
     const [speed, setSpeed] = useState(1)
     const [cursor, setCursor] = useState(0)
     const [leftBound, setLeftBound] = useState(0)
+    const [playing, setPlaying] = useState(true)
 
     const handleSetSpeed = (speed) => {
         setSpeed(speed)
@@ -35,6 +36,7 @@ export default function App() {
     const playerHeight = playerWidth * 3 / 4;
 
     const handleFinishClip = (rightBound) => {
+        setPlaying(true)
         const clipDuration = rightBound - leftBound
         playerRef.current.getVideoUrl().then(videoUrl => {
             const clipObject = {
@@ -60,12 +62,12 @@ export default function App() {
                 ref={playerRef}
                 height={playerHeight}
                 width={playerWidth}
-                play={true}
-                onReady={() => this.play=true}
+                play={playing}
+                onReady={() => setPlaying(true)}
                 videoId={contentID}
                 playList={contentID}
                 playbackRate={speed}
-                onPlaybackRateChange={() => playerRef.current.play=true}
+                onPlaybackRateChange={() => setPlaying(true)}
                 />
             <Controls
                 playerRef={playerRef}
@@ -75,6 +77,9 @@ export default function App() {
                 setCursor={setCursor}
                 setLeftBound={setLeftBound}
                 setRightBound={handleFinishClip}
+                playing={playing}
+                setPlaying={setPlaying}
+                getVideoId={getContentID}
                 />
         </View>
     );
