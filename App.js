@@ -16,7 +16,12 @@ import { styles } from "./src/styles"
 import getContentID from './src/getContentID'
 import { io } from 'socket.io-client'
 
-const socket = io('http://192.168.0.5:3000')
+import {
+    serverIP,
+    port,
+} from './config'
+
+const socket = io('http://'+ serverIP + ':' + port)
 
 export default function App() {
 
