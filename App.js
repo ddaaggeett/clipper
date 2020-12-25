@@ -15,7 +15,10 @@ import Controls from "./src/components/Controls"
 import { styles } from "./src/styles"
 import getContentID from './src/getContentID'
 import { io } from 'socket.io-client'
-
+import {
+    storeData,
+    getData,
+} from './src/appData'
 import {
     serverIP,
     port,
