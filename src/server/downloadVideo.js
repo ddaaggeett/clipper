@@ -2,10 +2,12 @@ const {
     exec,
 } = require('child_process')
 
-const downloadVideo = (videoId) => {
+const downloadVideo = (videoDirectory, videoId) => {
     return new Promise((resolve,reject) => {
         const command = "youtube-dl -f best https://www.youtube.com/watch?v=" + videoId
-        exec(command, (error, stdout, stderr) => {
+        exec(command, {
+            cwd: videoDirectory,
+        }, (error, stdout, stderr) => {
             if (error) {
                 console.error('ERROR downloadVideo\n', error)
                 return

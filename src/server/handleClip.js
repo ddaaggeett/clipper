@@ -10,9 +10,8 @@ const handleClip = (clipObject) => {
     fs.mkdir(videoDirectory,{recursive:true}, err => {
         if (err) throw err;
         else {
-            process.chdir(videoDirectory) // change pwd to new directory
-            downloadVideo(clipObject.videoId).then(() => {
-                clip(clipObject)
+            downloadVideo(videoDirectory, clipObject.videoId).then(() => {
+                clip(videoDirectory, clipObject)
             })
         }
     })
