@@ -34,6 +34,7 @@ export default function App() {
     const [cursor, setCursor] = useState(0)
     const [leftBound, setLeftBound] = useState(0)
     const [playing, setPlaying] = useState(true)
+    const [appOpened, setAppOpened] = useState(false)
 
     const handleSetSpeed = (speed) => {
         setSpeed(speed)
@@ -59,6 +60,21 @@ export default function App() {
         })
     }
 
+    const handleOnChangeState = (playerState) => {
+        // TODO: pickup play time where last left off
+        if(playerState === "unstarted" && !appOpened) {
+            getData('videoId').then(data => {
+                setContentID(data)
+            })
+            setAppOpened(true)
+        }
+        else if(playerState === "paused") {
+            playerRef.current.getVideoUrl().then(videoUrl => {
+                storeData('videoId', getContentID(videoUrl))
+            })
+        }
+    }
+
     return (
         <View style={styles.container}>
             <StatusBar style="light" />
@@ -79,6 +95,7 @@ export default function App() {
                 playList={contentID}
                 playbackRate={speed}
                 onPlaybackRateChange={() => setPlaying(true)}
+                onChangeState={playerState => handleOnChangeState(playerState)}
                 />
             <Controls
                 playerRef={playerRef}
