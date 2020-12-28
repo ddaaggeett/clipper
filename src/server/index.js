@@ -5,9 +5,10 @@ var { port } = require('../../config')
 var handleClip = require('./handleClip')
 
 io.on('connection', (socket) => {
-    socket.on('clip', (clipObject) => {
+    socket.on('clip', (clipObject, confirmReceived) => {
         console.log('clipObject: ', clipObject)
         handleClip(clipObject)
+        confirmReceived(true)
     })
 })
 

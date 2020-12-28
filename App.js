@@ -53,24 +53,30 @@ export default function App() {
         playerRef.current.getVideoUrl().then(videoUrl => {
             const clipObject = {
                 start: leftBound,
+                end: rightBound,
                 duration: clipDuration,
                 videoId: getContentID(videoUrl),
             }
-            socket.emit('clip', clipObject)
+            socket.emit('clip', clipObject, received => {
+                if(received) console.log('clip received')
+                // TODO: clips that have not been receieved by the server
+            })
         })
     }
 
     const handleOnChangeState = (playerState) => {
         // TODO: pickup play time where last left off
         if(playerState === "unstarted" && !appOpened) {
-            getData('videoId').then(data => {
-                setContentID(data)
+            getData('lastPlaying').then(data => {
+                setContentID(data.videoId)
             })
             setAppOpened(true)
         }
         else if(playerState === "paused") {
             playerRef.current.getVideoUrl().then(videoUrl => {
-                storeData('videoId', getContentID(videoUrl))
+                storeData('lastPlaying', {
+                    videoId: getContentID(videoUrl),
+                })
             })
         }
     }
