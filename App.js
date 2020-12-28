@@ -23,6 +23,11 @@ import {
     serverIP,
     port,
 } from './config'
+import {
+    addClip,
+    getClips,
+} from './src/clips'
+
 
 const socket = io('http://'+ serverIP + ':' + port)
 
@@ -35,6 +40,7 @@ export default function App() {
     const [leftBound, setLeftBound] = useState(0)
     const [playing, setPlaying] = useState(true)
     const [appOpened, setAppOpened] = useState(false)
+    const [clips, setClips] = useState(getClips())
 
     const handleSetSpeed = (speed) => {
         setSpeed(speed)
@@ -56,11 +62,13 @@ export default function App() {
                 end: rightBound,
                 duration: clipDuration,
                 videoId: getContentID(videoUrl),
+                id: Date.now().toString(),
             }
             socket.emit('clip', clipObject, received => {
                 if(received) console.log('clip received')
                 // TODO: clips that have not been receieved by the server
             })
+            addClip(clipObject).then(newClips => setClips(newClips))
         })
     }
 
@@ -68,7 +76,8 @@ export default function App() {
         // TODO: pickup play time where last left off
         if(playerState === "unstarted" && !appOpened) {
             getData('lastPlaying').then(data => {
-                setContentID(data.videoId)
+                if (data !== null) setContentID(data.videoId)
+                else setContentID('')
             })
             setAppOpened(true)
         }

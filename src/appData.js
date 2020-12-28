@@ -24,7 +24,9 @@ export const storeData = (key, value) => {
                 default:
                     break
             }
-        } catch (e) {}
+        } catch (error) {
+            console.log("storeData error: ", error)
+        }
     })
 }
 
@@ -44,7 +46,10 @@ export const getData = (key) => {
                             break
                     }
                 }
+                else resolve(null)
             })
-        } catch(e) {}
+        } catch (error) {
+            console.log("getData error: ", error)
+        }
     })
 }
