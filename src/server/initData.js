@@ -1,6 +1,7 @@
 var fs = require('fs')
+var { dataFileName } = require('../../config')
 
-const dataFile = __dirname + "/data.json"
+const dataFile = __dirname + "/" + dataFileName
 const initData = () => {
     return new Promise((resolve, reject) => {
         fs.readFile(dataFile, (error, jsonString) => {

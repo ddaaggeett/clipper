@@ -34,10 +34,15 @@ const ClipOrCancel = (props) => {
 
     const buttonWidth = props.screenWidth / 2 // divided by bumber of buttons in row
 
+    const handleCancelClip = () => {
+        props.setToggleClipping(!props.toggleClipping)
+        props.setPlaying(true)
+    }
+
     return (
         <View style={styles.buttonRow}>
             <ClipExecute {...props} buttonWidth={buttonWidth} />
-            <TouchableOpacity style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]} onPress={() => props.setToggleClipping(!props.toggleClipping)}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
+            <TouchableOpacity style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelClip()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
         </View>
     )
 }
