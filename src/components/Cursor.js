@@ -18,7 +18,7 @@ export default (props) => {
         if(!props.clipInitiated) { // LEFT BOUND CLIP
             const newCursor = props.cursor + seconds
             props.setCursor(newCursor)
-            props.playerRef.current.seekTo(newCursor)
+            props.player.current.seekTo(newCursor)
         }
         else { // RIGHT BOUND CLIP
             const newCursor = props.cursor + seconds
@@ -32,9 +32,9 @@ export default (props) => {
         // TODO:  PAUSE AT END BOUND instead of setTimeout. use API loadVideoById()
         props.setPlaying(true)
         const rewindSeconds = 3
-        props.playerRef.current.seekTo(endCursor - rewindSeconds)
+        props.player.current.seekTo(endCursor - rewindSeconds)
         if(props.playing) clearTimeout(rewindToPause)
-        props.playerRef.current.getPlaybackRate().then(rate => {
+        props.player.current.getPlaybackRate().then(rate => {
             const pauseTime = rewindSeconds * 1000 / rate
             setRewindToPause(setTimeout(() => {
                 props.setPlaying(false)
@@ -59,7 +59,7 @@ export default (props) => {
 const CheckCursor = (props) => {
 
     const handleCheckCursor = () => {
-        if(!props.clipInitiated) props.playerRef.current.seekTo(props.cursor) // LEFT BOUND CLIP
+        if(!props.clipInitiated) props.player.current.seekTo(props.cursor) // LEFT BOUND CLIP
         else props.checkEndBound(props.cursor) // RIGHT BOUND CLIP
     }
 

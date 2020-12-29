@@ -6,10 +6,8 @@ import React, {
 } from 'react';
 import { StyleSheet,
     View,
-    Button,
     Dimensions,
     TextInput,
-    NativeModules,
 } from 'react-native';
 import YoutubePlayer from "react-native-youtube-iframe";
 import Controls from "./src/components/Controls"
@@ -19,7 +17,7 @@ import { io } from 'socket.io-client'
 import {
     storeData,
     getData,
-} from './src/appData'
+} from './src/storage'
 import {
     serverIP,
     port,
@@ -30,7 +28,7 @@ const socket = io('http://'+ serverIP + ':' + port)
 
 export default function App() {
 
-    const playerRef = useRef()
+    const player = useRef()
     const [contentID, setContentID] = useState('')
     const [speed, setSpeed] = useState(1)
     const [cursor, setCursor] = useState(0)
@@ -54,10 +52,6 @@ export default function App() {
         }
     },[clips])
 
-    const handleSetSpeed = (speed) => {
-        setSpeed(speed)
-    }
-
     const handleGetPlayContent = (copiedText) => {
         setContentID(getContentID(copiedText))
     }
@@ -68,7 +62,7 @@ export default function App() {
     const handleFinishClip = (rightBound) => {
         setPlaying(true)
         const clipDuration = rightBound - leftBound
-        playerRef.current.getVideoUrl().then(videoUrl => {
+        player.current.getVideoUrl().then(videoUrl => {
             const clipObject = {
                 start: leftBound,
                 end: rightBound,
@@ -90,7 +84,7 @@ export default function App() {
             setAppOpened(true)
         }
         else if(playerState === "paused") {
-            playerRef.current.getVideoUrl().then(videoUrl => {
+            player.current.getVideoUrl().then(videoUrl => {
                 storeData('lastPlaying', {
                     videoId: getContentID(videoUrl),
                 })
@@ -109,7 +103,7 @@ export default function App() {
                 placeholderTextColor={"white"}
                 />
             <YoutubePlayer
-                ref={playerRef}
+                ref={player}
                 height={playerHeight}
                 width={playerWidth}
                 play={playing}
@@ -121,9 +115,9 @@ export default function App() {
                 onChangeState={playerState => handleOnChangeState(playerState)}
                 />
             <Controls
-                playerRef={playerRef}
+                player={player}
                 speed={speed}
-                setSpeed={handleSetSpeed}
+                setSpeed={setSpeed}
                 cursor={cursor}
                 setCursor={setCursor}
                 setLeftBound={setLeftBound}

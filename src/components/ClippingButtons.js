@@ -45,7 +45,7 @@ const ClipOrCancel = (props) => {
 const ClipType = (props) => {
 
     const handleClip = () => {
-        props.playerRef.current.getCurrentTime().then(time => {
+        props.player.current.getCurrentTime().then(time => {
             props.setCursor(time)
         })
         props.setToggleClipping(!props.toggleClipping)
