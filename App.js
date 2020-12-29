@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {
     useState,
     useRef,
+    useEffect,
 } from 'react';
 import { StyleSheet,
     View,
@@ -23,10 +24,6 @@ import {
     serverIP,
     port,
 } from './config'
-import {
-    addClip,
-    getClips,
-} from './src/clips'
 
 
 const socket = io('http://'+ serverIP + ':' + port)
@@ -40,7 +37,22 @@ export default function App() {
     const [leftBound, setLeftBound] = useState(0)
     const [playing, setPlaying] = useState(true)
     const [appOpened, setAppOpened] = useState(false)
-    const [clips, setClips] = useState(getClips())
+    const [clips, setClips] = useState([])
+
+    useEffect(() => { // whenever app starts
+        getData('clips').then(data => {
+            if(data !== null) setClips(data) // array of clips
+        })
+    },[])
+
+    useEffect(() => {
+        if (clips !== undefined) {
+            storeData('clips', clips)
+            socket.emit('clips', clips, received => {
+                if(received) console.log('server received all clips')
+            })
+        }
+    },[clips])
 
     const handleSetSpeed = (speed) => {
         setSpeed(speed)
@@ -64,11 +76,7 @@ export default function App() {
                 videoId: getContentID(videoUrl),
                 id: Date.now().toString(),
             }
-            socket.emit('clip', clipObject, received => {
-                if(received) console.log('clip received')
-                // TODO: clips that have not been receieved by the server
-            })
-            addClip(clipObject).then(newClips => setClips(newClips))
+            setClips([...clips, clipObject])
         })
     }
 
