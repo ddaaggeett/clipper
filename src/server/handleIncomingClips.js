@@ -1,6 +1,6 @@
+var handleClip = require('./handleClip')
 var fs = require('fs')
-var { dataFileName } = require('../../config')
-const dataFile = __dirname + "/" + dataFileName
+var { dataFile } = require('../../config')
 
 const handleIncomingClips = (incomingClips, data) => {
     var newClips = []
@@ -9,7 +9,10 @@ const handleIncomingClips = (incomingClips, data) => {
         ids.push(data.clips[x].id)
     }
     for(var x = 0; x < incomingClips.length; x++) {
-        if(!ids.includes(incomingClips[x].id)) newClips.push(incomingClips[x])
+        if(!ids.includes(incomingClips[x].id)) {
+            newClips.push(incomingClips[x])
+            handleClip(incomingClips[x])
+        }
     }
     const newData = {
         ...data,

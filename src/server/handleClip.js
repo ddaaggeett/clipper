@@ -4,9 +4,10 @@ const {
 const fs = require('fs')
 const downloadVideo = require('./downloadVideo')
 const clip = require('./clip')
+const { videoDataDirectory } = require('../../config')
 
 const handleClip = (clipObject) => {
-    const videoDirectory = './video_data/' + clipObject.videoId
+    const videoDirectory = videoDataDirectory + clipObject.videoId
     fs.mkdir(videoDirectory,{recursive:true}, err => {
         if (err) throw err;
         else {
