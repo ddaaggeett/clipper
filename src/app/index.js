@@ -30,8 +30,8 @@ export default () => {
     const player = useRef()
     const [contentID, setContentID] = useState('')
     const [speed, setSpeed] = useState(1)
-    const [cursor, setCursor] = useState(0)
-    const [leftBound, setLeftBound] = useState(0)
+    const [leftCursor, setLeftCursor] = useState(0)
+    const [rightCursor, setRightCursor] = useState(0)
     const [playing, setPlaying] = useState(true)
     const [appOpened, setAppOpened] = useState(false)
     const [clips, setClips] = useState([])
@@ -58,13 +58,13 @@ export default () => {
     const playerWidth = Dimensions.get('window').width;
     const playerHeight = playerWidth * 3 / 4;
 
-    const handleFinishClip = (rightBound) => {
+    const handleFinishClip = () => {
         setPlaying(true)
-        const clipDuration = rightBound - leftBound
+        const clipDuration = rightCursor - leftCursor
         player.current.getVideoUrl().then(videoUrl => {
             const clipObject = {
-                start: leftBound,
-                end: rightBound,
+                start: leftCursor,
+                end: rightCursor,
                 duration: clipDuration,
                 videoId: getContentID(videoUrl),
                 id: Date.now().toString(),
@@ -117,10 +117,11 @@ export default () => {
                 player={player}
                 speed={speed}
                 setSpeed={setSpeed}
-                cursor={cursor}
-                setCursor={setCursor}
-                setLeftBound={setLeftBound}
-                setRightBound={handleFinishClip}
+                leftCursor={leftCursor}
+                setLeftCursor={setLeftCursor}
+                rightCursor={rightCursor}
+                setRightCursor={setRightCursor}
+                handleFinishClip={handleFinishClip}
                 playing={playing}
                 setPlaying={setPlaying}
                 getVideoId={getContentID}

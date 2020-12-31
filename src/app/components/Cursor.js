@@ -15,14 +15,14 @@ export default (props) => {
 
     const setCursorOffset = (seconds) => {
         props.setPlaying(true)
-        if(!props.clipInitiated) { // LEFT BOUND CLIP
-            const newCursor = props.cursor + seconds
-            props.setCursor(newCursor)
+        if(props.handlingLeft) {
+            const newCursor = props.leftCursor + seconds
+            props.setLeftCursor(newCursor)
             props.player.current.seekTo(newCursor)
         }
-        else { // RIGHT BOUND CLIP
-            const newCursor = props.cursor + seconds
-            props.setCursor(newCursor)
+        else if (props.handlingRight){
+            const newCursor = props.rightCursor + seconds
+            props.setRightCursor(newCursor)
             checkEndBound(newCursor)
         }
     }
@@ -42,25 +42,28 @@ export default (props) => {
         })
     }
 
-    return (
-        <View>
-        <View style={styles.buttonRow}>
-        <TouchableOpacity style={[{width:buttonWidth}, styles.controlButton]} onPress={() => setCursorOffset(-1)}><Text style={styles.controlButtonText}>{"<<\n1.00\nsec"}</Text></TouchableOpacity>
-        <TouchableOpacity style={[{width:buttonWidth}, styles.controlButton]} onPress={() => setCursorOffset(-0.25)}><Text style={styles.controlButtonText}>{"<<\n0.25\nsec"}</Text></TouchableOpacity>
-        <TouchableOpacity style={[{width:buttonWidth}, styles.controlButton]} onPress={() => setCursorOffset(-0.1)}><Text style={styles.controlButtonText}>{"<<\n0.10\nsec"}</Text></TouchableOpacity>
-        <TouchableOpacity style={[{width:buttonWidth}, styles.controlButton]} onPress={() => setCursorOffset(0.1)}><Text style={styles.controlButtonText}>{">>\n0.10\nsec"}</Text></TouchableOpacity>
-        <TouchableOpacity style={[{width:buttonWidth}, styles.controlButton]} onPress={() => setCursorOffset(0.25)}><Text style={styles.controlButtonText}>{">>\n0.25\nsec"}</Text></TouchableOpacity>
-        </View>
-        <CheckCursor {...props} checkEndBound={checkEndBound} />
-        </View>
-    )
+    if(props.handlingLeft || props.handlingRight) {
+        return (
+            <View>
+                <View style={styles.buttonRow}>
+                    <TouchableOpacity style={[{width:buttonWidth}, styles.controlButton]} onPress={() => setCursorOffset(-1)}><Text style={styles.controlButtonText}>{"<<\n1.00\nsec"}</Text></TouchableOpacity>
+                    <TouchableOpacity style={[{width:buttonWidth}, styles.controlButton]} onPress={() => setCursorOffset(-0.25)}><Text style={styles.controlButtonText}>{"<<\n0.25\nsec"}</Text></TouchableOpacity>
+                    <TouchableOpacity style={[{width:buttonWidth}, styles.controlButton]} onPress={() => setCursorOffset(-0.1)}><Text style={styles.controlButtonText}>{"<<\n0.10\nsec"}</Text></TouchableOpacity>
+                    <TouchableOpacity style={[{width:buttonWidth}, styles.controlButton]} onPress={() => setCursorOffset(0.1)}><Text style={styles.controlButtonText}>{">>\n0.10\nsec"}</Text></TouchableOpacity>
+                    <TouchableOpacity style={[{width:buttonWidth}, styles.controlButton]} onPress={() => setCursorOffset(0.25)}><Text style={styles.controlButtonText}>{">>\n0.25\nsec"}</Text></TouchableOpacity>
+                </View>
+                <CheckCursor {...props} checkEndBound={checkEndBound} />
+            </View>
+        )
+    }
+    else return null
 }
 
 const CheckCursor = (props) => {
 
     const handleCheckCursor = () => {
-        if(!props.clipInitiated) props.player.current.seekTo(props.cursor) // LEFT BOUND CLIP
-        else props.checkEndBound(props.cursor) // RIGHT BOUND CLIP
+        if(props.handlingLeft) props.player.current.seekTo(props.leftCursor)
+        else if(props.handlingRight) props.checkEndBound(props.rightCursor)
     }
 
     return (

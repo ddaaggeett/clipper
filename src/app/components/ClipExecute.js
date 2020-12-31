@@ -6,27 +6,28 @@ import {
 import React from 'react'
 import { styles } from "../styles"
 
-export default (props) => {
+export const ExecuteLeft = (props) => {
 
-    const handleLeftBound = () => {
-        props.setToggleClipping(!props.toggleClipping)
-        props.setClipInitiated(!props.clipInitiated)
-        props.setLeftBound(props.cursor)
-    }
-
-    const handleRightBound = () => {
-        props.setToggleClipping(!props.toggleClipping)
-        props.setClipInitiated(!props.clipInitiated)
-        props.setRightBound(props.cursor)
+    const handleExecuteLeft = () => {
+        props.setLeftCursor(props.leftCursor)
     }
 
     return (
         <View>
-            {
-                props.clipInitiated
-                ? <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"orange"}]} onPress={() => handleRightBound()}><Text style={styles.controlButtonText} >{"CLIP RIGHT"}</Text></TouchableOpacity>
-                : <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"green"}]} onPress={() => handleLeftBound()}><Text style={styles.controlButtonText} >{"CLIP LEFT"}</Text></TouchableOpacity>
-            }
+            <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"green"}]} onPress={() => handleExecuteLeft()}><Text style={styles.controlButtonText} >{"EXECUTE LEFT"}</Text></TouchableOpacity>
+        </View>
+    )
+}
+
+export const ExecuteRight = (props) => {
+
+    const handleExecuteRight = () => {
+        props.setRightCursor(props.rightCursor)
+    }
+
+    return (
+        <View>
+            <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"orange"}]} onPress={() => handleExecuteRight()}><Text style={styles.controlButtonText} >{"EXECUTE RIGHT"}</Text></TouchableOpacity>
         </View>
     )
 }

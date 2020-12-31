@@ -8,75 +8,90 @@ import React, {
     useState,
 } from 'react'
 import { styles } from "../styles"
-import ClipExecute from './ClipExecute'
+import {
+    ExecuteLeft,
+    ExecuteRight,
+} from './ClipExecute'
 import CursorShifts from './Cursor'
 
 export default (props) => {
 
-    const screenWidth = Dimensions.get('window').width;
+    const [handlingLeft, setHandlingLeft] = useState(false)
+    const [handlingRight, setHandlingRight] = useState(false)
 
-    const [toggleClipping, setToggleClipping] = useState(false) // <ClipType/> pressed
-    const [clipInitiated, setClipInitiated] = useState(false) // TRUE IF LEFT BOUND EXECUTED <ClipExecute/> pressed
+    const screenWidth = Dimensions.get('window').width;
 
     return (
         <View>
-            <ClipToggle {...props} clipInitiated={clipInitiated} setClipInitiated={setClipInitiated} screenWidth={screenWidth} toggleClipping={toggleClipping} setToggleClipping={setToggleClipping} />
-            {
-                toggleClipping
-                ? <CursorShifts clipInitiated={clipInitiated} screenWidth={screenWidth} {...props} />
-                : null
-            }
+            <LeftOrRight
+                {...props}
+                handlingLeft={handlingLeft}
+                setHandlingLeft={setHandlingLeft}
+                handlingRight={handlingRight}
+                setHandlingRight={setHandlingRight}
+                screenWidth={screenWidth}
+                />
+            <CursorShifts
+                {...props}
+                screenWidth={screenWidth}
+                handlingLeft={handlingLeft}
+                handlingRight={handlingRight}
+                />
         </View>
     )
 }
 
-const ClipOrCancel = (props) => {
+const LeftOrRight = (props) => {
+
 
     const buttonWidth = props.screenWidth / 2 // divided by bumber of buttons in row
 
-    const handleCancelClip = () => {
-        props.setToggleClipping(!props.toggleClipping)
+    const handleLeftClip = () => {
+        props.setHandlingLeft(true)
+        props.player.current.getCurrentTime().then(time => {
+            props.setLeftCursor(time)
+        })
+    }
+
+    const handleRightClip = () => {
+        props.setHandlingRight(true)
+        props.player.current.getCurrentTime().then(time => {
+            props.setRightCursor(time)
+        })
+    }
+
+    const handleCancelLeft = () => {
+        props.setHandlingLeft(false)
         props.setPlaying(true)
     }
 
-    return (
-        <View style={styles.buttonRow}>
-            <ClipExecute {...props} buttonWidth={buttonWidth} />
-            <TouchableOpacity style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelClip()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
-        </View>
-    )
-}
-
-const ClipType = (props) => {
-
-    const handleClip = () => {
-        props.player.current.getCurrentTime().then(time => {
-            props.setCursor(time)
-        })
-        props.setToggleClipping(!props.toggleClipping)
+    const handleCancelRight = () => {
+        props.setHandlingRight(false)
+        props.setPlaying(true)
     }
 
-    return(
-        <View>
-            {
-                props.clipInitiated
-                ? <TouchableOpacity style={[styles.controlButton, {backgroundColor:"orange",}]} onPress={() => handleClip()}><Text style={styles.controlButtonText}>{"PLACE RIGHT BOUND"}</Text></TouchableOpacity>
-                : <TouchableOpacity style={[styles.controlButton, {backgroundColor:"green",}]} onPress={() => handleClip()}><Text style={styles.controlButtonText}>{"PLACE LEFT BOUND"}</Text></TouchableOpacity>
-            }
-        </View>
-    )
-}
-
-const ClipToggle = (props) => {
-
-    return (
-        <View>
-            {
-                props.toggleClipping
-                ? <ClipOrCancel {...props} />
-                : <ClipType {...props} />
-            }
-        </View>
-
-    )
+    if (!props.handlingLeft && !props.handlingRight) {
+        return (
+            <View style={styles.buttonRow}>
+                <TouchableOpacity style={[styles.controlButton, {width: buttonWidth, backgroundColor:"green",}]} onPress={() => handleLeftClip()}><Text style={styles.controlButtonText}>{"PLACE START"}</Text></TouchableOpacity>
+                <TouchableOpacity style={[styles.controlButton, {width: buttonWidth, backgroundColor:"orange",}]} onPress={() => handleRightClip()}><Text style={styles.controlButtonText}>{"PLACE END"}</Text></TouchableOpacity>
+            </View>
+        )
+    }
+    else if(props.handlingLeft) {
+        return (
+            <View style={styles.buttonRow}>
+                <ExecuteLeft {...props} buttonWidth={buttonWidth} />
+                <TouchableOpacity style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelLeft()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
+            </View>
+        )
+    }
+    else if(props.handlingRight) {
+        return (
+            <View style={styles.buttonRow}>
+                <TouchableOpacity style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelRight()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
+                <ExecuteRight {...props} buttonWidth={buttonWidth} />
+            </View>
+        )
+    }
 }
