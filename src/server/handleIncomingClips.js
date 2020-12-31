@@ -18,7 +18,7 @@ const handleIncomingClips = (incomingClips, data) => {
         ...data,
         clips: data.clips.concat(newClips)
     }
-    fs.writeFile(dataFile, JSON.stringify(newData), (error) => {
+    fs.writeFile(dataFile, JSON.stringify(newData, null, 4), (error) => {
         if(error) console.log('ERROR writing file:', error)
     })
 }

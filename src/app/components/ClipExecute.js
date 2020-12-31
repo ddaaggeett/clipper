@@ -6,10 +6,15 @@ import {
 import React from 'react'
 import { styles } from "../styles"
 
+const addBoundCount = (props) => {
+    props.setBoundCount(props.boundCount + 1)
+}
+
 export const ExecuteLeft = (props) => {
 
     const handleExecuteLeft = () => {
-        props.setLeftCursor(props.leftCursor)
+        addBoundCount(props)
+        props.setHandlingLeft(false)
     }
 
     return (
@@ -22,7 +27,8 @@ export const ExecuteLeft = (props) => {
 export const ExecuteRight = (props) => {
 
     const handleExecuteRight = () => {
-        props.setRightCursor(props.rightCursor)
+        addBoundCount(props)
+        props.setHandlingRight(false)
     }
 
     return (

@@ -35,6 +35,7 @@ export default () => {
     const [playing, setPlaying] = useState(true)
     const [appOpened, setAppOpened] = useState(false)
     const [clips, setClips] = useState([])
+    const [boundCount, setBoundCount] = useState(0)
 
     useEffect(() => { // whenever app starts
         getData('clips').then(data => {
@@ -50,6 +51,13 @@ export default () => {
             })
         }
     },[clips])
+
+    useEffect(() => {
+        if(boundCount == 2) {
+            handleFinishClip()
+            setBoundCount(0)
+        }
+    }, [boundCount])
 
     const handleGetPlayContent = (copiedText) => {
         setContentID(getContentID(copiedText))
@@ -125,6 +133,8 @@ export default () => {
                 playing={playing}
                 setPlaying={setPlaying}
                 getVideoId={getContentID}
+                boundCount={boundCount}
+                setBoundCount={setBoundCount}
                 />
         </View>
     );
