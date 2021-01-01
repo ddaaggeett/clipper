@@ -56,6 +56,8 @@ export default () => {
         if(boundCount == 2) {
             handleFinishClip()
             setBoundCount(0)
+            player.current.seekTo(rightCursor)
+            setPlaying(true)
         }
     }, [boundCount])
 
@@ -63,8 +65,8 @@ export default () => {
         setContentID(getContentID(copiedText))
     }
 
-    const playerWidth = Dimensions.get('window').width;
-    const playerHeight = playerWidth * 3 / 4;
+    const screenWidth = Dimensions.get('window').width
+    const playerHeight = screenWidth * 3 / 4;
 
     const handleFinishClip = () => {
         setPlaying(true)
@@ -112,7 +114,7 @@ export default () => {
             <YoutubePlayer
                 ref={player}
                 height={playerHeight}
-                width={playerWidth}
+                width={screenWidth}
                 play={playing}
                 onReady={() => setPlaying(true)}
                 videoId={contentID}
@@ -135,6 +137,7 @@ export default () => {
                 getVideoId={getContentID}
                 boundCount={boundCount}
                 setBoundCount={setBoundCount}
+                screenWidth={screenWidth}
                 />
         </View>
     );

@@ -19,8 +19,6 @@ export default (props) => {
     const [handlingLeft, setHandlingLeft] = useState(false)
     const [handlingRight, setHandlingRight] = useState(false)
 
-    const screenWidth = Dimensions.get('window').width;
-
     return (
         <View>
             <LeftOrRight
@@ -29,11 +27,9 @@ export default (props) => {
                 setHandlingLeft={setHandlingLeft}
                 handlingRight={handlingRight}
                 setHandlingRight={setHandlingRight}
-                screenWidth={screenWidth}
                 />
             <CursorShifts
                 {...props}
-                screenWidth={screenWidth}
                 handlingLeft={handlingLeft}
                 handlingRight={handlingRight}
                 />
@@ -42,7 +38,6 @@ export default (props) => {
 }
 
 const LeftOrRight = (props) => {
-
 
     const buttonWidth = props.screenWidth / 2 // divided by bumber of buttons in row
 
