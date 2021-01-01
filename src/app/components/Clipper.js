@@ -37,6 +37,8 @@ export default () => {
     const [clips, setClips] = useState([])
     const [boundCount, setBoundCount] = useState(0)
     const [clipping, setClipping] = useState(true)
+    const [leftClipped, setLeftClipped] = useState(false)
+    const [rightClipped, setRightClipped] = useState(false)
 
     useEffect(() => { // whenever app starts
         getData('clips').then(data => {
@@ -59,6 +61,8 @@ export default () => {
             setBoundCount(0)
             player.current.seekTo(rightCursor)
             setPlaying(true)
+            setLeftClipped(false)
+            setRightClipped(false)
         }
     }, [boundCount])
 
@@ -70,7 +74,6 @@ export default () => {
     const playerHeight = screenWidth * 3 / 4;
 
     const handleFinishClip = () => {
-        setPlaying(true)
         const clipDuration = rightCursor - leftCursor
         player.current.getVideoUrl().then(videoUrl => {
             const clipObject = {
@@ -139,6 +142,10 @@ export default () => {
                 boundCount={boundCount}
                 setBoundCount={setBoundCount}
                 screenWidth={screenWidth}
+                leftClipped={leftClipped}
+                setLeftClipped={setLeftClipped}
+                rightClipped={rightClipped}
+                setRightClipped={setRightClipped}
                 />
         </View>
     );

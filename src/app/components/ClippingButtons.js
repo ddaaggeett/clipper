@@ -65,11 +65,55 @@ const LeftOrRight = (props) => {
         props.setPlaying(true)
     }
 
+    const removeBoundCount = (props) => {
+        props.setBoundCount(props.boundCount - 1)
+    }
+
+    const handleDeleteLeftClip = () => {
+        props.setHandlingLeft(false)
+        props.setLeftClipped(false)
+        removeBoundCount(props)
+    }
+
+    const handleDeleteRightClip = () => {
+        props.setHandlingRight(false)
+        props.setRightClipped(false)
+        removeBoundCount(props)
+    }
+
     if (!props.handlingLeft && !props.handlingRight) {
         return (
             <View style={styles.buttonRow}>
-                <TouchableOpacity style={[styles.controlButton, {width: buttonWidth, backgroundColor:"green",}]} onPress={() => handleLeftClip()}><Text style={styles.controlButtonText}>{"PLACE START"}</Text></TouchableOpacity>
-                <TouchableOpacity style={[styles.controlButton, {width: buttonWidth, backgroundColor:"orange",}]} onPress={() => handleRightClip()}><Text style={styles.controlButtonText}>{"PLACE END"}</Text></TouchableOpacity>
+                {
+                    props.leftClipped
+                    ?   <TouchableOpacity
+                            style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]}
+                            onPress={() => handleDeleteLeftClip()}
+                            >
+                            <Text style={styles.controlButtonText} >{"DELETE LEFT"}</Text>
+                        </TouchableOpacity>
+                    :   <TouchableOpacity
+                            style={[styles.controlButton, {width: buttonWidth, backgroundColor:"green",}]}
+                            onPress={() => handleLeftClip()}
+                            >
+                            <Text style={styles.controlButtonText}>{"PLACE LEFT"}</Text>
+                        </TouchableOpacity>
+                }
+                {
+                    props.rightClipped
+                    ?   <TouchableOpacity
+                            style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]}
+                            onPress={() => handleDeleteRightClip()}
+                            >
+                            <Text style={styles.controlButtonText} >{"DELETE RIGHT"}</Text>
+                        </TouchableOpacity>
+                    :   <TouchableOpacity
+                            style={[styles.controlButton, {width: buttonWidth, backgroundColor:"orange",}]}
+                            onPress={() => handleRightClip()}
+                            >
+                            <Text style={styles.controlButtonText}>{"PLACE RIGHT"}</Text>
+                        </TouchableOpacity>
+                }
             </View>
         )
     }

@@ -13,6 +13,7 @@ const addBoundCount = (props) => {
 export const ExecuteLeft = (props) => {
 
     const handleExecuteLeft = () => {
+        props.setLeftClipped(true)
         addBoundCount(props)
         props.setHandlingLeft(false)
     }
@@ -27,6 +28,7 @@ export const ExecuteLeft = (props) => {
 export const ExecuteRight = (props) => {
 
     const handleExecuteRight = () => {
+        props.setRightClipped(true)
         addBoundCount(props)
         props.setHandlingRight(false)
     }
