@@ -2,7 +2,6 @@ import {
     View,
     Text,
     TouchableOpacity,
-    ScrollView,
 } from "react-native"
 import React, {
     useState,
@@ -10,26 +9,31 @@ import React, {
 import Clipper from './components/Clipper'
 import ClipManager from './components/ClipManager'
 import { styles } from './styles'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+
+const Tab = createBottomTabNavigator()
+
+const ClipperScreen = () => {
+    return (
+        <View  style={styles.container}>
+            <Clipper />
+        </View>
+    )
+}
+
+const ClipManagerScreen = () => {
+    return (
+        <View  style={styles.container}>
+            <ClipManager />
+        </View>
+    )
+}
 
 export default () => {
-
-    const [clipping, setClipping] = useState(true)
-
-    const modeText = () => {
-        if(clipping) return "MANAGE CLIPS"
-        else return "CLIPPING TOOL"
-    }
-
     return (
-        <View>
-            <ScrollView>
-                {
-                    clipping
-                    ? <Clipper />
-                    : <ClipManager />
-                }
-                <TouchableOpacity style={[styles.controlButton, {backgroundColor: "black", marginTop: 100}]} onPress={() => setClipping(!clipping)}><Text style={styles.controlButtonText}>{modeText()}</Text></TouchableOpacity>
-            </ScrollView>
-        </View>
+        <Tab.Navigator>
+            <Tab.Screen name="Clipper" component={ClipperScreen} />
+            <Tab.Screen name="ClipManager" component={ClipManagerScreen} />
+        </Tab.Navigator>
     )
 }
