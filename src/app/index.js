@@ -29,11 +29,18 @@ const ClipManagerScreen = () => {
     )
 }
 
+const tabBarOptions = {
+    activeBackgroundColor: '#222',
+    inactiveBackgroundColor: 'black',
+    labelPosition: 'beside-icon',
+    labelStyle:{fontSize:20,position:'absolute',color:'white'},
+}
+
 export default () => {
     return (
-        <Tab.Navigator>
+        <Tab.Navigator tabBarOptions={tabBarOptions}>
             <Tab.Screen name="Clipper" component={ClipperScreen} />
-            <Tab.Screen name="ClipManager" component={ClipManagerScreen} />
+            <Tab.Screen name="Clips" component={ClipManagerScreen} />
         </Tab.Navigator>
     )
 }
