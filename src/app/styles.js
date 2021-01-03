@@ -27,5 +27,17 @@ export const styles = StyleSheet.create({
     },
     buttonRow: {
         flexDirection:"row",
-    }
+    },
+    clipsList: {
+        marginTop:25,
+    },
+    clipItem: {
+        borderColor: 'white',
+        borderWidth:1,
+    },
+    clipItemText: {
+        padding: 20,
+        color: 'white',
+        fontSize:16,
+    },
 });
