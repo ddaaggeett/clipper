@@ -32,6 +32,7 @@ export const styles = StyleSheet.create({
         marginTop:25,
     },
     clipItem: {
+        flexDirection: 'row',
         borderColor: 'white',
         borderWidth:1,
     },

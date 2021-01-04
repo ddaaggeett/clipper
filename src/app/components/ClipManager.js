@@ -2,6 +2,7 @@ import React, {
     useState,
     useRef,
     useEffect,
+    useCallback,
 } from 'react';
 import {
     View,
@@ -20,16 +21,32 @@ import Clip from './Clip'
 export default (props) => {
 
     const [clips, setClips] = useState([])
+    const [selectedIndex, setSelectedIndex] = useState(null)
 
-    useFocusEffect(() => { // whenever screen gets focus
-        getData('clips').then(data => {
-            if(data !== null) setClips(data) // array of clips
-        })
-    },[])
-
-    const renderItem = ({ item }) => (
-        <Clip clip={item} />
+    useFocusEffect( // whenever screen gets focus
+        useCallback(() => { // so this suns only once per screen focus
+            getData('clips').then(data => {
+                if(data !== null) setClips(data) // array of clips
+            })
+        },[])
     )
+
+    const handleSelect = (index) => {
+        setSelectedIndex(index)
+    }
+
+    const renderItem = ({ item, index }) => {
+        return (
+            <View>
+                <Clip
+                    clip={item}
+                    selectedIndex={selectedIndex}
+                    index={index}
+                    handleSelect={handleSelect}
+                    />
+            </View>
+        )
+    }
 
     return (
         <View style={styles.container}>
