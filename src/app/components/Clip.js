@@ -11,17 +11,29 @@ import { styles } from "../styles"
 import YoutubePlayer from "react-native-youtube-iframe"
 
 export default (props) => {
+
+    const handleEditClip = () => {
+        const editedClip = {
+            ...props.clip,
+            comment: "comment",
+        }
+        props.handleEditClips(editedClip, props.index)
+    }
+
+    const durationTimeFormat = new Date(props.clip.duration * 1000).toISOString().substr(14, 8)
+
     return (
         <TouchableOpacity
             style={styles.clipItem}
             onPress={() => props.handleSelect(props.index)}
+            onLongPress={() => handleEditClip()}
             >
-            <Text style={styles.clipItemText}>{props.clip.id}</Text>
-            {
-                props.selectedIndex !== props.index
-                ?   null
-                :   <ClipPlayer clip={props.clip} />
-            }
+            <View>
+                { props.selectedIndex !== props.index ? null : <Text style={[styles.clipItemText, {color:'yellow'}]}>press and hold to edit</Text> }
+                <Text style={styles.clipItemText}>{durationTimeFormat}</Text>
+                <Text style={styles.clipItemText}>{props.clip.comment}</Text>
+            </View>
+            { props.selectedIndex !== props.index ? null : <ClipPlayer clip={props.clip} /> }
         </TouchableOpacity>
     )
 }

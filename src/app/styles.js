@@ -37,7 +37,6 @@ export const styles = StyleSheet.create({
         borderWidth:1,
     },
     clipItemText: {
-        padding: 20,
         color: 'white',
         fontSize:16,
     },

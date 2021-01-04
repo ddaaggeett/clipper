@@ -3,6 +3,7 @@ import React, {
     useState,
     useRef,
     useEffect,
+    useCallback,
 } from 'react'
 import {
     View,
@@ -13,6 +14,7 @@ import YoutubePlayer from "react-native-youtube-iframe"
 import Controls from "./Controls"
 import { styles } from "../styles"
 import getContentID from '../getContentID'
+import { useFocusEffect } from '@react-navigation/native'
 import { io } from 'socket.io-client'
 import {
     storeData,
@@ -40,11 +42,19 @@ export default () => {
     const [leftClipped, setLeftClipped] = useState(false)
     const [rightClipped, setRightClipped] = useState(false)
 
-    useEffect(() => { // whenever app starts
-        getData('clips').then(data => {
-            if(data !== null) setClips(data) // array of clips
-        })
-    },[])
+    useFocusEffect( // whenever screen gets focus
+        useCallback(() => { // so this suns only once per screen focus
+            let isActive = true // suggested by: https://www.debuggr.io/react-update-unmounted-component/
+            if (isActive) {
+                getData('clips').then(data => {
+                    if(data !== null) setClips(data) // array of clips
+                })
+            }
+            return () => {
+                isActive = false
+            }
+        },[])
+    )
 
     useEffect(() => {
         if (clips !== undefined) {
