@@ -5,17 +5,22 @@ import { View } from 'react-native';
 import AppMain from './src/app'
 import { styles } from "./src/app/styles"
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from './src/app/redux';
-const store = configureStore();
+
+const store = configureStore().store
+const persistor = configureStore().persistor
 
 export default function App() {
     return (
         <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
         <View style={styles.container}>
             <AppMain />
         </View>
         </NavigationContainer>
+        </PersistGate>
         </Provider>
     )
 }
