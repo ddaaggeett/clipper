@@ -5,6 +5,7 @@ import React, {
 import {
     View,
     Text,
+    TextInput,
     TouchableOpacity,
 } from 'react-native'
 import { styles } from "../styles"
@@ -12,10 +13,10 @@ import YoutubePlayer from "react-native-youtube-iframe"
 
 export default (props) => {
 
-    const handleEditClip = () => {
+    const handleEditClipPunchline = (text) => {
         const editedClip = {
             ...props.clip,
-            comment: "comment",
+            comment: text,
         }
         props.handleEditClips(editedClip, props.index)
     }
@@ -29,9 +30,16 @@ export default (props) => {
             onLongPress={() => handleEditClip()}
             >
             <View>
-                { props.selectedIndex !== props.index ? null : <Text style={[styles.clipItemText, {color:'yellow'}]}>press and hold to edit</Text> }
+                { props.selectedIndex !== props.index ? null
+                    :   <TextInput
+                            style={styles.urlText}
+                            onChangeText={text => handleEditClipPunchline(text)}
+                            value={props.clip.comment}
+                            placeholder={"edit punchline"}
+                            placeholderTextColor={"yellow"}
+                            /> }
                 <Text style={styles.clipItemText}>{durationTimeFormat}</Text>
-                <Text style={styles.clipItemText}>{props.clip.comment}</Text>
+                { props.selectedIndex == props.index ? null : <Text style={styles.clipItemText}>{props.clip.comment}</Text> }
                 { props.selectedIndex !== props.index ? null : <TouchableOpacity style={styles.deleteClip} onPress={() => props.handleDeleteClip(props.index)}><Text style={styles.clipItemText}>X</Text></TouchableOpacity> }
             </View>
             { props.selectedIndex !== props.index ? null : <ClipPlayer clip={props.clip} /> }
