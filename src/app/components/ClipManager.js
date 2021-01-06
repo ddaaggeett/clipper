@@ -22,23 +22,24 @@ import {
     serverIP,
     port,
 } from '../../../config'
+import {
+    useSelector,
+    useDispatch,
+} from 'react-redux'
+import { updateClips } from '../redux/actions/actionCreators'
 
 const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
-    const [clips, setClips] = useState([])
+    const clips = useSelector(state => state.clips)
+    const redux = useDispatch()
     const [selectedIndex, setSelectedIndex] = useState(null)
 
     useFocusEffect( // whenever screen gets focus
         useCallback(() => { // so this suns only once per screen focus
             let isActive = true // suggested by: https://www.debuggr.io/react-update-unmounted-component/
-            if (isActive) {
-                setSelectedIndex(null)
-                getData('clips').then(data => {
-                    if(data !== null) setClips(data) // array of clips
-                })
-            }
+            if (isActive) setSelectedIndex(null)
             return () => {
                 isActive = false
             }
@@ -46,12 +47,9 @@ export default (props) => {
     )
 
     useEffect(() => {
-        if (clips !== undefined) {
-            storeData('clips', clips)
-            socket.emit('clips', clips, received => {
-                if(received) console.log('server received all clips')
-            })
-        }
+        socket.emit('clips', clips, received => {
+            if(received) console.log('server received all clips')
+        })
     },[clips])
 
     const handleSelect = (index) => {
@@ -60,7 +58,7 @@ export default (props) => {
 
     const handleEditClips = (updatedClip, index) => {
         const newClips = clips.slice(0,index).concat(updatedClip).concat(clips.slice(index + 1, clips.length))
-        setClips(newClips)
+        redux(updateClips(newClips))
     }
 
     const renderItem = ({ item, index }) => {
@@ -71,7 +69,6 @@ export default (props) => {
                     selectedIndex={selectedIndex}
                     index={index}
                     handleSelect={handleSelect}
-                    clips={clips}
                     handleEditClips={handleEditClips}
                     />
             </View>

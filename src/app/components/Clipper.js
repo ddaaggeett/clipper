@@ -24,6 +24,11 @@ import {
     serverIP,
     port,
 } from '../../../config'
+import {
+    useSelector,
+    useDispatch,
+} from 'react-redux'
+import { updateClips } from '../redux/actions/actionCreators'
 
 const socket = io('http://'+ serverIP + ':' + port)
 
@@ -36,33 +41,18 @@ export default () => {
     const [rightCursor, setRightCursor] = useState(0)
     const [playing, setPlaying] = useState(true)
     const [appOpened, setAppOpened] = useState(false)
-    const [clips, setClips] = useState([])
     const [boundCount, setBoundCount] = useState(0)
     const [clipping, setClipping] = useState(true)
     const [leftClipped, setLeftClipped] = useState(false)
     const [rightClipped, setRightClipped] = useState(false)
 
-    useFocusEffect( // whenever screen gets focus
-        useCallback(() => { // so this suns only once per screen focus
-            let isActive = true // suggested by: https://www.debuggr.io/react-update-unmounted-component/
-            if (isActive) {
-                getData('clips').then(data => {
-                    if(data !== null) setClips(data) // array of clips
-                })
-            }
-            return () => {
-                isActive = false
-            }
-        },[])
-    )
+    const clips = useSelector(state => state.clips)
+    const redux = useDispatch()
 
     useEffect(() => {
-        if (clips !== undefined) {
-            storeData('clips', clips)
-            socket.emit('clips', clips, received => {
-                if(received) console.log('server received all clips')
-            })
-        }
+        socket.emit('clips', clips, received => {
+            if(received) console.log('server received all clips')
+        })
     },[clips])
 
     useEffect(() => {
@@ -93,7 +83,7 @@ export default () => {
                 videoId: getContentID(videoUrl),
                 id: Date.now().toString(),
             }
-            setClips([...clips, clipObject])
+            redux(updateClips([...clips, clipObject]))
         })
     }
 

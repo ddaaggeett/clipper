@@ -15,5 +15,6 @@ const middleware = applyMiddleware(thunk)
 export default () => {
     let store = createStore(persistedReducer, middleware)
     let persistor = persistStore(store)
+    // persistor.purge() // TODO: run as separate script when necessary
     return { store, persistor }
 }

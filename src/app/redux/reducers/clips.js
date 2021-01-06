@@ -1,17 +1,12 @@
 import * as actions from '../actions'
 
-const initialState = {
-    clips: [],
-}
+const initialState = []
 
 export default function clips(state = initialState, action) {
     switch(action.type) {
 
         case actions.UPDATE_CLIPS:
-            return {
-                ...state,
-                clips: action.clips
-            }
+            return action.clips
 
         default:
             return state
