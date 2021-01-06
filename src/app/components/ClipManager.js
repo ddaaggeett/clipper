@@ -27,6 +27,7 @@ import {
     useDispatch,
 } from 'react-redux'
 import { updateClips } from '../redux/actions/actionCreators'
+import DraggableFlatList from 'react-native-draggable-flatlist'
 
 const socket = io('http://'+ serverIP + ':' + port)
 
@@ -35,6 +36,7 @@ export default (props) => {
     const clips = useSelector(state => state.clips)
     const redux = useDispatch()
     const [selectedIndex, setSelectedIndex] = useState(null)
+    const [clipsDrag, setClipsDrag] = useState([])
 
     useFocusEffect( // whenever screen gets focus
         useCallback(() => { // so this suns only once per screen focus
@@ -50,6 +52,10 @@ export default (props) => {
         socket.emit('clips', clips, received => {
             if(received) console.log('server received all clips')
         })
+        setClipsDrag(clips.map((clip, index) => ({
+            ...clip,
+            key: clip.id
+        })))
     },[clips])
 
     const handleSelect = (index) => {
@@ -67,7 +73,7 @@ export default (props) => {
         redux(updateClips(newClips))
     }
 
-    const renderItem = ({ item, index }) => {
+    const renderItem = ({ item, index, drag }) => {
         return (
             <View>
                 <Clip
@@ -77,17 +83,20 @@ export default (props) => {
                     handleSelect={handleSelect}
                     handleEditClips={handleEditClips}
                     handleDeleteClip={handleDeleteClip}
+                    drag={drag}
                     />
             </View>
         )
     }
 
-    return (
+    return (// null )
         <View style={styles.container}>
-            <FlatList
+            <DraggableFlatList
                 style={styles.clipsList}
-                data={clips}
+                data={clipsDrag}
                 renderItem={renderItem}
+                keyExtractor={(item, index) => item.key}
+                onDragEnd={({ data }) => redux(updateClips(data))}
                 />
         </View>
     )

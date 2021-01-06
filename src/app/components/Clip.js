@@ -27,7 +27,7 @@ export default (props) => {
         <TouchableOpacity
             style={styles.clipItem}
             onPress={() => props.handleSelect(props.index)}
-            onLongPress={() => handleEditClip()}
+            onLongPress={props.drag}
             >
             <View>
                 { props.selectedIndex !== props.index ? null

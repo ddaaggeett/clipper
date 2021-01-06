@@ -71,7 +71,7 @@ export default () => {
     }
 
     const screenWidth = Dimensions.get('window').width
-    const playerHeight = screenWidth * 3 / 4;
+    const playerHeight = screenWidth * 9 / 16
 
     const handleFinishClip = () => {
         const clipDuration = rightCursor - leftCursor
