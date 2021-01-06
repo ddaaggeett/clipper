@@ -61,6 +61,12 @@ export default (props) => {
         redux(updateClips(newClips))
     }
 
+    const handleDeleteClip = (index) => {
+        // TODO: whether to delete clip on server as well?
+        const newClips = clips.slice(0,index).concat(clips.slice(index + 1, clips.length))
+        redux(updateClips(newClips))
+    }
+
     const renderItem = ({ item, index }) => {
         return (
             <View>
@@ -70,6 +76,7 @@ export default (props) => {
                     index={index}
                     handleSelect={handleSelect}
                     handleEditClips={handleEditClips}
+                    handleDeleteClip={handleDeleteClip}
                     />
             </View>
         )

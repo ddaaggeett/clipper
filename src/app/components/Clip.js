@@ -32,6 +32,7 @@ export default (props) => {
                 { props.selectedIndex !== props.index ? null : <Text style={[styles.clipItemText, {color:'yellow'}]}>press and hold to edit</Text> }
                 <Text style={styles.clipItemText}>{durationTimeFormat}</Text>
                 <Text style={styles.clipItemText}>{props.clip.comment}</Text>
+                { props.selectedIndex !== props.index ? null : <TouchableOpacity style={styles.deleteClip} onPress={() => props.handleDeleteClip(props.index)}><Text style={styles.clipItemText}>X</Text></TouchableOpacity> }
             </View>
             { props.selectedIndex !== props.index ? null : <ClipPlayer clip={props.clip} /> }
         </TouchableOpacity>

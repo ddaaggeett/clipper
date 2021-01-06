@@ -40,4 +40,9 @@ export const styles = StyleSheet.create({
         color: 'white',
         fontSize:16,
     },
+    deleteClip: {
+        backgroundColor: 'red',
+        height: 50,
+        width: 50,
+    },
 });
