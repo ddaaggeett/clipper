@@ -25,24 +25,34 @@ export const styles = StyleSheet.create({
         color: 'white',
         fontWeight:"bold",
     },
-    buttonRow: {
+    contentRow: {
         flexDirection:"row",
     },
     clipsList: {
         marginTop:25,
     },
     clipItem: {
-        flexDirection: 'row',
         borderColor: 'white',
         borderWidth:1,
     },
     clipItemText: {
         color: 'white',
         fontSize:16,
+        padding:15,
     },
     deleteClip: {
         backgroundColor: 'red',
-        height: 50,
-        width: 50,
+        height: 60,
+        width: 60,
     },
+    clipPlayer: {
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        borderColor: 'white',
+        borderWidth:1,
+    },
+    punchlineInput: {
+        backgroundColor:'purple',
+    }
 });

@@ -7,11 +7,23 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    Dimensions,
 } from 'react-native'
 import { styles } from "../styles"
 import YoutubePlayer from "react-native-youtube-iframe"
 
 export default (props) => {
+
+    const selected = props.selectedIndex == props.index
+    const clipPlayerHeight = 113
+
+    const [minClipHeight, setMinClipHeight] = useState(null)
+
+    const handleSetClipDimension = ({nativeEvent}) => {
+        const punchlineHeight = nativeEvent.layout.height
+        if(selected) setMinClipHeight(punchlineHeight + clipPlayerHeight)
+        else setMinClipHeight(punchlineHeight)
+    }
 
     const handleEditClipPunchline = (text) => {
         const editedClip = {
@@ -24,26 +36,52 @@ export default (props) => {
     const durationTimeFormat = new Date(props.clip.duration * 1000).toISOString().substr(14, 8)
 
     return (
-        <TouchableOpacity
-            style={styles.clipItem}
-            onPress={() => props.handleSelect(props.index)}
-            onLongPress={props.drag}
-            >
-            <View>
-                { props.selectedIndex !== props.index ? null
-                    :   <TextInput
-                            style={styles.urlText}
-                            onChangeText={text => handleEditClipPunchline(text)}
-                            value={props.clip.comment}
-                            placeholder={"edit punchline"}
-                            placeholderTextColor={"yellow"}
-                            /> }
-                <Text style={styles.clipItemText}>{durationTimeFormat}</Text>
-                { props.selectedIndex == props.index ? null : <Text style={styles.clipItemText}>{props.clip.comment}</Text> }
-                { props.selectedIndex !== props.index ? null : <TouchableOpacity style={styles.deleteClip} onPress={() => props.handleDeleteClip(props.index)}><Text style={styles.clipItemText}>X</Text></TouchableOpacity> }
-            </View>
-            { props.selectedIndex !== props.index ? null : <ClipPlayer clip={props.clip} /> }
-        </TouchableOpacity>
+        <View style={[styles.clipItem,{height:minClipHeight}]}>
+            <TouchableOpacity
+                onPress={() => props.handleSelect(props.index)}
+                onLongPress={props.drag}
+                style={{height:minClipHeight}}
+                >
+                <View style={styles.contentRow}>
+                    <Text style={styles.clipItemText}>{durationTimeFormat}</Text>
+                    { !selected
+                        ?   null
+                        :   <View
+                                style={{flex:1}}
+                                onLayout={handleSetClipDimension}
+                                >
+                                <TextInput
+                                    style={[styles.clipItemText, styles.punchlineInput]}
+                                    multiline={true}
+                                    onChangeText={text => handleEditClipPunchline(text)}
+                                    value={props.clip.comment}
+                                    placeholder={"edit punchline"}
+                                    placeholderTextColor={"yellow"}
+                                    />
+                            </View> }
+                    { selected
+                        ?   null
+                        :   <View style={{flex:1}}>
+                                <Text style={styles.clipItemText} onLayout={handleSetClipDimension}>
+                                    {props.clip.comment}
+                                </Text>
+                            </View> }
+                </View>
+                { !selected
+                    ?   null
+                    :   <View style={styles.contentRow}>
+                            <View style={{position:'absolute',
+                            left:0,
+                            top:50,}}>
+                            <TouchableOpacity style={styles.deleteClip} onPress={() => props.handleDeleteClip(props.index)}>
+                                <Text style={styles.clipItemText}>X</Text>
+                            </TouchableOpacity>
+                            </View>
+                            <ClipPlayer clip={props.clip} clipPlayerHeight={clipPlayerHeight} />
+                        </View>
+                }
+            </TouchableOpacity>
+        </View>
     )
 }
 
@@ -53,11 +91,11 @@ const ClipPlayer = (props) => {
     const [playing, setPlaying] = useState(false)
 
     return (
-        <View>
+        <View style={[styles.clipPlayer, {height:props.clipPlayerHeight}]}>
             <YoutubePlayer
                 ref={player}
                 play={true}
-                height={113}
+                height={props.clipPlayerHeight}
                 width={200}
                 videoId={props.clip.videoId}
                 initialPlayerParams={{

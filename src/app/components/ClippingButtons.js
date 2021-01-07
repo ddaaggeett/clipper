@@ -83,7 +83,7 @@ const LeftOrRight = (props) => {
 
     if (!props.handlingLeft && !props.handlingRight) {
         return (
-            <View style={styles.buttonRow}>
+            <View style={styles.contentRow}>
                 {
                     props.leftClipped
                     ?   <TouchableOpacity
@@ -119,7 +119,7 @@ const LeftOrRight = (props) => {
     }
     else if(props.handlingLeft) {
         return (
-            <View style={styles.buttonRow}>
+            <View style={styles.contentRow}>
                 <ExecuteLeft {...props} buttonWidth={buttonWidth} />
                 <TouchableOpacity style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelLeft()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
             </View>
@@ -127,7 +127,7 @@ const LeftOrRight = (props) => {
     }
     else if(props.handlingRight) {
         return (
-            <View style={styles.buttonRow}>
+            <View style={styles.contentRow}>
                 <TouchableOpacity style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelRight()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
                 <ExecuteRight {...props} buttonWidth={buttonWidth} />
             </View>
