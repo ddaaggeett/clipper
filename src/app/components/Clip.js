@@ -28,10 +28,12 @@ export default (props) => {
         else setMinClipHeight(punchlineHeight)
     }
 
-    const handleEditClipPunchline = (text) => {
+    const [comment, setComment] = useState(props.clip.comment)
+
+    const handleEditClipPunchline = () => {
         const editedClip = {
             ...props.clip,
-            comment: text,
+            comment: comment,
         }
         props.handleEditClips(editedClip, props.index)
     }
@@ -56,9 +58,10 @@ export default (props) => {
                                 <TextInput
                                     style={[styles.clipItemText, styles.punchlineInput]}
                                     multiline={true}
-                                    onChangeText={text => handleEditClipPunchline(text)}
-                                    value={props.clip.comment}
-                                    placeholder={"edit punchline"}
+                                    onChangeText={text => setComment(text)}
+                                    onEndEditing={handleEditClipPunchline}
+                                    value={comment}
+                                    placeholder={"add comment"}
                                     placeholderTextColor={"yellow"}
                                     />
                             </View> }
