@@ -69,6 +69,7 @@ export default (props) => {
         // TODO: whether to delete clip on server as well?
         const newClips = clips.slice(0,index).concat(clips.slice(index + 1, clips.length))
         redux(updateClips(newClips))
+        setSelectedIndex(null)
     }
 
     const renderItem = ({ item, index, drag }) => {
@@ -87,6 +88,12 @@ export default (props) => {
         )
     }
 
+    const KeyboardSpacer = () => { // TODO: use KeyboardAvoidingView instead
+        return (
+            <View style={{height:250}} />
+        )
+    }
+
     return (// null )
         <View style={styles.container}>
             <DraggableFlatList
@@ -95,6 +102,7 @@ export default (props) => {
                 renderItem={renderItem}
                 keyExtractor={(item, index) => item.key}
                 onDragEnd={({ data }) => redux(updateClips(data))}
+                ListFooterComponent={<KeyboardSpacer />}
                 />
         </View>
     )
