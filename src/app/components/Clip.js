@@ -11,6 +11,9 @@ import {
 } from 'react-native'
 import { styles } from "../styles"
 import YoutubePlayer from "react-native-youtube-iframe"
+import {
+    useSelector,
+} from 'react-redux'
 
 export default (props) => {
 
@@ -87,6 +90,7 @@ export default (props) => {
 
 const ClipPlayer = (props) => {
 
+    const playerState = useSelector(state => state.player)
     const player = useRef()
     const [playing, setPlaying] = useState(false)
 
@@ -98,6 +102,7 @@ const ClipPlayer = (props) => {
                 height={props.clipPlayerHeight}
                 width={200}
                 videoId={props.clip.videoId}
+                playbackRate={playerState.speed}
                 initialPlayerParams={{
                     // TODO: use exact values instead of integers
                     start: Math.floor(props.clip.start),

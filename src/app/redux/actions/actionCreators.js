@@ -6,3 +6,10 @@ export function updateClips(clips) {
         clips
     }
 }
+
+export function updatePlayer(player) {
+    return {
+        type: actions.UPDATE_PLAYER,
+        player
+    }
+}

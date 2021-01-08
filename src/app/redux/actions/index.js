@@ -1,5 +1,7 @@
 const UPDATE_CLIPS = 'UPDATE_CLIPS'
+const UPDATE_PLAYER = 'UPDATE_PLAYER'
 
 module.exports = {
     UPDATE_CLIPS,
+    UPDATE_PLAYER,
 }

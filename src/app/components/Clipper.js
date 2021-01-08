@@ -28,7 +28,7 @@ import {
     useSelector,
     useDispatch,
 } from 'react-redux'
-import { updateClips } from '../redux/actions/actionCreators'
+import * as actions from '../redux/actions/actionCreators'
 
 const socket = io('http://'+ serverIP + ':' + port)
 
@@ -36,7 +36,6 @@ export default () => {
 
     const player = useRef()
     const [contentID, setContentID] = useState('')
-    const [speed, setSpeed] = useState(1)
     const [leftCursor, setLeftCursor] = useState(0)
     const [rightCursor, setRightCursor] = useState(0)
     const [playing, setPlaying] = useState(true)
@@ -47,6 +46,7 @@ export default () => {
     const [rightClipped, setRightClipped] = useState(false)
 
     const clips = useSelector(state => state.clips)
+    const playerState = useSelector(state => state.player)
     const redux = useDispatch()
 
     useEffect(() => {
@@ -83,7 +83,7 @@ export default () => {
                 videoId: getContentID(videoUrl),
                 id: Date.now().toString(),
             }
-            redux(updateClips([...clips, clipObject]))
+            redux(actions.updateClips([...clips, clipObject]))
         })
     }
 
@@ -105,6 +105,10 @@ export default () => {
         }
     }
 
+    const handleSetSpeed = (newSpeed) => {
+        redux(actions.updatePlayer({speed:newSpeed}))
+    }
+
     return (
         <View>
             <StatusBar style="light" />
@@ -123,14 +127,13 @@ export default () => {
                 onReady={() => setPlaying(true)}
                 videoId={contentID}
                 playList={contentID}
-                playbackRate={speed}
+                playbackRate={playerState.speed}
                 onPlaybackRateChange={() => setPlaying(true)}
                 onChangeState={playerState => handleOnChangeState(playerState)}
                 />
             <Controls
                 player={player}
-                speed={speed}
-                setSpeed={setSpeed}
+                setSpeed={handleSetSpeed}
                 leftCursor={leftCursor}
                 setLeftCursor={setLeftCursor}
                 rightCursor={rightCursor}

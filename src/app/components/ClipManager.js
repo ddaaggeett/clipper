@@ -40,10 +40,8 @@ export default (props) => {
 
     useFocusEffect( // whenever screen gets focus
         useCallback(() => { // so this suns only once per screen focus
-            let isActive = true // suggested by: https://www.debuggr.io/react-update-unmounted-component/
-            if (isActive) setSelectedIndex(null)
             return () => {
-                isActive = false
+                setSelectedIndex(null) // when focus is lost
             }
         },[])
     )
