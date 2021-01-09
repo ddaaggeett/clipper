@@ -6,13 +6,13 @@ var handleIncomingClips = require('./handleIncomingClips')
 var fs = require('fs')
 var initData = require('./initData')
 
-var data
-initData().then(storage => data = storage)
+var serverData
+initData().then(storage => serverData = storage)
 
 io.on('connection', (socket) => {
-    socket.on('clips', (clips, confirmReceived) => {
+    socket.on('clips', (incomingClips, confirmReceived) => {
         confirmReceived(true)
-        handleIncomingClips(clips, data)
+        handleIncomingClips(incomingClips, serverData).then(newData => serverData = newData)
     })
 })
 

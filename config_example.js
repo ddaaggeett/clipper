@@ -1,6 +1,6 @@
 module.exports = {
     serverIP: 'ip address',
     port: 'port number',
-    dataFile: 'data.json',
-    videoDataDirectory: './video_data/'
+    dataFile: '../data/data.json',
+    videoDataDirectory: '../data/video_data/',
 }
