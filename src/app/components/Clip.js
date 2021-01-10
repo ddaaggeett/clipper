@@ -93,7 +93,7 @@ export default (props) => {
 
 const ClipPlayer = (props) => {
 
-    const playerState = useSelector(state => state.player)
+    const speed = useSelector(state => state.player.speed)
     const player = useRef()
     const [playing, setPlaying] = useState(false)
 
@@ -105,7 +105,7 @@ const ClipPlayer = (props) => {
                 height={props.clipPlayerHeight}
                 width={200}
                 videoId={props.clip.videoId}
-                playbackRate={playerState.speed}
+                playbackRate={speed}
                 initialPlayerParams={{
                     // TODO: use exact values instead of integers
                     start: Math.floor(props.clip.start),

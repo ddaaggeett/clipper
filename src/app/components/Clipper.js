@@ -50,10 +50,10 @@ export default () => {
     const redux = useDispatch()
 
     useEffect(() => {
-        socket.emit('clips', clips, received => {
+        socket.emit('allClips', clips, received => {
             if(received) console.log('server received all clips')
         })
-    },[clips])
+    },[]) // run only once on startup
 
     useEffect(() => {
         if(boundCount == 2) {
@@ -84,6 +84,9 @@ export default () => {
                 id: Date.now().toString(),
             }
             redux(actions.updateClips([...clips, clipObject]))
+            socket.emit('addClip', clipObject, received => {
+                if(received) console.log('server added ',clipObject)
+            })
         })
     }
 

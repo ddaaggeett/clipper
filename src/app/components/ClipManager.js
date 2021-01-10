@@ -47,9 +47,9 @@ export default (props) => {
     )
 
     useEffect(() => {
-        socket.emit('clips', clips, received => {
-            if(received) console.log('server received all clips')
-        })
+        // socket.emit('clips', clips, received => {
+        //     if(received) console.log('server received all clips')
+        // })
         setClipsDrag(clips.map((clip, index) => ({
             ...clip,
             key: clip.id
@@ -63,10 +63,16 @@ export default (props) => {
     const handleEditClips = (updatedClip, index) => {
         const newClips = clips.slice(0,index).concat(updatedClip).concat(clips.slice(index + 1, clips.length))
         redux(updateClips(newClips))
+        socket.emit('editClip', updatedClip, received => {
+            if(received) console.log('server edited ',updatedClip)
+        })
     }
 
     const handleDeleteClip = (index) => {
-        // TODO: whether to delete clip on server as well?
+        const clipForDeletion = clips[index]
+        socket.emit('deleteClip',clipForDeletion,received => {
+            if(received) console.log('server deleted ', clipForDeletion)
+        })
         const newClips = clips.slice(0,index).concat(clips.slice(index + 1, clips.length))
         redux(updateClips(newClips))
         setSelectedIndex(null)
