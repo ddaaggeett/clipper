@@ -94,7 +94,8 @@ export default (props) => {
         )
     }
 
-    return (// null )
+    return (
+        // TODO: https://stackoverflow.com/questions/44743904/virtualizedlist-you-have-a-large-list-that-is-slow-to-update
         <View style={styles.container}>
             <DraggableFlatList
                 style={styles.clipsList}

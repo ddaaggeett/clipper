@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
         backgroundColor: '#000',
     },
     urlText: {
-        marginTop:25,
         borderColor: 'white',
         borderWidth: 1,
         color: 'white',
@@ -29,7 +28,6 @@ export const styles = StyleSheet.create({
         flexDirection:"row",
     },
     clipsList: {
-        marginTop:25,
     },
     clipItem: {
         borderColor: 'white',

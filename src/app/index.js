@@ -2,11 +2,13 @@ import {
     View,
     Text,
     TouchableOpacity,
+    ScrollView,
 } from "react-native"
 import React, {
     useState,
 } from 'react'
 import Clipper from './components/Clipper'
+import VideoSelector from './components/VideoSelector'
 import ClipManager from './components/ClipManager'
 import { styles } from './styles'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -15,15 +17,16 @@ const Tab = createBottomTabNavigator()
 
 const ClipperScreen = () => {
     return (
-        <View  style={styles.container}>
+        <ScrollView  style={[styles.container,{paddingTop:25}]}>
             <Clipper />
-        </View>
+            <VideoSelector />
+        </ScrollView>
     )
 }
 
 const ClipManagerScreen = () => {
     return (
-        <View  style={styles.container}>
+        <View  style={[styles.container,{paddingTop:25}]}>
             <ClipManager />
         </View>
     )

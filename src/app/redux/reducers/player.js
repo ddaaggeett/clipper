@@ -1,6 +1,10 @@
 import * as actions from '../actions'
 
 const initialState = {
+    library: {
+        videos: [],
+        playlists: [],
+    },
     speed: 1,
 }
 
@@ -11,6 +15,7 @@ export default function player(state = initialState, action) {
             return {
                 ...state,
                 speed: action.player.speed,
+                library: action.player.library,
             }
 
         default:

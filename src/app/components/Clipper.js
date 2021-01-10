@@ -46,7 +46,7 @@ export default () => {
     const [rightClipped, setRightClipped] = useState(false)
 
     const clips = useSelector(state => state.clips)
-    const playerState = useSelector(state => state.player)
+    const speed = useSelector(state => state.player.speed)
     const redux = useDispatch()
 
     useEffect(() => {
@@ -127,7 +127,7 @@ export default () => {
                 onReady={() => setPlaying(true)}
                 videoId={contentID}
                 playList={contentID}
-                playbackRate={playerState.speed}
+                playbackRate={speed}
                 onPlaybackRateChange={() => setPlaying(true)}
                 onChangeState={playerState => handleOnChangeState(playerState)}
                 />
