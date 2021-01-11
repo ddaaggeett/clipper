@@ -6,16 +6,26 @@ const initData = () => {
         fs.readFile(dataFile, (error, jsonString) => {
             if (!error) resolve(JSON.parse(jsonString))
             else if ( error.code === "ENOENT" ) { // file doesn't exist
-                console.log("ERROR\n",error)
+                console.log('creating data file')
                 const newFileObject = {
                     "clips":[],
                 }
-                fs.writeFile(dataFile, JSON.stringify(newFileObject), (error) => {
-                    if(!error) resolve(newFileObject)
-                })
+                storeData(newFileObject).then(() => resolve(newFileObject))
             }
         })
     })
 }
 
-module.exports = initData
+const storeData = (data) => {
+    return new Promise((resolve,reject) => {
+        fs.writeFile(dataFile, JSON.stringify(data, null, 4), (error) => {
+            if(error) console.log('ERROR writing file:', error)
+            else resolve()
+        })
+    })
+}
+
+module.exports = {
+    initData,
+    storeData,
+}

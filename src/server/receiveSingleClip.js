@@ -1,5 +1,4 @@
-var fs = require('fs')
-var { dataFile } = require('../../config')
+var { storeData } = require('./storage')
 
 const addClip = (clip, serverData) => {
     return new Promise((resolve,reject) => {
@@ -7,10 +6,7 @@ const addClip = (clip, serverData) => {
             ...serverData,
             clips: [...serverData.clips, clip],
         }
-        fs.writeFile(dataFile, JSON.stringify(newData, null, 4), (error) => {
-            if(error) console.log('ERROR writing file:', error)
-            else resolve(newData)
-        })
+        storeData(newData).then(() => resolve(newData))
     })
 }
 
@@ -25,10 +21,7 @@ const editClip = (clip, serverData) => {
                 }
             }
         }
-        fs.writeFile(dataFile, JSON.stringify(newData, null, 4), (error) => {
-            if(error) console.log('ERROR writing file:', error)
-            else resolve(newData)
-        })
+        storeData(newData).then(() => resolve(newData))
     })
 }
 
@@ -43,10 +36,7 @@ const deleteClip = (clip, serverData) => {
                 }
             }
         }
-        fs.writeFile(dataFile, JSON.stringify(newData, null, 4), (error) => {
-            if(error) console.log('ERROR writing file:', error)
-            else resolve(newData)
-        })
+        storeData(newData).then(() => resolve(newData))
     })
 }
 

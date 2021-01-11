@@ -9,7 +9,8 @@ var {
     deleteClip,
 } = require('./receiveSingleClip')
 var fs = require('fs')
-var initData = require('./initData')
+var { initData } = require('./storage')
+var generateClip = require('./generateClip')
 
 var serverData
 initData().then(storage => serverData = storage)
@@ -22,6 +23,7 @@ io.on('connection', (socket) => {
     socket.on('addClip', (clip, confirmReceived) => {
         confirmReceived(true)
         addClip(clip, serverData).then(newData => serverData = newData)
+        generateClip(clip)
     })
     socket.on('editClip', (clip, confirmReceived) => {
         confirmReceived(true)

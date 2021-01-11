@@ -1,35 +1,33 @@
-var handleClip = require('./handleClip')
 var fs = require('fs')
 var { dataFile } = require('../../config')
+var generateClip = require('./generateClip')
+var { storeData } = require('./storage')
 
-const handleIncomingClips = (incomingClips, data) => {
+const handleIncomingClips = (incomingClips, serverData) => {
     return new Promise((resolve,reject) => {
         var newClips = []
         var ids = []
-        for(var x = 0; x < data.clips.length; x++) {
-            ids.push(data.clips[x].id)
+        for(var x = 0; x < serverData.clips.length; x++) {
+            ids.push(serverData.clips[x].id)
         }
         for(var x = 0; x < incomingClips.length; x++) {
             // if object doesn't exist yet
             if(!ids.includes(incomingClips[x].id)) {
                 newClips.push(incomingClips[x])
-                handleClip(incomingClips[x])
+                generateClip(incomingClips[x])
             }
             // if object exists but is not equal to previously stored object
             else {
-                if(JSON.stringify(data.clips[x]) !== JSON.stringify(incomingClips[x])) {
-                    data.clips[x] = incomingClips[x]
+                if(JSON.stringify(serverData.clips[x]) !== JSON.stringify(incomingClips[x])) {
+                    serverData.clips[x] = incomingClips[x]
                 }
             }
         }
         const newData = {
-            ...data,
-            clips: data.clips.concat(newClips)
+            ...serverData,
+            clips: serverData.clips.concat(newClips)
         }
-        fs.writeFile(dataFile, JSON.stringify(newData, null, 4), (error) => {
-            if(error) console.log('ERROR writing file:', error)
-            else resolve(newData)
-        })
+        storeData(newData).then(() => resolve(newData))
     })
 }
 
