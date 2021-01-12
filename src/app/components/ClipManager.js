@@ -47,57 +47,22 @@ export default (props) => {
     )
 
     useEffect(() => {
-        // socket.emit('clips', clips, received => {
-        //     if(received) console.log('server received all clips')
-        // })
         setClipsDrag(clips.map((clip, index) => ({
             ...clip,
             key: clip.id
         })))
     },[clips])
 
-    const handleSelect = (index) => {
-        setSelectedIndex(index)
-    }
-
-    const handleEditClips = (updatedClip, index) => {
-        const newClips = clips.slice(0,index).concat(updatedClip).concat(clips.slice(index + 1, clips.length))
-        redux(updateClips(newClips))
-        socket.emit('editClip', updatedClip, received => {
-            if(received) console.log('server edited ',updatedClip)
-        })
-    }
-
-    const handleDeleteClip = (index) => {
-        const clipForDeletion = clips[index]
-        socket.emit('deleteClip',clipForDeletion,received => {
-            if(received) console.log('server deleted ', clipForDeletion)
-        })
-        const newClips = clips.slice(0,index).concat(clips.slice(index + 1, clips.length))
-        redux(updateClips(newClips))
-        setSelectedIndex(null)
-    }
-
     const renderItem = ({ item, index, drag }) => {
         return (
             <View>
                 <Clip
                     clip={item}
-                    selectedIndex={selectedIndex}
                     index={index}
-                    handleSelect={handleSelect}
-                    handleEditClips={handleEditClips}
-                    handleDeleteClip={handleDeleteClip}
                     drag={drag}
                     navigation={props.navigation}
                     />
             </View>
-        )
-    }
-
-    const KeyboardSpacer = () => { // TODO: use KeyboardAvoidingView instead
-        return (
-            <View style={{height:250}} />
         )
     }
 
@@ -110,7 +75,6 @@ export default (props) => {
                 renderItem={renderItem}
                 keyExtractor={(item, index) => item.key}
                 onDragEnd={({ data }) => redux(updateClips(data))}
-                ListFooterComponent={<KeyboardSpacer />}
                 />
         </View>
     )

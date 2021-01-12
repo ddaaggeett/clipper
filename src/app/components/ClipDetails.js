@@ -2,22 +2,112 @@ import {
     View,
     Text,
     TouchableOpacity,
+    Dimensions,
+    TextInput,
+    ScrollView,
 } from "react-native"
 import React, {
     useState,
+    useRef,
 } from 'react'
 import { styles } from "../styles"
+import YoutubePlayer from "react-native-youtube-iframe"
+import {
+    useSelector,
+    useDispatch,
+} from 'react-redux'
+import { updateClips } from '../redux/actions/actionCreators'
+import { io } from 'socket.io-client'
+import {
+    serverIP,
+    port,
+} from '../../../config'
+
+const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
-    const clip = props.route.params.clip
+    const [clip, setClip] = useState(props.route.params.clip)
+    const index = props.route.params.index
+    const [comment, setComment] = useState(clip.comment)
+    const clips = useSelector(state => state.clips)
+    const redux = useDispatch()
+
+    const saveAndExit = () => {
+        props.navigation.goBack()
+    }
+
+    const handleEditComment = () => {
+        const editedClip = {
+            ...clip,
+            comment: comment,
+        }
+        editClips(editedClip)
+    }
+
+    const editClips = (updatedClip) => {
+        const newClips = clips.slice(0,index).concat(updatedClip).concat(clips.slice(index + 1, clips.length))
+        redux(updateClips(newClips))
+        socket.emit('editClip', updatedClip, received => {
+            if(received) console.log('server edited ',updatedClip)
+        })
+    }
+
+    const deleteClip = () => {
+        const newClips = clips.slice(0,index).concat(clips.slice(index + 1, clips.length))
+        redux(updateClips(newClips))
+        saveAndExit()
+        socket.emit('deleteClip', clip, received => {
+            if(received) console.log('server deleted ', clip)
+        })
+    }
 
     return (
-        <View style={styles.container}>
-            <TouchableOpacity style={styles.controlButton} onPress={() => props.navigation.goBack()}>
+        <ScrollView style={styles.container}>
+            <TouchableOpacity style={styles.controlButton} onPress={() => saveAndExit()}>
                 <Text style={styles.controlButtonText}>save clip</Text>
             </TouchableOpacity>
+            <ClipPlayer
+                clip={clip}
+                />
             <Text style={{color:'white'}}>{JSON.stringify(clip, null, 4)}</Text>
-        </View>
+            <TextInput
+                style={[styles.clipItemText, styles.punchlineInput]}
+                multiline={true}
+                onChangeText={text => setComment(text)}
+                onEndEditing={handleEditComment}
+                value={comment}
+                placeholder={"add comment"}
+                placeholderTextColor={"yellow"}
+                />
+            <TouchableOpacity style={[styles.controlButton, styles.deleteClip]} onPress={() => deleteClip()}>
+                <Text style={styles.controlButtonText}>{'DELETE CLIP'}</Text>
+            </TouchableOpacity>
+        </ScrollView>
+    )
+}
+
+const ClipPlayer = (props) => {
+
+    const speed = useSelector(state => state.player.speed)
+    const player = useRef()
+    const [playing, setPlaying] = useState(false)
+    const screenWidth = Dimensions.get('window').width
+    const playerHeight = screenWidth * 9 / 16
+
+    return (
+        <YoutubePlayer
+            ref={player}
+            play={playing}
+            height={playerHeight}
+            width={screenWidth}
+            videoId={props.clip.videoId}
+            playbackRate={speed}
+            initialPlayerParams={{
+                // TODO: use exact values instead of integers
+                start: Math.floor(props.clip.start),
+                end: Math.ceil(props.clip.end),
+            }}
+            />
     )
 }

@@ -40,8 +40,6 @@ export const styles = StyleSheet.create({
     },
     deleteClip: {
         backgroundColor: 'red',
-        height: 60,
-        width: 60,
     },
     clipPlayer: {
         position: 'absolute',
