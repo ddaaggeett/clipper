@@ -30,6 +30,7 @@ export default (props) => {
     const [clip, setClip] = useState(props.route.params.clip)
     const index = props.route.params.index
     const [comment, setComment] = useState(clip.comment)
+    const [confirmDelete, setConfirmDelete] = useState(false)
     const clips = useSelector(state => state.clips)
     const redux = useDispatch()
 
@@ -80,10 +81,28 @@ export default (props) => {
                 placeholder={"add comment"}
                 placeholderTextColor={"yellow"}
                 />
-            <TouchableOpacity style={[styles.controlButton, styles.deleteClip]} onPress={() => deleteClip()}>
+            <DeleteClip confirmDelete={confirmDelete} setConfirmDelete={setConfirmDelete} deleteClip={deleteClip} />
+        </ScrollView>
+    )
+}
+
+const DeleteClip = (props) => {
+
+    const buttonWidth = Dimensions.get('window').width/2
+
+    return (
+        props.confirmDelete
+        ?   <View style={styles.contentRow}>
+                <TouchableOpacity style={[styles.controlButton, styles.deleteClip, {width: buttonWidth}]} onPress={() => props.deleteClip()}>
+                    <Text style={styles.controlButtonText}>{'CONFIRM DELETE'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.controlButton, {backgroundColor:'orange', width: buttonWidth}]} onPress={() => props.setConfirmDelete(false)}>
+                    <Text style={styles.controlButtonText}>{'CANCEL'}</Text>
+                </TouchableOpacity>
+            </View>
+        :   <TouchableOpacity style={[styles.controlButton, styles.deleteClip]} onPress={() => props.setConfirmDelete(true)}>
                 <Text style={styles.controlButtonText}>{'DELETE CLIP'}</Text>
             </TouchableOpacity>
-        </ScrollView>
     )
 }
 

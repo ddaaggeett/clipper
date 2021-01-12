@@ -1,6 +1,5 @@
 import React, {
     useState,
-    useRef,
     useEffect,
     useCallback,
 } from 'react';
@@ -8,7 +7,6 @@ import {
     View,
     Text,
     TouchableOpacity,
-    FlatList,
 } from 'react-native';
 import {
     storeData,
@@ -51,7 +49,14 @@ export default (props) => {
             ...clip,
             key: clip.id
         })))
+        socket.emit('allClips', clips, received => {
+            if(received) console.log('server received all clips')
+        })
     },[clips])
+
+    const handleReorderedClips = (data) => {
+        redux(updateClips(data))
+    }
 
     const renderItem = ({ item, index, drag }) => {
         return (
@@ -74,7 +79,7 @@ export default (props) => {
                 data={clipsDrag}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => item.key}
-                onDragEnd={({ data }) => redux(updateClips(data))}
+                onDragEnd={({ data }) => handleReorderedClips(data)}
                 />
         </View>
     )
