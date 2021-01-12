@@ -79,9 +79,14 @@ export default (props) => {
                             <View style={{position:'absolute',
                             left:0,
                             top:50,}}>
+                            <View style={styles.contentRow}>
                             <TouchableOpacity style={styles.deleteClip} onPress={() => props.handleDeleteClip(props.index)}>
                                 <Text style={styles.clipItemText}>X</Text>
                             </TouchableOpacity>
+                            <TouchableOpacity style={[styles.deleteClip, {backgroundColor:'blue'}]} onPress={() => props.navigation.navigate('ClipDetails', {clip: props.clip})}>
+                                <Text style={styles.clipItemText}>{'>>'}</Text>
+                            </TouchableOpacity>
+                            </View>
                             </View>
                             <ClipPlayer clip={props.clip} clipPlayerHeight={clipPlayerHeight} />
                         </View>

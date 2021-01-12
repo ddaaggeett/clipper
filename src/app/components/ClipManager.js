@@ -89,6 +89,7 @@ export default (props) => {
                     handleEditClips={handleEditClips}
                     handleDeleteClip={handleDeleteClip}
                     drag={drag}
+                    navigation={props.navigation}
                     />
             </View>
         )

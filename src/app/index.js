@@ -10,10 +10,13 @@ import React, {
 import Clipper from './components/Clipper'
 import VideoSelector from './components/VideoSelector'
 import ClipManager from './components/ClipManager'
+import ClipDetails from './components/ClipDetails'
 import { styles } from './styles'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Tab = createBottomTabNavigator()
+const Stack = createStackNavigator()
 
 const ClipperScreen = () => {
     return (
@@ -27,7 +30,10 @@ const ClipperScreen = () => {
 const ClipManagerScreen = () => {
     return (
         <View  style={[styles.container,{paddingTop:25}]}>
-            <ClipManager />
+            <Stack.Navigator>
+                <Stack.Screen name="ClipManager" component={ClipManager} options={{headerShown: false}} />
+                <Stack.Screen name="ClipDetails" component={ClipDetails} options={{headerShown: false}} />
+            </Stack.Navigator>
         </View>
     )
 }
