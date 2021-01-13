@@ -16,9 +16,7 @@ export default function App() {
         <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
-        <View style={styles.container}>
             <AppMain />
-        </View>
         </NavigationContainer>
         </PersistGate>
         </Provider>

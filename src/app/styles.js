@@ -48,7 +48,10 @@ export const styles = StyleSheet.create({
         borderColor: 'white',
         borderWidth:1,
     },
-    punchlineInput: {
+    commentInput: {
         backgroundColor:'purple',
+    },
+    titleInput: {
+        backgroundColor:'#444',
     }
 });

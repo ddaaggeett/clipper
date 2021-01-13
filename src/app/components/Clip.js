@@ -23,13 +23,12 @@ export default (props) => {
         setMinClipHeight(nativeEvent.layout.height)
     }
 
-    const [comment, setComment] = useState(props.clip.comment)
+    const comment = props.clip.comment
 
     const durationTimeFormat = new Date(props.clip.duration * 1000).toISOString().substr(14, 8)
 
     const selectClip = () => {
         props.navigation.navigate('ClipDetails', {
-            clip: props.clip,
             index: props.index,
         })
     }
@@ -45,7 +44,7 @@ export default (props) => {
                     <Text style={styles.clipItemText}>{durationTimeFormat}</Text>
                     <View style={{flex:1}}>
                         <Text style={styles.clipItemText} onLayout={handleSetClipDimension}>
-                            {props.clip.comment}
+                            {comment}
                         </Text>
                     </View>
                 </View>

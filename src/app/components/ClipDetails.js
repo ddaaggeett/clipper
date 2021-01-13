@@ -27,21 +27,23 @@ const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
-    const [clip, setClip] = useState(props.route.params.clip)
     const index = props.route.params.index
-    const [comment, setComment] = useState(clip.comment)
-    const [confirmDelete, setConfirmDelete] = useState(false)
     const clips = useSelector(state => state.clips)
+    const clip = clips[index]
+    const [comment, setComment] = useState(clip.comment)
+    const [title, setTitle] = useState(clip.title)
+    const [confirmDelete, setConfirmDelete] = useState(false)
     const redux = useDispatch()
 
     const saveAndExit = () => {
         props.navigation.goBack()
     }
 
-    const handleEditComment = () => {
+    const handleEditClip = () => {
         const editedClip = {
             ...clip,
             comment: comment,
+            title: title,
         }
         editClips(editedClip)
     }
@@ -66,22 +68,35 @@ export default (props) => {
     return (
         <ScrollView style={styles.container}>
             <TouchableOpacity style={styles.controlButton} onPress={() => saveAndExit()}>
-                <Text style={styles.controlButtonText}>save clip</Text>
+                <Text style={styles.controlButtonText}>{'<-- SAVE CLIP'}</Text>
             </TouchableOpacity>
             <ClipPlayer
                 clip={clip}
                 />
-            <Text style={{color:'white'}}>{JSON.stringify(clip, null, 4)}</Text>
             <TextInput
-                style={[styles.clipItemText, styles.punchlineInput]}
+                style={[styles.clipItemText, styles.titleInput]}
                 multiline={true}
-                onChangeText={text => setComment(text)}
-                onEndEditing={handleEditComment}
-                value={comment}
-                placeholder={"add comment"}
+                onChangeText={text => setTitle(text)}
+                onEndEditing={handleEditClip}
+                value={title}
+                placeholder={"TITLE"}
                 placeholderTextColor={"yellow"}
                 />
-            <DeleteClip confirmDelete={confirmDelete} setConfirmDelete={setConfirmDelete} deleteClip={deleteClip} />
+            <TextInput
+                style={[styles.clipItemText, styles.commentInput]}
+                multiline={true}
+                onChangeText={text => setComment(text)}
+                onEndEditing={handleEditClip}
+                value={comment}
+                placeholder={"DESCRIPTION"}
+                placeholderTextColor={"yellow"}
+                />
+            <Text style={{color:'white'}}>{JSON.stringify(clip, null, 4)}</Text>
+            <DeleteClip
+                confirmDelete={confirmDelete}
+                setConfirmDelete={setConfirmDelete}
+                deleteClip={deleteClip}
+                />
         </ScrollView>
     )
 }

@@ -23,6 +23,7 @@ import {
 import {
     serverIP,
     port,
+    clipInitObject,
 } from '../../../config'
 import {
     useSelector,
@@ -77,6 +78,7 @@ export default () => {
         const clipDuration = rightCursor - leftCursor
         player.current.getVideoUrl().then(videoUrl => {
             const clipObject = {
+                ...clipInitObject,
                 start: leftCursor,
                 end: rightCursor,
                 duration: clipDuration,
