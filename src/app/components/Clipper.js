@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {
     useState,
     useRef,
@@ -116,7 +115,6 @@ export default () => {
 
     return (
         <View>
-            <StatusBar style="light" />
             <TextInput
                 style={styles.urlText}
                 onChangeText={text => handleGetPlayContent(text)}
