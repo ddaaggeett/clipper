@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { View } from 'react-native'
 import AccountScreen from './screens/AccountScreen'
 import ClipManagerScreen from './screens/ClipManagerScreen'
 import ClipperScreen from './screens/ClipperScreen'
 import { styles } from './styles'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { useSelector } from 'react-redux'
 
 const Tab = createBottomTabNavigator()
 
 export default () => {
+
+    const loggedIn = useSelector(state => state.account.loggedIn)
 
     const tabBarOptions = {
         activeBackgroundColor: '#222',
@@ -17,10 +21,19 @@ export default () => {
     }
 
     return (
-        <Tab.Navigator tabBarOptions={tabBarOptions}>
-            <Tab.Screen name="Account" component={AccountScreen} />
-            <Tab.Screen name="Clipper" component={ClipperScreen} />
-            <Tab.Screen name="Clips" component={ClipManagerScreen} />
-        </Tab.Navigator>
+        <View style={styles.container}>
+        {
+            loggedIn
+            ?   <Tab.Navigator tabBarOptions={tabBarOptions}>
+                    <Tab.Screen name="Account" component={AccountScreen} />
+                    <Tab.Screen name="Clipper" component={ClipperScreen} />
+                    <Tab.Screen name="Clips" component={ClipManagerScreen} />
+                </Tab.Navigator>
+            :   <Tab.Navigator tabBarOptions={tabBarOptions}>
+                    <Tab.Screen name="Account" component={AccountScreen} />
+                </Tab.Navigator>
+
+        }
+        </View>
     )
 }
