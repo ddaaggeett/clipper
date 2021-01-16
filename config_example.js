@@ -1,4 +1,5 @@
 module.exports = {
+    androidClientId: 'androidClientId',
     serverIP: 'ip address',
     port: 'port number',
     dataFile: '../data/data.json',

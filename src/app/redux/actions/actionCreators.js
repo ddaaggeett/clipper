@@ -13,3 +13,10 @@ export function updatePlayer(player) {
         player
     }
 }
+
+export function login(account) {
+    return {
+        type: actions.LOGIN,
+        account
+    }
+}
