@@ -1,9 +1,11 @@
 const UPDATE_CLIPS = 'UPDATE_CLIPS'
 const UPDATE_PLAYER = 'UPDATE_PLAYER'
 const LOGIN = 'LOGIN'
+const LOGOUT = 'LOGOUT'
 
 module.exports = {
     UPDATE_CLIPS,
     UPDATE_PLAYER,
     LOGIN,
+    LOGOUT,
 }

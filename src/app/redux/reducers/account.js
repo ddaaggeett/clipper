@@ -1,19 +1,21 @@
 import * as actions from '../actions'
 
 const initialState = {
-    loggedIn: false,
-    account: null,
+    loggedIn: false
 }
 
 export default function account(state = initialState, action) {
     switch(action.type) {
 
         case actions.LOGIN:
-            console.log('REDUCER\n',action)
             return {
-                ...state,
                 loggedIn: true,
-                account: action.account,
+                ...action.account,
+            }
+
+        case actions.LOGOUT:
+            return {
+                loggedIn: false
             }
 
         default:

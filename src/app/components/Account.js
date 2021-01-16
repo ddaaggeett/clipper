@@ -19,15 +19,21 @@ import {
 export default () => {
 
     const redux = useDispatch()
-    const account = useSelector(state => state.account)
+    const loggedIn = useSelector(state => state.account.loggedIn)
+    const user = useSelector(state => state.account.user)
+    const accessToken = useSelector(state => state.account.accessToken)
+    const idToken = useSelector(state => state.account.idToken)
+    const refreshToken = useSelector(state => state.account.refreshToken)
+
+    const accountAccessConfig = {
+        androidClientId: androidClientId,
+        // iosClientId: YOUR_CLIENT_ID_HERE,
+        scopes: ['profile', 'email'],
+    }
 
     const signInWithGoogleAsync = async () => {
         try {
-            const result = await Google.logInAsync({
-                androidClientId: androidClientId,
-                // iosClientId: YOUR_CLIENT_ID_HERE,
-                scopes: ['profile', 'email'],
-            })
+            const result = await Google.logInAsync(accountAccessConfig)
 
             if (result.type === 'success') {
                 return (result)
@@ -44,12 +50,23 @@ export default () => {
         redux(actions.login(loginResult))
     }
 
+    const handleLogout = async () => {
+        await Google.logOutAsync({accessToken, ...accountAccessConfig})
+        redux(actions.logout())
+    }
+
     return (
         <ScrollView>
         {
-            account.loggedIn
+            loggedIn
             ?   <View>
-                    <Text style={styles.controlButtonText}>{JSON.stringify(account,null,4)}</Text>
+                    <Text style={{color:'white'}}>{`you are logged into YouTube, ${user.name}`}</Text>
+                    <TouchableOpacity
+                        style={[styles.controlButton, {backgroundColor: 'red'}]}
+                        onPress={() => handleLogout()}
+                        >
+                        <Text style={styles.controlButtonText}>Logout</Text>
+                    </TouchableOpacity>
                 </View>
             :   <View>
                     <TouchableOpacity

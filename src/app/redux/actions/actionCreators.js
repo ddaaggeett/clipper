@@ -20,3 +20,9 @@ export function login(account) {
         account
     }
 }
+
+export function logout() {
+    return {
+        type: actions.LOGOUT
+    }
+}
