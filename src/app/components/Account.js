@@ -28,7 +28,11 @@ export default () => {
     const accountAccessConfig = {
         androidClientId: androidClientId,
         // iosClientId: YOUR_CLIENT_ID_HERE,
-        scopes: ['profile', 'email'],
+        scopes: [
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/youtube',
+        ],
     }
 
     const signInWithGoogleAsync = async () => {

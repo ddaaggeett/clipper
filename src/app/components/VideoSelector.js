@@ -8,13 +8,15 @@ import { styles } from "../styles"
 import {
     useSelector,
 } from 'react-redux'
+import Playlist from './Playlist'
 
 export default () => {
 
     const library = useSelector(state => state.player.library)
     return (
         <View>
-            <Text style={{color:'white',height:500,}}>Video selector</Text>
+            <Text style={{color:'white'}}>Video selector</Text>
+            <Playlist />
         </View>
     )
 }
