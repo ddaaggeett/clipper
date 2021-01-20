@@ -35,18 +35,17 @@ const socket = io('http://'+ serverIP + ':' + port)
 export default () => {
 
     const player = useRef()
-    const [contentID, setContentID] = useState('')
     const [leftCursor, setLeftCursor] = useState(0)
     const [rightCursor, setRightCursor] = useState(0)
     const [playing, setPlaying] = useState(true)
     const [appOpened, setAppOpened] = useState(false)
     const [boundCount, setBoundCount] = useState(0)
-    const [clipping, setClipping] = useState(true)
     const [leftClipped, setLeftClipped] = useState(false)
     const [rightClipped, setRightClipped] = useState(false)
 
     const clips = useSelector(state => state.clips)
     const speed = useSelector(state => state.player.speed)
+    const contentID = useSelector(state => state.player.contentID)
     const redux = useDispatch()
 
     useEffect(() => {
@@ -67,7 +66,7 @@ export default () => {
     }, [boundCount])
 
     const handleGetPlayContent = (copiedText) => {
-        setContentID(getContentID(copiedText))
+        redux(actions.updateContentID(getContentID(copiedText)))
     }
 
     const screenWidth = Dimensions.get('window').width
@@ -91,26 +90,8 @@ export default () => {
         })
     }
 
-    const handleOnChangeState = (playerState) => {
-        // TODO: pickup play time where last left off
-        if(playerState === "unstarted" && !appOpened) {
-            getData('lastPlaying').then(data => {
-                if (data !== null) setContentID(data.videoId)
-                else setContentID('')
-            })
-            setAppOpened(true)
-        }
-        else if(playerState === "paused") {
-            player.current.getVideoUrl().then(videoUrl => {
-                storeData('lastPlaying', {
-                    videoId: getContentID(videoUrl),
-                })
-            })
-        }
-    }
-
     const handleSetSpeed = (newSpeed) => {
-        redux(actions.updatePlayer({speed:newSpeed}))
+        redux(actions.updateSpeed(newSpeed))
     }
 
     return (
@@ -132,7 +113,6 @@ export default () => {
                 playList={contentID}
                 playbackRate={speed}
                 onPlaybackRateChange={() => setPlaying(true)}
-                onChangeState={playerState => handleOnChangeState(playerState)}
                 />
             <Controls
                 player={player}

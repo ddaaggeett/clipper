@@ -7,10 +7,17 @@ export function updateClips(clips) {
     }
 }
 
-export function updatePlayer(player) {
+export function updateSpeed(speed) {
     return {
-        type: actions.UPDATE_PLAYER,
-        player
+        type: actions.UPDATE_SPEED,
+        speed
+    }
+}
+
+export function updateContentID(contentID) {
+    return {
+        type: actions.UPDATE_CONTENT_ID,
+        contentID
     }
 }
 
