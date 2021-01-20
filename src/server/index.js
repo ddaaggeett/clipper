@@ -11,7 +11,10 @@ var {
 var fs = require('fs')
 var { initData } = require('./storage')
 var generateClip = require('./generateClip')
-var { getPlaylist } = require('./youtube')
+var {
+    getPlaylist,
+    getAllPlaylists,
+} = require('./youtube')
 
 var serverData
 initData().then(storage => serverData = storage)
@@ -37,6 +40,11 @@ io.on('connection', (socket) => {
     socket.on('getPlaylist', (auth, returnPlaylist) => {
         getPlaylist(auth).then(playlist => {
             returnPlaylist(playlist)
+        })
+    })
+    socket.on('getAllPlaylists', (accessToken, returnPlaylists) => {
+        getAllPlaylists(accessToken).then(playlists => {
+            returnPlaylists(playlists)
         })
     })
 })

@@ -1,7 +1,9 @@
 import * as actions from '../actions'
 
 const initialState = {
-    loggedIn: false
+    loggedIn: false,
+    playlists:[],
+    playlist: [],
 }
 
 export default function account(state = initialState, action) {
@@ -16,6 +18,18 @@ export default function account(state = initialState, action) {
         case actions.LOGOUT:
             return {
                 loggedIn: false
+            }
+
+        case actions.SET_PLAYLISTS:
+            return {
+                ...state,
+                playlists: action.playlists,
+            }
+
+        case actions.SET_PLAYLIST:
+            return {
+                ...state,
+                playlist: action.playlist,
             }
 
         default:

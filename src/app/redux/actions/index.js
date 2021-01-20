@@ -3,6 +3,8 @@ const UPDATE_SPEED = 'UPDATE_SPEED'
 const UPDATE_CONTENT_ID = 'UPDATE_CONTENT_ID'
 const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
+const SET_PLAYLISTS = 'SET_PLAYLISTS'
+const SET_PLAYLIST = 'SET_PLAYLIST'
 
 module.exports = {
     UPDATE_CLIPS,
@@ -10,4 +12,6 @@ module.exports = {
     UPDATE_CONTENT_ID,
     LOGIN,
     LOGOUT,
+    SET_PLAYLISTS,
+    SET_PLAYLIST,
 }

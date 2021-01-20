@@ -1,10 +1,6 @@
 import * as actions from '../actions'
 
 const initialState = {
-    library: {
-        videos: [],
-        playlists: [],
-    },
     speed: 1,
     contentID: '',
 }

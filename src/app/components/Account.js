@@ -15,6 +15,7 @@ import {
     useSelector,
     useDispatch,
 } from 'react-redux'
+import PlaylistSelector from './PlaylistSelector'
 
 export default () => {
 
@@ -71,6 +72,7 @@ export default () => {
                         >
                         <Text style={styles.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
+                    <PlaylistSelector />
                 </View>
             :   <View>
                     <TouchableOpacity

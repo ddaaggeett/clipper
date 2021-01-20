@@ -33,3 +33,17 @@ export function logout() {
         type: actions.LOGOUT
     }
 }
+
+export function setPlaylists(playlists) {
+    return {
+        type: actions.SET_PLAYLISTS,
+        playlists
+    }
+}
+
+export function setPlaylist(playlist) {
+    return {
+        type: actions.SET_PLAYLIST,
+        playlist
+    }
+}

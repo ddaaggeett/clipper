@@ -38,6 +38,37 @@ const getPlaylist = (auth) => {
     })
 }
 
+const getAllPlaylists = (accessToken) => {
+    return new Promise((resolve,reject) => {
+        const youtube = google.youtube({
+            version: 'v3',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+
+        var playlists = []
+        youtube.playlists.list({
+            part:'snippet',
+            mine: true,
+            maxResults: 50,
+        }).then(response => {
+
+            response.data.items.forEach((item, i) => {
+                const playlist = {
+                    id: item.id,
+                    title: item.snippet.title,
+                }
+                playlists.push(playlist)
+            })
+            resolve(playlists)
+        }).catch(error => {
+            console.log(`youtube error:\n${error}`)
+        })
+    })
+}
+
 module.exports = {
     getPlaylist,
+    getAllPlaylists,
 }
