@@ -65,10 +65,6 @@ export default () => {
         }
     }, [boundCount])
 
-    const handleGetPlayContent = (copiedText) => {
-        redux(actions.updateContentID(getContentID(copiedText)))
-    }
-
     const screenWidth = Dimensions.get('window').width
     const playerHeight = screenWidth * 9 / 16
 
@@ -96,13 +92,6 @@ export default () => {
 
     return (
         <View>
-            <TextInput
-                style={styles.urlText}
-                onChangeText={text => handleGetPlayContent(text)}
-                value={contentID}
-                placeholder={"paste YouTube address"}
-                placeholderTextColor={"white"}
-                />
             <YoutubePlayer
                 ref={player}
                 height={playerHeight}
