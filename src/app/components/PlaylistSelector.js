@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {
+    useState,
+} from 'react'
 import {
     View,
     Text,
     TouchableOpacity,
+    FlatList,
 } from 'react-native'
 import { styles } from '../styles'
 import {
@@ -21,8 +24,16 @@ import * as actions from '../redux/actions/actionCreators'
 export default (props) => {
 
     const redux = useDispatch()
+    const user = useSelector(state => state.account.user)
     const accessToken = useSelector(state => state.account.accessToken)
     const playlists = useSelector(state => state.account.playlists)
+    const playlist = useSelector(state => state.account.playlist)
+    const [selectingPlaylist, setSelectingPlaylist] = useState(false)
+    const [minItemHeight, setMinItemHeight] = useState(null)
+
+    const handleSetItemDimension = ({nativeEvent}) => {
+        setMinItemHeight(nativeEvent.layout.height)
+    }
 
     const getPlaylists = () => {
         socket.emit('getAllPlaylists', accessToken, data => {
@@ -30,12 +41,72 @@ export default (props) => {
         })
     }
 
+    const handleSelectPlaylist = () => {
+        setSelectingPlaylist(true)
+        getPlaylists()
+    }
+
+    const selectPlaylist = (playlist) => {
+        setSelectingPlaylist(false)
+        redux(actions.setPlaylist(playlist))
+    }
+
+    const renderItem = ({ item }) => (
+        <View style={styles.clipItem}>
+            <TouchableOpacity
+                onPress={() => selectPlaylist({id: item.id, title: item.title})}
+                style={{height:minItemHeight}}
+                >
+                <View style={{flex:1}}>
+                    <Text style={styles.clipItemText} onLayout={handleSetItemDimension}>
+                        {item.title}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        </View>
+    )
+
+    const ListOfPlaylists = () => {
+        return (
+            <View>
+            {
+                selectingPlaylist
+                ?   <FlatList
+                        data={playlists}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                        />
+                :   null
+            }
+            </View>
+        )
+    }
+
     return (
         <View style={{marginTop:25}}>
-            <TouchableOpacity style={styles.controlButton} onPress={() => getPlaylists()}>
-                <Text style={styles.controlButtonText}>select playlist</Text>
-            </TouchableOpacity>
-            <Text style={{color:'white'}}>{JSON.stringify(playlists, null, 4)}</Text>
+        {
+            playlist.id !== null
+            ?   <View>
+                    <TouchableOpacity style={styles.controlButton} onPress={() => handleSelectPlaylist()}>
+                    {
+                        selectingPlaylist
+                        ?   <Text style={styles.controlButtonText}>{`select playlist`}</Text>
+                        :   <Text style={styles.controlButtonText}>{`playlist: ${playlist.title}`}</Text>
+                    }
+                    </TouchableOpacity>
+                    <ListOfPlaylists />
+                </View>
+            :   <View>
+                    <TouchableOpacity style={styles.controlButton} onPress={() => handleSelectPlaylist()}>
+                    {
+                        selectingPlaylist
+                        ?   <Text style={styles.controlButtonText}>{`select playlist`}</Text>
+                        :   <Text style={styles.controlButtonText}>{`${user.name}'s playlists`}</Text>
+                    }
+                    </TouchableOpacity>
+                    <ListOfPlaylists />
+                </View>
+        }
         </View>
     )
 }

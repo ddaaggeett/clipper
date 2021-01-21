@@ -3,7 +3,11 @@ import * as actions from '../actions'
 const initialState = {
     loggedIn: false,
     playlists:[],
-    playlist: [],
+    playlist: {
+        id: null,
+        title: '',
+        videos: [],
+    },
 }
 
 export default function account(state = initialState, action) {
@@ -11,6 +15,7 @@ export default function account(state = initialState, action) {
 
         case actions.LOGIN:
             return {
+                ...state,
                 loggedIn: true,
                 ...action.account,
             }
@@ -29,7 +34,10 @@ export default function account(state = initialState, action) {
         case actions.SET_PLAYLIST:
             return {
                 ...state,
-                playlist: action.playlist,
+                playlist: {
+                    ...state.playlist,
+                    ...action.playlist,
+                }
             }
 
         default:
