@@ -29,11 +29,6 @@ export default (props) => {
     const playlists = useSelector(state => state.account.playlists)
     const playlist = useSelector(state => state.account.playlist)
     const [selectingPlaylist, setSelectingPlaylist] = useState(false)
-    const [minItemHeight, setMinItemHeight] = useState(null)
-
-    const handleSetItemDimension = ({nativeEvent}) => {
-        setMinItemHeight(nativeEvent.layout.height)
-    }
 
     const getPlaylists = () => {
         socket.emit('getAllPlaylists', accessToken, data => {
@@ -53,12 +48,9 @@ export default (props) => {
 
     const renderItem = ({ item }) => (
         <View style={styles.clipItem}>
-            <TouchableOpacity
-                onPress={() => selectPlaylist({id: item.id, title: item.title})}
-                style={{height:minItemHeight}}
-                >
+            <TouchableOpacity onPress={() => selectPlaylist({id: item.id, title: item.title})}>
                 <View style={{flex:1}}>
-                    <Text style={styles.clipItemText} onLayout={handleSetItemDimension}>
+                    <Text style={styles.clipItemText}>
                         {item.title}
                     </Text>
                 </View>

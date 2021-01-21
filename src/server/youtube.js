@@ -1,16 +1,15 @@
 const { google } = require('googleapis')
-const { playlistId } = require('../../config')
 
-const getPlaylist = (auth) => {
+const getPlaylist = (info) => {
     return new Promise((resolve,reject) => {
 
         // TODO: implement refresh_token
 
         const youtube = google.youtube({
             version: 'v3',
-            // auth: auth.apiKey,
+            // auth: info.apiKey,
             headers: {
-                Authorization: `Bearer ${auth.accessToken}`,
+                Authorization: `Bearer ${info.accessToken}`,
             },
         })
 
@@ -19,12 +18,12 @@ const getPlaylist = (auth) => {
             // part:'contentDetails',
             part:'snippet',
             mine: true,
-            playlistId: playlistId,
+            playlistId: info.playlist.id,
             maxResults: 50,
         }).then(response => {
             response.data.items.forEach((item, i) => {
                 const videoObject = {
-                    videoId: item.snippet.resourceId.videoId,
+                    id: item.snippet.resourceId.videoId,
                     thumbnails: item.snippet.thumbnails,
                     title: item.snippet.title,
                 }

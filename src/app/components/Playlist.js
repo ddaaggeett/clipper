@@ -6,46 +6,59 @@ import {
     View,
     Text,
     TouchableOpacity,
+    FlatList,
 } from 'react-native'
 import { styles } from '../styles'
-import { useSelector } from 'react-redux'
+import {
+    useSelector,
+    useDispatch,
+} from 'react-redux'
 import {
     serverIP,
     port,
 } from '../../../config'
 import * as AuthSession from 'expo-app-auth'
+import * as actions from '../redux/actions/actionCreators'
 import { io } from 'socket.io-client'
 const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
-    const loggedIn = useSelector(state => state.account.loggedIn)
-    const user = useSelector(state => state.account.user)
     const accessToken = useSelector(state => state.account.accessToken)
-    const idToken = useSelector(state => state.account.idToken)
-    const refreshToken = useSelector(state => state.account.refreshToken)
+    const playlist = useSelector(state => state.account.playlist)
+    const redux = useDispatch()
 
-    const [playlist, setPlaylist] = useState(null)
-
-    const auth = {
+    const info = {
         accessToken,
-        refreshToken,
+        playlist,
     }
 
-    const triggerPlaylist = async () => {
-        socket.emit('getPlaylist', auth, receivedPlaylist => {
-            console.log(receivedPlaylist)
-            setPlaylist(receivedPlaylist)
+    useEffect(() => {
+        socket.emit('getPlaylist', info, data => {
+            redux(actions.setPlaylist({videos: data}))
         })
-    }
+    },[playlist])
 
+    const renderItem = ({ item }) => (
+        <View style={styles.clipItem}>
+            <TouchableOpacity onPress={() => redux(actions.updateContentID(item.id))}>
+                <View style={{flex:1}}>
+                    <Text style={styles.clipItemText}>
+                        {item.title}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        </View>
+    )
 
     return (
         <View>
-            <TouchableOpacity style={styles.controlButton} onPress={() => triggerPlaylist()}>
-                <Text style={styles.controlButtonText}>get playlist</Text>
-            </TouchableOpacity>
-            <Text style={{color:'white'}}>{JSON.stringify(playlist, null, 4)}</Text>
+            <Text style={{color:'white'}}>{`select from your playlist: ${playlist.title}`}</Text>
+            <FlatList
+                data={playlist.videos}
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+                />
         </View>
     )
 }
