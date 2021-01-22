@@ -10,6 +10,7 @@ import {
 import { styles } from '../styles'
 import { androidClientId } from '../../../config'
 import * as Google from 'expo-google-app-auth'
+import * as AppAuth from 'expo-app-auth'
 import * as actions from '../redux/actions/actionCreators'
 import {
     useSelector,
@@ -60,6 +61,24 @@ export default () => {
         redux(actions.logout())
     }
 
+    const handleRefreshTokecns = () => {
+        refreshAccessToken().then(newAccessToken => {
+            redux(actions.setAccessToken(newAccessToken))
+        }).catch(error => console.log(error))
+    }
+
+    const refreshAccessToken = async () => {
+        return new Promise((resolve, reject) => {
+            AppAuth.refreshAsync({
+                issuer: 'https://accounts.google.com',
+                clientId: androidClientId,
+            }, refreshToken).then(result => {
+                // TODO: result accessTokenExpirationDate
+                resolve(result.accessToken)
+            })
+        })
+    }
+
     return (
         <ScrollView>
         {
@@ -73,6 +92,13 @@ export default () => {
                         <Text style={styles.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
                     <PlaylistSelector />
+                    <TouchableOpacity
+                        style={styles.controlButton}
+                        onPress={() => handleRefreshTokecns()}
+                        >
+                        <Text style={styles.controlButtonText}>refresh tokens</Text>
+                    </TouchableOpacity>
+
                 </View>
             :   <View>
                     <TouchableOpacity

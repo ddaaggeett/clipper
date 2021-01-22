@@ -47,3 +47,10 @@ export function setPlaylist(playlist) {
         playlist
     }
 }
+
+export function setAccessToken(accessToken) {
+    return {
+        type: actions.SET_ACCESS_TOKEN,
+        accessToken
+    }
+}

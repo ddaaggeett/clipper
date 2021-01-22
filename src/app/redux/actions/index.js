@@ -5,6 +5,7 @@ const LOGIN = 'LOGIN'
 const LOGOUT = 'LOGOUT'
 const SET_PLAYLISTS = 'SET_PLAYLISTS'
 const SET_PLAYLIST = 'SET_PLAYLIST'
+const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
 
 module.exports = {
     UPDATE_CLIPS,
@@ -14,4 +15,5 @@ module.exports = {
     LOGOUT,
     SET_PLAYLISTS,
     SET_PLAYLIST,
+    SET_ACCESS_TOKEN,
 }

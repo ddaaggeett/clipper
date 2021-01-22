@@ -40,6 +40,13 @@ export default function account(state = initialState, action) {
                 }
             }
 
+        case actions.SET_ACCESS_TOKEN:
+        console.log(action)
+            return {
+                ...state,
+                accessToken: action.accessToken,
+            }
+
         default:
             return state
     }
