@@ -61,9 +61,9 @@ export default () => {
         redux(actions.logout())
     }
 
-    const handleRefreshTokecns = () => {
-        refreshAccessToken().then(newAccessToken => {
-            redux(actions.setAccessToken(newAccessToken))
+    const handleRefreshTokens = () => {
+        refreshAccessToken().then(data => {
+            redux(actions.setAccessToken(data.accessToken, data.accessTokenExpirationDate))
         }).catch(error => console.log(error))
     }
 
@@ -73,8 +73,11 @@ export default () => {
                 issuer: 'https://accounts.google.com',
                 clientId: androidClientId,
             }, refreshToken).then(result => {
-                // TODO: result accessTokenExpirationDate
-                resolve(result.accessToken)
+                const authInfo = {
+                    accessToken: result.accessToken,
+                    accessTokenExpirationDate: result.accessTokenExpirationDate,
+                }
+                resolve(authInfo)
             })
         })
     }
@@ -94,7 +97,7 @@ export default () => {
                     <PlaylistSelector />
                     <TouchableOpacity
                         style={styles.controlButton}
-                        onPress={() => handleRefreshTokecns()}
+                        onPress={() => handleRefreshTokens()}
                         >
                         <Text style={styles.controlButtonText}>refresh tokens</Text>
                     </TouchableOpacity>
