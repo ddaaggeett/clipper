@@ -2,6 +2,10 @@ import * as actions from '../actions'
 
 const initialState = {
     loggedIn: false,
+    user: {},
+    accessToken: '',
+    accessExpirationTime: 0,
+    refreshToken: '',
     playlists:[],
     playlist: {
         id: null,
@@ -18,6 +22,7 @@ export default function account(state = initialState, action) {
                 ...state,
                 loggedIn: true,
                 ...action.account,
+                accessExpirationTime: Date.now() + 3594000, // 1 minute less than assumed hour since expo-google-app-auth does not have expiration time
             }
 
         case actions.LOGOUT:
@@ -44,7 +49,7 @@ export default function account(state = initialState, action) {
             return {
                 ...state,
                 accessToken: action.accessToken,
-                accessTokenExpirationDate: action.accessTokenExpirationDate,
+                accessExpirationTime: action.accessExpirationTime,
             }
 
         default:

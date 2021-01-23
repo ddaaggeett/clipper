@@ -1,5 +1,6 @@
 import React, {
     useState,
+    useEffect,
 } from 'react'
 import {
     Text,
@@ -24,8 +25,16 @@ export default () => {
     const loggedIn = useSelector(state => state.account.loggedIn)
     const user = useSelector(state => state.account.user)
     const accessToken = useSelector(state => state.account.accessToken)
-    const idToken = useSelector(state => state.account.idToken)
+    const accessExpirationTime = useSelector(state => state.account.accessExpirationTime)
     const refreshToken = useSelector(state => state.account.refreshToken)
+
+    useEffect(() => {
+        const refreshInterval = setInterval(() => {
+            if ((accessExpirationTime - Date.now()) < 1000) {
+                handleRefreshTokens()
+            }
+        }, 1000)
+    }, [])
 
     const accountAccessConfig = {
         androidClientId: androidClientId,
@@ -63,7 +72,8 @@ export default () => {
 
     const handleRefreshTokens = () => {
         refreshAccessToken().then(data => {
-            redux(actions.setAccessToken(data.accessToken, data.accessTokenExpirationDate))
+            const accessExpirationTime = Date.parse(data.accessTokenExpirationDate)
+            redux(actions.setAccessToken(data.accessToken, accessExpirationTime))
         }).catch(error => console.log(error))
     }
 
@@ -95,13 +105,6 @@ export default () => {
                         <Text style={styles.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
                     <PlaylistSelector />
-                    <TouchableOpacity
-                        style={styles.controlButton}
-                        onPress={() => handleRefreshTokens()}
-                        >
-                        <Text style={styles.controlButtonText}>refresh tokens</Text>
-                    </TouchableOpacity>
-
                 </View>
             :   <View>
                     <TouchableOpacity

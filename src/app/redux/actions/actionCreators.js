@@ -48,10 +48,10 @@ export function setPlaylist(playlist) {
     }
 }
 
-export function setAccessToken(accessToken, accessTokenExpirationDate) {
+export function setAccessToken(accessToken, accessExpirationTime) {
     return {
         type: actions.SET_ACCESS_TOKEN,
         accessToken,
-        accessTokenExpirationDate,
+        accessExpirationTime,
     }
 }
