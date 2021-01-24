@@ -39,9 +39,14 @@ export default (props) => {
         })
     },[playlist])
 
+    const selectVideo = (item) => {
+        redux(actions.updateContentID(item.id))
+        redux(actions.selectingFromPlaylist(false))
+    }
+
     const renderItem = ({ item }) => (
         <View style={styles.clipItem}>
-            <TouchableOpacity onPress={() => redux(actions.updateContentID(item.id))}>
+            <TouchableOpacity onPress={() => selectVideo(item)}>
                 <View style={{flex:1}}>
                     <Text style={styles.clipItemText}>
                         {item.title}
@@ -53,7 +58,6 @@ export default (props) => {
 
     return (
         <View>
-            <Text style={{color:'white'}}>{`select from your playlist: ${playlist.title}`}</Text>
             <FlatList
                 data={playlist.videos}
                 renderItem={renderItem}

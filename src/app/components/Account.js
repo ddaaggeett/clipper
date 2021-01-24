@@ -80,7 +80,7 @@ export default (props) => {
         return new Promise((resolve, reject) => {
             AppAuth.refreshAsync({
                 issuer: 'https://accounts.google.com',
-                clientId: androidClientId,
+                clientId: androidClientId, // TODO: iosClientId, etc.
             }, refreshToken).then(result => {
                 const authInfo = {
                     accessToken: result.accessToken,

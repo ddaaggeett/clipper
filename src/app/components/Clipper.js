@@ -46,6 +46,7 @@ export default () => {
     const clips = useSelector(state => state.clips)
     const speed = useSelector(state => state.player.speed)
     const contentID = useSelector(state => state.player.contentID)
+    const selectingFromPlaylist = useSelector(state => state.library.selectingFromPlaylist)
     const redux = useDispatch()
 
     useEffect(() => {
@@ -92,36 +93,55 @@ export default () => {
 
     return (
         <View>
-            <YoutubePlayer
-                ref={player}
-                height={playerHeight}
-                width={screenWidth}
-                play={playing}
-                onReady={() => setPlaying(true)}
-                videoId={contentID}
-                playList={contentID}
-                playbackRate={speed}
-                onPlaybackRateChange={() => setPlaying(true)}
-                />
-            <Controls
-                player={player}
-                setSpeed={handleSetSpeed}
-                leftCursor={leftCursor}
-                setLeftCursor={setLeftCursor}
-                rightCursor={rightCursor}
-                setRightCursor={setRightCursor}
-                handleFinishClip={handleFinishClip}
-                playing={playing}
-                setPlaying={setPlaying}
-                getVideoId={getContentID}
-                boundCount={boundCount}
-                setBoundCount={setBoundCount}
-                screenWidth={screenWidth}
-                leftClipped={leftClipped}
-                setLeftClipped={setLeftClipped}
-                rightClipped={rightClipped}
-                setRightClipped={setRightClipped}
-                />
+            {
+                selectingFromPlaylist
+                ?   <View>
+                        <YoutubePlayer
+                            ref={player}
+                            height={100}
+                            width={178}
+                            play={playing}
+                            onReady={() => setPlaying(true)}
+                            videoId={contentID}
+                            playList={contentID}
+                            playbackRate={speed}
+                            onPlaybackRateChange={() => setPlaying(true)}
+                            />
+                    </View>
+                :   <View>
+                        <YoutubePlayer
+                            ref={player}
+                            height={playerHeight}
+                            width={screenWidth}
+                            play={playing}
+                            onReady={() => setPlaying(true)}
+                            videoId={contentID}
+                            playList={contentID}
+                            playbackRate={speed}
+                            onPlaybackRateChange={() => setPlaying(true)}
+                            />
+                        <Controls
+                            player={player}
+                            setSpeed={handleSetSpeed}
+                            leftCursor={leftCursor}
+                            setLeftCursor={setLeftCursor}
+                            rightCursor={rightCursor}
+                            setRightCursor={setRightCursor}
+                            handleFinishClip={handleFinishClip}
+                            playing={playing}
+                            setPlaying={setPlaying}
+                            getVideoId={getContentID}
+                            boundCount={boundCount}
+                            setBoundCount={setBoundCount}
+                            screenWidth={screenWidth}
+                            leftClipped={leftClipped}
+                            setLeftClipped={setLeftClipped}
+                            rightClipped={rightClipped}
+                            setRightClipped={setRightClipped}
+                            />
+                    </View>
+            }
+
         </View>
     );
 }

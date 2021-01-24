@@ -55,3 +55,10 @@ export function setAccessToken(accessToken, accessExpirationTime) {
         accessExpirationTime,
     }
 }
+
+export function selectingFromPlaylist(isSelecting) {
+    return {
+        type: actions.SELECTING_FROM_PLAYLIST,
+        isSelecting,
+    }
+}
