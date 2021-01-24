@@ -14,7 +14,7 @@ import { setPlaylist } from '../redux/actions/actionCreators'
 
 export default (props) => {
 
-    const playlists = useSelector(state => state.account.playlists)
+    const playlists = useSelector(state => state.library.playlists)
     const redux = useDispatch()
 
     const selectPlaylist = (playlist) => {

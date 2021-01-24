@@ -2,6 +2,12 @@ import * as actions from '../actions'
 
 const initialState = {
     selectingFromPlaylist: false,
+    playlists:[],
+    playlist: {
+        id: null,
+        title: '',
+        videos: [],
+    },
 }
 
 export default function library(state = initialState, action) {
@@ -11,6 +17,21 @@ export default function library(state = initialState, action) {
             return {
                 ...state,
                 selectingFromPlaylist: action.isSelecting,
+            }
+
+        case actions.SET_PLAYLISTS:
+            return {
+                ...state,
+                playlists: action.playlists,
+            }
+
+        case actions.SET_PLAYLIST:
+            return {
+                ...state,
+                playlist: {
+                    ...state.playlist,
+                    ...action.playlist,
+                }
             }
 
         default:

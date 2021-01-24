@@ -26,8 +26,8 @@ export default (props) => {
     const redux = useDispatch()
     const user = useSelector(state => state.account.user)
     const accessToken = useSelector(state => state.account.accessToken)
-    const playlists = useSelector(state => state.account.playlists)
-    const playlist = useSelector(state => state.account.playlist)
+    const playlists = useSelector(state => state.library.playlists)
+    const playlist = useSelector(state => state.library.playlist)
 
     const getPlaylists = () => {
         socket.emit('getAllPlaylists', accessToken, data => {

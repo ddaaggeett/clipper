@@ -6,12 +6,6 @@ const initialState = {
     accessToken: '',
     accessExpirationTime: 0,
     refreshToken: '',
-    playlists:[],
-    playlist: {
-        id: null,
-        title: '',
-        videos: [],
-    },
 }
 
 export default function account(state = initialState, action) {
@@ -28,21 +22,6 @@ export default function account(state = initialState, action) {
         case actions.LOGOUT:
             return {
                 loggedIn: false
-            }
-
-        case actions.SET_PLAYLISTS:
-            return {
-                ...state,
-                playlists: action.playlists,
-            }
-
-        case actions.SET_PLAYLIST:
-            return {
-                ...state,
-                playlist: {
-                    ...state.playlist,
-                    ...action.playlist,
-                }
             }
 
         case actions.SET_ACCESS_TOKEN:

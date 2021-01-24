@@ -25,7 +25,7 @@ const socket = io('http://'+ serverIP + ':' + port)
 export default (props) => {
 
     const accessToken = useSelector(state => state.account.accessToken)
-    const playlist = useSelector(state => state.account.playlist)
+    const playlist = useSelector(state => state.library.playlist)
     const redux = useDispatch()
 
     const info = {

@@ -17,7 +17,7 @@ import getContentID from '../getContentID'
 export default (props) => {
 
     const contentID = useSelector(state => state.player.contentID)
-    const playlist = useSelector(state => state.account.playlist)
+    const playlist = useSelector(state => state.library.playlist)
     const selectingFromPlaylist = useSelector(state => state.library.selectingFromPlaylist)
     const redux = useDispatch()
 
