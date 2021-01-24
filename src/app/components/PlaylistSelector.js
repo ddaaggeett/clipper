@@ -28,7 +28,6 @@ export default (props) => {
     const accessToken = useSelector(state => state.account.accessToken)
     const playlists = useSelector(state => state.account.playlists)
     const playlist = useSelector(state => state.account.playlist)
-    const [selectingPlaylist, setSelectingPlaylist] = useState(false)
 
     const getPlaylists = () => {
         socket.emit('getAllPlaylists', accessToken, data => {
@@ -37,66 +36,23 @@ export default (props) => {
     }
 
     const handleSelectPlaylist = () => {
-        setSelectingPlaylist(true)
         getPlaylists()
-    }
-
-    const selectPlaylist = (playlist) => {
-        setSelectingPlaylist(false)
-        redux(actions.setPlaylist(playlist))
-    }
-
-    const renderItem = ({ item }) => (
-        <View style={styles.clipItem}>
-            <TouchableOpacity onPress={() => selectPlaylist({id: item.id, title: item.title})}>
-                <View style={{flex:1}}>
-                    <Text style={styles.clipItemText}>
-                        {item.title}
-                    </Text>
-                </View>
-            </TouchableOpacity>
-        </View>
-    )
-
-    const ListOfPlaylists = () => {
-        return (
-            <View>
-            {
-                selectingPlaylist
-                ?   <FlatList
-                        data={playlists}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id}
-                        />
-                :   null
-            }
-            </View>
-        )
+        props.navigation.navigate('PlaylistSelectorList')
     }
 
     return (
-        <View style={{marginTop:25}}>
+        <View>
         {
             playlist.id !== null
             ?   <View>
                     <TouchableOpacity style={styles.controlButton} onPress={() => handleSelectPlaylist()}>
-                    {
-                        selectingPlaylist
-                        ?   <Text style={styles.controlButtonText}>{`select playlist`}</Text>
-                        :   <Text style={styles.controlButtonText}>{`playlist: ${playlist.title}`}</Text>
-                    }
+                        <Text style={styles.controlButtonText}>{`playlist: ${playlist.title}`}</Text>
                     </TouchableOpacity>
-                    <ListOfPlaylists />
                 </View>
             :   <View>
                     <TouchableOpacity style={styles.controlButton} onPress={() => handleSelectPlaylist()}>
-                    {
-                        selectingPlaylist
-                        ?   <Text style={styles.controlButtonText}>{`select playlist`}</Text>
-                        :   <Text style={styles.controlButtonText}>{`${user.name}'s playlists`}</Text>
-                    }
+                        <Text style={styles.controlButtonText}>{`${user.name}'s playlists`}</Text>
                     </TouchableOpacity>
-                    <ListOfPlaylists />
                 </View>
         }
         </View>

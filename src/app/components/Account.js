@@ -6,7 +6,6 @@ import {
     Text,
     TouchableOpacity,
     View,
-    ScrollView,
 } from 'react-native'
 import { styles } from '../styles'
 import { androidClientId } from '../../../config'
@@ -17,9 +16,9 @@ import {
     useSelector,
     useDispatch,
 } from 'react-redux'
-import PlaylistSelector from './PlaylistSelector'
+import Settings from './Settings'
 
-export default () => {
+export default (props) => {
 
     const redux = useDispatch()
     const loggedIn = useSelector(state => state.account.loggedIn)
@@ -93,7 +92,7 @@ export default () => {
     }
 
     return (
-        <ScrollView>
+        <View style={styles.container}>
         {
             loggedIn
             ?   <View>
@@ -104,7 +103,7 @@ export default () => {
                         >
                         <Text style={styles.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
-                    <PlaylistSelector />
+                    <Settings navigation={props.navigation} />
                 </View>
             :   <View>
                     <TouchableOpacity
@@ -115,6 +114,6 @@ export default () => {
                     </TouchableOpacity>
                 </View>
         }
-        </ScrollView>
+        </View>
     )
 }
