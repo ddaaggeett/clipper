@@ -7,6 +7,7 @@ import {
     Text,
     TouchableOpacity,
     FlatList,
+    Image,
 } from 'react-native'
 import { styles } from '../styles'
 import {
@@ -29,8 +30,12 @@ export default (props) => {
     const renderItem = ({ item }) => (
         <View style={styles.clipItem}>
             <TouchableOpacity onPress={() => selectVideo(item)}>
-                <View style={{flex:1}}>
-                    <Text style={styles.clipItemText}>
+                <View style={styles.contentRow}>
+                    <Image
+                        style={{height:90,width:160}}
+                        source={{uri:item.thumbnails.default.url}}
+                        />
+                    <Text style={[styles.clipItemText, {flex:1, flexWrap: "wrap"}]}>
                         {item.title}
                     </Text>
                 </View>
