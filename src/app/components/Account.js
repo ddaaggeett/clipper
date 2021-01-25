@@ -27,13 +27,19 @@ export default (props) => {
     const accessExpirationTime = useSelector(state => state.account.accessExpirationTime)
     const refreshToken = useSelector(state => state.account.refreshToken)
 
+    const [refreshInterval, setRefreshInterval] = useState()
+
     useEffect(() => {
-        const refreshInterval = setInterval(() => {
-            if ((accessExpirationTime - Date.now()) < 1000) {
-                handleRefreshTokens()
-            }
-        }, 1000)
-    }, [])
+        if(loggedIn) {
+            const intervalTime = 1000
+            setRefreshInterval(setInterval(() => {
+                if ((accessExpirationTime - Date.now()) < intervalTime) {
+                    handleRefreshTokens()
+                }
+            }, intervalTime))
+        }
+        else clearInterval(refreshInterval)
+    }, [loggedIn])
 
     const accountAccessConfig = {
         androidClientId: androidClientId,
