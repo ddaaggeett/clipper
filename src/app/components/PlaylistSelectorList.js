@@ -10,15 +10,31 @@ import {
     useSelector,
 } from 'react-redux'
 import { styles } from '../styles'
-import { setPlaylist } from '../redux/actions/actionCreators'
+import * as actions from '../redux/actions/actionCreators'
+import {
+    serverIP,
+    port,
+} from '../../../config'
+import { io } from 'socket.io-client'
+const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
+    const accessToken = useSelector(state => state.account.accessToken)
     const playlists = useSelector(state => state.library.playlists)
     const redux = useDispatch()
 
     const selectPlaylist = (playlist) => {
-        redux(setPlaylist(playlist))
+        const info = {
+            accessToken,
+            playlist,
+        }
+        socket.emit('getPlaylist', info, data => {
+            redux(actions.setPlaylist({
+                ...playlist,
+                videos: data,
+            }))
+        })
         props.navigation.goBack()
     }
 
