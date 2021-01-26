@@ -8,14 +8,25 @@ const downloadVideo = (videoDirectory, videoId) => {
         exec(command, {
             cwd: videoDirectory,
         }, (error, stdout, stderr) => {
+            console.log(`\nERROR: downloadVideo() ${videoId}:\n${error}`)
             if (error) {
-                console.error('ERROR downloadVideo\n', error)
-                return
+                if (error.toString().includes('[Errno -3] Temporary failure in name resolution')) {
+                    /*
+                    recursion should be fine here since this is not a youtube-dl issue.
+                    instead is a networking issue so error should not persist and
+                    recursion should not be endless
+                    */
+                    downloadVideo(videoDirectory, videoId)
+                }
+                else console.log('\nTODO: downloadVideo() error not yet caught')
             }
             console.log(stdout)
             var lines = stdout.toString().split('\n')
             lines.forEach(line => {
-                if(line.includes('[download] 100%')) resolve()
+                if(line.includes('[download] 100%')) {
+                    console.log(`\nDOWNLOAD COMPLETE: ${videoId}`)
+                    resolve()
+                }
             })
         })
     })
