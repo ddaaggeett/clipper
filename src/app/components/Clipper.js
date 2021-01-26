@@ -50,12 +50,6 @@ export default () => {
     const redux = useDispatch()
 
     useEffect(() => {
-        socket.emit('allClips', clips, received => {
-            if(received) console.log('server received all clips')
-        })
-    },[]) // run only once on startup
-
-    useEffect(() => {
         if(boundCount == 2) {
             handleFinishClip()
             setBoundCount(0)
