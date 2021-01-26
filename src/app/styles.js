@@ -53,5 +53,9 @@ export const styles = StyleSheet.create({
     },
     titleInput: {
         backgroundColor:'#444',
-    }
+    },
+    playlistItemText: {
+        flexWrap: "wrap",
+        padding: 5,
+    },
 });

@@ -18,7 +18,7 @@ const downloadVideo = (videoDirectory, videoId) => {
                     */
                     downloadVideo(videoDirectory, videoId)
                 }
-                else console.log('\nTODO: downloadVideo() error not yet caught')
+                else console.log(`TODO: downloadVideo() ${videoId} error not yet caught\n`)
             }
             console.log(stdout)
             var lines = stdout.toString().split('\n')

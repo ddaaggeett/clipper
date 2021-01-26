@@ -35,9 +35,10 @@ export default (props) => {
                         style={{height:90,width:160}}
                         source={{uri:item.thumbnails.default.url}}
                         />
-                    <Text style={[styles.clipItemText, {flex:1, flexWrap: "wrap"}]}>
-                        {item.title}
-                    </Text>
+                    <View style={{flex:1}}>
+                        <Text style={[styles.playlistItemText, {color:'white'}]}>{item.title}</Text>
+                        <Text style={[styles.playlistItemText, {color:'yellow'}]}>{item.channelTitle}</Text>
+                    </View>
                 </View>
             </TouchableOpacity>
         </View>

@@ -1,35 +1,39 @@
 const { google } = require('googleapis')
 
-const getPlaylist = (info) => {
+const youtube = (auth) => {
+    return google.youtube({
+        version: 'v3',
+        // auth: info.apiKey,
+        headers: {
+            Authorization: `Bearer ${auth}`,
+        },
+    })
+}
+
+const getPlaylist = async (info) => {
     return new Promise((resolve,reject) => {
-
-        // TODO: implement refresh_token
-
-        const youtube = google.youtube({
-            version: 'v3',
-            // auth: info.apiKey,
-            headers: {
-                Authorization: `Bearer ${info.accessToken}`,
-            },
-        })
-
         var playlist = []
-        youtube.playlistItems.list({
+        youtube(info.accessToken).playlistItems.list({
             // part:'contentDetails',
             part:'snippet',
             mine: true,
             playlistId: info.playlist.id,
-            maxResults: 50,
+            maxResults: 50, // TODO: create more arrays for more content
         }).then(response => {
             response.data.items.forEach((item, i) => {
-                const videoObject = {
-                    id: item.snippet.resourceId.videoId,
-                    thumbnails: item.snippet.thumbnails,
-                    title: item.snippet.title,
-                }
-                playlist.push(videoObject)
+                getChannelTitle(item.snippet.resourceId.videoId, info.accessToken).then(channelTitle => {
+                    const videoObject = {
+                        id: item.snippet.resourceId.videoId,
+                        thumbnails: item.snippet.thumbnails,
+                        title: item.snippet.title,
+                        channelTitle: channelTitle,
+                    }
+                    playlist.push(videoObject)
+                    if((response.data.items.length - 1) == i) {
+                        resolve(playlist)
+                    }
+                })
             })
-            resolve(playlist)
         }).catch(error => {
             console.log(`youtube error:\n${error}`)
         })
@@ -37,17 +41,21 @@ const getPlaylist = (info) => {
     })
 }
 
+const getChannelTitle = (videoId, auth) => {
+    return new Promise((resolve, reject) => {
+        youtube(auth).videos.list({
+            part: 'snippet',
+            id: videoId,
+        }).then(response => {
+            resolve(response.data.items[0].snippet.channelTitle)
+        })
+    })
+}
+
 const getAllPlaylists = (accessToken) => {
     return new Promise((resolve,reject) => {
-        const youtube = google.youtube({
-            version: 'v3',
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        })
-
         var playlists = []
-        youtube.playlists.list({
+        youtube(accessToken).playlists.list({
             part:'snippet',
             mine: true,
             maxResults: 50,
