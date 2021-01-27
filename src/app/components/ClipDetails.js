@@ -32,6 +32,7 @@ export default (props) => {
     const clip = clips[index]
     const [comment, setComment] = useState(clip.comment)
     const [title, setTitle] = useState(clip.title)
+    const [who, setWho] = useState(clip.who)
     const [confirmDelete, setConfirmDelete] = useState(false)
     const redux = useDispatch()
 
@@ -44,6 +45,7 @@ export default (props) => {
             ...clip,
             comment: comment,
             title: title,
+            who: who,
         }
         editClips(editedClip)
     }
@@ -80,6 +82,15 @@ export default (props) => {
                 onEndEditing={handleEditClip}
                 value={title}
                 placeholder={"TITLE"}
+                placeholderTextColor={"yellow"}
+                />
+            <TextInput
+                style={[styles.clipItemText, styles.whoInput]}
+                multiline={true}
+                onChangeText={text => setWho(text)}
+                onEndEditing={handleEditClip}
+                value={who}
+                placeholder={"WHO"}
                 placeholderTextColor={"yellow"}
                 />
             <TextInput

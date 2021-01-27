@@ -13,5 +13,6 @@ module.exports = {
         key: '',
         title: '',
         comment: '',
+        who: '',
     },
 }

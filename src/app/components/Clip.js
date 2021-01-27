@@ -7,7 +7,6 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    Dimensions,
 } from 'react-native'
 import { styles } from "../styles"
 import YoutubePlayer from "react-native-youtube-iframe"
@@ -16,14 +15,6 @@ import {
 } from 'react-redux'
 
 export default (props) => {
-
-    const [minClipHeight, setMinClipHeight] = useState(null)
-
-    const handleSetClipDimension = ({nativeEvent}) => {
-        setMinClipHeight(nativeEvent.layout.height)
-    }
-
-    const comment = props.clip.comment
 
     const durationTimeFormat = new Date(props.clip.duration * 1000).toISOString().substr(14, 8)
 
@@ -34,17 +25,16 @@ export default (props) => {
     }
 
     return (
-        <View style={[styles.clipItem,{height:minClipHeight}]}>
+        <View style={styles.clipItem}>
             <TouchableOpacity
                 onPress={() => selectClip()}
                 onLongPress={props.drag}
-                style={{height:minClipHeight}}
                 >
                 <View style={styles.contentRow}>
                     <Text style={styles.clipItemText}>{durationTimeFormat}</Text>
                     <View style={{flex:1}}>
-                        <Text style={styles.clipItemText} onLayout={handleSetClipDimension}>
-                            {comment}
+                        <Text style={styles.clipItemText}>
+                            {props.clip.title}
                         </Text>
                     </View>
                 </View>
