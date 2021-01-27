@@ -29,7 +29,7 @@ const getPlaylist = async (info) => {
                         channelTitle: channelTitle,
                     }
                     playlist.push(videoObject)
-                    if((response.data.items.length - 1) == i) {
+                    if(response.data.items.length == playlist.length) {
                         resolve(playlist)
                     }
                 })
