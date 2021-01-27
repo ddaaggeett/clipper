@@ -49,13 +49,11 @@ export default (props) => {
             ...clip,
             key: clip.id
         })))
-        socket.emit('allClips', clips, received => {
-            if(received) console.log('server received all clips')
-        })
     },[clips])
 
-    const handleReorderedClips = (data) => {
-        redux(updateClips(data))
+    const handleReorderedClips = (reorderedClips) => {
+        redux(updateClips(reorderedClips))
+        socket.emit('allClips', reorderedClips, clipsFromServer => {})
     }
 
     const renderItem = ({ item, index, drag }) => {

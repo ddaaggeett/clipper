@@ -20,9 +20,11 @@ var serverData
 initData().then(storage => serverData = storage)
 
 io.on('connection', (socket) => {
-    socket.on('allClips', (incomingClips, confirmReceived) => {
-        confirmReceived(true)
-        handleIncomingClips(incomingClips, serverData).then(newData => serverData = newData)
+    socket.on('allClips', (incomingClips, updateAppClips) => {
+        handleIncomingClips(incomingClips, serverData).then(newData => {
+            serverData = newData
+            updateAppClips(newData.clips)
+        })
     })
     socket.on('addClip', (clip, confirmReceived) => {
         confirmReceived(true)

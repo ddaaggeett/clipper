@@ -8,7 +8,11 @@ import ClipManagerScreen from './screens/ClipManagerScreen'
 import ClipperScreen from './screens/ClipperScreen'
 import { styles } from './styles'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { useSelector } from 'react-redux'
+import {
+    useSelector,
+    useDispatch,
+} from 'react-redux'
+import {updateClips} from './redux/actions/actionCreators'
 import {
     serverIP,
     port,
@@ -22,11 +26,12 @@ export default () => {
 
     const loggedIn = useSelector(state => state.account.loggedIn)
     const clips = useSelector(state => state.clips)
+    const redux = useDispatch()
 
     useEffect(() => {
         if(loggedIn) {
-            socket.emit('allClips', clips, received => {
-                if(received) console.log('server received all clips')
+            socket.emit('allClips', clips, clipsFromServer => {
+                redux(updateClips(clipsFromServer))
             })
         }
     },[loggedIn]) // run only once on startup
