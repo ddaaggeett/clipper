@@ -1,6 +1,11 @@
 var app = require('express')()
 var http = require('http').Server(app)
-var io = require('socket.io')(http)
+var io = require('socket.io')(http, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+})
 var { port } = require('../../config')
 var handleIncomingClips = require('./handleIncomingClips')
 var {

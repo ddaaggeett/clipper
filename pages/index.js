@@ -1,22 +1,18 @@
-// @generated: @expo/next-adapter@2.1.57
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import WebApp from '../src/app/web'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import configureStore from '../src/app/redux';
+
+const store = configureStore().store
+const persistor = configureStore().persistor
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Welcome to Expo + Next.js 👋</Text>
-    </View>
-  );
+    return (
+        <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+            <WebApp />
+        </PersistGate>
+        </Provider>
+    )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    fontSize: 16,
-  },
-});
