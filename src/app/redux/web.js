@@ -1,14 +1,15 @@
 import { createStore , applyMiddleware } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+// import localforage from 'localforage' // TODO: rather localforage than storage
 import rootReducer from './reducers'
 import logger from 'redux-logger'
 
-const middleware = applyMiddleware(thunk)
+const middleware = applyMiddleware(thunk, logger)
 const persistConfig = {
     key: 'root',
-    storage: AsyncStorage,
+    storage: storage,
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
