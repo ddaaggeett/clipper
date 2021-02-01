@@ -6,9 +6,12 @@ import {
 import React, {
     useState,
 } from 'react'
+import { useSelector } from 'react-redux'
 import { styles } from "../styles"
 
 export default (props) => {
+
+    const speed = useSelector(state => state.player.speed)
 
     const [rewindToPause, setRewindToPause] = useState()
     const buttonWidth = props.screenWidth / 5 // divided by bumber of buttons in row
@@ -34,12 +37,10 @@ export default (props) => {
         const rewindSeconds = 3
         props.player.current.seekTo(endCursor - rewindSeconds)
         if(props.playing) clearTimeout(rewindToPause)
-        props.player.current.getPlaybackRate().then(rate => {
-            const pauseTime = rewindSeconds * 1000 / rate
-            setRewindToPause(setTimeout(() => {
-                props.setPlaying(false)
-            }, pauseTime))
-        })
+        const pauseTime = rewindSeconds * 1000 / speed
+        setRewindToPause(setTimeout(() => {
+            props.setPlaying(false)
+        }, pauseTime))
     }
 
     if(props.handlingLeft || props.handlingRight) {

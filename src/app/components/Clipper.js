@@ -61,9 +61,27 @@ export default () => {
         }
     }, [boundCount])
 
+    const sendClip = (clipObject) => {
+        redux(actions.updateClips([...clips, clipObject]))
+        socket.emit('addClip', clipObject, received => {
+            if(received) console.log('server added ',clipObject)
+        })
+    }
+
     const handleFinishClip = () => {
         const clipDuration = rightCursor - leftCursor
-        player.current.getVideoUrl().then(videoUrl => {
+        if (Platform.OS === 'web') {
+            const clipObject = {
+                ...clipInitObject,
+                start: leftCursor,
+                end: rightCursor,
+                duration: clipDuration,
+                videoId: contentID,
+                id: Date.now().toString(),
+            }
+            sendClip(clipObject)
+        }
+        else player.current.getVideoUrl().then(videoUrl => { // in case playlistID is the contentID
             const clipObject = {
                 ...clipInitObject,
                 start: leftCursor,
@@ -72,10 +90,7 @@ export default () => {
                 videoId: getContentID(videoUrl),
                 id: Date.now().toString(),
             }
-            redux(actions.updateClips([...clips, clipObject]))
-            socket.emit('addClip', clipObject, received => {
-                if(received) console.log('server added ',clipObject)
-            })
+            sendClip(clipObject)
         })
     }
 
@@ -96,6 +111,25 @@ export default () => {
                     playbackRate={speed}
                     width={playerWidth}
                     height={playerHeight}
+                    />
+                <Controls
+                    player={player}
+                    setSpeed={handleSetSpeed}
+                    leftCursor={leftCursor}
+                    setLeftCursor={setLeftCursor}
+                    rightCursor={rightCursor}
+                    setRightCursor={setRightCursor}
+                    handleFinishClip={handleFinishClip}
+                    playing={playing}
+                    setPlaying={setPlaying}
+                    getVideoId={getContentID}
+                    boundCount={boundCount}
+                    setBoundCount={setBoundCount}
+                    screenWidth={playerWidth}
+                    leftClipped={leftClipped}
+                    setLeftClipped={setLeftClipped}
+                    rightClipped={rightClipped}
+                    setRightClipped={setRightClipped}
                     />
             </View>
         )

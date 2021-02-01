@@ -3,6 +3,7 @@ import {
     Text,
     TouchableOpacity,
     Dimensions,
+    Platform,
 } from "react-native"
 import React, {
     useState,
@@ -43,14 +44,16 @@ const LeftOrRight = (props) => {
 
     const handleLeftClip = () => {
         props.setHandlingLeft(true)
-        props.player.current.getCurrentTime().then(time => {
+        if(Platform.OS === 'web') props.setLeftCursor(props.player.current.getCurrentTime())
+        else props.player.current.getCurrentTime().then(time => {
             props.setLeftCursor(time)
         })
     }
 
     const handleRightClip = () => {
         props.setHandlingRight(true)
-        props.player.current.getCurrentTime().then(time => {
+        if(Platform.OS === 'web') props.setRightCursor(props.player.current.getCurrentTime())
+        else props.player.current.getCurrentTime().then(time => {
             props.setRightCursor(time)
         })
     }
