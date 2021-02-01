@@ -3,6 +3,7 @@ import {
     Text,
     TouchableOpacity,
     TextInput,
+    Platform,
 } from "react-native"
 import React from 'react'
 import { styles } from "../styles"
@@ -33,7 +34,16 @@ export default (props) => {
         redux(actions.selectingFromPlaylist(false))
     }
 
-    return (
+    if (Platform.OS === 'web') return (
+        <TextInput
+            style={[styles.urlText,{width:640}]}
+            onChangeText={text => handleGetPlayContent(text)}
+            value={contentID}
+            placeholder={"paste YouTube video address"}
+            placeholderTextColor={"white"}
+            />
+    )
+    else return (
         <View>
         {
             selectingFromPlaylist
@@ -45,7 +55,7 @@ export default (props) => {
                 </View>
             :   <View>
                     <TextInput
-                        style={[styles.urlText, {marginTop: 25, marginBottom:25}]}
+                        style={styles.urlText}
                         onChangeText={text => handleGetPlayContent(text)}
                         value={contentID}
                         placeholder={"paste YouTube address"}

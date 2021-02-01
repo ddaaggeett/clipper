@@ -8,12 +8,13 @@ import {
     View,
     Dimensions,
     TextInput,
+    Platform,
 } from 'react-native'
 import YoutubePlayer from "react-native-youtube-iframe"
+import ReactPlayer from 'react-player'
 import Controls from "./Controls"
 import { styles } from "../styles"
 import getContentID from '../getContentID'
-import { useFocusEffect } from '@react-navigation/native'
 import { io } from 'socket.io-client'
 import {
     storeData,
@@ -60,9 +61,6 @@ export default () => {
         }
     }, [boundCount])
 
-    const screenWidth = Dimensions.get('window').width
-    const playerHeight = screenWidth * 9 / 16
-
     const handleFinishClip = () => {
         const clipDuration = rightCursor - leftCursor
         player.current.getVideoUrl().then(videoUrl => {
@@ -85,8 +83,29 @@ export default () => {
         redux(actions.updateSpeed(newSpeed))
     }
 
-    return (
-        <View>
+    if (Platform.OS === 'web') {
+        const playerWidth = Dimensions.get('window').width/2
+        const playerHeight = playerWidth * 9 / 16
+
+        return (
+            <View>
+                <ReactPlayer
+                    url={'https://www.youtube.com/watch?v=' + contentID}
+                    ref={player}
+                    playing={playing}
+                    playbackRate={speed}
+                    width={playerWidth}
+                    height={playerHeight}
+                    />
+            </View>
+        )
+    }
+    else {
+        const screenWidth = Dimensions.get('window').width
+        const playerHeight = screenWidth * 9 / 16
+
+        return ( // iOS/android
+            <View>
             {
                 selectingFromPlaylist
                 ?   <View>
@@ -135,7 +154,7 @@ export default () => {
                             />
                     </View>
             }
-
-        </View>
-    );
+            </View>
+        )
+    }
 }

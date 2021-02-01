@@ -1,3 +1,5 @@
+import Clipper from '../components/Clipper'
+import VideoSelector from '../components/VideoSelector'
 import React, {
     useEffect,
 } from 'react'
@@ -32,6 +34,8 @@ export default () => {
     return (
         <View style={styles.container}>
             <Text style={{color:'white'}}>CLIPPER Web App</Text>
+            <VideoSelector />
+            <Clipper />
         </View>
     )
 }

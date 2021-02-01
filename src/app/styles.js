@@ -12,6 +12,8 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         color: 'white',
         padding: 10,
+        marginTop: 25,
+        marginBottom:25,
     },
     controlButton: {
         borderColor: 'white',
