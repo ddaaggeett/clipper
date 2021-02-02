@@ -15,4 +15,8 @@ module.exports = {
         comment: '',
         who: '',
     },
+    db: 'clipper',
+    tables: {
+        clips: 'clips'
+    },
 }

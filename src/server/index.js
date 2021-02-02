@@ -20,6 +20,7 @@ var {
     getPlaylist,
     getAllPlaylists,
 } = require('./youtube')
+require('./db')
 
 var serverData
 initData().then(storage => serverData = storage)

@@ -39,3 +39,5 @@ data.json
 /.pnp
 .pnp.js
 # @end @expo/next-adapter
+
+rethinkdb_data

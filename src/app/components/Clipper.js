@@ -17,10 +17,6 @@ import { styles } from "../styles"
 import getContentID from '../getContentID'
 import { io } from 'socket.io-client'
 import {
-    storeData,
-    getData,
-} from '../storage'
-import {
     serverIP,
     port,
     clipInitObject,

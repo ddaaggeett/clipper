@@ -8,10 +8,6 @@ import {
     Text,
     TouchableOpacity,
 } from 'react-native';
-import {
-    storeData,
-    getData,
-} from '../storage'
 import { styles } from "../styles"
 import { useFocusEffect } from '@react-navigation/native'
 import { io } from 'socket.io-client'
