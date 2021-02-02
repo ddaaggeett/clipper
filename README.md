@@ -1,13 +1,21 @@
 # clipper
 
-replace `node_modules/react-native-youtube-iframe` with [this](https://github.com/ddaaggeett/node_modules-react-native-youtube-iframe) until dependency has accepted pull request
-
 	npm install
 
-terminal 1
+replace `./node_modules/react-native-youtube-iframe` with [this](https://github.com/ddaaggeett/node_modules-react-native-youtube-iframe) directory until dependency has accepted pull request
+
+start database
+
+    rethinkdb
+
+start server
+
+	npm run server
+
+native
 
 	npm start
 
-terminal 2
+web
 
-	npm run server
+	npm run web
