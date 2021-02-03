@@ -2,54 +2,48 @@ var { storeData } = require('./storage')
 var r = require('rethinkdb')
 var { dbConnxConfig } = require('../../config')
 
-const addClip = (clip, serverData) => {
-
-    r.connect(dbConnxConfig).then(dbConnx => {
-        r.table('clips').insert(clip).run(dbConnx).then(result => {
-            console.log(`\naddClip result\n${JSON.stringify(result,null,4)}`)
+const addClip = (clip) => {
+    return new Promise((resolve,reject) => {
+        r.connect(dbConnxConfig).then(connection => {
+            r.table('clips').insert(clip, { returnChanges: true }).run(connection).then(result => {
+                console.log(`\naddClip result\n${JSON.stringify(result,null,4)}`)
+                resolve(result.changes[0].new_val)
+            }).error(error => {
+                console.log(`\naddClip error\n${error}`)
+            })
         }).error(error => {
-            console.log(`\naddClip error\n${error}`)
+            console.log(`\ndb connection error\n${error}`)
         })
-    }).error(error => {
-        console.log(`\ndb connection error\n${error}`)
-    })
-
-    return new Promise((resolve,reject) => {
-        var newData = {
-            ...serverData,
-            clips: [...serverData.clips, clip],
-        }
-        storeData(newData).then(() => resolve(newData))
     })
 }
 
-const editClip = (clip, serverData) => {
+const editClip = (clip) => {
     return new Promise((resolve,reject) => {
-        var newData
-        for(var x = 0; x < serverData.clips.length; x++) {
-            if(clip.id === serverData.clips[x].id) {
-                newData = {
-                    ...serverData,
-                    clips: serverData.clips.slice(0,x).concat(clip).concat(serverData.clips.slice(x+1,serverData.clips.length))
-                }
-            }
-        }
-        storeData(newData).then(() => resolve(newData))
+        r.connect(dbConnxConfig).then(connection => {
+            r.table('clips').get(clip.id).replace(clip, { returnChanges: true }).run(connection).then(result => {
+                console.log(`\neditClip result\n${JSON.stringify(result,null,4)}`)
+                resolve(result.changes[0].new_val)
+            }).error(error => {
+                console.log(`\neditClip error\n${error}`)
+            })
+        }).error(error => {
+            console.log(`\ndb connection error\n${error}`)
+        })
     })
 }
 
-const deleteClip = (clip, serverData) => {
+const deleteClip = (clip) => {
     return new Promise((resolve,reject) => {
-        var newData
-        for(var x = 0; x < serverData.clips.length; x++) {
-            if(clip.id === serverData.clips[x].id) {
-                newData = {
-                    ...serverData,
-                    clips: serverData.clips.slice(0,x).concat(serverData.clips.slice(x+1,serverData.clips.length))
-                }
-            }
-        }
-        storeData(newData).then(() => resolve(newData))
+        r.connect(dbConnxConfig).then(connection => {
+            r.table('clips').get(clip.id).delete({ returnChanges: true }).run(connection).then(result => {
+                console.log(`\ndeleteClip result\n${JSON.stringify(result,null,4)}`)
+                resolve(result.changes[0].old_val)
+            }).error(error => {
+                console.log(`\ndeleteClip error\n${error}`)
+            })
+        }).error(error => {
+            console.log(`\ndb connection error\n${error}`)
+        })
     })
 }
 

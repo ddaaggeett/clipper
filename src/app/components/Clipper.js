@@ -58,9 +58,8 @@ export default () => {
     }, [boundCount])
 
     const sendClip = (clipObject) => {
-        redux(actions.updateClips([...clips, clipObject]))
-        socket.emit('addClip', clipObject, received => {
-            if(received) console.log('server added ',clipObject)
+        socket.emit('addClip', clipObject, clipWithID => {
+            redux(actions.updateClips([...clips, clipWithID])) // TODO: if server is not connected
         })
     }
 

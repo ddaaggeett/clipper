@@ -32,18 +32,15 @@ io.on('connection', (socket) => {
             updateAppClips(newData.clips)
         })
     })
-    socket.on('addClip', (clip, confirmReceived) => {
-        confirmReceived(true)
-        addClip(clip, serverData).then(newData => serverData = newData)
+    socket.on('addClip', (clip, sendBack) => {
+        addClip(clip).then(clipWithID => sendBack(clipWithID))
         generateClip(clip)
     })
-    socket.on('editClip', (clip, confirmReceived) => {
-        confirmReceived(true)
-        editClip(clip, serverData).then(newData => serverData = newData)
+    socket.on('editClip', (clip, sendBack) => {
+        editClip(clip).then(editedClip => sendBack(editedClip))
     })
-    socket.on('deleteClip', (clip, confirmReceived) => {
-        confirmReceived(true)
-        deleteClip(clip, serverData).then(newData => serverData = newData)
+    socket.on('deleteClip', (clip, sendBack) => {
+        deleteClip(clip).then(deletedClip => sendBack(deletedClip))
     })
     socket.on('getPlaylist', (auth, returnPlaylist) => {
         getPlaylist(auth).then(playlist => {

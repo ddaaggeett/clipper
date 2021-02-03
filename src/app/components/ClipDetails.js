@@ -54,6 +54,7 @@ export default (props) => {
         const newClips = clips.slice(0,index).concat(updatedClip).concat(clips.slice(index + 1, clips.length))
         redux(updateClips(newClips))
         socket.emit('editClip', updatedClip, received => {
+            // TODO: redux update
             if(received) console.log('server edited ',updatedClip)
         })
     }
@@ -63,6 +64,7 @@ export default (props) => {
         redux(updateClips(newClips))
         saveAndExit()
         socket.emit('deleteClip', clip, received => {
+            // TODO: redux update
             if(received) console.log('server deleted ', clip)
         })
     }
