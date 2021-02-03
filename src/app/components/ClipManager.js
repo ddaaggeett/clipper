@@ -30,7 +30,6 @@ export default (props) => {
     const clips = useSelector(state => state.clips)
     const redux = useDispatch()
     const [selectedIndex, setSelectedIndex] = useState(null)
-    const [clipsDrag, setClipsDrag] = useState([])
 
     useFocusEffect( // whenever screen gets focus
         useCallback(() => { // so this suns only once per screen focus
@@ -39,13 +38,6 @@ export default (props) => {
             }
         },[])
     )
-
-    useEffect(() => {
-        setClipsDrag(clips.map((clip, index) => ({
-            ...clip,
-            key: clip.id
-        })))
-    },[clips])
 
     const handleReorderedClips = (reorderedClips) => {
         redux(updateClips(reorderedClips))
@@ -70,7 +62,7 @@ export default (props) => {
         <View style={styles.container}>
             <DraggableFlatList
                 style={styles.clipsList}
-                data={clipsDrag}
+                data={clips}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => item.key}
                 onDragEnd={({ data }) => handleReorderedClips(data)}
