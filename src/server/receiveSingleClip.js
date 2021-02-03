@@ -1,6 +1,19 @@
 var { storeData } = require('./storage')
+var r = require('rethinkdb')
+var { dbConnxConfig } = require('../../config')
 
 const addClip = (clip, serverData) => {
+
+    r.connect(dbConnxConfig).then(dbConnx => {
+        r.table('clips').insert(clip).run(dbConnx).then(result => {
+            console.log(`\naddClip result\n${JSON.stringify(result,null,4)}`)
+        }).error(error => {
+            console.log(`\naddClip error\n${error}`)
+        })
+    }).error(error => {
+        console.log(`\ndb connection error\n${error}`)
+    })
+
     return new Promise((resolve,reject) => {
         var newData = {
             ...serverData,

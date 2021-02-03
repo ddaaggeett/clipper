@@ -66,6 +66,7 @@ export default () => {
 
     const handleFinishClip = () => {
         const clipDuration = rightCursor - leftCursor
+        const timestamp = Date.now().toString()
         if (Platform.OS === 'web') {
             const clipObject = {
                 ...clipInitObject,
@@ -73,7 +74,8 @@ export default () => {
                 end: rightCursor,
                 duration: clipDuration,
                 videoId: contentID,
-                id: Date.now().toString(),
+                key: timestamp,
+                timestamp,
             }
             sendClip(clipObject)
         }
@@ -84,7 +86,8 @@ export default () => {
                 end: rightCursor,
                 duration: clipDuration,
                 videoId: getContentID(videoUrl),
-                id: Date.now().toString(),
+                key: timestamp,
+                timestamp,
             }
             sendClip(clipObject)
         })

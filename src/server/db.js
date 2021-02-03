@@ -2,12 +2,9 @@ var r = require('rethinkdb')
 var {
     db,
     tables,
+    dbConnxConfig,
 } = require('../../config')
 var dbConnx = null
-
-const dbConfiguration = {
-    db: db
-}
 
 const createTables = (tables) => {
     for(var table in tables) {
@@ -20,7 +17,7 @@ const createTables = (tables) => {
     }
 }
 
-r.connect(dbConfiguration).then(connection => {
+r.connect(dbConnxConfig).then(connection => {
     dbConnx = connection
     r.dbCreate(db).run(connection).then(result => {
         console.log(`\nDB RESULT:\n${JSON.stringify(result,null,4)}`)
@@ -33,7 +30,3 @@ r.connect(dbConfiguration).then(connection => {
 }).error(error => {
 	console.log('\nError connecting to RethinkDB!\n',error)
 })
-
-module.exports = {
-    dbConnx,
-}

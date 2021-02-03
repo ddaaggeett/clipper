@@ -9,8 +9,6 @@ module.exports = {
         end: 0,
         duration: 0,
         videoId: '',
-        id: '',
-        key: '',
         title: '',
         comment: '',
         who: '',
@@ -18,5 +16,8 @@ module.exports = {
     db: 'clipper',
     tables: {
         clips: 'clips'
+    },
+    dbConnxConfig: {
+        db: 'clipper',
     },
 }
