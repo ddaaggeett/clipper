@@ -39,6 +39,7 @@ export default () => {
     const [boundCount, setBoundCount] = useState(0)
     const [leftClipped, setLeftClipped] = useState(false)
     const [rightClipped, setRightClipped] = useState(false)
+    const [clipPreDB, setClipPreDB] = useState(null)
 
     const clips = useSelector(state => state.clips)
     const speed = useSelector(state => state.player.speed)
@@ -57,10 +58,20 @@ export default () => {
         }
     }, [boundCount])
 
-    const sendClip = (clipObject) => {
-        socket.emit('addClip', clipObject, clipWithID => {
-            redux(actions.updateClips([...clips, clipWithID])) // TODO: if server is not connected
-        })
+    useEffect(() => {
+        if(clipPreDB != null) {
+            socket.emit('addClip', clipPreDB, clipWithID => {
+                const index = clips.findIndex(clip => clip.timestamp === clipWithID.timestamp)
+                clips[index] = clipWithID
+                redux(actions.updateClips(clips))
+                setClipPreDB(null)
+            })
+        }
+    },[clips])
+
+    const saveClip = (clipObject) => {
+        setClipPreDB(clipObject)
+        redux(actions.addClip(clipObject))
     }
 
     const handleFinishClip = () => {
@@ -76,7 +87,7 @@ export default () => {
                 key: timestamp,
                 timestamp,
             }
-            sendClip(clipObject)
+            saveClip(clipObject)
         }
         else player.current.getVideoUrl().then(videoUrl => { // in case playlistID is the contentID
             const clipObject = {
@@ -88,7 +99,7 @@ export default () => {
                 key: timestamp,
                 timestamp,
             }
-            sendClip(clipObject)
+            saveClip(clipObject)
         })
     }
 

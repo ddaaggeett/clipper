@@ -62,3 +62,10 @@ export function selectingFromPlaylist(isSelecting) {
         isSelecting,
     }
 }
+
+export function addClip(clip) {
+    return {
+        type: actions.ADD_CLIP,
+        clip,
+    }
+}

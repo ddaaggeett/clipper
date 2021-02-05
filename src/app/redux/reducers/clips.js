@@ -8,6 +8,12 @@ export default function clips(state = initialState, action) {
         case actions.UPDATE_CLIPS:
             return action.clips
 
+        case actions.ADD_CLIP:
+            return [
+                ...state,
+                action.clip
+            ]
+
         default:
             return state
     }
