@@ -12,7 +12,7 @@ import {
     useSelector,
     useDispatch,
 } from 'react-redux'
-import {updateClips} from './redux/actions/actionCreators'
+import * as actions from './redux/actions/actionCreators'
 import {
     serverIP,
     port,
@@ -30,8 +30,11 @@ export default () => {
 
     useEffect(() => {
         if(loggedIn) {
-            socket.emit('allClips', clips, clipsFromServer => {
-                redux(updateClips(clipsFromServer))
+            socket.emit('allClips', clips, updatedClipsFromDB => {
+                updatedClipsFromDB.forEach(clipFromDB => {
+                    const index = clips.findIndex(clip => clip.timestamp === clipFromDB.timestamp)
+                    redux(actions.updateClip(clipFromDB, index))
+                })
             })
         }
     },[loggedIn]) // run only once on startup
