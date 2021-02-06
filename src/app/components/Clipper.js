@@ -63,10 +63,10 @@ export default () => {
             socket.emit('addClip', clipPreDB, clipWithID => {
                 const index = clips.findIndex(clip => clip.timestamp === clipWithID.timestamp)
                 redux(actions.updateClip(clipWithID, index))
-                setClipPreDB(null)
             })
         }
-    },[clipPreDB])
+        setClipPreDB(null)
+    },[clips.length]) // effect of adding a clip
 
     const saveClip = (clipObject) => {
         setClipPreDB(clipObject)

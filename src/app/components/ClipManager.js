@@ -32,7 +32,7 @@ export default (props) => {
     const [selectedIndex, setSelectedIndex] = useState(null)
 
     useFocusEffect( // whenever screen gets focus
-        useCallback(() => { // so this suns only once per screen focus
+        useCallback(() => { // runs only once per screen focus
             return () => {
                 setSelectedIndex(null) // when focus is lost
             }
@@ -41,7 +41,7 @@ export default (props) => {
 
     const handleReorderedClips = (reorderedClips) => {
         redux(updateClips(reorderedClips))
-        socket.emit('allClips', reorderedClips, clipsFromServer => {})
+        // socket.emit('allClips', reorderedClips, clipsFromServer => {})
     }
 
     const renderItem = ({ item, index, drag }) => {
