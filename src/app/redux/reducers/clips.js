@@ -14,6 +14,13 @@ export default function clips(state = initialState, action) {
                 action.clip
             ]
 
+        case actions.UPDATE_CLIP:
+            return [
+                ...state.slice(0, action.index),
+                action.clip,
+                ...state.slice(action.index + 1, state.length)
+            ]
+
         default:
             return state
     }

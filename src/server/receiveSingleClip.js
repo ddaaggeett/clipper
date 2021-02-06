@@ -1,4 +1,3 @@
-var { storeData } = require('./storage')
 var r = require('rethinkdb')
 var { dbConnxConfig } = require('../../config')
 

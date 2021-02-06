@@ -69,3 +69,11 @@ export function addClip(clip) {
         clip,
     }
 }
+
+export function updateClip(clip, index) {
+    return {
+        type: actions.UPDATE_CLIP,
+        clip,
+        index,
+    }
+}

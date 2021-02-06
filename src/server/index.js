@@ -14,7 +14,6 @@ var {
     deleteClip,
 } = require('./receiveSingleClip')
 var fs = require('fs')
-var { initData } = require('./storage')
 var generateClip = require('./generateClip')
 var {
     getPlaylist,
@@ -22,14 +21,10 @@ var {
 } = require('./youtube')
 require('./db')
 
-var serverData
-initData().then(storage => serverData = storage)
-
 io.on('connection', (socket) => {
-    socket.on('allClips', (incomingClips, updateAppClips) => {
-        handleIncomingClips(incomingClips, serverData).then(newData => {
-            serverData = newData
-            updateAppClips(newData.clips)
+    socket.on('allClips', (incomingClips, sendBack) => {
+        handleIncomingClips(incomingClips).then(clips => {
+            sendBack(clips)
         })
     })
     socket.on('addClip', (clip, sendBack) => {
