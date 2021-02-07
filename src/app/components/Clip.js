@@ -1,18 +1,7 @@
-import React, {
-    useRef,
-    useState,
-} from 'react'
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-} from 'react-native'
+import React, { useRef, useState } from 'react'
+import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { styles } from "../styles"
-import YoutubePlayer from "react-native-youtube-iframe"
-import {
-    useSelector,
-} from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export default (props) => {
 

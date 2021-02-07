@@ -3,6 +3,7 @@ import * as actions from '../actions'
 const initialState = {
     speed: 1,
     contentID: '',
+    width: 0,
 }
 
 export default function player(state = initialState, action) {
@@ -18,6 +19,12 @@ export default function player(state = initialState, action) {
             return {
                 ...state,
                 contentID: action.contentID,
+            }
+
+        case actions.SET_WEB_PANEL_WIDTH:
+            return {
+                ...state,
+                width: action.width,
             }
 
         default:

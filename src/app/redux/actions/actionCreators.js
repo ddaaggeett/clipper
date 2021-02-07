@@ -77,3 +77,17 @@ export function updateClip(clip, index) {
         index,
     }
 }
+
+export function setWebPanelWidth(width) {
+    return {
+        type: actions.SET_WEB_PANEL_WIDTH,
+        width,
+    }
+}
+
+export function setEditIndex(index) {
+    return {
+        type: actions.SET_EDIT_INDEX,
+        index,
+    }
+}

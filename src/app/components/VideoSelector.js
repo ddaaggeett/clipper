@@ -17,7 +17,7 @@ import getContentID from '../getContentID'
 
 export default (props) => {
 
-    const contentID = useSelector(state => state.player.contentID)
+    const { contentID, width } = useSelector(state => state.player)
     const playlist = useSelector(state => state.library.playlist)
     const selectingFromPlaylist = useSelector(state => state.library.selectingFromPlaylist)
     const redux = useDispatch()
@@ -36,7 +36,7 @@ export default (props) => {
 
     if (Platform.OS === 'web') return (
         <TextInput
-            style={[styles.urlText,{width:640}]}
+            style={styles.urlText}
             onChangeText={text => handleGetPlayContent(text)}
             value={contentID}
             placeholder={"paste YouTube video address"}
