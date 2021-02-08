@@ -1,27 +1,11 @@
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    Dimensions,
-    TextInput,
-    ScrollView,
-} from "react-native"
-import React, {
-    useState,
-    useRef,
-} from 'react'
+import { View, Text, TouchableOpacity, Dimensions, TextInput, ScrollView, Platform } from "react-native"
+import React, { useState, useRef } from 'react'
 import { styles } from "../styles"
 import YoutubePlayer from "react-native-youtube-iframe"
-import {
-    useSelector,
-    useDispatch,
-} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { updateClips } from '../redux/actions/actionCreators'
 import { io } from 'socket.io-client'
-import {
-    serverIP,
-    port,
-} from '../../../config'
+import { serverIP, port } from '../../../config'
 
 const socket = io('http://'+ serverIP + ':' + port)
 
@@ -51,6 +35,7 @@ export default (props) => {
     }
 
     const editClips = (updatedClip) => {
+        // TODO: duplicate function in ../web/components/ClipListItem
         const newClips = clips.slice(0,index).concat(updatedClip).concat(clips.slice(index + 1, clips.length))
         redux(updateClips(newClips))
         socket.emit('editClip', updatedClip, received => {
@@ -60,6 +45,7 @@ export default (props) => {
     }
 
     const deleteClip = () => {
+        // TODO: duplicate function in ../web/components/ClipListItem
         const newClips = clips.slice(0,index).concat(clips.slice(index + 1, clips.length))
         redux(updateClips(newClips))
         saveAndExit()
@@ -114,9 +100,11 @@ export default (props) => {
     )
 }
 
-const DeleteClip = (props) => {
+export const DeleteClip = (props) => {
 
-    const buttonWidth = Dimensions.get('window').width/2
+    var buttonWidth
+    if(Platform.OS === 'web') buttonWidth = useSelector(state => state.player.width)/2
+    else buttonWidth = Dimensions.get('window').width/2
 
     return (
         props.confirmDelete
