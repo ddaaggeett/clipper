@@ -16,7 +16,7 @@ export default function account(state = initialState, action) {
                 ...state,
                 loggedIn: true,
                 ...action.account,
-                accessExpirationTime: Date.now() + 3594000, // 1 minute less than assumed hour since expo-google-app-auth does not have expiration time
+                accessExpirationTime: action.accessExpirationTime,
             }
 
         case actions.LOGOUT:

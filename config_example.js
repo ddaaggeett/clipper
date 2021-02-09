@@ -1,4 +1,6 @@
 module.exports = {
+    webClientId: 'webClientId',
+    webClientSecret: 'webClientSecret',
     androidClientId: 'androidClientId',
     serverIP: 'ip address',
     port: 'port number',

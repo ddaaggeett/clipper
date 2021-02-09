@@ -119,6 +119,7 @@ export default () => {
                     playbackRate={speed}
                     width={playerWidth}
                     height={playerHeight}
+                    controls={true}
                     />
                 <Controls
                     player={player}

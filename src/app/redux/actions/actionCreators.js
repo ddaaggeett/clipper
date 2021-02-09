@@ -21,10 +21,11 @@ export function updateContentID(contentID) {
     }
 }
 
-export function login(account) {
+export function login(account, accessExpirationTime) {
     return {
         type: actions.LOGIN,
-        account
+        account,
+        accessExpirationTime,
     }
 }
 

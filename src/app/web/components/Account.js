@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
-import { styles } from '../styles'
-import { androidClientId } from '../../../config'
-import * as Google from 'expo-google-app-auth'
-import * as AppAuth from 'expo-app-auth'
-import * as actions from '../redux/actions/actionCreators'
+import { Text, TouchableOpacity, View, Platform } from 'react-native'
+import { styles } from '../../styles'
+import { androidClientId, webClientId, webClientSecret } from '../../../../config'
+import * as AuthSession from 'expo-auth-session'
+import * as Google from 'expo-auth-session/providers/google'
+import * as WebBrowser from 'expo-web-browser'
+import * as actions from '../../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
-import Settings from './Settings'
+
+WebBrowser.maybeCompleteAuthSession()
 
 export default (props) => {
 
@@ -31,43 +33,9 @@ export default (props) => {
         else clearInterval(refreshInterval)
     }, [loggedIn])
 
-    const accountAccessConfig = {
-        androidClientId: androidClientId,
-        // iosClientId: YOUR_CLIENT_ID_HERE,
-        scopes: [
-            'profile',
-            'email',
-            'https://www.googleapis.com/auth/youtube',
-        ],
-    }
-
-    const signInWithGoogleAsync = async () => {
-        try {
-            const result = await Google.logInAsync(accountAccessConfig)
-
-            if (result.type === 'success') {
-                return (result)
-            } else {
-                return { cancelled: true };
-            }
-        } catch (e) {
-            return { error: true };
-        }
-    }
-
-    const handleLogin = async () => {
-        const loginResult = await signInWithGoogleAsync()
-        const accessExpirationTime = Date.now() + 3594000 // 1 minute less than assumed hour since expo-google-app-auth does not have expiration time
-        redux(actions.login(loginResult, accessExpirationTime))
-    }
-
-    const handleLogout = async () => {
-        await Google.logOutAsync({accessToken, ...accountAccessConfig})
-        redux(actions.logout())
-    }
-
     const handleRefreshTokens = () => {
-        refreshAccessToken().then(data => {
+        if (Platform.OS === 'web') {}// TODO:
+        else refreshAccessToken().then(data => {
             const accessExpirationTime = Date.parse(data.accessTokenExpirationDate)
             redux(actions.setAccessToken(data.accessToken, accessExpirationTime))
         }).catch(error => console.log(error))
@@ -88,8 +56,37 @@ export default (props) => {
         })
     }
 
+    const accountAccessConfig = {
+        webClientId: webClientId,
+        clientSecret: webClientSecret,
+        // androidClientId: androidClientId,
+        // iosClientId: YOUR_CLIENT_ID_HERE,
+        scopes: [
+            'profile',
+            'email',
+            'https://www.googleapis.com/auth/youtube',
+        ],
+    }
+
+    const [request, response, promptAsyncGoogleWeb] = Google.useAuthRequest(accountAccessConfig)
+
+    const handleLogin = async () => promptAsyncGoogleWeb()
+
+    const handleLogout = async () => {
+        // TODO: AuthSession.revokeAsync()
+        redux(actions.logout())
+    }
+
+    useEffect(() => {
+        if (response?.type === 'success') {
+            const { authentication } = response;
+            const accessExpirationTime = Date.now() + 3594000
+            redux(actions.login(authentication, accessExpirationTime))
+        }
+    }, [response])
+
     return (
-        <View style={styles.container}>
+        <View>
         {
             loggedIn
             ?   <View>
@@ -100,12 +97,12 @@ export default (props) => {
                         >
                         <Text style={styles.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
-                    <Settings navigation={props.navigation} />
                 </View>
             :   <View>
                     <TouchableOpacity
                         style={styles.controlButton}
                         onPress={() => handleLogin()}
+                        disabled={!request}
                         >
                         <Text style={styles.controlButtonText}>Login with Google</Text>
                     </TouchableOpacity>
