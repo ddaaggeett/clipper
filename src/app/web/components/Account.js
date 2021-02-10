@@ -14,10 +14,7 @@ export default (props) => {
 
     const redux = useDispatch()
     const loggedIn = useSelector(state => state.account.loggedIn)
-    const user = useSelector(state => state.account.user)
-    const accessToken = useSelector(state => state.account.accessToken)
-    const accessExpirationTime = useSelector(state => state.account.accessExpirationTime)
-    const refreshToken = useSelector(state => state.account.refreshToken)
+    const { user, accessToken, refreshToken, accessExpirationTime, authentication, params } = useSelector(state => state.account)
 
     const [refreshInterval, setRefreshInterval] = useState()
 
@@ -65,12 +62,13 @@ export default (props) => {
             'profile',
             'email',
             'https://www.googleapis.com/auth/youtube',
+            // 'offline' // TODO: for refreshToken retrieval
         ],
     }
 
-    const [request, response, promptAsyncGoogleWeb] = Google.useAuthRequest(accountAccessConfig)
+    const [request, response, promptAsync] = Google.useAuthRequest(accountAccessConfig)
 
-    const handleLogin = async () => promptAsyncGoogleWeb()
+    const handleLogin = async () => promptAsync()
 
     const handleLogout = async () => {
         // TODO: AuthSession.revokeAsync()
@@ -79,9 +77,14 @@ export default (props) => {
 
     useEffect(() => {
         if (response?.type === 'success') {
-            const { authentication } = response;
-            const accessExpirationTime = Date.now() + 3594000
-            redux(actions.login(authentication, accessExpirationTime))
+            const { authentication, params } = response;
+            const accountObject = {
+                accessToken: authentication.accessToken,
+                refreshToken: authentication.refresh,
+                user: JSON.parse(window.atob(authentication.idToken.split('.')[1]))
+            }
+            const accessExpirationTime = (authentication.issuedAt + authentication.expiresIn) * 1000
+            redux(actions.login(accountObject, accessExpirationTime))
         }
     }, [response])
 
