@@ -29,15 +29,10 @@ export default () => {
     const redux = useDispatch()
 
     useEffect(() => {
-        if(loggedIn) {
-            socket.emit('allClips', clips, updatedClipsFromDB => {
-                updatedClipsFromDB.forEach(clipFromDB => {
-                    const index = clips.findIndex(clip => clip.timestamp === clipFromDB.timestamp)
-                    redux(actions.updateClip(clipFromDB, index))
-                })
-            })
-        }
-    },[loggedIn]) // run only once on startup
+        if(loggedIn) socket.emit('allClips', clips, clipsFromDB => {
+            redux(actions.updateClips(clipsFromDB))
+        })
+    },[loggedIn])
 
 
     const tabBarOptions = {

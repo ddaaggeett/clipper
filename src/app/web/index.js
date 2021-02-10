@@ -20,13 +20,10 @@ export default () => {
 
     useEffect(() => {
         redux(actions.setWebPanelWidth(Dimensions.get('window').width/2))
-        socket.emit('allClips', clips, updatedClipsFromDB => {
-            updatedClipsFromDB.forEach(clipFromDB => {
-                const index = clips.findIndex(clip => clip.timestamp === clipFromDB.timestamp)
-                redux(actions.updateClip(clipFromDB, index))
-            })
+        if(loggedIn) socket.emit('allClips', clips, clipsFromDB => {
+            redux(actions.updateClips(clipsFromDB))
         })
-    },[]) // run only once on startup
+    },[loggedIn])
 
     if(!loggedIn) return (
         <View style={styles.container}>
