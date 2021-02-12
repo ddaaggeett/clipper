@@ -1,5 +1,6 @@
 var r = require('rethinkdb')
 var { dbConnxConfig } = require('../../config')
+var editVideoFileName = require('./editVideoFileName')
 
 const addClip = (clip) => {
     return new Promise((resolve,reject) => {
@@ -20,6 +21,7 @@ const editClip = (clip) => {
     return new Promise((resolve,reject) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').get(clip.id).replace(clip, { returnChanges: true }).run(connection).then(result => {
+                if(result.changes[0].new_val.title !== result.changes[0].old_val.title) editVideoFileName(result.changes[0].new_val)
                 console.log(`\neditClip result\n${JSON.stringify(result,null,4)}`)
                 resolve(result.changes[0].new_val)
             }).error(error => {
