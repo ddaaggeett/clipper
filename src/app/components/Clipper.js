@@ -1,30 +1,13 @@
-import React, {
-    useState,
-    useRef,
-    useEffect,
-    useCallback,
-} from 'react'
-import {
-    View,
-    Dimensions,
-    TextInput,
-    Platform,
-} from 'react-native'
+import React, { useState, useRef, useEffect } from 'react'
+import { View, Dimensions, TextInput, Platform } from 'react-native'
 import YoutubePlayer from "react-native-youtube-iframe"
 import ReactPlayer from 'react-player'
 import Controls from "./Controls"
 import { styles } from "../styles"
 import getContentID from '../getContentID'
 import { io } from 'socket.io-client'
-import {
-    serverIP,
-    port,
-    clipInitObject,
-} from '../../../config'
-import {
-    useSelector,
-    useDispatch,
-} from 'react-redux'
+import { serverIP, port, clipInitObject } from '../../../config'
+import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 
 const socket = io('http://'+ serverIP + ':' + port)
@@ -42,9 +25,9 @@ export default () => {
     const [clipPreDB, setClipPreDB] = useState(null)
 
     const clips = useSelector(state => state.clips)
-    const speed = useSelector(state => state.player.speed)
-    const contentID = useSelector(state => state.player.contentID)
+    const { speed, contentID } = useSelector(state => state.player)
     const selectingFromPlaylist = useSelector(state => state.library.selectingFromPlaylist)
+    const editIndex = useSelector(state => state.manager.editIndex)
     const redux = useDispatch()
 
     useEffect(() => {
@@ -106,6 +89,27 @@ export default () => {
         redux(actions.updateSpeed(newSpeed))
     }
 
+    const getReactPlayerUrl = () => {
+        if(editIndex != null) {
+            const start = Math.floor(clips[editIndex].start)
+            const end = Math.ceil(clips[editIndex].end)
+            // return 'https://www.youtube.com/embed/'+contentID+'?start='+start+'&end=' + end
+            return 'https://www.youtube.com/v/' + contentID + '?start=' + start + '&end=' + end
+        }
+        else return 'https://www.youtube.com/watch?v=' + contentID
+    }
+
+    const getConfig = () => {
+        if (editIndex != null) {
+            return {
+                youtube: {
+                    playerVars: { end: Math.ceil(clips[editIndex].end) }
+                }
+            }
+        }
+        else return {}
+    }
+
     if (Platform.OS === 'web') {
         const playerWidth = Dimensions.get('window').width/2
         const playerHeight = playerWidth * 9 / 16
@@ -113,13 +117,14 @@ export default () => {
         return (
             <View>
                 <ReactPlayer
-                    url={'https://www.youtube.com/watch?v=' + contentID}
+                    url={getReactPlayerUrl()}
                     ref={player}
                     playing={playing}
                     playbackRate={speed}
                     width={playerWidth}
                     height={playerHeight}
                     controls={true}
+                    config={getConfig()}
                     />
                 <Controls
                     player={player}

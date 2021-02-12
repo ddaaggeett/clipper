@@ -12,6 +12,11 @@ export default (props) => {
     const redux = useDispatch()
     const clips = useSelector(state => state.clips)
 
+    const handleSelectClipItem = () => {
+        redux(actions.setEditIndex(props.index))
+        redux(actions.updateContentID(clips[props.index].videoId))
+    }
+
     if(isSelected) return (
         <div style={styles.clipItem}>
             <EditTitleWhoComment index={props.index} />
@@ -21,7 +26,7 @@ export default (props) => {
     else return (
         <div
             style={styles.clipItem}
-            onClick={() => redux(actions.setEditIndex(props.index))}
+            onClick={() => handleSelectClipItem()}
             >
             <div style={styles.clipDetail}>
                 {new Date(props.clip.duration * 1000).toISOString().substr(14, 8)}
