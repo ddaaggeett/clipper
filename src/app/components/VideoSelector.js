@@ -1,16 +1,7 @@
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    TextInput,
-    Platform,
-} from "react-native"
+import { View, Text, TouchableOpacity, TextInput, Platform } from "react-native"
 import React from 'react'
 import { styles } from "../styles"
-import {
-    useSelector,
-    useDispatch,
-} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Playlist from './Playlist'
 import * as actions from '../redux/actions/actionCreators'
 import getContentID from '../getContentID'
@@ -18,11 +9,11 @@ import getContentID from '../getContentID'
 export default (props) => {
 
     const { contentID, width } = useSelector(state => state.player)
-    const playlist = useSelector(state => state.library.playlist)
-    const selectingFromPlaylist = useSelector(state => state.library.selectingFromPlaylist)
+    const { playlist, selectingFromPlaylist } = useSelector(state => state.library)
     const redux = useDispatch()
 
     const handleGetPlayContent = (text) => {
+        redux(actions.setEditIndex(null))
         redux(actions.updateContentID(getContentID(text)))
     }
 
