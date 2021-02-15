@@ -27,7 +27,8 @@ export default () => {
     const clips = useSelector(state => state.clips)
     const { speed, contentID } = useSelector(state => state.player)
     const selectingFromPlaylist = useSelector(state => state.library.selectingFromPlaylist)
-    const editIndex = useSelector(state => state.manager.editIndex)
+    const { editIndex } = useSelector(state => state.manager)
+    const { user } = useSelector(state => state.account)
     const redux = useDispatch()
 
     useEffect(() => {
@@ -59,27 +60,26 @@ export default () => {
     const handleFinishClip = () => {
         const clipDuration = rightCursor - leftCursor
         const timestamp = Date.now().toString()
+        var clipObject = {
+            ...clipInitObject,
+            user: user.id,
+            start: leftCursor,
+            end: rightCursor,
+            duration: clipDuration,
+            key: timestamp,
+            timestamp,
+        }
         if (Platform.OS === 'web') {
-            const clipObject = {
-                ...clipInitObject,
-                start: leftCursor,
-                end: rightCursor,
-                duration: clipDuration,
+            clipObject = {
+                ...clipObject,
                 videoId: contentID,
-                key: timestamp,
-                timestamp,
             }
             saveClip(clipObject)
         }
         else player.current.getVideoUrl().then(videoUrl => { // in case playlistID is the contentID
-            const clipObject = {
-                ...clipInitObject,
-                start: leftCursor,
-                end: rightCursor,
-                duration: clipDuration,
+            clipObject = {
+                ...clipObject,
                 videoId: getContentID(videoUrl),
-                key: timestamp,
-                timestamp,
             }
             saveClip(clipObject)
         })

@@ -13,17 +13,13 @@ const socket = io('http://'+ serverIP + ':' + port)
 
 export default () => {
 
-    const loggedIn = useSelector(state => state.account.loggedIn)
-    const width = useSelector(state => state.player.width)
-    const clips = useSelector(state => state.clips)
+    const { loggedIn } = useSelector(state => state.account)
+    const { width } = useSelector(state => state.player)
     const redux = useDispatch()
 
     useEffect(() => {
         redux(actions.setWebPanelWidth(Dimensions.get('window').width/2))
-        if(loggedIn) socket.emit('allClips', clips, clipsFromDB => {
-            redux(actions.updateClips(clipsFromDB))
-        })
-    },[loggedIn])
+    },[])
 
     if(!loggedIn) return (
         <View style={styles.container}>

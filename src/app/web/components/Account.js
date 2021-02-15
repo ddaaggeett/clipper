@@ -17,6 +17,7 @@ export default (props) => {
 
     const redux = useDispatch()
     const { loggedIn, user, accessToken, refreshToken, accessExpirationTime } = useSelector(state => state.account)
+    const clips = useSelector(state => state.clips)
 
     /*
     const [refreshInterval, setRefreshInterval] = useState()
@@ -102,6 +103,12 @@ export default (props) => {
             })
         }
     }, [response])
+
+    useEffect(() => {
+        if(loggedIn) socket.emit('allClips', clips, clipsFromDB => {
+            redux(actions.updateClips(clipsFromDB)) // TODO:  only fresh objects
+        })
+    },[loggedIn])
 
     return (
         <View>
