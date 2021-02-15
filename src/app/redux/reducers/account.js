@@ -16,7 +16,6 @@ export default function account(state = initialState, action) {
                 ...state,
                 loggedIn: true,
                 ...action.account,
-                accessExpirationTime: action.accessExpirationTime,
             }
 
         case actions.LOGOUT:
@@ -29,6 +28,12 @@ export default function account(state = initialState, action) {
                 ...state,
                 accessToken: action.accessToken,
                 accessExpirationTime: action.accessExpirationTime,
+            }
+
+        case actions.UPDATE_USER:
+            return {
+                ...state,
+                user: action.user,
             }
 
         default:

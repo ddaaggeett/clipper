@@ -21,11 +21,10 @@ export function updateContentID(contentID) {
     }
 }
 
-export function login(account, accessExpirationTime) {
+export function login(account) {
     return {
         type: actions.LOGIN,
         account,
-        accessExpirationTime,
     }
 }
 
@@ -90,5 +89,12 @@ export function setEditIndex(index) {
     return {
         type: actions.SET_EDIT_INDEX,
         index,
+    }
+}
+
+export function updateUser(user) {
+    return {
+        type: actions.UPDATE_USER,
+        user,
     }
 }

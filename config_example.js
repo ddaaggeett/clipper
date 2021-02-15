@@ -4,7 +4,6 @@ module.exports = {
     androidClientId: 'androidClientId',
     serverIP: 'ip address',
     port: 'port number',
-    dataFile: '../data/data.json',
     videoDataDirectory: '../data/video_data/',
     clipInitObject: {
         start: 0,
@@ -17,7 +16,8 @@ module.exports = {
     },
     db: 'clipper',
     tables: {
-        clips: 'clips'
+        clips: 'clips',
+        users: 'users',
     },
     dbConnxConfig: {
         db: 'clipper',

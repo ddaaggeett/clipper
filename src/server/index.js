@@ -1,24 +1,13 @@
 var app = require('express')()
 var http = require('http').Server(app)
-var io = require('socket.io')(http, {
-    cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
-    }
-})
+var io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
 var { port } = require('../../config')
 var handleIncomingClips = require('./handleIncomingClips')
-var {
-    addClip,
-    editClip,
-    deleteClip,
-} = require('./receiveSingleClip')
+var { addClip, editClip, deleteClip } = require('./receiveSingleClip')
 var fs = require('fs')
 var generateClip = require('./generateClip')
-var {
-    getPlaylist,
-    getAllPlaylists,
-} = require('./youtube')
+var { getPlaylist, getAllPlaylists } = require('./youtube')
+var { userLog } = require('./user')
 require('./db')
 
 io.on('connection', (socket) => {
@@ -46,6 +35,9 @@ io.on('connection', (socket) => {
         getAllPlaylists(accessToken).then(playlists => {
             returnPlaylists(playlists)
         })
+    })
+    socket.on('userLog', (user, sendBack) => {
+        userLog(user).then(userData => sendBack(userData))
     })
 })
 

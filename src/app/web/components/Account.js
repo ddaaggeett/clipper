@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { Text, TouchableOpacity, View, Platform } from 'react-native'
 import { styles } from '../../styles'
-import { androidClientId, webClientId, webClientSecret } from '../../../../config'
+import { androidClientId, webClientId, webClientSecret, serverIP, port } from '../../../../config'
 import * as AuthSession from 'expo-auth-session'
 import * as Google from 'expo-auth-session/providers/google'
 import * as WebBrowser from 'expo-web-browser'
 import * as actions from '../../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
+import { io } from 'socket.io-client'
+
+const socket = io('http://'+ serverIP + ':' + port)
 
 WebBrowser.maybeCompleteAuthSession()
 
 export default (props) => {
 
     const redux = useDispatch()
-    const loggedIn = useSelector(state => state.account.loggedIn)
-    const { user, accessToken, refreshToken, accessExpirationTime, authentication, params } = useSelector(state => state.account)
+    const { loggedIn, user, accessToken, refreshToken, accessExpirationTime } = useSelector(state => state.account)
 
+    /*
     const [refreshInterval, setRefreshInterval] = useState()
 
     useEffect(() => {
@@ -52,6 +55,7 @@ export default (props) => {
             })
         })
     }
+    */
 
     const accountAccessConfig = {
         webClientId: webClientId,
@@ -77,14 +81,25 @@ export default (props) => {
 
     useEffect(() => {
         if (response?.type === 'success') {
-            const { authentication, params } = response;
-            const accountObject = {
-                accessToken: authentication.accessToken,
-                refreshToken: authentication.refresh,
-                user: JSON.parse(window.atob(authentication.idToken.split('.')[1]))
-            }
+            const { authentication } = response
             const accessExpirationTime = (authentication.issuedAt + authentication.expiresIn) * 1000
-            redux(actions.login(accountObject, accessExpirationTime))
+            const userFromGoogle = JSON.parse(window.atob(authentication.idToken.split('.')[1]))
+            const user = {
+                id: userFromGoogle.email,
+                email: userFromGoogle.email,
+                name: userFromGoogle.name,
+                picture: userFromGoogle.picture,
+            }
+            const account = {
+                accessToken: authentication.accessToken,
+                refreshToken: authentication.refreshToken, // TODO: undefined -> scope: offline_access
+                accessExpirationTime,
+                user,
+            }
+            redux(actions.login(account))
+            socket.emit('userLog', user, userData => {
+                redux(actions.updateUser(userData))
+            })
         }
     }, [response])
 

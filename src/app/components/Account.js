@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { styles } from '../styles'
-import { androidClientId } from '../../../config'
+import { androidClientId, serverIP, port } from '../../../config'
 import * as Google from 'expo-google-app-auth'
 import * as AppAuth from 'expo-app-auth'
 import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import Settings from './Settings'
+import { io } from 'socket.io-client'
+
+const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
     const redux = useDispatch()
-    const loggedIn = useSelector(state => state.account.loggedIn)
-    const user = useSelector(state => state.account.user)
-    const accessToken = useSelector(state => state.account.accessToken)
-    const accessExpirationTime = useSelector(state => state.account.accessExpirationTime)
-    const refreshToken = useSelector(state => state.account.refreshToken)
+    const { loggedIn, user, accessToken, refreshToken, accessExpirationTime } = useSelector(state => state.account)
 
     const [refreshInterval, setRefreshInterval] = useState()
 
@@ -57,8 +56,23 @@ export default (props) => {
 
     const handleLogin = async () => {
         const loginResult = await signInWithGoogleAsync()
-        const accessExpirationTime = Date.now() + 3594000 // 1 minute less than assumed hour since expo-google-app-auth does not have expiration time
-        redux(actions.login(loginResult, accessExpirationTime))
+        const accessExpirationTime = Date.now() + 3600000 // assumed hour
+        const user = {
+            id: loginResult.user.email,
+            email: loginResult.user.email,
+            name: loginResult.name,
+            picture: loginResult.user.photoUrl,
+        }
+        const account = {
+            accessToken: loginResult.accessToken,
+            refreshToken: loginResult.refreshToken,
+            accessExpirationTime,
+            user,
+        }
+        redux(actions.login(account))
+        socket.emit('userLog', user, userData => {
+            redux(actions.updateUser(userData))
+        })
     }
 
     const handleLogout = async () => {

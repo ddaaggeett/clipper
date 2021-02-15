@@ -11,6 +11,7 @@ const ADD_CLIP = 'ADD_CLIP'
 const UPDATE_CLIP = 'UPDATE_CLIP'
 const SET_WEB_PANEL_WIDTH = 'SET_WEB_PANEL_WIDTH'
 const SET_EDIT_INDEX = 'SET_EDIT_INDEX'
+const UPDATE_USER = 'UPDATE_USER'
 
 module.exports = {
     UPDATE_CLIPS,
@@ -26,4 +27,5 @@ module.exports = {
     UPDATE_CLIP,
     SET_WEB_PANEL_WIDTH,
     SET_EDIT_INDEX,
+    UPDATE_USER,
 }
