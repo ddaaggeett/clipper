@@ -11,8 +11,9 @@ const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
+    const { editIndex } = useSelector(state => state.manager)
     const clips = useSelector(state => state.clips)
-    const clip = clips[props.index]
+    const clip = clips[editIndex]
     const [comment, setComment] = useState(clip.comment)
     const [title, setTitle] = useState(clip.title)
     const [who, setWho] = useState(clip.who)
@@ -23,7 +24,7 @@ export default (props) => {
     const handleChangeComment = (event) => setComment(event.target.value)
 
     const editClips = (updatedClip) => {
-        const newClips = clips.slice(0,props.index).concat(updatedClip).concat(clips.slice(props.index + 1, clips.length))
+        const newClips = clips.slice(0, editIndex).concat(updatedClip).concat(clips.slice(editIndex + 1, clips.length))
         redux(actions.updateClips(newClips))
         redux(actions.setEditIndex(null))
         socket.emit('editClip', updatedClip, received => {

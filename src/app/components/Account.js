@@ -64,7 +64,7 @@ export default (props) => {
         const user = {
             id: loginResult.user.email,
             email: loginResult.user.email,
-            name: loginResult.name,
+            name: loginResult.user.name,
             picture: loginResult.user.photoUrl,
         }
         const account = {

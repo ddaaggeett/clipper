@@ -1,16 +1,18 @@
 import React, { useRef, useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { styles } from "../styles"
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import * as actions from '../redux/actions/actionCreators'
 
 export default (props) => {
+
+    const redux = useDispatch()
 
     const durationTimeFormat = new Date(props.clip.duration * 1000).toISOString().substr(14, 8)
 
     const selectClip = () => {
-        props.navigation.navigate('ClipDetails', {
-            index: props.index,
-        })
+        redux(actions.setEditIndex(props.index))
+        props.navigation.navigate('ClipDetails')
     }
 
     return (

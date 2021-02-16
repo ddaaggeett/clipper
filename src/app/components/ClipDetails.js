@@ -1,11 +1,11 @@
-import { View, Text, TouchableOpacity, Dimensions, TextInput, ScrollView, Platform } from "react-native"
+import { View, Text, TouchableOpacity, Dimensions, ScrollView } from "react-native"
 import EditTitleWhoComment from './EditTitleWhoComment'
 import DeleteClip from './DeleteClip'
 import React, { useState, useRef } from 'react'
 import { styles } from "../styles"
 import YoutubePlayer from "react-native-youtube-iframe"
 import { useSelector, useDispatch } from 'react-redux'
-import { updateClips } from '../redux/actions/actionCreators'
+import * as actions from '../redux/actions/actionCreators'
 import { io } from 'socket.io-client'
 import { serverIP, port } from '../../../config'
 
@@ -13,9 +13,9 @@ const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
-    const index = props.route.params.index
+    const { editIndex } = useSelector(state => state.manager)
     const clips = useSelector(state => state.clips)
-    const clip = clips[index]
+    const clip = clips[editIndex]
     const redux = useDispatch()
 
     const saveAndExit = () => {
@@ -30,11 +30,10 @@ export default (props) => {
             <ClipPlayer
                 clip={clip}
                 />
-            <EditTitleWhoComment index={index} />
+            <EditTitleWhoComment />
             <Text style={{color:'white'}}>{JSON.stringify(clip, null, 4)}</Text>
             <DeleteClip
                 saveAndExit={saveAndExit}
-                index={index}
                 />
         </ScrollView>
     )
