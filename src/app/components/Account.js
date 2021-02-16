@@ -15,11 +15,15 @@ export default (props) => {
 
     const redux = useDispatch()
     const { loggedIn, user, accessToken, refreshToken, accessExpirationTime } = useSelector(state => state.account)
+    const clips = useSelector(state => state.clips)
 
     const [refreshInterval, setRefreshInterval] = useState()
 
     useEffect(() => {
         if(loggedIn) {
+            socket.emit('allClips', clips, clipsFromDB => {
+                redux(actions.updateClips(clipsFromDB))
+            })
             const intervalTime = 1000
             setRefreshInterval(setInterval(() => {
                 if ((accessExpirationTime - Date.now()) < intervalTime) {

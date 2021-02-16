@@ -1,22 +1,13 @@
-import React, {
-    useState,
-    useEffect,
-} from 'react'
+import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import AccountScreen from './screens/AccountScreen'
 import ClipManagerScreen from './screens/ClipManagerScreen'
 import ClipperScreen from './screens/ClipperScreen'
 import { styles } from './styles'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import {
-    useSelector,
-    useDispatch,
-} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import * as actions from './redux/actions/actionCreators'
-import {
-    serverIP,
-    port,
-} from '../../config'
+import { serverIP, port } from '../../config'
 import { io } from 'socket.io-client'
 const socket = io('http://'+ serverIP + ':' + port)
 
@@ -24,16 +15,8 @@ const Tab = createBottomTabNavigator()
 
 export default () => {
 
-    const loggedIn = useSelector(state => state.account.loggedIn)
-    const clips = useSelector(state => state.clips)
+    const { loggedIn } = useSelector(state => state.account)
     const redux = useDispatch()
-
-    useEffect(() => {
-        if(loggedIn) socket.emit('allClips', clips, clipsFromDB => {
-            redux(actions.updateClips(clipsFromDB))
-        })
-    },[loggedIn])
-
 
     const tabBarOptions = {
         activeBackgroundColor: '#222',
