@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, TouchableOpacity, TextInput, Platform } from 'react-native'
 import { styles } from '../styles'
 import { styles as webStyles } from '../web/styles'
@@ -13,24 +13,35 @@ export default (props) => {
 
     const { editIndex } = useSelector(state => state.manager)
     const clips = useSelector(state => state.clips)
-    const clip = clips[editIndex]
-    const [comment, setComment] = useState(clip.comment)
-    const [title, setTitle] = useState(clip.title)
-    const [who, setWho] = useState(clip.who)
+    const [comment, setComment] = useState()
+    const [title, setTitle] = useState()
+    const [who, setWho] = useState()
     const redux = useDispatch()
 
     const handleChangeTitle = (event) => setTitle(event.target.value)
     const handleChangeWho = (event) => setWho(event.target.value)
     const handleChangeComment = (event) => setComment(event.target.value)
 
+    useEffect(() => {
+        if(editIndex != null) {
+            setComment(clips[editIndex].comment)
+            setTitle(clips[editIndex].title)
+            setWho(clips[editIndex].who)
+        }
+    }, [editIndex])
+
+    useEffect(() => {
+        return () => redux(actions.setEditIndex(null))
+    }, [])
+
     const editClips = (updatedClip) => {
-        redux(actions.setEditIndex(null))
+        if(Platform.OS === 'web') redux(actions.setEditIndex(null))
         socket.emit('editClip', updatedClip)
     }
 
     const handleEditClip = () => {
         const editedClip = {
-            ...clip,
+            ...clips[editIndex],
             comment: comment,
             title: title,
             who: who,

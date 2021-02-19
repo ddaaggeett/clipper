@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Dimensions, ScrollView } from "react-native"
 import EditTitleWhoComment from './EditTitleWhoComment'
 import DeleteClip from './DeleteClip'
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { styles } from "../styles"
 import YoutubePlayer from "react-native-youtube-iframe"
 import { useSelector, useDispatch } from 'react-redux'
@@ -17,6 +17,10 @@ export default (props) => {
     const clips = useSelector(state => state.clips)
     const clip = clips[editIndex]
     const redux = useDispatch()
+
+    useEffect(() => {
+        return () => redux(actions.setEditIndex(null))
+    }, [])
 
     const saveAndExit = () => {
         props.navigation.goBack()
@@ -47,7 +51,7 @@ const ClipPlayer = (props) => {
     const screenWidth = Dimensions.get('window').width
     const playerHeight = screenWidth * 9 / 16
 
-    return (
+    if (props.clip != undefined) return (
         <YoutubePlayer
             ref={player}
             play={playing}
@@ -62,4 +66,5 @@ const ClipPlayer = (props) => {
             }}
             />
     )
+    else return null
 }
