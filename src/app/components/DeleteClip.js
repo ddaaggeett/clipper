@@ -21,9 +21,7 @@ export default (props) => {
         redux(actions.updateClips(newClips))
         redux(actions.setEditIndex(null))
         if(Platform.OS !== 'web') props.saveAndExit()
-        socket.emit('deleteClip', clip, received => {
-            if(received) console.log('server deleted ', clip)
-        })
+        socket.emit('deleteClip', clip)
     }
 
     var buttonWidth

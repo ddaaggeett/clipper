@@ -13,7 +13,6 @@ export default (props) => {
     const redux = useDispatch()
 
     const renderClipItems = clips.map(clip => {
-        const index = clips.findIndex(item => item.timestamp === clip.timestamp)
         return (
             <ClipListItem
                 key={clip.timestamp}

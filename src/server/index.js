@@ -16,15 +16,15 @@ io.on('connection', (socket) => {
             sendBack(clips)
         })
     })
-    socket.on('addClip', (clip, sendBack) => {
-        addClip(clip).then(clipWithID => sendBack(clipWithID))
+    socket.on('addClip', clip => {
+        addClip(clip).then(clipWithID => io.emit('updateClip',clipWithID))
         generateClip(clip)
     })
-    socket.on('editClip', (clip, sendBack) => {
-        editClip(clip).then(editedClip => sendBack(editedClip))
+    socket.on('editClip', clip => {
+        editClip(clip).then(editedClip => io.emit('updateClip',editedClip))
     })
-    socket.on('deleteClip', (clip, sendBack) => {
-        deleteClip(clip).then(deletedClip => sendBack(deletedClip))
+    socket.on('deleteClip', clip => {
+        deleteClip(clip).then(deletedClip => io.emit('deleteClip',deletedClip))
     })
     socket.on('getPlaylist', (auth, returnPlaylist) => {
         getPlaylist(auth).then(playlist => {

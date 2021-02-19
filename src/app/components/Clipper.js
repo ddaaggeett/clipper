@@ -42,19 +42,8 @@ export default () => {
         }
     }, [boundCount])
 
-    useEffect(() => {
-        if(clipPreDB != null) {
-            socket.emit('addClip', clipPreDB, clipWithID => {
-                const index = clips.findIndex(clip => clip.timestamp === clipWithID.timestamp)
-                redux(actions.updateClip(clipWithID, index))
-            })
-        }
-        setClipPreDB(null)
-    },[clips.length]) // effect of adding a clip
-
     const saveClip = (clipObject) => {
-        setClipPreDB(clipObject)
-        redux(actions.addClip(clipObject))
+        socket.emit('addClip', clipObject)
     }
 
     const handleFinishClip = () => {

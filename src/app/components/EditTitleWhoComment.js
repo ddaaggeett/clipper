@@ -24,12 +24,8 @@ export default (props) => {
     const handleChangeComment = (event) => setComment(event.target.value)
 
     const editClips = (updatedClip) => {
-        const newClips = clips.slice(0, editIndex).concat(updatedClip).concat(clips.slice(editIndex + 1, clips.length))
-        redux(actions.updateClips(newClips))
         redux(actions.setEditIndex(null))
-        socket.emit('editClip', updatedClip, received => {
-            if(received) console.log('server edited ',updatedClip)
-        })
+        socket.emit('editClip', updatedClip)
     }
 
     const handleEditClip = () => {

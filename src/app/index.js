@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as actions from './redux/actions/actionCreators'
 import { serverIP, port } from '../../config'
 import { io } from 'socket.io-client'
+import dataSocket from './dataSocket'
 const socket = io('http://'+ serverIP + ':' + port)
 
 const Tab = createBottomTabNavigator()
@@ -17,6 +18,35 @@ export default () => {
 
     const { loggedIn } = useSelector(state => state.account)
     const redux = useDispatch()
+
+    const clips = useSelector(state => state.clips)
+    const [dataSocketPromise, setDataSocketPromise] = useState(dataSocket())
+
+    useEffect(() => {
+
+        dataSocketPromise.then(data => {
+
+            var index
+
+            switch(data.type) {
+                case 'updateClip':
+                    index = clips.findIndex(item => item.timestamp === data.clip.timestamp)
+                    if ( index == -1 ) redux(actions.addClip(data.clip))
+                    else redux(actions.updateClip(data.clip, index))
+                    break
+
+                case 'deleteClip':
+                    index = clips.findIndex(item => item.timestamp === data.clip.timestamp)
+                    if (index != -1) {
+                        const newClips = clips.slice(0, index).concat(clips.slice(index + 1, clips.length))
+                        redux(actions.updateClips(newClips))
+                    }
+                    break
+
+            }
+            setDataSocketPromise(dataSocket())
+        })
+    }, [dataSocketPromise])
 
     const tabBarOptions = {
         activeBackgroundColor: '#222',
