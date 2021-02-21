@@ -7,7 +7,7 @@ var { addClip, editClip, deleteClip } = require('./receiveSingleClip')
 var fs = require('fs')
 var generateClip = require('./generateClip')
 var { getPlaylist, getAllPlaylists } = require('./youtube')
-var { userLog } = require('./user')
+var { userLog, getUserClips } = require('./user')
 require('./db')
 
 io.on('connection', (socket) => {
@@ -38,6 +38,9 @@ io.on('connection', (socket) => {
     })
     socket.on('userLog', (user, sendBack) => {
         userLog(user).then(userData => sendBack(userData))
+    })
+    socket.on('getUserClips', (user_id, sendBack) => {
+        getUserClips(user_id).then(userClips => sendBack(userClips))
     })
 })
 

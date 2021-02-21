@@ -21,9 +21,6 @@ export default (props) => {
 
     useEffect(() => {
         if(loggedIn) {
-            socket.emit('allClips', clips, clipsFromDB => {
-                redux(actions.updateClips(clipsFromDB))
-            })
             const intervalTime = 1000
             setRefreshInterval(setInterval(() => {
                 if ((accessExpirationTime - Date.now()) < intervalTime) {
@@ -76,6 +73,9 @@ export default (props) => {
         redux(actions.login(account))
         socket.emit('userLog', user, userData => {
             redux(actions.updateUser(userData))
+        })
+        socket.emit('getUserClips', user.id, userClips => {
+            redux(actions.updateClips(userClips))
         })
     }
 

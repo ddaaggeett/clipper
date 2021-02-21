@@ -101,14 +101,11 @@ export default (props) => {
             socket.emit('userLog', user, userData => {
                 redux(actions.updateUser(userData))
             })
+            socket.emit('getUserClips', user.id, userClips => {
+                redux(actions.updateClips(userClips))
+            })
         }
     }, [response])
-
-    useEffect(() => {
-        if(loggedIn) socket.emit('allClips', clips, clipsFromDB => {
-            redux(actions.updateClips(clipsFromDB)) // TODO:  only fresh objects
-        })
-    },[loggedIn])
 
     return (
         <View>
