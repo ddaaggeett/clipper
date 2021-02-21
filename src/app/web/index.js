@@ -14,7 +14,7 @@ const socket = io('http://'+ serverIP + ':' + port)
 
 export default () => {
 
-    const { loggedIn } = useSelector(state => state.account)
+    const { loggedIn, user } = useSelector(state => state.account)
     const { width } = useSelector(state => state.player)
     const redux = useDispatch()
     const clips = useSelector(state => state.clips)
@@ -48,6 +48,9 @@ export default () => {
 
     useEffect(() => {
         redux(actions.setWebPanelWidth(Dimensions.get('window').width/2))
+        socket.emit('getUserClips', user.id, userClips => {
+            redux(actions.updateClips(userClips))
+        })
     },[])
 
     if(!loggedIn) return (

@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator()
 
 export default () => {
 
-    const { loggedIn } = useSelector(state => state.account)
+    const { loggedIn, user } = useSelector(state => state.account)
     const redux = useDispatch()
 
     const clips = useSelector(state => state.clips)
@@ -47,6 +47,12 @@ export default () => {
             setDataSocketPromise(dataSocket())
         })
     }, [dataSocketPromise])
+
+    useEffect(() => {
+        socket.emit('getUserClips', user.id, userClips => {
+            redux(actions.updateClips(userClips))
+        })
+    }, [])
 
     const tabBarOptions = {
         activeBackgroundColor: '#222',
