@@ -23,11 +23,9 @@ export default () => {
     const [dataSocketPromise, setDataSocketPromise] = useState(dataSocket())
 
     useEffect(() => {
-
+        // TODO: custom hook because this is duplicate effect. see ./web/index.js
         dataSocketPromise.then(data => {
-
             var index
-
             switch(data.type) {
                 case 'updateClip':
                     index = clips.findIndex(item => item.timestamp === data.clip.timestamp)
