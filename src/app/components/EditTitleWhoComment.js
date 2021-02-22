@@ -34,6 +34,18 @@ export default (props) => {
         return () => redux(actions.setEditIndex(null))
     }, [])
 
+    const controlEnterPress = (event) => {
+        if (event.ctrlKey && event.keyCode == 13) handleEditClip()
+    }
+
+    useEffect(() => {
+        if (Platform.OS === 'web') window.addEventListener('keydown', controlEnterPress)
+
+        return () => {
+            if (Platform.OS === 'web') window.removeEventListener('keydown', controlEnterPress)
+        }
+    }, [controlEnterPress])
+
     const editClips = (updatedClip) => {
         if(Platform.OS === 'web') redux(actions.setEditIndex(null))
         socket.emit('editClip', updatedClip)
@@ -62,6 +74,7 @@ export default (props) => {
                 placeholder={'TITLE'}
                 value={title}
                 onChange={handleChangeTitle}
+                autoFocus={true}
                 />
             <textarea
                 style={webStyles.clipDetail}

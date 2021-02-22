@@ -7,7 +7,8 @@ const addClip = (clip) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').insert(clip, { returnChanges: true }).run(connection).then(result => {
                 console.log(`\naddClip result\n${JSON.stringify(result,null,4)}`)
-                resolve(result.changes[0].new_val)
+                const newClip = result.changes[0].new_val
+                resolve(newClip)
             }).error(error => {
                 console.log(`\naddClip error\n${error}`)
             })
@@ -38,7 +39,8 @@ const deleteClip = (clip) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').get(clip.id).delete({ returnChanges: true }).run(connection).then(result => {
                 console.log(`\ndeleteClip result\n${JSON.stringify(result,null,4)}`)
-                resolve(result.changes[0].old_val)
+                const deletedClip = result.changes[0].old_val
+                resolve(deletedClip)
             }).error(error => {
                 console.log(`\ndeleteClip error\n${error}`)
             })
