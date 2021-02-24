@@ -98,3 +98,10 @@ export function updateUser(user) {
         user,
     }
 }
+
+export function setVideoProgress(progress) {
+    return {
+        type: actions.SET_VIDEO_PROGRESS,
+        progress,
+    }
+}

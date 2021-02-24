@@ -25,7 +25,7 @@ export default () => {
     const [clipPreDB, setClipPreDB] = useState(null)
 
     const clips = useSelector(state => state.clips)
-    const { speed, contentID } = useSelector(state => state.player)
+    const { speed, contentID, videoProgress } = useSelector(state => state.player)
     const selectingFromPlaylist = useSelector(state => state.library.selectingFromPlaylist)
     const { editIndex } = useSelector(state => state.manager)
     const { user } = useSelector(state => state.account)
@@ -99,6 +99,18 @@ export default () => {
         else return {}
     }
 
+    const handleVideoProgress = (progress) => {
+        if (editIndex == null) redux(actions.setVideoProgress(progress.playedSeconds))
+    }
+
+    useEffect(() => {
+        if (editIndex == null && videoProgress > 0) {
+            setTimeout(() => { // TODO: don't do a timeout
+                player.current.seekTo(videoProgress)
+            }, 500)
+        }
+    }, [editIndex])
+
     if (Platform.OS === 'web') {
         const playerWidth = Dimensions.get('window').width/2
         const playerHeight = playerWidth * 9 / 16
@@ -114,6 +126,7 @@ export default () => {
                     height={playerHeight}
                     controls={true}
                     config={getConfig()}
+                    onProgress={handleVideoProgress}
                     />
                 <Controls
                     player={player}
