@@ -100,13 +100,15 @@ export default () => {
     }
 
     const handleVideoProgress = (progress) => {
-        if (editIndex == null) redux(actions.setVideoProgress(progress.playedSeconds))
+        if (editIndex == null) setVideoProgressLocal(progress.playedSeconds)
     }
 
+    const [videoProgressLocal, setVideoProgressLocal] = useState(videoProgress)
+
     useEffect(() => {
-        if (editIndex == null && videoProgress > 0) {
+        if (editIndex == null && videoProgressLocal > 0) {
             setTimeout(() => { // TODO: don't do a timeout
-                player.current.seekTo(videoProgress)
+                player.current.seekTo(videoProgressLocal)
             }, 500)
         }
     }, [editIndex])
@@ -127,6 +129,7 @@ export default () => {
                     controls={true}
                     config={getConfig()}
                     onProgress={handleVideoProgress}
+                    onPause={() => redux(actions.setVideoProgress(videoProgressLocal))}
                     />
                 <Controls
                     player={player}
