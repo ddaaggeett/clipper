@@ -17,7 +17,7 @@ export default () => {
     const { loggedIn, user } = useSelector(state => state.account)
     const { width } = useSelector(state => state.player)
     const redux = useDispatch()
-    const clips = useSelector(state => state.clips)
+    const { clips } = useSelector(state => state.clips)
     const [dataSocketPromise, setDataSocketPromise] = useState(dataSocket())
 
     useEffect(() => {

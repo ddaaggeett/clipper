@@ -15,7 +15,7 @@ export default (props) => {
 
     const redux = useDispatch()
     const { loggedIn, user, accessToken, refreshToken, accessExpirationTime } = useSelector(state => state.account)
-    const clips = useSelector(state => state.clips)
+    const { clips } = useSelector(state => state.clips)
 
     const [refreshInterval, setRefreshInterval] = useState()
 

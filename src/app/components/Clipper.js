@@ -24,7 +24,7 @@ export default () => {
     const [rightClipped, setRightClipped] = useState(false)
     const [clipPreDB, setClipPreDB] = useState(null)
 
-    const clips = useSelector(state => state.clips)
+    const { clips } = useSelector(state => state.clips)
     const { speed, contentID, videoProgress } = useSelector(state => state.player)
     const selectingFromPlaylist = useSelector(state => state.library.selectingFromPlaylist)
     const { editIndex } = useSelector(state => state.manager)

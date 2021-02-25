@@ -14,7 +14,7 @@ const socket = io('http://'+ serverIP + ':' + port)
 export default (props) => {
 
     const { editIndex } = useSelector(state => state.manager)
-    const clips = useSelector(state => state.clips)
+    const { clips } = useSelector(state => state.clips)
     const clip = clips[editIndex]
     const redux = useDispatch()
 

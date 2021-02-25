@@ -10,7 +10,7 @@ export default (props) => {
     const { editIndex } = useSelector(state => state.manager)
     const isSelected = props.index == editIndex
     const redux = useDispatch()
-    const clips = useSelector(state => state.clips)
+    const { clips } = useSelector(state => state.clips)
 
     const handleSelectClipItem = () => {
         redux(actions.setEditIndex(props.index))
