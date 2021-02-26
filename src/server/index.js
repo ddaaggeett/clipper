@@ -23,8 +23,11 @@ io.on('connection', (socket) => {
             socket.broadcast.emit('updateClip',editedClip)
         })
     })
-    socket.on('deleteClip', clip => {
-        deleteClip(clip).then(deletedClip => socket.broadcast.emit('deleteClip',deletedClip))
+    socket.on('deleteClip', (clip, returnToSender) => {
+        deleteClip(clip).then(deletedClip => {
+            returnToSender(deletedClip)
+            socket.broadcast.emit('deleteClip',deletedClip)
+        })
     })
     socket.on('getPlaylist', (auth, returnPlaylist) => {
         getPlaylist(auth).then(playlist => {

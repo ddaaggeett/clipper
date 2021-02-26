@@ -17,12 +17,12 @@ export default (props) => {
     const redux = useDispatch()
 
     const deleteClip = () => {
-        const newClips = clips.slice(0, editIndex).concat(clips.slice(editIndex + 1, clips.length))
-        redux(actions.updateClips(newClips))
         redux(actions.setEditIndex(null))
         if(Platform.OS !== 'web') props.saveAndExit()
-        redux(actions.updatePendingClip({ ...clip, deleted: true }))
-        socket.emit('deleteClip', clip)
+        redux(actions.pendingDeleteClip({ ...clip, deleted: true }))
+        socket.emit('deleteClip', clip, returnedClip => {
+            redux(actions.fulfillPendingClip(returnedClip))
+        })
     }
 
     var buttonWidth

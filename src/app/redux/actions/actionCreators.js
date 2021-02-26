@@ -124,3 +124,17 @@ export function fulfillPendingClip(clip) {
         clip
     }
 }
+
+export function pendingDeleteClip(clip) {
+    return {
+        type: actions.PENDING_DELETE_CLIP,
+        clip
+    }
+}
+
+export function deleteClip(clip) {
+    return {
+        type: actions.DELETE_CLIP,
+        clip
+    }
+}

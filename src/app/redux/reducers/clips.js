@@ -98,6 +98,47 @@ export default function clips(state = initialState, action) {
                 ],
             }
 
+        case actions.PENDING_DELETE_CLIP:
+
+            clipsIndex = state.clips.findIndex(item => item.timestamp === action.clip.timestamp)
+            pendingIndex = state.pending.findIndex(item => item.timestamp === action.clip.timestamp)
+
+            if (pendingIndex == -1) return {
+                ...state,
+                clips: [
+                    ...state.clips.slice(0, clipsIndex),
+                    ...state.clips.slice(clipsIndex + 1, state.clips.length),
+                ],
+                pending: [
+                    ...state.pending,
+                    action.clip,
+                ],
+            }
+            else return {
+                ...state,
+                clips: [
+                    ...state.clips.slice(0, clipsIndex),
+                    ...state.clips.slice(clipsIndex + 1, state.clips.length),
+                ],
+                pending: [
+                    ...state.pending.slice(0, pendingIndex),
+                    action.clip,
+                    ...state.pending.slice(pendingIndex + 1, state.pending.length)
+                ],
+            }
+
+        case actions.DELETE_CLIP:
+
+            clipsIndex = state.clips.findIndex(item => item.timestamp === action.clip.timestamp)
+
+            return {
+                ...state,
+                clips: [
+                    ...state.clips.slice(0, clipsIndex),
+                    ...state.clips.slice(clipsIndex + 1, state.clips.length),
+                ],
+            }
+
         case actions.CLEAR_PENDING:
             return {
                 ...state,

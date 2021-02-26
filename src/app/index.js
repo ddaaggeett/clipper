@@ -32,11 +32,7 @@ export default () => {
                     break
 
                 case 'deleteClip':
-                    index = clips.findIndex(item => item.timestamp === data.clip.timestamp)
-                    if (index != -1) {
-                        const newClips = clips.slice(0, index).concat(clips.slice(index + 1, clips.length))
-                        redux(actions.updateClips(newClips))
-                    }
+                    redux(actions.deleteClip(data.clip))
                     break
 
             }
