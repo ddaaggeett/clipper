@@ -63,18 +63,10 @@ export function selectingFromPlaylist(isSelecting) {
     }
 }
 
-export function addClip(clip) {
-    return {
-        type: actions.ADD_CLIP,
-        clip,
-    }
-}
-
-export function updateClip(clip, index) {
+export function updateClip(clip) {
     return {
         type: actions.UPDATE_CLIP,
         clip,
-        index,
     }
 }
 
@@ -103,5 +95,32 @@ export function setVideoProgress(progress) {
     return {
         type: actions.SET_VIDEO_PROGRESS,
         progress,
+    }
+}
+
+export function addPendingClip(clip) {
+    return {
+        type: actions.ADD_PENDING_CLIP,
+        clip,
+    }
+}
+
+export function updatePendingClip(clip) {
+    return {
+        type: actions.UPDATE_PENDING_CLIP,
+        clip,
+    }
+}
+
+export function clearPending() {
+    return {
+        type: actions.CLEAR_PENDING
+    }
+}
+
+export function fulfillPendingClip(clip) {
+    return {
+        type: actions.FULFILL_PENDING_CLIP,
+        clip
     }
 }

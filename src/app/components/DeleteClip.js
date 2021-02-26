@@ -21,6 +21,7 @@ export default (props) => {
         redux(actions.updateClips(newClips))
         redux(actions.setEditIndex(null))
         if(Platform.OS !== 'web') props.saveAndExit()
+        redux(actions.updatePendingClip({ ...clip, deleted: true }))
         socket.emit('deleteClip', clip)
     }
 

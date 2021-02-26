@@ -5,7 +5,7 @@ var editVideoFileName = require('./editVideoFileName')
 const addClip = (clip) => {
     return new Promise((resolve,reject) => {
         r.connect(dbConnxConfig).then(connection => {
-            r.table('clips').insert(clip, { returnChanges: true }).run(connection).then(result => {
+            r.table('clips').insert(clip, { returnChanges: true, conflict: 'update' }).run(connection).then(result => {
                 console.log(`\naddClip result\n${JSON.stringify(result,null,4)}`)
                 const newClip = result.changes[0].new_val
                 resolve(newClip)
@@ -18,13 +18,14 @@ const addClip = (clip) => {
     })
 }
 
-const editClip = (clip) => {
+const updateClip = (clip) => {
     return new Promise((resolve,reject) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').get(clip.id).replace(clip, { returnChanges: true }).run(connection).then(result => {
                 if(result.changes[0].new_val.title !== result.changes[0].old_val.title) editVideoFileName(result.changes[0].new_val)
                 console.log(`\neditClip result\n${JSON.stringify(result,null,4)}`)
-                resolve(result.changes[0].new_val)
+                const updatedClip = result.changes[0].new_val
+                resolve(updatedClip)
             }).error(error => {
                 console.log(`\neditClip error\n${error}`)
             })
@@ -50,8 +51,19 @@ const deleteClip = (clip) => {
     })
 }
 
+const handlePendingClips = (pendingClips) => {
+    return new Promise((resolve,reject) => {
+        if (pendingClips.length != 0) pendingClips.forEach(clip => {
+            if (clip.deleted && clip.id != undefined) deleteClip(clip)
+            else addClip(clip)
+        })
+        resolve()
+    })
+}
+
 module.exports = {
     addClip,
-    editClip,
+    updateClip,
     deleteClip,
+    handlePendingClips,
 }

@@ -19,7 +19,7 @@ export default () => {
     const { loggedIn, user } = useSelector(state => state.account)
     const redux = useDispatch()
 
-    const { clips } = useSelector(state => state.clips)
+    const { clips, pending } = useSelector(state => state.clips)
     const [dataSocketPromise, setDataSocketPromise] = useState(dataSocket())
 
     useEffect(() => {
@@ -28,9 +28,7 @@ export default () => {
             var index
             switch(data.type) {
                 case 'updateClip':
-                    index = clips.findIndex(item => item.timestamp === data.clip.timestamp)
-                    if ( index == -1 ) redux(actions.addClip(data.clip))
-                    else redux(actions.updateClip(data.clip, index))
+                    redux(actions.updateClip(data.clip))
                     break
 
                 case 'deleteClip':
@@ -47,7 +45,12 @@ export default () => {
     }, [dataSocketPromise])
 
     useEffect(() => {
-        socket.emit('getUserClips', user.id, userClips => {
+        const packet = {
+            user_id: user.id,
+            pendingClips: pending,
+        }
+        socket.emit('getUserClips', packet, userClips => {
+            redux(actions.clearPending())
             redux(actions.updateClips(userClips))
         })
     }, [])

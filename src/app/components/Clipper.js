@@ -43,7 +43,10 @@ export default () => {
     }, [boundCount])
 
     const saveClip = (clipObject) => {
-        socket.emit('addClip', clipObject)
+        redux(actions.addPendingClip(clipObject))
+        socket.emit('addClip', clipObject, returnedClip => {
+            redux(actions.fulfillPendingClip(returnedClip))
+        })
     }
 
     const handleFinishClip = () => {

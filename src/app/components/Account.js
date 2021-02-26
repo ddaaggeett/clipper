@@ -15,7 +15,7 @@ export default (props) => {
 
     const redux = useDispatch()
     const { loggedIn, user, accessToken, refreshToken, accessExpirationTime } = useSelector(state => state.account)
-    const { clips } = useSelector(state => state.clips)
+    const { clips, pending } = useSelector(state => state.clips)
 
     const [refreshInterval, setRefreshInterval] = useState()
 
@@ -74,7 +74,12 @@ export default (props) => {
         socket.emit('userLog', user, userData => {
             redux(actions.updateUser(userData))
         })
-        socket.emit('getUserClips', user.id, userClips => {
+        const packet = {
+            user_id: user.id,
+            pendingClips: pending,
+        }
+        socket.emit('getUserClips', packet, userClips => {
+            redux(actions.clearPending())
             redux(actions.updateClips(userClips))
         })
     }
