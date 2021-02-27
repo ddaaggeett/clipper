@@ -138,3 +138,10 @@ export function deleteClip(clip) {
         clip
     }
 }
+
+export function fulfillPendingDelete(clip) {
+    return {
+        type: actions.FULFILL_PENDING_DELETE,
+        clip
+    }
+}

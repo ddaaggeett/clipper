@@ -131,11 +131,24 @@ export default function clips(state = initialState, action) {
 
             clipsIndex = state.clips.findIndex(item => item.timestamp === action.clip.timestamp)
 
-            return {
+            if (clipsIndex != -1) return {
                 ...state,
                 clips: [
                     ...state.clips.slice(0, clipsIndex),
                     ...state.clips.slice(clipsIndex + 1, state.clips.length),
+                ],
+            }
+            else return state
+
+        case actions.FULFILL_PENDING_DELETE:
+
+            pendingIndex = state.pending.findIndex(item => item.timestamp === action.clip.timestamp)
+
+            return {
+                ...state,
+                pending: [
+                    ...state.pending.slice(0, pendingIndex),
+                    ...state.pending.slice(pendingIndex + 1, state.pending.length),
                 ],
             }
 
