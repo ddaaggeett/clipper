@@ -1,6 +1,7 @@
 var r = require('rethinkdb')
 var { dbConnxConfig } = require('../../config')
 var editVideoFileName = require('./editVideoFileName')
+var generateClip = require('./generateClip')
 
 const addClip = (clip) => {
     return new Promise((resolve,reject) => {
@@ -8,6 +9,7 @@ const addClip = (clip) => {
             r.table('clips').insert(clip, { returnChanges: true, conflict: 'update' }).run(connection).then(result => {
                 console.log(`\naddClip result\n${JSON.stringify(result,null,4)}`)
                 const newClip = result.changes[0].new_val
+                if (result.changes[0].old_val == null) generateClip(newClip)
                 resolve(newClip)
             }).error(error => {
                 console.log(`\naddClip error\n${error}`)

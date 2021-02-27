@@ -4,7 +4,6 @@ var io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POS
 var { port } = require('../../config')
 var { addClip, updateClip, deleteClip, handlePendingClips } = require('./handleReceiveClips')
 var fs = require('fs')
-var generateClip = require('./generateClip')
 var { getPlaylist, getAllPlaylists } = require('./youtube')
 var { userLog, getUserClips } = require('./user')
 require('./db')
@@ -15,7 +14,6 @@ io.on('connection', (socket) => {
             returnToSender(clipWithID)
             socket.broadcast.emit('updateClip',clipWithID)
         })
-        generateClip(clip)
     })
     socket.on('editClip', (clip, returnToSender) => {
         updateClip(clip).then(editedClip => {
