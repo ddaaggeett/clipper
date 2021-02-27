@@ -49,7 +49,7 @@ export default (props) => {
     const editClips = (updatedClip) => {
         if(Platform.OS === 'web') redux(actions.setEditIndex(null))
         redux(actions.updatePendingClip(updatedClip))
-        socket.emit('editClip', updatedClip, returnedClip => {
+        socket.emit('updateClip', updatedClip, returnedClip => {
             redux(actions.fulfillPendingClip(returnedClip))
         })
     }

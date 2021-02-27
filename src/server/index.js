@@ -2,23 +2,17 @@ var app = require('express')()
 var http = require('http').Server(app)
 var io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
 var { port } = require('../../config')
-var { addClip, updateClip, deleteClip, handlePendingClips } = require('./handleReceiveClips')
+var { updateClip, deleteClip, handlePendingClips } = require('./handleReceiveClips')
 var fs = require('fs')
 var { getPlaylist, getAllPlaylists } = require('./youtube')
 var { userLog, getUserClips } = require('./user')
 require('./db')
 
 io.on('connection', (socket) => {
-    socket.on('addClip', (clip, returnToSender) => {
-        addClip(clip).then(clipWithID => {
-            returnToSender(clipWithID)
-            socket.broadcast.emit('updateClip',clipWithID)
-        })
-    })
-    socket.on('editClip', (clip, returnToSender) => {
-        updateClip(clip).then(editedClip => {
-            returnToSender(editedClip)
-            socket.broadcast.emit('updateClip',editedClip)
+    socket.on('updateClip', (clip, returnToSender) => {
+        updateClip(clip).then(updatedClip => {
+            returnToSender(updatedClip)
+            socket.broadcast.emit('updateClip',updatedClip)
         })
     })
     socket.on('deleteClip', (clip, returnToSender) => {

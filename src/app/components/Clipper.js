@@ -44,7 +44,7 @@ export default () => {
 
     const saveClip = (clipObject) => {
         redux(actions.addPendingClip(clipObject))
-        socket.emit('addClip', clipObject, returnedClip => {
+        socket.emit('updateClip', clipObject, returnedClip => {
             redux(actions.fulfillPendingClip(returnedClip))
         })
     }
