@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as actions from './redux/actions/actionCreators'
 import { serverIP, port } from '../../config'
 import { io } from 'socket.io-client'
-import dataSocket from './dataSocket'
+import useDataSocketHook from './dataSocket'
 const socket = io('http://'+ serverIP + ':' + port)
 
 const Tab = createBottomTabNavigator()
@@ -20,24 +20,8 @@ export default () => {
     const redux = useDispatch()
 
     const { clips, pending } = useSelector(state => state.clips)
-    const [dataSocketPromise, setDataSocketPromise] = useState(dataSocket())
 
-    useEffect(() => {
-        // TODO: custom hook because this is duplicate effect. see ./web/index.js
-        dataSocketPromise.then(data => {
-            switch(data.type) {
-                case 'updateClip':
-                    redux(actions.updateClip(data.clip))
-                    break
-
-                case 'deleteClip':
-                    redux(actions.deleteClip(data.clip))
-                    break
-
-            }
-            setDataSocketPromise(dataSocket())
-        })
-    }, [dataSocketPromise])
+    useDataSocketHook()
 
     useEffect(() => {
         const packet = {
