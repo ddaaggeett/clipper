@@ -1,18 +1,7 @@
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    Dimensions,
-    Platform,
-} from "react-native"
-import React, {
-    useState,
-} from 'react'
+import { View, Text, TouchableOpacity, Dimensions, Platform } from "react-native"
+import React, { useState } from 'react'
 import { styles } from "../styles"
-import {
-    ExecuteLeft,
-    ExecuteRight,
-} from './ClipExecute'
+import { ExecuteLeft, ExecuteRight } from './ClipExecute'
 import CursorShifts from './Cursor'
 
 export default (props) => {

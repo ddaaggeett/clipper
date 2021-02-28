@@ -25,7 +25,6 @@ export default () => {
     useEffect(() => {
         // TODO: custom hook because this is duplicate effect. see ./web/index.js
         dataSocketPromise.then(data => {
-            var index
             switch(data.type) {
                 case 'updateClip':
                     redux(actions.updateClip(data.clip))

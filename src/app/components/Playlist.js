@@ -1,20 +1,7 @@
-import React, {
-    useEffect,
-    useState,
-} from 'react'
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    FlatList,
-    Image,
-    Dimensions,
-} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, TouchableOpacity, FlatList, Image, Dimensions } from 'react-native'
 import { styles } from '../styles'
-import {
-    useSelector,
-    useDispatch,
-} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import PlaylistVideoOptions from './PlaylistVideoOptions'
 

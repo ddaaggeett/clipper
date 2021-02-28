@@ -12,7 +12,5 @@ export default () => {
             type: 'deleteClip',
             clip,
         }))
-        socket.on('allClips', clips => {
-        })
     })
 }

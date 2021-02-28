@@ -1,25 +1,10 @@
-import React, {
-    useState,
-    useEffect,
-    useCallback,
-} from 'react';
-import {
-    View,
-    Text,
-    TouchableOpacity,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from "../styles"
-import { useFocusEffect } from '@react-navigation/native'
 import { io } from 'socket.io-client'
 import Clip from './Clip'
-import {
-    serverIP,
-    port,
-} from '../../../config'
-import {
-    useSelector,
-    useDispatch,
-} from 'react-redux'
+import { serverIP, port } from '../../../config'
+import { useSelector, useDispatch } from 'react-redux'
 import { updateClips } from '../redux/actions/actionCreators'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 
@@ -29,15 +14,6 @@ export default (props) => {
 
     const { clips } = useSelector(state => state.clips)
     const redux = useDispatch()
-    const [selectedIndex, setSelectedIndex] = useState(null)
-
-    useFocusEffect( // whenever screen gets focus
-        useCallback(() => { // runs only once per screen focus
-            return () => {
-                setSelectedIndex(null) // when focus is lost
-            }
-        },[])
-    )
 
     const handleReorderedClips = (reorderedClips) => {
         redux(updateClips(reorderedClips))

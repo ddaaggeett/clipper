@@ -1,15 +1,7 @@
 import React from 'react'
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    Dimensions,
-} from 'react-native'
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native'
 import { styles } from '../styles'
-import {
-    useSelector,
-    useDispatch,
-} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { setPlaylist } from '../redux/actions/actionCreators'
 
 export default (props) => {

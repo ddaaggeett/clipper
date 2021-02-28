@@ -1,21 +1,8 @@
-import React, {
-    useState,
-} from 'react'
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    FlatList,
-} from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import { styles } from '../styles'
-import {
-    useSelector,
-    useDispatch,
- } from 'react-redux'
-import {
-    serverIP,
-    port,
-} from '../../../config'
+import { useSelector, useDispatch } from 'react-redux'
+import { serverIP, port } from '../../../config'
 import * as AuthSession from 'expo-app-auth'
 import { io } from 'socket.io-client'
 const socket = io('http://'+ serverIP + ':' + port)

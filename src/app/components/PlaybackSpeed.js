@@ -1,14 +1,7 @@
-import {
-    View,
-    Text,
-    TouchableOpacity,
-} from "react-native"
-import React, {
-} from 'react'
+import { View, Text, TouchableOpacity } from "react-native"
+import React from 'react'
 import { styles } from "../styles"
-import {
-    useSelector,
-} from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export default (props) => {
 
