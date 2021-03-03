@@ -41,7 +41,7 @@ const deleteClip = (clip) => {
 const handlePendingClips = (pendingClips) => {
     return new Promise((resolve,reject) => {
         if (pendingClips.length != 0) pendingClips.forEach(clip => {
-            if (clip.deleted && clip.id != undefined) deleteClip(clip)
+            if (clip.deleted) deleteClip(clip)
             else updateClip(clip)
         })
         resolve()

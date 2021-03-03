@@ -103,7 +103,18 @@ export default function clips(state = initialState, action) {
             clipsIndex = state.clips.findIndex(item => item.timestamp === action.clip.timestamp)
             pendingIndex = state.pending.findIndex(item => item.timestamp === action.clip.timestamp)
 
-            if (pendingIndex == -1) return {
+            if (state.clips[clipsIndex].id == undefined) return { // no need to send pending deletion to server if it doesn't exist there yet
+                ...state,
+                clips: [
+                    ...state.clips.slice(0, clipsIndex),
+                    ...state.clips.slice(clipsIndex + 1, state.clips.length),
+                ],
+                pending: [
+                    ...state.pending.slice(0, pendingIndex),
+                    ...state.pending.slice(pendingIndex + 1, state.pending.length),
+                ],
+            }
+            else if (pendingIndex == -1) return {
                 ...state,
                 clips: [
                     ...state.clips.slice(0, clipsIndex),
