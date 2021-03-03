@@ -20,7 +20,7 @@ export default (props) => {
         redux(actions.setEditIndex(null))
         if(Platform.OS !== 'web') props.saveAndExit()
         redux(actions.pendingDeleteClip({ ...clip, deleted: true }))
-        socket.emit('deleteClip', clip, returnedClip => {
+        socket.volatile.emit('deleteClip', clip, returnedClip => {
             redux(actions.fulfillPendingDelete(returnedClip))
         })
     }
