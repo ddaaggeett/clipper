@@ -11,7 +11,17 @@ const updateClip = (clip) => {
                 const updatedClip = result.changes[0].new_val
                 const oldClip = result.changes[0].old_val
                 if (oldClip == null) generateClip(updatedClip)
-                else if (oldClip != null && updatedClip.title !== oldClip.title) editVideoFileName(updatedClip)
+                else if (oldClip != null && updatedClip.title !== oldClip.title) {
+                    try {
+                        editVideoFileName(updatedClip)
+                    }
+                    catch(error) {
+                        switch (error) {
+                            case 'ENOENT: no such file or directory':
+                                generateClip(updatedClip)
+                        }
+                    }
+                }
                 resolve(updatedClip)
             }).error(error => {
                 console.log(`\nupdateClip error\n${error}`)
