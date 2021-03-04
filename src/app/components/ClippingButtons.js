@@ -47,16 +47,6 @@ const LeftOrRight = (props) => {
         })
     }
 
-    const handleCancelLeft = () => {
-        props.setHandlingLeft(false)
-        props.setPlaying(true)
-    }
-
-    const handleCancelRight = () => {
-        props.setHandlingRight(false)
-        props.setPlaying(true)
-    }
-
     const removeBoundCount = (props) => {
         props.setBoundCount(props.boundCount - 1)
     }
@@ -109,20 +99,16 @@ const LeftOrRight = (props) => {
             </View>
         )
     }
-    else if(props.handlingLeft) {
-        return (
-            <View style={styles.contentRow}>
-                <ExecuteLeft {...props} buttonWidth={buttonWidth} />
-                <TouchableOpacity style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelLeft()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
-            </View>
-        )
-    }
-    else if(props.handlingRight) {
-        return (
-            <View style={styles.contentRow}>
-                <TouchableOpacity style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelRight()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
-                <ExecuteRight {...props} buttonWidth={buttonWidth} />
-            </View>
-        )
-    }
+    else if(props.handlingLeft) return (
+        <ExecuteLeft
+            {...props}
+            buttonWidth={buttonWidth}
+            />
+    )
+    else if(props.handlingRight) return (
+        <ExecuteRight
+            {...props}
+            buttonWidth={buttonWidth}
+            />
+    )
 }

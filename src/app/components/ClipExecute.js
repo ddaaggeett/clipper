@@ -14,9 +14,15 @@ export const ExecuteLeft = (props) => {
         props.setHandlingLeft(false)
     }
 
+    const handleCancelLeft = () => {
+        props.setHandlingLeft(false)
+        props.setPlaying(true)
+    }
+
     return (
-        <View>
+        <View style={styles.contentRow}>
             <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"green"}]} onPress={() => handleExecuteLeft()}><Text style={styles.controlButtonText} >{"EXECUTE LEFT"}</Text></TouchableOpacity>
+            <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelLeft()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
         </View>
     )
 }
@@ -29,8 +35,14 @@ export const ExecuteRight = (props) => {
         props.setHandlingRight(false)
     }
 
+    const handleCancelRight = () => {
+        props.setHandlingRight(false)
+        props.setPlaying(true)
+    }
+
     return (
-        <View>
+        <View style={styles.contentRow}>
+            <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelRight()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
             <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"orange"}]} onPress={() => handleExecuteRight()}><Text style={styles.controlButtonText} >{"EXECUTE RIGHT"}</Text></TouchableOpacity>
         </View>
     )
