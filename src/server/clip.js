@@ -20,6 +20,7 @@ const clip = (videoDirectory, clipObject) => {
             }, (error, stdout, stderr) => {
                 if (error) {
                     console.error('ERROR clip\n', error)
+                    if(error.toString().includes('Syntax error: Unterminated quoted string')) throw('Syntax error: Unterminated quoted string')
                     return
                 }
                 console.log('clip made @ ', videoDirectory + "/" + clipID)
