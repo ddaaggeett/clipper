@@ -1,8 +1,9 @@
-import { View, Text, TouchableOpacity, Dimensions, Platform } from "react-native"
+import { View, Text, TouchableOpacity, Dimensions } from "react-native"
 import React, { useState } from 'react'
 import { styles } from "../styles"
 import { ExecuteLeft, ExecuteRight } from './ClipExecute'
 import CursorShifts from './Cursor'
+import { ClipInitOrDeleteLeft, ClipInitOrDeleteRight } from './ClipInitOrDelete'
 
 export default (props) => {
 
@@ -31,74 +32,24 @@ const LeftOrRight = (props) => {
 
     const buttonWidth = props.screenWidth / 2 // divided by bumber of buttons in row
 
-    const handleLeftClip = () => {
-        props.setHandlingLeft(true)
-        if(Platform.OS === 'web') props.setLeftCursor(props.player.current.getCurrentTime())
-        else props.player.current.getCurrentTime().then(time => {
-            props.setLeftCursor(time)
-        })
-    }
-
-    const handleRightClip = () => {
-        props.setHandlingRight(true)
-        if(Platform.OS === 'web') props.setRightCursor(props.player.current.getCurrentTime())
-        else props.player.current.getCurrentTime().then(time => {
-            props.setRightCursor(time)
-        })
-    }
-
     const removeBoundCount = (props) => {
         props.setBoundCount(props.boundCount - 1)
     }
 
-    const handleDeleteLeftClip = () => {
-        props.setHandlingLeft(false)
-        props.setLeftClipped(false)
-        removeBoundCount(props)
-    }
-
-    const handleDeleteRightClip = () => {
-        props.setHandlingRight(false)
-        props.setRightClipped(false)
-        removeBoundCount(props)
-    }
-
-    if (!props.handlingLeft && !props.handlingRight) {
-        return (
-            <View style={styles.contentRow}>
-                {
-                    props.leftClipped
-                    ?   <TouchableOpacity
-                            style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]}
-                            onPress={() => handleDeleteLeftClip()}
-                            >
-                            <Text style={styles.controlButtonText} >{"DELETE LEFT"}</Text>
-                        </TouchableOpacity>
-                    :   <TouchableOpacity
-                            style={[styles.controlButton, {width: buttonWidth, backgroundColor:"green",}]}
-                            onPress={() => handleLeftClip()}
-                            >
-                            <Text style={styles.controlButtonText}>{"PLACE LEFT"}</Text>
-                        </TouchableOpacity>
-                }
-                {
-                    props.rightClipped
-                    ?   <TouchableOpacity
-                            style={[styles.controlButton, {width:buttonWidth, backgroundColor:"red"}]}
-                            onPress={() => handleDeleteRightClip()}
-                            >
-                            <Text style={styles.controlButtonText} >{"DELETE RIGHT"}</Text>
-                        </TouchableOpacity>
-                    :   <TouchableOpacity
-                            style={[styles.controlButton, {width: buttonWidth, backgroundColor:"orange",}]}
-                            onPress={() => handleRightClip()}
-                            >
-                            <Text style={styles.controlButtonText}>{"PLACE RIGHT"}</Text>
-                        </TouchableOpacity>
-                }
-            </View>
-        )
-    }
+    if (!props.handlingLeft && !props.handlingRight) return (
+        <View style={styles.contentRow}>
+            <ClipInitOrDeleteLeft
+                {...props}
+                buttonWidth={buttonWidth}
+                removeBoundCount={removeBoundCount}
+                />
+            <ClipInitOrDeleteRight
+                {...props}
+                buttonWidth={buttonWidth}
+                removeBoundCount={removeBoundCount}
+                />
+        </View>
+    )
     else if(props.handlingLeft) return (
         <ExecuteLeft
             {...props}
