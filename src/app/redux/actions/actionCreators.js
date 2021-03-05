@@ -145,3 +145,10 @@ export function fulfillPendingDelete(clip) {
         clip
     }
 }
+
+export function setGotSomethingCursor(cursor) {
+    return {
+        type: actions.SET_GOT_SOMETHING_CURSOR,
+        cursor
+    }
+}

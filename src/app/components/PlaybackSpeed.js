@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 export default (props) => {
 
     const playerState = useSelector(state => state.player)
-    const buttonWidth = props.screenWidth / 3 // divided by bumber of buttons in row
+    const buttonWidth = props.screenWidth / 3 // divided by number of buttons in row
 
     const selectedSpeed = (speed) => {
         if (speed == playerState.speed) return "black"

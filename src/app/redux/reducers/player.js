@@ -5,6 +5,7 @@ const initialState = {
     contentID: '',
     width: 0,
     videoProgress: 0,
+    gotSomethingCursor: null,
 }
 
 export default function player(state = initialState, action) {
@@ -33,6 +34,12 @@ export default function player(state = initialState, action) {
             return {
                 ...state,
                 videoProgress: action.progress,
+            }
+
+        case actions.SET_GOT_SOMETHING_CURSOR:
+            return {
+                ...state,
+                gotSomethingCursor: action.cursor,
             }
 
         default:

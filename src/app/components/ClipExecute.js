@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native"
 import React from 'react'
 import { styles } from "../styles"
+import GotSomething from './GotSomething'
 
 const addBoundCount = (props) => {
     props.setBoundCount(props.boundCount + 1)
@@ -43,6 +44,7 @@ export const ExecuteRight = (props) => {
     return (
         <View style={styles.contentRow}>
             <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelRight()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
+            <GotSomething {...props} />
             <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"orange"}]} onPress={() => handleExecuteRight()}><Text style={styles.controlButtonText} >{"EXECUTE RIGHT"}</Text></TouchableOpacity>
         </View>
     )

@@ -8,7 +8,7 @@ export default (props) => {
     const speed = useSelector(state => state.player.speed)
 
     const [rewindToPause, setRewindToPause] = useState()
-    const buttonWidth = props.screenWidth / 5 // divided by bumber of buttons in row
+    const buttonWidth = props.screenWidth / 5 // divided by number of buttons in row
 
     const setCursorOffset = (seconds) => {
         props.setPlaying(true)
