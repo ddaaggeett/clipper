@@ -23,6 +23,7 @@ export const ExecuteLeft = (props) => {
     return (
         <View style={styles.contentRow}>
             <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"green"}]} onPress={() => handleExecuteLeft()}><Text style={styles.controlButtonText} >{"EXECUTE LEFT"}</Text></TouchableOpacity>
+            <GotSomething {...props} />
             <TouchableOpacity style={[styles.controlButton, {width:props.buttonWidth, backgroundColor:"red"}]} onPress={() => handleCancelLeft()}><Text style={styles.controlButtonText} >{"CANCEL"}</Text></TouchableOpacity>
         </View>
     )

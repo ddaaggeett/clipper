@@ -39,6 +39,7 @@ export default () => {
             setPlaying(true)
             setLeftClipped(false)
             setRightClipped(false)
+            redux(actions.setGotSomethingCursor(null))
         }
     }, [boundCount])
 
