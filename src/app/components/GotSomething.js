@@ -37,13 +37,6 @@ const RewindOrCancel = (props) => {
     const redux = useDispatch()
     const { gotSomethingCursor } = useSelector(state => state.player)
 
-    const setCursorOffset = (seconds) => {
-        props.setPlaying(true)
-        const newCursor = gotSomethingCursor + seconds
-        redux(actions.setGotSomethingCursor(newCursor))
-        props.player.current.seekTo(newCursor)
-    }
-
     const handleGotSomethingCancel = () => redux(actions.setGotSomethingCursor(null))
 
     return (
@@ -52,7 +45,7 @@ const RewindOrCancel = (props) => {
             props.rightClipped && props.boundCount == 1
             ?   <TouchableOpacity
                     style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"gray",}]}
-                    onPress={() => setCursorOffset(-10)}
+                    onPress={() => props.setGotSomethingCursorOffset()}
                     >
                     <Text style={styles.controlButtonText}>{"<< 10 sec"}</Text>
                 </TouchableOpacity>

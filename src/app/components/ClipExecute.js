@@ -32,6 +32,7 @@ export const ExecuteLeft = (props) => {
 export const ExecuteRight = (props) => {
 
     const handleExecuteRight = () => {
+        if (props.boundCount + 1 == 1) props.setGotSomethingCursorOffset()
         props.setRightClipped(true)
         addBoundCount(props)
         props.setHandlingRight(false)
