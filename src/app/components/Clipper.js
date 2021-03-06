@@ -25,7 +25,7 @@ export default () => {
     const [clipPreDB, setClipPreDB] = useState(null)
 
     const { clips } = useSelector(state => state.clips)
-    const { speed, contentID, videoProgress } = useSelector(state => state.player)
+    const { speed, contentID, videoProgress, panelWidth } = useSelector(state => state.player)
     const selectingFromPlaylist = useSelector(state => state.library.selectingFromPlaylist)
     const { editIndex } = useSelector(state => state.manager)
     const { user } = useSelector(state => state.account)
@@ -118,9 +118,6 @@ export default () => {
     }, [editIndex])
 
     if (Platform.OS === 'web') {
-        const playerWidth = Dimensions.get('window').width/2
-        const playerHeight = playerWidth * 9 / 16
-
         return (
             <View>
                 <ReactPlayer
@@ -128,8 +125,8 @@ export default () => {
                     ref={player}
                     playing={playing}
                     playbackRate={speed}
-                    width={playerWidth}
-                    height={playerHeight}
+                    width={panelWidth}
+                    height={panelWidth * 9 / 16}
                     controls={true}
                     config={getConfig()}
                     onProgress={handleVideoProgress}
@@ -148,7 +145,7 @@ export default () => {
                     getVideoId={getContentID}
                     boundCount={boundCount}
                     setBoundCount={setBoundCount}
-                    screenWidth={playerWidth}
+                    screenWidth={panelWidth}
                     leftClipped={leftClipped}
                     setLeftClipped={setLeftClipped}
                     rightClipped={rightClipped}

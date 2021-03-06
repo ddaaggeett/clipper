@@ -8,7 +8,7 @@ import getContentID from '../getContentID'
 
 export default (props) => {
 
-    const { contentID, width } = useSelector(state => state.player)
+    const { contentID, panelWidth } = useSelector(state => state.player)
     const { playlist, selectingFromPlaylist } = useSelector(state => state.library)
     const redux = useDispatch()
 

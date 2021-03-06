@@ -3,7 +3,7 @@ import * as actions from '../actions'
 const initialState = {
     speed: 1,
     contentID: '',
-    width: 0,
+    panelWidth: 0,
     videoProgress: 0,
     gotSomethingCursor: null,
 }
@@ -27,7 +27,7 @@ export default function player(state = initialState, action) {
         case actions.SET_WEB_PANEL_WIDTH:
             return {
                 ...state,
-                width: action.width,
+                panelWidth: action.width,
             }
 
         case actions.SET_VIDEO_PROGRESS:

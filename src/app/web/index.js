@@ -15,14 +15,16 @@ const socket = io('http://'+ serverIP + ':' + port)
 export default () => {
 
     const { loggedIn, user } = useSelector(state => state.account)
-    const { width } = useSelector(state => state.player)
+    const { panelWidth } = useSelector(state => state.player)
     const redux = useDispatch()
     const { clips, pending } = useSelector(state => state.clips)
 
     useDataSocketHook()
 
     useEffect(() => {
-        redux(actions.setWebPanelWidth(Dimensions.get('window').width/2))
+        const width = Dimensions.get('window').width / 2
+        if (width > 640) redux(actions.setWebPanelWidth(640))
+        else redux(actions.setWebPanelWidth(width))
         const packet = {
             user_id: user.id,
             pendingClips: pending,
@@ -40,13 +42,13 @@ export default () => {
     )
     else return (
         <View style={[styles.container, styles.contentRow]}>
-            <View style={{width: width}}>
+            <View style={{width: panelWidth}}>
                 <Account />
                 <Text style={{color:'white'}}>CLIPPER Web App</Text>
                 <VideoSelector />
                 <Clipper />
             </View>
-            <View style={{width: width}}>
+            <View style={{width: panelWidth}}>
                 <ClipManager />
             </View>
         </View>
