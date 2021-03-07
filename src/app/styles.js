@@ -12,8 +12,8 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         color: 'white',
         padding: 10,
-        marginTop: 25,
-        marginBottom:25,
+        marginTop: 5,
+        marginBottom: 5,
     },
     controlButton: {
         borderColor: 'white',
@@ -63,4 +63,17 @@ export const styles = StyleSheet.create({
         flexWrap: "wrap",
         padding: 5,
     },
+    account: {
+        margin: 5,
+        marginBottom: 0,
+        alignItems: 'flex-end',
+        borderColor: 'red',
+        borderWidth: 1,
+    },
+    loginButton: {
+        backgroundColor: 'red',
+        padding: 5,
+        paddingLeft: 15,
+        paddingRight: 15,
+    }
 });

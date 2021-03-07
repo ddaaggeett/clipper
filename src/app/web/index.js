@@ -25,14 +25,16 @@ export default () => {
         const width = Dimensions.get('window').width / 2
         if (width > 640) redux(actions.setWebPanelWidth(640))
         else redux(actions.setWebPanelWidth(width))
-        const packet = {
-            user_id: user.id,
-            pendingClips: pending,
+        if (loggedIn) {
+            const packet = {
+                user_id: user.id,
+                pendingClips: pending,
+            }
+            socket.emit('getUserClips', packet, userClips => {
+                redux(actions.clearPending())
+                redux(actions.updateClips(userClips))
+            })
         }
-        socket.emit('getUserClips', packet, userClips => {
-            redux(actions.clearPending())
-            redux(actions.updateClips(userClips))
-        })
     },[])
 
     if(!loggedIn) return (
@@ -41,16 +43,17 @@ export default () => {
         </View>
     )
     else return (
-        <View style={[styles.container, styles.contentRow]}>
+        <View style={styles.container}>
+        <View style={styles.contentRow}>
             <View style={{width: panelWidth}}>
-                <Account />
-                <Text style={{color:'white'}}>CLIPPER Web App</Text>
                 <VideoSelector />
                 <Clipper />
             </View>
             <View style={{width: panelWidth}}>
+                <Account />
                 <ClipManager />
             </View>
+        </View>
         </View>
     )
 }

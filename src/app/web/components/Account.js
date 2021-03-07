@@ -113,13 +113,13 @@ export default (props) => {
     }, [response])
 
     return (
-        <View>
+        <View style={styles.account}>
         {
             loggedIn
-            ?   <View>
-                    <Text style={{color:'white'}}>{`you are logged into YouTube, ${user.name}`}</Text>
+            ?   <View style={styles.contentRow}>
+                    <Text style={{padding: 5, color:'white'}}>{user.name}</Text>
                     <TouchableOpacity
-                        style={[styles.controlButton, {backgroundColor: 'red'}]}
+                        style={[styles.loginButton, {backgroundColor: 'red'}]}
                         onPress={() => handleLogout()}
                         >
                         <Text style={styles.controlButtonText}>Logout</Text>
@@ -127,7 +127,7 @@ export default (props) => {
                 </View>
             :   <View>
                     <TouchableOpacity
-                        style={styles.controlButton}
+                        style={[styles.loginButton,  {backgroundColor: 'gray'}]}
                         onPress={() => handleLogin()}
                         disabled={!request}
                         >

@@ -24,10 +24,7 @@ export default (props) => {
 
     return (
         <div style={styles.clipManager}>
-            CLIP MANAGER
-            <div>
-                {renderClipItems}
-            </div>
+            {renderClipItems}
         </div>
     )
 }

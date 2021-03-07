@@ -5,9 +5,8 @@ export const styles = {
     clipItem: {
         display: 'flex',
         flexFlow: 'column nowrap',
-        fontFamily: 'Courier',
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontFamily: 'Sans',
+        fontSize: 14,
         color:'yellow',
         backgroundColor:'#333',
         border: '1px solid white',

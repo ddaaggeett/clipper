@@ -24,14 +24,16 @@ export default () => {
     useDataSocketHook()
 
     useEffect(() => {
-        const packet = {
-            user_id: user.id,
-            pendingClips: pending,
+        if (loggedIn) {
+            const packet = {
+                user_id: user.id,
+                pendingClips: pending,
+            }
+            socket.emit('getUserClips', packet, userClips => {
+                redux(actions.clearPending())
+                redux(actions.updateClips(userClips))
+            })
         }
-        socket.emit('getUserClips', packet, userClips => {
-            redux(actions.clearPending())
-            redux(actions.updateClips(userClips))
-        })
     }, [])
 
     const tabBarOptions = {
