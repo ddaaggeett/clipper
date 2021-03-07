@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text, TouchableOpacity, View, Platform } from 'react-native'
 import { styles } from '../../styles'
-import { androidClientId, webClientId, webClientSecret, serverIP, port } from '../../../../config'
+import { androidClientId, webClientId, webClientSecret, serverIP, port, appName } from '../../../../config'
 import * as AuthSession from 'expo-auth-session'
 import * as Google from 'expo-auth-session/providers/google'
 import * as WebBrowser from 'expo-web-browser'
@@ -116,18 +116,19 @@ export default (props) => {
         <View style={styles.account}>
         {
             loggedIn
-            ?   <View style={styles.contentRow}>
-                    <Text style={{padding: 5, color:'white'}}>{user.name}</Text>
+            ?   <View style={[styles.contentRow, styles.accountLoggedIn]}>
+                    <Text style={styles.username}>{`${appName}   ///   ${user.name}`}</Text>
                     <TouchableOpacity
-                        style={[styles.loginButton, {backgroundColor: 'red'}]}
+                        style={[styles.accountButton, styles.loginButton]}
                         onPress={() => handleLogout()}
                         >
                         <Text style={styles.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
                 </View>
-            :   <View>
+            :   <View style={[styles.contentRow, styles.accountLoggedOut]}>
+                    <Text style={styles.username}>{appName}</Text>
                     <TouchableOpacity
-                        style={[styles.loginButton,  {backgroundColor: 'gray'}]}
+                        style={[styles.accountButton, styles.logoutButton]}
                         onPress={() => handleLogin()}
                         disabled={!request}
                         >

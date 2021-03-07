@@ -64,16 +64,43 @@ export const styles = StyleSheet.create({
         padding: 5,
     },
     account: {
-        margin: 5,
-        marginBottom: 0,
         alignItems: 'flex-end',
-        borderColor: 'red',
+        marginBottom: 0,
+    },
+    accountLoggedOut: {
         borderWidth: 1,
+        margin: 5,
+        borderColor: 'purple',
+    },
+    accountLoggedIn: {
+        borderWidth: 1,
+        margin: 5,
+        borderColor: 'red',
+    },
+    accountButton: {
+        padding: 5,
+        paddingLeft: 25,
+        paddingRight: 25,
     },
     loginButton: {
         backgroundColor: 'red',
+    },
+    logoutButton: {
+        backgroundColor: 'purple',
+    },
+    username: {
         padding: 5,
-        paddingLeft: 15,
-        paddingRight: 15,
-    }
+        paddingLeft: 25,
+        paddingRight: 25,
+        color:'white',
+    },
+    panelRow: {
+        alignSelf: 'center',
+    },
+    videoPanel: {
+    },
+    usernameNative: {
+        alignSelf: 'center',
+        fontSize: 18,
+    },
 });

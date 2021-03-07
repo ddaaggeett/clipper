@@ -44,12 +44,12 @@ export default () => {
     )
     else return (
         <View style={styles.container}>
-        <View style={styles.contentRow}>
-            <View style={{width: panelWidth}}>
+        <View style={[styles.panelRow, styles.contentRow]}>
+            <View style={[styles.videoPanel, styles.panel, {width: panelWidth}]}>
                 <VideoSelector />
                 <Clipper />
             </View>
-            <View style={{width: panelWidth}}>
+            <View style={[styles.panel, {width: panelWidth}]}>
                 <Account />
                 <ClipManager />
             </View>
