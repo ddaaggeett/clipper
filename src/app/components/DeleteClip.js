@@ -10,6 +10,7 @@ const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
+    const { panelWidth } = useSelector(state => state.player)
     const { editIndex } = useSelector(state => state.manager)
     const { clips } = useSelector(state => state.clips)
     const clip = clips[editIndex]
@@ -26,7 +27,7 @@ export default (props) => {
     }
 
     var buttonWidth
-    if(Platform.OS === 'web') buttonWidth = useSelector(state => state.player.width)/2
+    if(Platform.OS === 'web') buttonWidth = panelWidth / 2
     else buttonWidth = Dimensions.get('window').width/2
 
     return (

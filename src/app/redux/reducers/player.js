@@ -6,6 +6,7 @@ const initialState = {
     panelWidth: 0,
     videoProgress: 0,
     gotSomethingCursor: null,
+    videoSelectorFocused: false,
 }
 
 export default function player(state = initialState, action) {
@@ -40,6 +41,12 @@ export default function player(state = initialState, action) {
             return {
                 ...state,
                 gotSomethingCursor: action.cursor,
+            }
+
+        case actions.SET_VIDEO_SELECTOR_FOCUSED:
+            return {
+                ...state,
+                videoSelectorFocused: action.focused,
             }
 
         default:

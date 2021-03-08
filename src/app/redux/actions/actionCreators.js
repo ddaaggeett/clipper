@@ -152,3 +152,10 @@ export function setGotSomethingCursor(cursor) {
         cursor
     }
 }
+
+export function setVideoSelectorFocused(focused) {
+    return {
+        type: actions.SET_VIDEO_SELECTOR_FOCUSED,
+        focused
+    }
+}

@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, TextInput, Platform } from "react-native"
-import React from 'react'
+import { View, Text, TouchableOpacity, TextInput, Platform, Keyboard } from "react-native"
+import React, { useEffect } from 'react'
 import { styles } from "../styles"
 import { useSelector, useDispatch } from 'react-redux'
 import Playlist from './Playlist'
@@ -17,6 +17,8 @@ export default (props) => {
         redux(actions.updateContentID(getContentID(text)))
     }
 
+    useEffect(() => Keyboard.dismiss(), [contentID])
+
     const selectFromPlaylist = () => {
         redux(actions.selectingFromPlaylist(true))
     }
@@ -24,6 +26,9 @@ export default (props) => {
     const cancelSelectFromPlaylist = () => {
         redux(actions.selectingFromPlaylist(false))
     }
+
+    const focusVideoSelector = () => redux(actions.setVideoSelectorFocused(true))
+    const blurVideoSelector = () => redux(actions.setVideoSelectorFocused(false))
 
     if (Platform.OS === 'web') return (
         <TextInput
@@ -51,6 +56,8 @@ export default (props) => {
                         value={contentID}
                         placeholder={"paste YouTube address"}
                         placeholderTextColor={"white"}
+                        onFocus={focusVideoSelector}
+                        onBlur={blurVideoSelector}
                         />
                     <TouchableOpacity style={styles.controlButton} onPress={() => selectFromPlaylist()}>
                         <Text style={styles.controlButtonText}>{`select from ${playlist.title}`}</Text>
