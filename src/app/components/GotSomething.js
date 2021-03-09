@@ -36,13 +36,14 @@ const RewindOrCancel = (props) => {
 
     const redux = useDispatch()
     const { gotSomethingCursor } = useSelector(state => state.player)
+    const { rightClipped } = useSelector(state => state.app)
 
     const handleGotSomethingCancel = () => redux(actions.setGotSomethingCursor(null))
 
     return (
         <View>
         {
-            props.rightClipped && props.boundCount == 1
+            rightClipped && props.boundCount == 1
             ?   <TouchableOpacity
                     style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"gray",}]}
                     onPress={() => props.setGotSomethingCursorOffset()}

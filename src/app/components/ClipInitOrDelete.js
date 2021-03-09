@@ -1,27 +1,32 @@
 import { View, Text, TouchableOpacity, Dimensions, Platform } from "react-native"
 import React from 'react'
 import { styles } from "../styles"
+import { useDispatch, useSelector } from 'react-redux'
+import * as actions from '../redux/actions/actionCreators'
 
 export const ClipInitOrDeleteLeft = (props) => {
 
+    const redux = useDispatch()
+    const { leftClipped } = useSelector(state => state.app)
+
     const handleLeftClip = () => {
-        props.setHandlingLeft(true)
-        if(Platform.OS === 'web') props.setLeftCursor(props.player.current.getCurrentTime())
+        redux(actions.setHandlingLeft(true))
+        if(Platform.OS === 'web') redux(actions.setLeftCursor(props.player.current.getCurrentTime()))
         else props.player.current.getCurrentTime().then(time => {
-            props.setLeftCursor(time)
+            redux(actions.setLeftCursor(time))
         })
     }
 
     const handleDeleteLeftClip = () => {
-        props.setHandlingLeft(false)
-        props.setLeftClipped(false)
+        redux(actions.setHandlingLeft(false))
+        redux(actions.setLeftClipped(false))
         props.removeBoundCount(props)
     }
 
     return (
         <View>
         {
-            props.leftClipped
+            leftClipped
             ?   <TouchableOpacity
                     style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"red"}]}
                     onPress={() => handleDeleteLeftClip()}
@@ -41,24 +46,27 @@ export const ClipInitOrDeleteLeft = (props) => {
 
 export const ClipInitOrDeleteRight = (props) => {
 
+    const redux = useDispatch()
+    const { rightClipped } = useSelector(state => state.app)
+
     const handleRightClip = () => {
-        props.setHandlingRight(true)
-        if(Platform.OS === 'web') props.setRightCursor(props.player.current.getCurrentTime())
+        redux(actions.setHandlingRight(true))
+        if(Platform.OS === 'web') redux(actions.setRightCursor(props.player.current.getCurrentTime()))
         else props.player.current.getCurrentTime().then(time => {
-            props.setRightCursor(time)
+            redux(actions.setRightCursor(time))
         })
     }
 
     const handleDeleteRightClip = () => {
-        props.setHandlingRight(false)
-        props.setRightClipped(false)
+        redux(actions.setHandlingRight(false))
+        redux(actions.setRightClipped(false))
         props.removeBoundCount(props)
     }
 
     return (
         <View>
         {
-            props.rightClipped
+            rightClipped
             ?   <TouchableOpacity
                     style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"red"}]}
                     onPress={() => handleDeleteRightClip()}

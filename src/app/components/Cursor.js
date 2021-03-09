@@ -1,25 +1,27 @@
 import { View, Text, TouchableOpacity } from "react-native"
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { styles } from "../styles"
 
 export default (props) => {
 
-    const speed = useSelector(state => state.player.speed)
+    const redux = useDispatch()
+    const { speed } = useSelector(state => state.player)
+    const { leftCursor, rightCursor, handlingLeft, handlingRight } = useSelector(state => state.app)
 
     const [rewindToPause, setRewindToPause] = useState()
     const buttonWidth = props.screenWidth / 5 // divided by number of buttons in row
 
     const setCursorOffset = (seconds) => {
         props.setPlaying(true)
-        if(props.handlingLeft) {
-            const newCursor = props.leftCursor + seconds
-            props.setLeftCursor(newCursor)
+        if(handlingLeft) {
+            const newCursor = leftCursor + seconds
+            redux(actions.setLeftCursor(newCursor))
             props.player.current.seekTo(newCursor)
         }
-        else if (props.handlingRight){
-            const newCursor = props.rightCursor + seconds
-            props.setRightCursor(newCursor)
+        else if (handlingRight){
+            const newCursor = rightCursor + seconds
+            redux(actions.setRightCursor(newCursor))
             checkEndBound(newCursor)
         }
     }
@@ -37,7 +39,7 @@ export default (props) => {
         }, pauseTime))
     }
 
-    if(props.handlingLeft || props.handlingRight) {
+    if(handlingLeft || handlingRight) {
         return (
             <View>
                 <View style={styles.contentRow}>
@@ -57,8 +59,8 @@ export default (props) => {
 const CheckCursor = (props) => {
 
     const handleCheckCursor = () => {
-        if(props.handlingLeft) props.player.current.seekTo(props.leftCursor)
-        else if(props.handlingRight) props.checkEndBound(props.rightCursor)
+        if(handlingLeft) props.player.current.seekTo(leftCursor)
+        else if(handlingRight) props.checkEndBound(rightCursor)
     }
 
     return (

@@ -1,6 +1,8 @@
 import { View, Text, TouchableOpacity } from "react-native"
 import React from 'react'
 import { styles } from "../styles"
+import { useDispatch } from 'react-redux'
+import * as actions from '../redux/actions/actionCreators'
 import GotSomething from './GotSomething'
 
 const addBoundCount = (props) => {
@@ -9,14 +11,16 @@ const addBoundCount = (props) => {
 
 export const ExecuteLeft = (props) => {
 
+    const redux = useDispatch()
+
     const handleExecuteLeft = () => {
-        props.setLeftClipped(true)
+        redux(actions.setLeftClipped(true))
         addBoundCount(props)
-        props.setHandlingLeft(false)
+        redux(actions.setHandlingLeft(false))
     }
 
     const handleCancelLeft = () => {
-        props.setHandlingLeft(false)
+        redux(actions.setHandlingLeft(false))
         props.setPlaying(true)
     }
 
@@ -31,15 +35,17 @@ export const ExecuteLeft = (props) => {
 
 export const ExecuteRight = (props) => {
 
+    const redux = useDispatch()
+
     const handleExecuteRight = () => {
         if (props.boundCount + 1 == 1) props.setGotSomethingCursorOffset()
-        props.setRightClipped(true)
+        redux(actions.setRightClipped(true))
         addBoundCount(props)
-        props.setHandlingRight(false)
+        redux(actions.setHandlingRight(false))
     }
 
     const handleCancelRight = () => {
-        props.setHandlingRight(false)
+        redux(actions.setHandlingRight(false))
         props.setPlaying(true)
     }
 

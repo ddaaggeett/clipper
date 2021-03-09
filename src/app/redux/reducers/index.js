@@ -4,6 +4,7 @@ import player from './player'
 import account from './account'
 import library from './library'
 import manager from './manager'
+import app from './app'
 
 export default combineReducers({
     clips,
@@ -11,4 +12,5 @@ export default combineReducers({
     account,
     library,
     manager,
+    app,
 })

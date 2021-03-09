@@ -15,16 +15,12 @@ const socket = io('http://'+ serverIP + ':' + port)
 export default () => {
 
     const player = useRef()
-    const [leftCursor, setLeftCursor] = useState(0)
-    const [rightCursor, setRightCursor] = useState(0)
     const [playing, setPlaying] = useState(true)
-    const [appOpened, setAppOpened] = useState(false)
     const [boundCount, setBoundCount] = useState(0)
-    const [leftClipped, setLeftClipped] = useState(false)
-    const [rightClipped, setRightClipped] = useState(false)
     const [clipPreDB, setClipPreDB] = useState(null)
 
     const { clips } = useSelector(state => state.clips)
+    const { leftCursor, rightCursor } = useSelector(state => state.app)
     const { speed, contentID, videoProgress, panelWidth } = useSelector(state => state.player)
     const selectingFromPlaylist = useSelector(state => state.library.selectingFromPlaylist)
     const { editIndex } = useSelector(state => state.manager)
@@ -37,8 +33,8 @@ export default () => {
             setBoundCount(0)
             player.current.seekTo(rightCursor)
             setPlaying(true)
-            setLeftClipped(false)
-            setRightClipped(false)
+            redux(actions.setLeftClipped(false))
+            redux(actions.setRightClipped(false))
             redux(actions.setGotSomethingCursor(null))
         }
     }, [boundCount])
@@ -76,10 +72,6 @@ export default () => {
             }
             saveClip(clipObject)
         })
-    }
-
-    const handleSetSpeed = (newSpeed) => {
-        redux(actions.updateSpeed(newSpeed))
     }
 
     const getReactPlayerUrl = () => {
@@ -131,14 +123,10 @@ export default () => {
                     config={getConfig()}
                     onProgress={handleVideoProgress}
                     onPause={() => redux(actions.setVideoProgress(videoProgressLocal))}
+                    volume={0}
                     />
                 <Controls
                     player={player}
-                    setSpeed={handleSetSpeed}
-                    leftCursor={leftCursor}
-                    setLeftCursor={setLeftCursor}
-                    rightCursor={rightCursor}
-                    setRightCursor={setRightCursor}
                     handleFinishClip={handleFinishClip}
                     playing={playing}
                     setPlaying={setPlaying}
@@ -146,10 +134,6 @@ export default () => {
                     boundCount={boundCount}
                     setBoundCount={setBoundCount}
                     screenWidth={panelWidth}
-                    leftClipped={leftClipped}
-                    setLeftClipped={setLeftClipped}
-                    rightClipped={rightClipped}
-                    setRightClipped={setRightClipped}
                     />
             </View>
         )
@@ -189,11 +173,6 @@ export default () => {
                             />
                         <Controls
                             player={player}
-                            setSpeed={handleSetSpeed}
-                            leftCursor={leftCursor}
-                            setLeftCursor={setLeftCursor}
-                            rightCursor={rightCursor}
-                            setRightCursor={setRightCursor}
                             handleFinishClip={handleFinishClip}
                             playing={playing}
                             setPlaying={setPlaying}
@@ -201,10 +180,6 @@ export default () => {
                             boundCount={boundCount}
                             setBoundCount={setBoundCount}
                             screenWidth={screenWidth}
-                            leftClipped={leftClipped}
-                            setLeftClipped={setLeftClipped}
-                            rightClipped={rightClipped}
-                            setRightClipped={setRightClipped}
                             />
                     </View>
             }

@@ -159,3 +159,45 @@ export function setVideoSelectorFocused(focused) {
         focused
     }
 }
+
+export function setLeftCursor(cursor) {
+    return {
+        type: actions.SET_LEFT_CURSOR,
+        cursor
+    }
+}
+
+export function setRightCursor(cursor) {
+    return {
+        type: actions.SET_RIGHT_CURSOR,
+        cursor
+    }
+}
+
+export function setHandlingLeft(handling) {
+    return {
+        type: actions.SET_HANDLING_LEFT,
+        handling
+    }
+}
+
+export function setHandlingRight(handling) {
+    return {
+        type: actions.SET_HANDLING_RIGHT,
+        handling
+    }
+}
+
+export function setLeftClipped(clipped) {
+    return {
+        type: actions.SET_LEFT_CLIPPED,
+        clipped
+    }
+}
+
+export function setRightClipped(clipped) {
+    return {
+        type: actions.SET_RIGHT_CLIPPED,
+        clipped
+    }
+}

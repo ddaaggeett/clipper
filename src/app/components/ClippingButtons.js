@@ -14,8 +14,6 @@ export default (props) => {
     const { gotSomethingCursor } = useSelector(state => state.player)
 
     const buttonWidth = props.screenWidth / 3 // divided by number of buttons in row
-    const [handlingLeft, setHandlingLeft] = useState(false)
-    const [handlingRight, setHandlingRight] = useState(false)
 
     const removeBoundCount = (props) => {
         props.setBoundCount(props.boundCount - 1)
@@ -34,29 +32,26 @@ export default (props) => {
                 {...props}
                 removeBoundCount={removeBoundCount}
                 buttonWidth={buttonWidth}
-                handlingLeft={handlingLeft}
-                setHandlingLeft={setHandlingLeft}
-                handlingRight={handlingRight}
-                setHandlingRight={setHandlingRight}
                 setGotSomethingCursorOffset={setGotSomethingCursorOffset}
                 />
             <CursorShifts
                 {...props}
-                handlingLeft={handlingLeft}
-                handlingRight={handlingRight}
                 />
         </View>
     )
 }
 
 const CursorPlacements = (props) => {
-    if (!props.handlingLeft && !props.handlingRight) return (
+
+    const { handlingLeft, handlingRight } = useSelector(state => state.app)
+
+    if (!handlingLeft && !handlingRight) return (
         <View style={styles.contentRow}>
             <ClipInitOrDeleteLeft {...props} />
             <GotSomething {...props} />
             <ClipInitOrDeleteRight {...props} />
         </View>
     )
-    else if(props.handlingLeft) return  <ExecuteLeft {...props} />
-    else if(props.handlingRight) return  <ExecuteRight {...props} />
+    else if(handlingLeft) return  <ExecuteLeft {...props} />
+    else if(handlingRight) return  <ExecuteRight {...props} />
 }
