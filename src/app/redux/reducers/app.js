@@ -7,6 +7,7 @@ const initialState = {
     handlingRight: false,
     leftClipped: false,
     rightClipped: false,
+    boundCount: 0,
 }
 
 export default function app(state = initialState, action) {
@@ -46,6 +47,12 @@ export default function app(state = initialState, action) {
             return {
                 ...state,
                 rightClipped: action.clipped,
+            }
+
+        case actions.SET_BOUND_COUNT:
+            return {
+                ...state,
+                boundCount: action.count,
             }
 
         default:

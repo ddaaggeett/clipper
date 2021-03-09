@@ -7,7 +7,7 @@ import * as actions from '../redux/actions/actionCreators'
 export const ClipInitOrDeleteLeft = (props) => {
 
     const redux = useDispatch()
-    const { leftClipped } = useSelector(state => state.app)
+    const { leftClipped, boundCount } = useSelector(state => state.app)
 
     const handleLeftClip = () => {
         redux(actions.setHandlingLeft(true))
@@ -20,7 +20,7 @@ export const ClipInitOrDeleteLeft = (props) => {
     const handleDeleteLeftClip = () => {
         redux(actions.setHandlingLeft(false))
         redux(actions.setLeftClipped(false))
-        props.removeBoundCount(props)
+        redux(actions.setBoundCount(boundCount - 1))
     }
 
     return (
@@ -47,7 +47,7 @@ export const ClipInitOrDeleteLeft = (props) => {
 export const ClipInitOrDeleteRight = (props) => {
 
     const redux = useDispatch()
-    const { rightClipped } = useSelector(state => state.app)
+    const { rightClipped, boundCount } = useSelector(state => state.app)
 
     const handleRightClip = () => {
         redux(actions.setHandlingRight(true))
@@ -60,7 +60,7 @@ export const ClipInitOrDeleteRight = (props) => {
     const handleDeleteRightClip = () => {
         redux(actions.setHandlingRight(false))
         redux(actions.setRightClipped(false))
-        props.removeBoundCount(props)
+        redux(actions.setBoundCount(boundCount - 1))
     }
 
     return (

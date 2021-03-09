@@ -1,21 +1,18 @@
 import { View, Text, TouchableOpacity } from "react-native"
 import React from 'react'
 import { styles } from "../styles"
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import GotSomething from './GotSomething'
-
-const addBoundCount = (props) => {
-    props.setBoundCount(props.boundCount + 1)
-}
 
 export const ExecuteLeft = (props) => {
 
     const redux = useDispatch()
+    const { boundCount } = useSelector(state => state.app)
 
     const handleExecuteLeft = () => {
         redux(actions.setLeftClipped(true))
-        addBoundCount(props)
+        redux(actions.setBoundCount(boundCount + 1))
         redux(actions.setHandlingLeft(false))
     }
 
@@ -36,11 +33,12 @@ export const ExecuteLeft = (props) => {
 export const ExecuteRight = (props) => {
 
     const redux = useDispatch()
+    const { boundCount } = useSelector(state => state.app)
 
     const handleExecuteRight = () => {
-        if (props.boundCount + 1 == 1) props.setGotSomethingCursorOffset()
+        if (boundCount + 1 == 1) props.setGotSomethingCursorOffset()
         redux(actions.setRightClipped(true))
-        addBoundCount(props)
+        redux(actions.setBoundCount(boundCount + 1))
         redux(actions.setHandlingRight(false))
     }
 

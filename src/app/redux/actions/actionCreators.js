@@ -201,3 +201,10 @@ export function setRightClipped(clipped) {
         clipped
     }
 }
+
+export function setBoundCount(count) {
+    return {
+        type: actions.SET_BOUND_COUNT,
+        count
+    }
+}

@@ -16,13 +16,12 @@ export default () => {
 
     const player = useRef()
     const [playing, setPlaying] = useState(true)
-    const [boundCount, setBoundCount] = useState(0)
     const [clipPreDB, setClipPreDB] = useState(null)
 
     const { clips } = useSelector(state => state.clips)
-    const { leftCursor, rightCursor } = useSelector(state => state.app)
+    const { leftCursor, rightCursor, boundCount } = useSelector(state => state.app)
     const { speed, contentID, videoProgress, panelWidth } = useSelector(state => state.player)
-    const selectingFromPlaylist = useSelector(state => state.library.selectingFromPlaylist)
+    const { selectingFromPlaylist } = useSelector(state => state.library)
     const { editIndex } = useSelector(state => state.manager)
     const { user } = useSelector(state => state.account)
     const redux = useDispatch()
@@ -30,7 +29,7 @@ export default () => {
     useEffect(() => {
         if(boundCount == 2) {
             handleFinishClip()
-            setBoundCount(0)
+            redux(actions.setBoundCount(0))
             player.current.seekTo(rightCursor)
             setPlaying(true)
             redux(actions.setLeftClipped(false))
@@ -131,8 +130,6 @@ export default () => {
                     playing={playing}
                     setPlaying={setPlaying}
                     getVideoId={getContentID}
-                    boundCount={boundCount}
-                    setBoundCount={setBoundCount}
                     screenWidth={panelWidth}
                     />
             </View>
@@ -177,8 +174,6 @@ export default () => {
                             playing={playing}
                             setPlaying={setPlaying}
                             getVideoId={getContentID}
-                            boundCount={boundCount}
-                            setBoundCount={setBoundCount}
                             screenWidth={screenWidth}
                             />
                     </View>
