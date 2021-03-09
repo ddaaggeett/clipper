@@ -2,11 +2,13 @@ const { exec } = require('child_process')
 const fs = require('fs')
 var { dbConnxConfig } = require('../../config')
 var r = require('rethinkdb')
+const path = require('path')
 
 const clip = (videoDirectory, clipObject) => {
 
     r.connect(dbConnxConfig).then(connection => {
-        r.table('clips').get(clipObject.id).run(connection).then(storedClip => { // clip may have been edited before file finished downloading, so get what was sstoredstored
+        r.table('clips').get(clipObject.id).run(connection).then(storedClip => {
+            // clip may have been edited before file finished downloading, so get what was stored
             // TODO: generate better unique clip ID
             let clipID
             if(storedClip.title.length == 0) clipID = storedClip.timestamp + ".mp4"
@@ -24,6 +26,12 @@ const clip = (videoDirectory, clipObject) => {
                     return
                 }
                 console.log('clip made @ ', videoDirectory + "/" + clipID)
+                const videoFilePath = path.join(videoDirectory,clipID)
+                const updatedClipObject = {
+                    ...storedClip,
+                    videoFilePath
+                }
+                r.table('clips').update(updatedClipObject).run(connection)
             })
         }).error(error => {
             console.log(`\nget clip object error\n${error}`)

@@ -1,15 +1,25 @@
-const { videoDataDirectory } = require('../../config')
-var fs = require('fs')
+const { dbConnxConfig, videoDataDirectory } = require('../../config')
+const fs = require('fs')
+const path = require('path')
+const r = require('rethinkdb')
 
 const editVideoFileName = (clipObject) => {
-    const videoDirectory = videoDataDirectory + clipObject.videoId + '/'
+    const videoDirectory = path.join(videoDataDirectory, clipObject.videoId)
     const filenameString = clipObject.title.split(' ').join('_')
-    const newVideoFile = videoDirectory + clipObject.timestamp + '_' + filenameString + '.mp4'
+    const newVideoFile = path.join(videoDirectory, clipObject.timestamp + '_' + filenameString + '.mp4')
     try{
         fs.readdirSync(videoDirectory).forEach((file, i) => {
             if(file.includes(clipObject.timestamp)) {
-                const oldVideoFile = videoDirectory + file
-                fs.renameSync(oldVideoFile, newVideoFile)
+                const oldVideoFile = path.join(videoDirectory, file)
+                fs.rename(oldVideoFile, newVideoFile, () => {
+                    const updatedClipObject = {
+                        ...clipObject,
+                        videoFilePath: newVideoFile
+                    }
+                    r.connect(dbConnxConfig).then(connection => {
+                        r.table('clips').update(updatedClipObject).run(connection)
+                    })
+                })
             }
         })
     }

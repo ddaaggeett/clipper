@@ -2,12 +2,13 @@ const {
     exec,
 } = require('child_process')
 const fs = require('fs')
+const path = require('path')
 const downloadVideo = require('./downloadVideo')
 const clip = require('./clip')
 const { videoDataDirectory } = require('../../config')
 
 const generateClip = (clipObject) => {
-    const videoDirectory = videoDataDirectory + clipObject.videoId
+    const videoDirectory = path.join(videoDataDirectory, clipObject.videoId)
     fs.mkdir(videoDirectory,{recursive:true}, err => {
         if (err) throw err;
         else {

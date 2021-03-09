@@ -7,7 +7,6 @@ const updateClip = (clip) => {
     return new Promise((resolve,reject) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').insert(clip, { returnChanges: true, conflict: 'update' }).run(connection).then(result => {
-                console.log(`\naddClip result\n${JSON.stringify(result,null,4)}`)
                 const updatedClip = result.changes[0].new_val
                 const oldClip = result.changes[0].old_val
                 if (oldClip == null) generateClip(updatedClip)
@@ -36,7 +35,6 @@ const deleteClip = (clip) => {
     return new Promise((resolve,reject) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').get(clip.id).delete({ returnChanges: true }).run(connection).then(result => {
-                console.log(`\ndeleteClip result\n${JSON.stringify(result,null,4)}`)
                 const deletedClip = result.changes[0].old_val
                 resolve(deletedClip)
             }).error(error => {
