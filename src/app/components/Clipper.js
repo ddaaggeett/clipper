@@ -107,7 +107,8 @@ export default () => {
     }, [editIndex])
 
     if (Platform.OS === 'web') {
-        return (
+        if (contentID == null) return null
+        else return (
             <View>
                 <ReactPlayer
                     url={getReactPlayerUrl()}
@@ -137,7 +138,8 @@ export default () => {
         const screenWidth = Dimensions.get('window').width
         const playerHeight = screenWidth * 9 / 16
 
-        return ( // iOS/android
+        if (contentID == null) return null
+        else return (
             <View>
             {
                 selectingFromPlaylist

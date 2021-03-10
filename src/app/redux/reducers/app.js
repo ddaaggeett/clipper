@@ -10,7 +10,7 @@ const initialState = {
     boundCount: 0,
     editIndex: null,
     speed: 1,
-    contentID: '',
+    contentID: null,
     panelWidth: 0,
     videoProgress: 0,
     gotSomethingCursor: null,
