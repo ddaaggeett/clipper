@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity } from "react-native"
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { styles } from "../styles"
+import * as actions from '../redux/actions/actionCreators'
 
 export default (props) => {
 
