@@ -49,7 +49,7 @@ export default () => {
                 <VideoSelector />
                 <Clipper />
             </View>
-            <View style={[styles.panel, {width: panelWidth}]}>
+            <View style={[styles.clipsPanel, styles.panel, {width: panelWidth}]}>
                 <Account />
                 <ClipManager />
             </View>

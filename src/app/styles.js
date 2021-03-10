@@ -98,6 +98,11 @@ export const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     videoPanel: {
+        position: 'fixed',
+        right: '50%',
+    },
+    clipsPanel: {
+        left: '50%'
     },
     usernameNative: {
         alignSelf: 'center',
