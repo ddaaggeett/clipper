@@ -58,6 +58,8 @@ export default (props) => {
 
 const CheckCursor = (props) => {
 
+    const { leftCursor, rightCursor, handlingLeft, handlingRight } = useSelector(state => state.app)
+
     const handleCheckCursor = () => {
         if(handlingLeft) props.player.current.seekTo(leftCursor)
         else if(handlingRight) props.checkEndBound(rightCursor)

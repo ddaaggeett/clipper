@@ -19,12 +19,9 @@ export default (props) => {
 
     useEffect(() => Keyboard.dismiss(), [contentID])
 
-    const selectFromPlaylist = () => {
-        redux(actions.selectingFromPlaylist(true))
-    }
-
     const cancelSelectFromPlaylist = () => {
         redux(actions.selectingFromPlaylist(false))
+        blurVideoSelector()
     }
 
     const focusVideoSelector = () => redux(actions.setVideoSelectorFocused(true))
@@ -59,11 +56,26 @@ export default (props) => {
                         onFocus={focusVideoSelector}
                         onBlur={blurVideoSelector}
                         />
-                    <TouchableOpacity style={styles.controlButton} onPress={() => selectFromPlaylist()}>
-                        <Text style={styles.controlButtonText}>{`select from ${playlist.title}`}</Text>
-                    </TouchableOpacity>
+                    <PlaylistButton />
                 </View>
         }
         </View>
+    )
+
+}
+
+const PlaylistButton = () => {
+
+    const redux = useDispatch()
+    const { videoSelectorFocused } = useSelector(state => state.app)
+    const { playlist } = useSelector(state => state.library)
+
+    const selectFromPlaylist = () => redux(actions.selectingFromPlaylist(true))
+
+    if (!videoSelectorFocused || playlist.id == null) return null
+    else return (
+        <TouchableOpacity style={styles.controlButton} onPress={() => selectFromPlaylist()}>
+            <Text style={styles.controlButtonText}>{`select from ${playlist.title}`}</Text>
+        </TouchableOpacity>
     )
 }
