@@ -6,8 +6,7 @@ import { styles } from "../styles"
 export default (props) => {
 
     const redux = useDispatch()
-    const { speed } = useSelector(state => state.player)
-    const { leftCursor, rightCursor, handlingLeft, handlingRight } = useSelector(state => state.app)
+    const { leftCursor, rightCursor, handlingLeft, handlingRight, speed } = useSelector(state => state.app)
 
     const [rewindToPause, setRewindToPause] = useState()
     const buttonWidth = props.screenWidth / 5 // divided by number of buttons in row

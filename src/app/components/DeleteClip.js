@@ -10,8 +10,7 @@ const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
-    const { panelWidth } = useSelector(state => state.player)
-    const { editIndex } = useSelector(state => state.manager)
+    const { editIndex, panelWidth } = useSelector(state => state.app)
     const { clips } = useSelector(state => state.clips)
     const clip = clips[editIndex]
     const [confirmDelete, setConfirmDelete] = useState(false)

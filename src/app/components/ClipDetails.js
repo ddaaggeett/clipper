@@ -13,7 +13,7 @@ const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
-    const { editIndex } = useSelector(state => state.manager)
+    const { editIndex } = useSelector(state => state.app)
     const { clips } = useSelector(state => state.clips)
     const clip = clips[editIndex]
     const redux = useDispatch()
@@ -45,7 +45,7 @@ export default (props) => {
 
 const ClipPlayer = (props) => {
 
-    const speed = useSelector(state => state.player.speed)
+    const { speed } = useSelector(state => state.app)
     const player = useRef()
     const [playing, setPlaying] = useState(false)
     const screenWidth = Dimensions.get('window').width

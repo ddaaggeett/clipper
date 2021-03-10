@@ -7,7 +7,7 @@ import EditTitleWhoComment from '../../components/EditTitleWhoComment'
 
 export default (props) => {
 
-    const { editIndex } = useSelector(state => state.manager)
+    const { editIndex } = useSelector(state => state.app)
     const isSelected = props.index == editIndex
     const redux = useDispatch()
     const { clips } = useSelector(state => state.clips)

@@ -15,7 +15,7 @@ const socket = io('http://'+ serverIP + ':' + port)
 export default () => {
 
     const { loggedIn, user } = useSelector(state => state.account)
-    const { panelWidth } = useSelector(state => state.player)
+    const { panelWidth } = useSelector(state => state.app)
     const redux = useDispatch()
     const { clips, pending } = useSelector(state => state.clips)
 

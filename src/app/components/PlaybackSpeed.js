@@ -7,7 +7,7 @@ import * as actions from '../redux/actions/actionCreators'
 export default (props) => {
 
     const redux = useDispatch()
-    const { speed } = useSelector(state => state.player)
+    const { speed } = useSelector(state => state.app)
     const buttonWidth = props.screenWidth / 3 // divided by number of buttons in row
 
     const selectedSpeed = (selectedSpeed) => {

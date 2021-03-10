@@ -11,7 +11,7 @@ import GotSomething from './GotSomething'
 export default (props) => {
 
     const redux = useDispatch()
-    const { gotSomethingCursor } = useSelector(state => state.player)
+    const { gotSomethingCursor } = useSelector(state => state.app)
 
     const buttonWidth = props.screenWidth / 3 // divided by number of buttons in row
 

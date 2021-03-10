@@ -11,7 +11,7 @@ const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
-    const { editIndex } = useSelector(state => state.manager)
+    const { editIndex } = useSelector(state => state.app)
     const { clips } = useSelector(state => state.clips)
     const [comment, setComment] = useState()
     const [title, setTitle] = useState()
