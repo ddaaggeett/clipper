@@ -18,7 +18,8 @@ export const styles = StyleSheet.create({
     controlButton: {
         borderColor: 'white',
         borderWidth: 1,
-        padding: 20,
+        paddingTop: 20,
+        paddingBottom: 20,
         backgroundColor:'blue',
     },
     controlButtonText: {
@@ -98,7 +99,6 @@ export const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     videoPanel: {
-        position: 'fixed',
         right: '50%',
     },
     clipsPanel: {

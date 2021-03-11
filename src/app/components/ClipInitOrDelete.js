@@ -31,13 +31,13 @@ export const ClipInitOrDeleteLeft = (props) => {
                     style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"red"}]}
                     onPress={() => handleDeleteLeftClip()}
                     >
-                    <Text style={styles.controlButtonText} >{"DELETE LEFT"}</Text>
+                    <Text style={styles.controlButtonText} >{"DELETE\nLEFT"}</Text>
                 </TouchableOpacity>
             :   <TouchableOpacity
                     style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"green",}]}
                     onPress={() => handleLeftClip()}
                     >
-                    <Text style={styles.controlButtonText}>{"PLACE LEFT"}</Text>
+                    <Text style={styles.controlButtonText}>{"PLACE\nLEFT"}</Text>
                 </TouchableOpacity>
         }
         </View>
@@ -71,13 +71,13 @@ export const ClipInitOrDeleteRight = (props) => {
                     style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"red"}]}
                     onPress={() => handleDeleteRightClip()}
                     >
-                    <Text style={styles.controlButtonText} >{"DELETE RIGHT"}</Text>
+                    <Text style={styles.controlButtonText} >{"DELETE\nRIGHT"}</Text>
                 </TouchableOpacity>
             :   <TouchableOpacity
                     style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"orange",}]}
                     onPress={() => handleRightClip()}
                     >
-                    <Text style={styles.controlButtonText}>{"PLACE RIGHT"}</Text>
+                    <Text style={styles.controlButtonText}>{"PLACE\nRIGHT"}</Text>
                 </TouchableOpacity>
         }
         </View>

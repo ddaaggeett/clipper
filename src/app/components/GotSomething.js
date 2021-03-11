@@ -24,7 +24,7 @@ export default (props) => {
                     style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"gray",}]}
                     onPress={() => handleGotSomething()}
                     >
-                    <Text style={styles.controlButtonText}>{"GOT SOMETHING"}</Text>
+                    <Text style={styles.controlButtonText}>{"GOT\nSOMETHING"}</Text>
                 </TouchableOpacity>
             :   <RewindOrCancel {...props} />
         }
@@ -47,13 +47,13 @@ const RewindOrCancel = (props) => {
                     style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"gray",}]}
                     onPress={() => props.setGotSomethingCursorOffset()}
                     >
-                    <Text style={styles.controlButtonText}>{"<< 10 sec"}</Text>
+                    <Text style={styles.controlButtonText}>{"<< 10\nsec"}</Text>
                 </TouchableOpacity>
             :   <TouchableOpacity
                     style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"gray",}]}
                     onPress={() => handleGotSomethingCancel()}
                     >
-                    <Text style={styles.controlButtonText}>{"DROP IT"}</Text>
+                    <Text style={styles.controlButtonText}>{"DROP\nIT"}</Text>
                 </TouchableOpacity>
         }
         </View>
