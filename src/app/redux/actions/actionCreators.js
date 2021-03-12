@@ -208,3 +208,11 @@ export function setBoundCount(count) {
         count
     }
 }
+
+export function setPlayingClip(playing, contentID) {
+    return {
+        type: actions.SET_PLAYING_CLIP,
+        playing,
+        contentID
+    }
+}

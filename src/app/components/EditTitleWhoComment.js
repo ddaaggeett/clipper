@@ -6,6 +6,7 @@ import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
 import { serverIP, port } from '../../../config'
+import SaveOrPlay from './SaveOrPlay'
 
 const socket = io('http://'+ serverIP + ':' + port)
 
@@ -66,12 +67,9 @@ export default (props) => {
 
     if(Platform.OS === 'web') return (
         <div style={webStyles.clipEdit}>
-            <TouchableOpacity
-                style={[styles.controlButton, {backgroundColor: 'green'}]}
-                onPress={() => handleEditClip()}
-                >
-                <Text style={styles.controlButtonText}>SAVE</Text>
-            </TouchableOpacity>
+            <SaveOrPlay
+                handleEditClip={handleEditClip}
+                />
             <textarea
                 style={webStyles.clipDetail}
                 placeholder={'TITLE'}

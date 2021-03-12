@@ -15,6 +15,7 @@ const initialState = {
     videoProgress: 0,
     gotSomethingCursor: null,
     videoSelectorFocused: false,
+    playingClip: false,
 }
 
 export default function app(state = initialState, action) {
@@ -63,7 +64,12 @@ export default function app(state = initialState, action) {
             }
 
         case actions.SET_EDIT_INDEX:
-            return {
+            if (action.index == null) return {
+                ...state,
+                editIndex: action.index,
+                playingClip: false,
+            }
+            else return {
                 ...state,
                 editIndex: action.index,
             }
@@ -103,6 +109,17 @@ export default function app(state = initialState, action) {
             return {
                 ...state,
                 videoSelectorFocused: action.focused,
+            }
+
+        case actions.SET_PLAYING_CLIP:
+            if(action.playing == true) return {
+                ...state,
+                playingClip: action.playing,
+                contentID: action.contentID,
+            }
+            else return {
+                ...state,
+                playingClip: action.playing
             }
 
         default:

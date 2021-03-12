@@ -12,10 +12,7 @@ export default (props) => {
     const redux = useDispatch()
     const { clips } = useSelector(state => state.clips)
 
-    const handleSelectClipItem = () => {
-        redux(actions.setEditIndex(props.index))
-        redux(actions.updateContentID(clips[props.index].videoId))
-    }
+    const handleSelectClipItem = () => redux(actions.setEditIndex(props.index))
 
     if(isSelected) return (
         <div style={styles.clipItem}>

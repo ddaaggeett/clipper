@@ -19,7 +19,7 @@ export default () => {
     const [clipPreDB, setClipPreDB] = useState(null)
 
     const { clips } = useSelector(state => state.clips)
-    const { leftCursor, rightCursor, boundCount, editIndex, speed, contentID, videoProgress, panelWidth } = useSelector(state => state.app)
+    const { leftCursor, rightCursor, boundCount, editIndex, speed, contentID, videoProgress, panelWidth, playingClip } = useSelector(state => state.app)
     const { selectingFromPlaylist } = useSelector(state => state.library)
     const { user } = useSelector(state => state.account)
     const redux = useDispatch()
@@ -71,32 +71,8 @@ export default () => {
         })
     }
 
-    const getReactPlayerUrl = () => {
-        if(editIndex != null) {
-            const start = Math.floor(clips[editIndex].start)
-            const end = Math.ceil(clips[editIndex].end)
-            // return 'https://www.youtube.com/embed/'+contentID+'?start='+start+'&end=' + end
-            return 'https://www.youtube.com/v/' + contentID + '?start=' + start + '&end=' + end
-        }
-        else return 'https://www.youtube.com/watch?v=' + contentID
-    }
-
-    const getConfig = () => {
-        if (editIndex != null) {
-            return {
-                youtube: {
-                    playerVars: { end: Math.ceil(clips[editIndex].end) }
-                }
-            }
-        }
-        else return {}
-    }
-
-    const handleVideoProgress = (progress) => {
-        if (editIndex == null) setVideoProgressLocal(progress.playedSeconds)
-    }
-
     const [videoProgressLocal, setVideoProgressLocal] = useState(videoProgress)
+    const handleVideoProgress = (progress) => setVideoProgressLocal(progress.playedSeconds)
 
     useEffect(() => {
         if (editIndex == null && videoProgressLocal > 0) {
@@ -110,19 +86,33 @@ export default () => {
         if (contentID == null) return null
         else return (
             <View>
-                <ReactPlayer
-                    url={getReactPlayerUrl()}
-                    ref={player}
-                    playing={playing}
-                    playbackRate={speed}
-                    width={panelWidth}
-                    height={panelWidth * 9 / 16}
-                    controls={true}
-                    config={getConfig()}
-                    onProgress={handleVideoProgress}
-                    onPause={() => redux(actions.setVideoProgress(videoProgressLocal))}
-                    volume={0}
-                    />
+            {
+                playingClip
+                ?   <ReactPlayer
+                        ref={player}
+                        url={'https://www.youtube.com/v/' + clips[editIndex].videoId + '?start=' + Math.floor(clips[editIndex].start) + '&end=' + Math.ceil(clips[editIndex].end)}
+                        playing={playing}
+                        playbackRate={speed}
+                        width={panelWidth}
+                        height={panelWidth * 9 / 16}
+                        controls={true}
+                        onProgress={handleVideoProgress}
+                        onPause={() => redux(actions.setVideoProgress(videoProgressLocal))}
+                        volume={100}
+                        />
+                :   <ReactPlayer
+                        ref={player}
+                        url={'https://www.youtube.com/watch?v=' + contentID}
+                        playing={playing}
+                        playbackRate={speed}
+                        width={panelWidth}
+                        height={panelWidth * 9 / 16}
+                        controls={true}
+                        onProgress={handleVideoProgress}
+                        onPause={() => redux(actions.setVideoProgress(videoProgressLocal))}
+                        volume={100}
+                        />
+            }
                 <Controls
                     player={player}
                     handleFinishClip={handleFinishClip}
