@@ -25,17 +25,13 @@ export default (props) => {
         })
     }
 
-    var buttonWidth
-    if(Platform.OS === 'web') buttonWidth = panelWidth / 2
-    else buttonWidth = Dimensions.get('window').width/2
-
     return (
         confirmDelete
         ?   <View style={styles.contentRow}>
-                <TouchableOpacity style={[styles.controlButton, styles.deleteClip, {width: buttonWidth}]} onPress={() => deleteClip()}>
+                <TouchableOpacity style={[styles.controlButton, styles.deleteClip]} onPress={() => deleteClip()}>
                     <Text style={styles.controlButtonText}>{'CONFIRM DELETE'}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.controlButton, {backgroundColor:'orange', width: buttonWidth}]} onPress={() => setConfirmDelete(false)}>
+                <TouchableOpacity style={[styles.controlButton, {backgroundColor:'orange'}]} onPress={() => setConfirmDelete(false)}>
                     <Text style={styles.controlButtonText}>{'CANCEL'}</Text>
                 </TouchableOpacity>
             </View>

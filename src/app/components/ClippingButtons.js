@@ -13,8 +13,6 @@ export default (props) => {
     const redux = useDispatch()
     const { gotSomethingCursor } = useSelector(state => state.app)
 
-    const buttonWidth = props.screenWidth / 3 // divided by number of buttons in row
-
     const setGotSomethingCursorOffset = () => {
         props.setPlaying(true)
         const newCursor = gotSomethingCursor - 10 // seems a good rewind amount
@@ -26,7 +24,6 @@ export default (props) => {
         <View>
             <CursorPlacements
                 {...props}
-                buttonWidth={buttonWidth}
                 setGotSomethingCursorOffset={setGotSomethingCursorOffset}
                 />
             <CursorShifts

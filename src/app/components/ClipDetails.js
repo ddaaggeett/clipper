@@ -48,15 +48,13 @@ const ClipPlayer = (props) => {
     const { speed } = useSelector(state => state.app)
     const player = useRef()
     const [playing, setPlaying] = useState(false)
-    const screenWidth = Dimensions.get('window').width
-    const playerHeight = screenWidth * 9 / 16
 
     if (props.clip != undefined) return (
         <YoutubePlayer
             ref={player}
             play={playing}
-            height={playerHeight}
-            width={screenWidth}
+            height={Dimensions.get('window').width * 9 / 16}
+            width={Dimensions.get('window').width}
             videoId={props.clip.videoId}
             playbackRate={speed}
             initialPlayerParams={{

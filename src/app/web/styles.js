@@ -13,7 +13,7 @@ export const styles = {
         borderRadius: 5,
         margin: 5,
         padding: 5,
-        cursor: 'default',
+        cursor: 'pointer',
     },
     clipDetail:{
         margin:2,

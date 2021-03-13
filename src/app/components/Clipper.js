@@ -119,15 +119,11 @@ export default () => {
                     playing={playing}
                     setPlaying={setPlaying}
                     getVideoId={getContentID}
-                    screenWidth={panelWidth}
                     />
             </View>
         )
     }
     else {
-        const screenWidth = Dimensions.get('window').width
-        const playerHeight = screenWidth * 9 / 16
-
         if (contentID == null) return null
         else return (
             <View>
@@ -149,8 +145,8 @@ export default () => {
                 :   <View>
                         <YoutubePlayer
                             ref={player}
-                            height={playerHeight}
-                            width={screenWidth}
+                            height={Dimensions.get('window').width * 9 / 16}
+                            width={Dimensions.get('window').width}
                             play={playing}
                             onReady={() => setPlaying(true)}
                             videoId={contentID}
@@ -164,7 +160,6 @@ export default () => {
                             playing={playing}
                             setPlaying={setPlaying}
                             getVideoId={getContentID}
-                            screenWidth={screenWidth}
                             />
                     </View>
             }

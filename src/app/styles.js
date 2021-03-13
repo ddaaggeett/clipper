@@ -16,11 +16,12 @@ export const styles = StyleSheet.create({
         marginBottom: 5,
     },
     controlButton: {
+        flex: 1,
         borderColor: 'white',
         borderWidth: 1,
         paddingTop: 20,
         paddingBottom: 20,
-        backgroundColor:'blue',
+        backgroundColor:'black',
     },
     controlButtonText: {
         textAlign:"center",

@@ -17,18 +17,14 @@ export default (props) => {
     }
 
     return (
-        <View>
-        {
-            gotSomethingCursor == null
-            ?   <TouchableOpacity
-                    style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"gray",}]}
-                    onPress={() => handleGotSomething()}
-                    >
-                    <Text style={styles.controlButtonText}>{"GOT\nSOMETHING"}</Text>
-                </TouchableOpacity>
-            :   <RewindOrCancel {...props} />
-        }
-        </View>
+        gotSomethingCursor == null
+        ?   <TouchableOpacity
+                style={styles.controlButton}
+                onPress={() => handleGotSomething()}
+                >
+                <Text style={styles.controlButtonText}>{"GOT\nSOMETHING"}</Text>
+            </TouchableOpacity>
+        :   <RewindOrCancel {...props} />
     )
 }
 
@@ -40,22 +36,18 @@ const RewindOrCancel = (props) => {
     const handleGotSomethingCancel = () => redux(actions.setGotSomethingCursor(null))
 
     return (
-        <View>
-        {
-            rightClipped && boundCount == 1
-            ?   <TouchableOpacity
-                    style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"gray",}]}
-                    onPress={() => props.setGotSomethingCursorOffset()}
-                    >
-                    <Text style={styles.controlButtonText}>{"<< 10\nsec"}</Text>
-                </TouchableOpacity>
-            :   <TouchableOpacity
-                    style={[styles.controlButton, {width: props.buttonWidth, backgroundColor:"gray",}]}
-                    onPress={() => handleGotSomethingCancel()}
-                    >
-                    <Text style={styles.controlButtonText}>{"DROP\nIT"}</Text>
-                </TouchableOpacity>
-        }
-        </View>
+        rightClipped && boundCount == 1
+        ?   <TouchableOpacity
+                style={[styles.controlButton, {backgroundColor:"#440075"}]}
+                onPress={() => props.setGotSomethingCursorOffset()}
+                >
+                <Text style={styles.controlButtonText}>{"<< 10\nsec"}</Text>
+            </TouchableOpacity>
+        :   <TouchableOpacity
+                style={[styles.controlButton, {backgroundColor:"#440075"}]}
+                onPress={() => handleGotSomethingCancel()}
+                >
+                <Text style={styles.controlButtonText}>{"DROP\nIT"}</Text>
+            </TouchableOpacity>
     )
 }
