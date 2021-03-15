@@ -71,16 +71,25 @@ export default () => {
         })
     }
 
-    const [videoProgressLocal, setVideoProgressLocal] = useState(videoProgress)
-    const handleVideoProgress = (progress) => setVideoProgressLocal(progress.playedSeconds)
+    const handleVideoProgress = (progress) => redux(actions.setVideoProgress(progress.playedSeconds))
 
     useEffect(() => {
-        if (editIndex == null && videoProgressLocal > 0) {
-            setTimeout(() => { // TODO: don't do a timeout
-                player.current.seekTo(videoProgressLocal)
-            }, 500)
-        }
+        if (editIndex == null && videoProgress > 0) playAtLatestProgress()
     }, [editIndex])
+
+    const handleChangeEvent = (event) => {
+        if(event === 'paused') {
+            player.current.getCurrentTime().then(time => {
+                redux(actions.setVideoProgress(time))
+            })
+        }
+    }
+
+    const playAtLatestProgress = () => {
+        setTimeout(() => { // TODO: don't do a timeout
+            player.current.seekTo(videoProgress)
+        }, 500)
+    }
 
     if (Platform.OS === 'web') {
         if (contentID == null) return null
@@ -97,8 +106,6 @@ export default () => {
                         height={panelWidth * 9 / 16}
                         controls={true}
                         onProgress={handleVideoProgress}
-                        onPause={() => redux(actions.setVideoProgress(videoProgressLocal))}
-                        volume={100}
                         />
                 :   <ReactPlayer
                         ref={player}
@@ -109,8 +116,6 @@ export default () => {
                         height={panelWidth * 9 / 16}
                         controls={true}
                         onProgress={handleVideoProgress}
-                        onPause={() => redux(actions.setVideoProgress(videoProgressLocal))}
-                        volume={100}
                         />
             }
                 <Controls
@@ -135,11 +140,12 @@ export default () => {
                             height={100}
                             width={178}
                             play={playing}
-                            onReady={() => setPlaying(true)}
+                            onReady={() => playAtLatestProgress()}
                             videoId={contentID}
                             playList={contentID}
                             playbackRate={speed}
                             onPlaybackRateChange={() => setPlaying(true)}
+                            onChangeState={handleChangeEvent}
                             />
                     </View>
                 :   <View>
@@ -148,11 +154,12 @@ export default () => {
                             height={Dimensions.get('window').width * 9 / 16}
                             width={Dimensions.get('window').width}
                             play={playing}
-                            onReady={() => setPlaying(true)}
+                            onReady={() => playAtLatestProgress()}
                             videoId={contentID}
                             playList={contentID}
                             playbackRate={speed}
                             onPlaybackRateChange={() => setPlaying(true)}
+                            onChangeState={handleChangeEvent}
                             />
                         <Controls
                             player={player}

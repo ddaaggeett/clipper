@@ -16,8 +16,8 @@ export default (props) => {
 
     if(isSelected) return (
         <div style={styles.clipItem}>
-            <EditTitleWhoComment index={props.index} />
-            <DeleteClip index={props.index} />
+            <EditTitleWhoComment />
+            <DeleteClip />
         </div>
     )
     else return (
