@@ -91,10 +91,10 @@ export function updateUser(user) {
     }
 }
 
-export function setVideoProgress(progress) {
+export function setVideoProgression(progressionObject) {
     return {
-        type: actions.SET_VIDEO_PROGRESS,
-        progress,
+        type: actions.SET_VIDEO_PROGRESSION,
+        progressionObject,
     }
 }
 

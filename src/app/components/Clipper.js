@@ -19,8 +19,8 @@ export default () => {
     const [clipPreDB, setClipPreDB] = useState(null)
 
     const { clips } = useSelector(state => state.clips)
-    const { leftCursor, rightCursor, boundCount, editIndex, speed, contentID, videoProgress, panelWidth, playingClip } = useSelector(state => state.app)
-    const { selectingFromPlaylist } = useSelector(state => state.library)
+    const { leftCursor, rightCursor, boundCount, editIndex, speed, contentID, panelWidth, playingClip } = useSelector(state => state.app)
+    const { selectingFromPlaylist, videoProgressions } = useSelector(state => state.library)
     const { user } = useSelector(state => state.account)
     const redux = useDispatch()
 
@@ -71,23 +71,23 @@ export default () => {
         })
     }
 
-    const handleVideoProgress = (progress) => redux(actions.setVideoProgress(progress.playedSeconds))
-
-    useEffect(() => {
-        if (editIndex == null && videoProgress > 0) playAtLatestProgress()
-    }, [editIndex])
+    const updateProgression = (time) => redux(actions.setVideoProgression({videoId: contentID, progress: time}))
+    const handleVideoProgress = (progress) => updateProgression(progress.playedSeconds)
 
     const handleChangeEvent = (event) => {
-        if(event === 'paused') {
-            player.current.getCurrentTime().then(time => {
-                redux(actions.setVideoProgress(time))
-            })
-        }
+        if(event === 'paused') player.current.getCurrentTime().then(time => updateProgression(time))
+        // TODO: else if (event === 'ended') updateProgression(-1)
     }
+
+    const [videoProgressionsIndex, setVideoProgressionsIndex] = useState(-1)
+    useEffect(() => {
+        setVideoProgressionsIndex(videoProgressions.findIndex(item => item.videoId === contentID))
+    }, [contentID])
 
     const playAtLatestProgress = () => {
         setTimeout(() => { // TODO: don't do a timeout
-            player.current.seekTo(videoProgress)
+            if (videoProgressionsIndex != -1) player.current.seekTo(videoProgressions[videoProgressionsIndex].progress)
+            else player.current.seekTo(0)
         }, 500)
     }
 
@@ -116,6 +116,8 @@ export default () => {
                         height={panelWidth * 9 / 16}
                         controls={true}
                         onProgress={handleVideoProgress}
+                        onEnded={() => {}} // TODO: () => updateProgression(-1)
+                        onReady={() => playAtLatestProgress()}
                         />
             }
                 <Controls

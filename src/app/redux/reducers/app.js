@@ -12,7 +12,6 @@ const initialState = {
     speed: 1,
     contentID: null,
     panelWidth: 0,
-    videoProgress: 0,
     gotSomethingCursor: null,
     videoSelectorFocused: false,
     playingClip: false,
@@ -91,12 +90,6 @@ export default function app(state = initialState, action) {
             return {
                 ...state,
                 panelWidth: action.width,
-            }
-
-        case actions.SET_VIDEO_PROGRESS:
-            return {
-                ...state,
-                videoProgress: action.progress,
             }
 
         case actions.SET_GOT_SOMETHING_CURSOR:

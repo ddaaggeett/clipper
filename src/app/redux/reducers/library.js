@@ -8,6 +8,7 @@ const initialState = {
         title: '',
         videos: [],
     },
+    videoProgressions: [],
 }
 
 export default function library(state = initialState, action) {
@@ -32,6 +33,26 @@ export default function library(state = initialState, action) {
                     ...state.playlist,
                     ...action.playlist,
                 }
+            }
+
+        case actions.SET_VIDEO_PROGRESSION:
+
+            var index = state.videoProgressions.findIndex(item => item.videoId === action.progressionObject.videoId)
+
+            if (index == -1) return {
+                ...state,
+                videoProgressions: [
+                    ...state.videoProgressions,
+                    action.progressionObject
+                ]
+            }
+            else return {
+                ...state,
+                videoProgressions: [
+                    ...state.videoProgressions.slice(0,index),
+                    action.progressionObject,
+                    ...state.videoProgressions.slice(index + 1, state.videoProgressions.length)
+                ]
             }
 
         default:
