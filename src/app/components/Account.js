@@ -6,6 +6,7 @@ import * as Google from 'expo-google-app-auth'
 import * as AppAuth from 'expo-app-auth'
 import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 import Settings from './Settings'
 import { io } from 'socket.io-client'
 
@@ -14,10 +15,15 @@ const socket = io('http://'+ serverIP + ':' + port)
 export default (props) => {
 
     const redux = useDispatch()
+    const navigation = useNavigation()
     const { loggedIn, user, accessToken, refreshToken, accessExpirationTime } = useSelector(state => state.account)
     const { clips, pending } = useSelector(state => state.clips)
 
     const [refreshInterval, setRefreshInterval] = useState()
+
+    useEffect(() => {
+        if (loggedIn) navigation.navigate('Clipper')
+    }, [])
 
     useEffect(() => {
         if(loggedIn) {
