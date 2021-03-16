@@ -37,6 +37,7 @@ export default () => {
     }, [boundCount])
 
     const saveClip = (clipObject) => {
+        redux(actions.setEditIndex(clips.length))
         redux(actions.addPendingClip(clipObject))
         socket.volatile.emit('updateClip', clipObject, returnedClip => {
             redux(actions.fulfillPendingClip(returnedClip))
@@ -92,7 +93,7 @@ export default () => {
     }
 
     if (Platform.OS === 'web') {
-        if (contentID == null) return null
+        if (contentID.length == 0) return null
         else return (
             <View>
             {
@@ -131,7 +132,7 @@ export default () => {
         )
     }
     else {
-        if (contentID == null) return null
+        if (contentID.length == 0) return null
         else return (
             <View>
             {

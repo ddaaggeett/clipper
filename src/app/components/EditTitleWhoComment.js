@@ -37,6 +37,7 @@ export default (props) => {
 
     const controlEnterPress = (event) => {
         if (event.ctrlKey && event.keyCode == 13) handleEditClip()
+        else if (event.key === 'Escape') redux(actions.setEditIndex(null))
     }
 
     useEffect(() => {
@@ -47,7 +48,7 @@ export default (props) => {
         }
     }, [controlEnterPress])
 
-    const editClips = (updatedClip) => {
+    const updateEditedClip = (updatedClip) => {
         if(Platform.OS === 'web') redux(actions.setEditIndex(null))
         redux(actions.updatePendingClip(updatedClip))
         socket.volatile.emit('updateClip', updatedClip, returnedClip => {
@@ -62,7 +63,7 @@ export default (props) => {
             title: title,
             who: who,
         }
-        editClips(editedClip)
+        updateEditedClip(editedClip)
     }
 
     if(Platform.OS === 'web') return (

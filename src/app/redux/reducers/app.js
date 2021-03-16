@@ -10,7 +10,7 @@ const initialState = {
     boundCount: 0,
     editIndex: null,
     speed: 1,
-    contentID: null,
+    contentID: '',
     panelWidth: 0,
     gotSomethingCursor: null,
     videoSelectorFocused: false,
@@ -83,7 +83,6 @@ export default function app(state = initialState, action) {
             return {
                 ...state,
                 contentID: action.contentID,
-                videoProgress: 0,
             }
 
         case actions.SET_WEB_PANEL_WIDTH:
