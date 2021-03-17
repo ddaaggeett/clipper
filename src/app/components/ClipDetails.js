@@ -35,7 +35,6 @@ export default (props) => {
                 clip={clip}
                 />
             <EditTitleWhoComment />
-            <Text style={{color:'white'}}>{JSON.stringify(clip, null, 4)}</Text>
             <DeleteClip
                 saveAndExit={saveAndExit}
                 />

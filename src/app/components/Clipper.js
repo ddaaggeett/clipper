@@ -12,7 +12,7 @@ import * as actions from '../redux/actions/actionCreators'
 
 const socket = io('http://'+ serverIP + ':' + port)
 
-export default () => {
+export default (props) => {
 
     const player = useRef()
     const [playing, setPlaying] = useState(true)
@@ -54,6 +54,7 @@ export default () => {
             end: rightCursor,
             duration: clipDuration,
             key: timestamp,
+            title: props.pendingTitle,
             timestamp,
         }
         if (Platform.OS === 'web') {

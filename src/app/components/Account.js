@@ -27,6 +27,7 @@ export default (props) => {
 
     useEffect(() => {
         if(loggedIn) {
+            navigation.navigate('Clipper')
             const intervalTime = 1000
             setRefreshInterval(setInterval(() => {
                 if ((accessExpirationTime - Date.now()) < intervalTime) {
