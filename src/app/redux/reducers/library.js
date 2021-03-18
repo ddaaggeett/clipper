@@ -2,6 +2,7 @@ import * as actions from '../actions'
 
 const initialState = {
     selectingFromPlaylist: false,
+    selectingUnfinishedVideo: false,
     playlists:[],
     playlist: {
         id: null,
@@ -39,7 +40,14 @@ export default function library(state = initialState, action) {
 
             var index = state.videoProgressions.findIndex(item => item.videoId === action.progressionObject.videoId)
 
-            if (index == -1) return {
+            if (action.progressionObject.progress == null) return {
+                ...state,
+                videoProgressions: [
+                    ...state.videoProgressions.slice(0,index),
+                    ...state.videoProgressions.slice(index + 1, state.videoProgressions.length)
+                ]
+            }
+            else if (index == -1) return {
                 ...state,
                 videoProgressions: [
                     ...state.videoProgressions,
@@ -53,6 +61,12 @@ export default function library(state = initialState, action) {
                     action.progressionObject,
                     ...state.videoProgressions.slice(index + 1, state.videoProgressions.length)
                 ]
+            }
+
+        case actions.SELECTING_UNFINISHED_VIDEO:
+            return {
+                ...state,
+                selectingUnfinishedVideo: action.selecting
             }
 
         default:

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, TextInput } from 'react-native'
+import { View, TextInput, ScrollView } from 'react-native'
 import { useSelector } from 'react-redux'
 import { StatusBar } from 'expo-status-bar';
 import Clipper from '../components/Clipper'
@@ -9,7 +9,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default () => {
 
-    const { boundCount } = useSelector(state => state.app)
+    const { contentID, boundCount, videoSelectorFocused } = useSelector(state => state.app)
+    const { selectingFromPlaylist, selectingUnfinishedVideo } = useSelector(state => state.library)
     const [pendingTitle, setPendingTitle] = useState('')
 
     useEffect(() => {
@@ -18,16 +19,22 @@ export default () => {
 
     return (
         <SafeAreaView style={styles.container}>
+        <ScrollView>
             <StatusBar style="light" />
             <Clipper pendingTitle={pendingTitle} />
             <VideoSelector />
-            <TextInput
-                style={[styles.clipItemText, styles.titleInput]}
-                onChangeText={text => setPendingTitle(text)}
-                value={pendingTitle}
-                placeholder={"PENDING TITLE"}
-                placeholderTextColor={"yellow"}
-                />
+            {
+                videoSelectorFocused || selectingFromPlaylist || selectingUnfinishedVideo || contentID.length == 0
+                ?   null
+                :   <TextInput
+                        style={[styles.clipItemText, styles.titleInput]}
+                        onChangeText={text => setPendingTitle(text)}
+                        value={pendingTitle}
+                        placeholder={"PENDING TITLE"}
+                        placeholderTextColor={"yellow"}
+                        />
+            }
+        </ScrollView>
         </SafeAreaView>
     )
 }

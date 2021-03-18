@@ -20,7 +20,7 @@ export default (props) => {
 
     const { clips } = useSelector(state => state.clips)
     const { leftCursor, rightCursor, boundCount, editIndex, speed, contentID, panelWidth, playingClip } = useSelector(state => state.app)
-    const { selectingFromPlaylist, videoProgressions } = useSelector(state => state.library)
+    const { selectingFromPlaylist, selectingUnfinishedVideo, videoProgressions } = useSelector(state => state.library)
     const { user } = useSelector(state => state.account)
     const redux = useDispatch()
 
@@ -78,7 +78,7 @@ export default (props) => {
 
     const handleChangeEvent = (event) => {
         if(event === 'paused') player.current.getCurrentTime().then(time => updateProgression(time))
-        // TODO: else if (event === 'ended') updateProgression(-1)
+        else if (event === 'ended') updateProgression(null)
     }
 
     const [videoProgressionsIndex, setVideoProgressionsIndex] = useState(-1)
@@ -118,7 +118,7 @@ export default (props) => {
                         height={panelWidth * 9 / 16}
                         controls={true}
                         onProgress={handleVideoProgress}
-                        onEnded={() => {}} // TODO: () => updateProgression(-1)
+                        onEnded={() => updateProgression(null)}
                         onReady={() => playAtLatestProgress()}
                         />
             }
@@ -137,7 +137,7 @@ export default (props) => {
         else return (
             <View>
             {
-                selectingFromPlaylist
+                selectingFromPlaylist || selectingUnfinishedVideo
                 ?   <View>
                         <YoutubePlayer
                             ref={player}

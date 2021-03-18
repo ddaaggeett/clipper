@@ -3,13 +3,14 @@ import React, { useEffect } from 'react'
 import { styles } from "../styles"
 import { useSelector, useDispatch } from 'react-redux'
 import Playlist from './Playlist'
+import UnfinishedVideosList from './UnfinishedVideosList'
 import * as actions from '../redux/actions/actionCreators'
 import getContentID from '../getContentID'
 
 export default (props) => {
 
     const { contentID, panelWidth } = useSelector(state => state.app)
-    const { playlist, selectingFromPlaylist } = useSelector(state => state.library)
+    const { playlist, selectingFromPlaylist, selectingUnfinishedVideo } = useSelector(state => state.library)
     const redux = useDispatch()
 
     const handleGetPlayContent = (text) => {
@@ -21,6 +22,7 @@ export default (props) => {
 
     const cancelSelectFromPlaylist = () => {
         redux(actions.selectingFromPlaylist(false))
+        redux(actions.selectingUnfinishedVideo(false))
         blurVideoSelector()
     }
 
@@ -39,12 +41,16 @@ export default (props) => {
     else return (
         <View>
         {
-            selectingFromPlaylist
+            selectingFromPlaylist || selectingUnfinishedVideo
             ?   <View>
                     <TouchableOpacity style={[styles.controlButton, {backgroundColor:'red'}]} onPress={() => cancelSelectFromPlaylist()}>
                         <Text style={styles.controlButtonText}>CANCEL</Text>
                     </TouchableOpacity>
-                    <Playlist />
+                    {
+                        selectingFromPlaylist
+                        ?   <Playlist />
+                        :   <UnfinishedVideosList />
+                    }
                 </View>
             :   <View>
                     <TextInput
@@ -56,12 +62,31 @@ export default (props) => {
                         onFocus={focusVideoSelector}
                         onBlur={blurVideoSelector}
                         />
-                    <PlaylistButton />
+                    <View style={styles.contentRow}>
+                        <PlaylistButton />
+                        <UnfinishedVideosButton />
+                    </View>
                 </View>
         }
         </View>
     )
 
+}
+
+const UnfinishedVideosButton = () => {
+
+    const redux = useDispatch()
+    const { videoProgressions } = useSelector(state => state.library)
+    const { videoSelectorFocused } = useSelector(state => state.app)
+
+    const selectUnfinished = () => redux(actions.selectingUnfinishedVideo(true))
+
+    if (videoSelectorFocused || videoProgressions.length == 0) return null
+    else return (
+        <TouchableOpacity style={styles.controlButton} onPress={() => selectUnfinished()}>
+            <Text style={styles.controlButtonText}>{`unfinished videos`}</Text>
+        </TouchableOpacity>
+    )
 }
 
 const PlaylistButton = () => {
@@ -72,7 +97,7 @@ const PlaylistButton = () => {
 
     const selectFromPlaylist = () => redux(actions.selectingFromPlaylist(true))
 
-    if (!videoSelectorFocused || playlist.id == null) return null
+    if (videoSelectorFocused || playlist.id == null) return null
     else return (
         <TouchableOpacity style={styles.controlButton} onPress={() => selectFromPlaylist()}>
             <Text style={styles.controlButtonText}>{`select from ${playlist.title}`}</Text>
