@@ -32,10 +32,10 @@ export const ClipInitOrDeleteLeft = (props) => {
                 <Text style={styles.controlButtonText} >{"DELETE\nLEFT"}</Text>
             </TouchableOpacity>
         :   <TouchableOpacity
-                style={[styles.controlButton, {backgroundColor:"green",}]}
+                style={[styles.controlButton, {backgroundColor:"#444444",}]}
                 onPress={() => handleLeftClip()}
                 >
-                <Text style={styles.controlButtonText}>{"PLACE\nLEFT"}</Text>
+                <Text style={styles.controlButtonText}>{"LEFT\nCURSOR"}</Text>
             </TouchableOpacity>
     )
 }
@@ -68,10 +68,10 @@ export const ClipInitOrDeleteRight = (props) => {
                 <Text style={styles.controlButtonText} >{"DELETE\nRIGHT"}</Text>
             </TouchableOpacity>
         :   <TouchableOpacity
-                style={[styles.controlButton, {backgroundColor:"orange",}]}
+                style={[styles.controlButton, {backgroundColor:"#444444",}]}
                 onPress={() => handleRightClip()}
                 >
-                <Text style={styles.controlButtonText}>{"PLACE\nRIGHT"}</Text>
+                <Text style={styles.controlButtonText}>{"RIGHT\nCURSOR"}</Text>
             </TouchableOpacity>
     )
 }

@@ -41,6 +41,7 @@ export default (props) => {
     if(handlingLeft || handlingRight) {
         return (
             <View>
+                <CheckCursor {...props} checkEndBound={checkEndBound} />
                 <View style={styles.contentRow}>
                     <TouchableOpacity style={[styles.controlButton, {backgroundColor: '#440075'}]} onPress={() => setCursorOffset(-1)}><Text style={styles.controlButtonText}>{"<<\n1.00\nsec"}</Text></TouchableOpacity>
                     <TouchableOpacity style={[styles.controlButton, {backgroundColor: '#2d004e'}]} onPress={() => setCursorOffset(-0.25)}><Text style={styles.controlButtonText}>{"<<\n0.25\nsec"}</Text></TouchableOpacity>
@@ -48,7 +49,6 @@ export default (props) => {
                     <TouchableOpacity style={[styles.controlButton, {backgroundColor: '#17027'}]} onPress={() => setCursorOffset(0.1)}><Text style={styles.controlButtonText}>{">>\n0.10\nsec"}</Text></TouchableOpacity>
                     <TouchableOpacity style={[styles.controlButton, {backgroundColor: '#2d004e'}]} onPress={() => setCursorOffset(0.25)}><Text style={styles.controlButtonText}>{">>\n0.25\nsec"}</Text></TouchableOpacity>
                 </View>
-                <CheckCursor {...props} checkEndBound={checkEndBound} />
             </View>
         )
     }
@@ -65,6 +65,8 @@ const CheckCursor = (props) => {
     }
 
     return (
-        <View><TouchableOpacity onPress={() => handleCheckCursor()} style={styles.controlButton}><Text style={styles.controlButtonText}>{"CHECK CURSOR"}</Text></TouchableOpacity></View>
+        <TouchableOpacity onPress={() => handleCheckCursor()} style={[styles.controlButton, {backgroundColor: '#444444'}]}>
+            <Text style={styles.controlButtonText}>{"CHECK CURSOR"}</Text>
+        </TouchableOpacity>
     )
 }
