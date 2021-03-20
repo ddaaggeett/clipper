@@ -1,7 +1,5 @@
 import React from 'react'
-import {
-    View,
-} from 'react-native'
+import { View } from 'react-native'
 import { styles } from '../styles'
 import { StatusBar } from 'expo-status-bar';
 import Account from '../components/Account'

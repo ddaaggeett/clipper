@@ -124,7 +124,7 @@ export default (props) => {
             loggedIn
             ?   <View style={styles.accountLoggedIn}>
                     <TouchableOpacity
-                        style={[styles.controlButton, {backgroundColor: 'red'}]}
+                        style={[styles.controlButton, {flex: 0, backgroundColor: 'red'}]}
                         onPress={() => handleLogout()}
                         >
                         <Text style={styles.controlButtonText}>Logout</Text>
@@ -134,7 +134,7 @@ export default (props) => {
                 </View>
             :   <View style={styles.accountLoggedOut}>
                     <TouchableOpacity
-                        style={[styles.controlButton, {backgroundColor: 'purple'}]}
+                        style={[styles.controlButton, {flex: 0, backgroundColor: 'purple'}]}
                         onPress={() => handleLogin()}
                         >
                         <Text style={styles.controlButtonText}>Login with Google</Text>

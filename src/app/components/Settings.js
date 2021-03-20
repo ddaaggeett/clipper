@@ -7,7 +7,7 @@ export default (props) => {
     return (
         <View style={{marginTop:25, marginBottom:25}}>
             <Text style={{color:'white'}}>settings</Text>
-            <PlaylistSelector {...props} />
+            {/*<PlaylistSelector {...props} />*/}
         </View>
     )
 }

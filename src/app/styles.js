@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     },
     controlButton: {
         flex: 1,
-        borderColor: 'white',
+        borderColor: 'black',
         borderWidth: 1,
         paddingTop: 20,
         paddingBottom: 20,
