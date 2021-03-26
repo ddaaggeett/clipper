@@ -9,19 +9,22 @@ const updateClip = (clip) => {
             r.table('clips').insert(clip, { returnChanges: true, conflict: 'update' }).run(connection).then(result => {
                 const updatedClip = result.changes[0].new_val
                 const oldClip = result.changes[0].old_val
-                if (oldClip == null) generateClip(updatedClip)
+                if (oldClip == null) {
+                    generateClip(updatedClip)
+                    resolve(updatedClip)
+                }
                 else if (oldClip != null && updatedClip.title !== oldClip.title) {
                     try {
-                        editVideoFileName(updatedClip)
+                        editVideoFileName(updatedClip).then(clipWithNewFileName => resolve(clipWithNewFileName))
                     }
                     catch(error) {
                         switch (error) {
                             case 'ENOENT: no such file or directory':
                                 generateClip(updatedClip)
+                                resolve(updatedClip)
                         }
                     }
                 }
-                resolve(updatedClip)
             }).error(error => {
                 console.log(`\nupdateClip error\n${error}`)
             })
