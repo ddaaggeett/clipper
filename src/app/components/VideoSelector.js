@@ -62,10 +62,12 @@ export default (props) => {
                         onFocus={focusVideoSelector}
                         onBlur={blurVideoSelector}
                         />
+                    {/*
                     <View style={styles.contentRow}>
                         <PlaylistButton />
                         <UnfinishedVideosButton />
                     </View>
+                    */}
                 </View>
         }
         </View>

@@ -5,7 +5,7 @@ import { io } from 'socket.io-client'
 import Clip from './Clip'
 import { serverIP, port } from '../../../config'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateClips } from '../redux/actions/actionCreators'
+import * as actions from '../redux/actions/actionCreators'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 
 const socket = io('http://'+ serverIP + ':' + port)
@@ -16,8 +16,8 @@ export default (props) => {
     const redux = useDispatch()
 
     const handleReorderedClips = (reorderedClips) => {
-        redux(updateClips(reorderedClips))
         // socket.emit('allClips', reorderedClips, clipsFromServer => {})
+        redux(actions.updateClips(reorderedClips))
     }
 
     const renderItem = ({ item, index, drag }) => {
