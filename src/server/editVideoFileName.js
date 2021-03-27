@@ -15,7 +15,7 @@ const editVideoFileName = (clipObject) => {
                     fs.rename(oldVideoFile, newVideoFile, () => {
                         const updatedClipObject = {
                             ...clipObject,
-                            videoFilePath: newVideoFile
+                            serverUri: newVideoFile
                         }
                         r.connect(dbConnxConfig).then(connection => {
                             r.table('clips').update(updatedClipObject).run(connection)

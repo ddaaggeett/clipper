@@ -10,8 +10,7 @@ const updateClip = (clip) => {
                 const updatedClip = result.changes[0].new_val
                 const oldClip = result.changes[0].old_val
                 if (oldClip == null) {
-                    generateClip(updatedClip)
-                    resolve(updatedClip)
+                    generateClip(updatedClip).then(updatedClipObject => resolve(updatedClipObject))
                 }
                 else if (oldClip != null && updatedClip.title !== oldClip.title) {
                     try {
@@ -20,8 +19,7 @@ const updateClip = (clip) => {
                     catch(error) {
                         switch (error) {
                             case 'ENOENT: no such file or directory':
-                                generateClip(updatedClip)
-                                resolve(updatedClip)
+                                generateClip(updatedClip).then(updatedClipObject => resolve(updatedClipObject))
                         }
                     }
                 }

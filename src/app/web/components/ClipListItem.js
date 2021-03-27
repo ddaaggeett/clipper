@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { View } from 'react-native'
 import { styles } from '../styles'
+import { styles as nativeStyles} from '../../styles'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../redux/actions/actionCreators'
 import DeleteClip from '../../components/DeleteClip'
 import EditTitleWhoComment from '../../components/EditTitleWhoComment'
+import DownloadClip from '../../components/DownloadClip'
 
 export default (props) => {
 
@@ -17,7 +20,10 @@ export default (props) => {
     if(isSelected) return (
         <div style={styles.clipItem}>
             <EditTitleWhoComment />
-            <DeleteClip />
+            <View style={nativeStyles.contentRow}>
+                <DownloadClip />
+                <DeleteClip />
+            </View>
         </div>
     )
     else return (

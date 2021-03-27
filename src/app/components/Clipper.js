@@ -54,7 +54,6 @@ export default (props) => {
             end: rightCursor,
             duration: clipDuration,
             key: timestamp,
-            title: props.pendingTitle,
             timestamp,
         }
         if (Platform.OS === 'web') {
@@ -67,6 +66,7 @@ export default (props) => {
         else player.current.getVideoUrl().then(videoUrl => { // in case playlistID is the contentID
             clipObject = {
                 ...clipObject,
+                title: props.pendingTitle,
                 videoId: getContentID(videoUrl),
             }
             saveClip(clipObject)

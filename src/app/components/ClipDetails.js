@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, Dimensions, ScrollView } from "react-native"
 import EditTitleWhoComment from './EditTitleWhoComment'
 import DeleteClip from './DeleteClip'
+import DownloadClip from './DownloadClip'
 import React, { useState, useEffect, useRef } from 'react'
 import { styles } from "../styles"
 import YoutubePlayer from "react-native-youtube-iframe"
@@ -35,9 +36,12 @@ export default (props) => {
                 clip={clip}
                 />
             <EditTitleWhoComment />
-            <DeleteClip
-                saveAndExit={saveAndExit}
-                />
+            <View style={styles.contentRow}>
+                <DownloadClip />
+                <DeleteClip
+                    saveAndExit={saveAndExit}
+                    />
+            </View>
         </ScrollView>
     )
 }

@@ -45,6 +45,9 @@ export const styles = StyleSheet.create({
     deleteClip: {
         backgroundColor: 'red',
     },
+    downloadClip: {
+        backgroundColor: 'green',
+    },
     clipPlayer: {
         position: 'absolute',
         right: 0,
