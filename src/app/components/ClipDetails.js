@@ -4,7 +4,7 @@ import DeleteClip from './DeleteClip'
 import DownloadClip from './DownloadClip'
 import React, { useState, useEffect, useRef } from 'react'
 import { styles } from "../styles"
-import YoutubePlayer from "react-native-youtube-iframe"
+import YoutubePlayer from "./react-native-youtube-iframe"
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import { io } from 'socket.io-client'
