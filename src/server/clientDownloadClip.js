@@ -15,8 +15,12 @@ nextapp.prepare().then(() => {
         const clipID = res.req.params.clipID
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').get(clipID).run(connection).then(response => {
-                const clipFile = response.serverUri
-                res.download(clipFile, path.basename(clipFile), error => console.log(error))
+                const filePath = response.serverUri
+                const file = path.basename(filePath)
+                const array = file.split('_')
+                array.shift()
+                const fileWithoutPrefix = array.join('_')
+                res.download(filePath, fileWithoutPrefix, error => console.log(error))
             })
         })
     })
