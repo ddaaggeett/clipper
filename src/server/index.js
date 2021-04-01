@@ -1,4 +1,5 @@
-var app = require('express')()
+var express = require('express')
+var app = express()
 var http = require('http').Server(app)
 var io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
 var { port } = require('../../config')
@@ -7,6 +8,7 @@ var fs = require('fs')
 var { getPlaylist, getAllPlaylists } = require('./youtube')
 var { userLog, getUserClips } = require('./user')
 require('./db')
+require('./clientDownloadClip')
 
 io.on('connection', (socket) => {
     socket.on('updateClip', (clip, returnToSender) => {

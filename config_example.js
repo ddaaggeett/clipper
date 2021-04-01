@@ -5,6 +5,7 @@ module.exports = {
     androidClientId: 'androidClientId',
     serverIP: 'ip address',
     port: 'port number',
+    nextAppPort: 'port number',
     videoDataDirectory: '../data/video_data/',
     clipInitObject: {
         start: 0,

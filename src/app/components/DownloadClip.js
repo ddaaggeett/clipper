@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import { View, Text, TouchableOpacity, Platform } from "react-native"
 import { styles } from "../styles"
 import { useSelector, useDispatch } from 'react-redux'
+import * as Linking from 'expo-linking';
 
 export default () => {
 
@@ -9,7 +10,7 @@ export default () => {
     const { clips } = useSelector(state => state.clips)
 
     const downloadClip = () => {
-        console.log('download clip to client')
+        if (Platform.OS === 'web') Linking.openURL(clips[editIndex].id)
     }
 
     if (clips[editIndex].serverUri == undefined) return null

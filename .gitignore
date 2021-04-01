@@ -13,6 +13,7 @@ web-build/
 .DS_Store
 
 *-lock.json
+yarn.lock
 
 config.js
 *.mp4
