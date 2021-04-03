@@ -10,7 +10,7 @@ import DownloadClip from '../../components/DownloadClip'
 
 export default (props) => {
 
-    const { editIndex } = useSelector(state => state.app)
+    const { editIndex, confirmDelete } = useSelector(state => state.app)
     const isSelected = props.index == editIndex
     const redux = useDispatch()
     const { clips } = useSelector(state => state.clips)
@@ -21,7 +21,7 @@ export default (props) => {
         <div style={styles.clipItem}>
             <EditTitleWhoComment />
             <View style={nativeStyles.contentRow}>
-                <DownloadClip />
+                { confirmDelete ? null : <DownloadClip /> }
                 <DeleteClip />
             </View>
         </div>

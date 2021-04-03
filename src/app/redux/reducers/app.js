@@ -114,6 +114,12 @@ export default function app(state = initialState, action) {
                 playingClip: action.playing
             }
 
+        case actions.SET_CONFIRM_DELETE:
+            return {
+                ...state,
+                confirmDelete: action.confirm,
+            }
+
         default:
             return state
     }

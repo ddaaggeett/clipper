@@ -223,3 +223,10 @@ export function setPlayingClip(playing, contentID) {
         contentID
     }
 }
+
+export function setConfirmDelete(confirm) {
+    return {
+        type: actions.SET_CONFIRM_DELETE,
+        confirm
+    }
+}

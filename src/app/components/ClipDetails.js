@@ -14,7 +14,7 @@ const socket = io('http://'+ serverIP + ':' + port)
 
 export default (props) => {
 
-    const { editIndex } = useSelector(state => state.app)
+    const { editIndex, confirmDelete } = useSelector(state => state.app)
     const { clips } = useSelector(state => state.clips)
     const clip = clips[editIndex]
     const redux = useDispatch()
@@ -37,7 +37,7 @@ export default (props) => {
                 />
             <EditTitleWhoComment />
             <View style={styles.contentRow}>
-                <DownloadClip />
+                { confirmDelete ? null : <DownloadClip /> }
                 <DeleteClip
                     saveAndExit={saveAndExit}
                     />
