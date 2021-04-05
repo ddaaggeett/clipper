@@ -6,7 +6,7 @@ module.exports = {
     serverIP: 'ip address',
     port: 'port number',
     nextAppPort: 'port number',
-    videoDataDirectory: '../data/video_data/',
+    videoDataDirectory: '../clipper_data/',
     clipInitObject: {
         start: 0,
         end: 0,

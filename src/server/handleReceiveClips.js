@@ -1,6 +1,5 @@
 var r = require('rethinkdb')
 var { dbConnxConfig } = require('../../config')
-var editVideoFileName = require('./editVideoFileName')
 var generateClip = require('./generateClip')
 
 const updateClip = (clip) => {
@@ -11,17 +10,6 @@ const updateClip = (clip) => {
                 const oldClip = result.changes[0].old_val
                 if (oldClip == null) {
                     generateClip(updatedClip).then(updatedClipObject => resolve(updatedClipObject))
-                }
-                else if (oldClip != null && updatedClip.title !== oldClip.title) {
-                    try {
-                        editVideoFileName(updatedClip).then(clipWithNewFileName => resolve(clipWithNewFileName))
-                    }
-                    catch(error) {
-                        switch (error) {
-                            case 'ENOENT: no such file or directory':
-                                generateClip(updatedClip).then(updatedClipObject => resolve(updatedClipObject))
-                        }
-                    }
                 }
             }).error(error => {
                 console.log(`\nupdateClip error\n${error}`)

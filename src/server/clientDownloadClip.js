@@ -16,13 +16,9 @@ nextapp.prepare().then(() => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').get(clipID).run(connection).then(response => {
                 if (response != null) {
-
                     const filePath = response.serverUri
-                    const file = path.basename(filePath)
-                    const array = file.split('_')
-                    array.shift()
-                    const fileWithoutPrefix = array.join('_')
-                    res.download(filePath, fileWithoutPrefix, error => {
+                    const downloadTo = response.title + '.mp4'
+                    res.download(filePath, downloadTo, error => {
                         if (error) console.log(error)
                     })
                 }
