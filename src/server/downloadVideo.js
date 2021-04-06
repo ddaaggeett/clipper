@@ -4,7 +4,7 @@ const {
 
 const downloadVideo = (videoDirectory, videoId) => {
     return new Promise((resolve,reject) => {
-        const command = "youtube-dl -f best https://www.youtube.com/watch?v=" + videoId
+        const command = "youtube-dl -f best https://www.youtube.com/watch?v=" + videoId + ' --id --write-thumbnail'
         exec(command, {
             cwd: videoDirectory,
         }, (error, stdout, stderr) => {

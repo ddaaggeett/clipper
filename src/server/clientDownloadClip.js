@@ -17,7 +17,10 @@ nextapp.prepare().then(() => {
             r.table('clips').get(clipID).run(connection).then(response => {
                 if (response != null) {
                     const filePath = response.serverUri
-                    const downloadTo = response.title + '.mp4'
+                    var downloadName = ''
+                    if(response.title.length == 0) downloadName = '_'
+                    else downloadName = response.title
+                    const downloadTo = downloadName + '.mp4'
                     res.download(filePath, downloadTo, error => {
                         if (error) console.log(error)
                     })
