@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import { View, Dimensions, TextInput, Platform } from 'react-native'
 import YoutubePlayer from "./react-native-youtube-iframe"
 import ReactPlayer from 'react-player'
-import Controls from "./Controls"
+import Controls from './Controls'
+import ThumbnailSelector from './ThumbnailSelector'
 import { styles } from "../styles"
 import getContentID from '../getContentID'
 import { io } from 'socket.io-client'
@@ -99,36 +100,44 @@ export default (props) => {
             <View>
             {
                 playingClip
-                ?   <ReactPlayer
-                        ref={player}
-                        url={'https://www.youtube.com/v/' + clips[editIndex].videoId + '?start=' + Math.floor(clips[editIndex].start) + '&end=' + Math.ceil(clips[editIndex].end)}
-                        playing={playing}
-                        playbackRate={speed}
-                        width={panelWidth}
-                        height={panelWidth * 9 / 16}
-                        controls={true}
-                        onProgress={handleVideoProgress}
-                        />
-                :   <ReactPlayer
-                        ref={player}
-                        url={'https://www.youtube.com/watch?v=' + contentID}
-                        playing={playing}
-                        playbackRate={speed}
-                        width={panelWidth}
-                        height={panelWidth * 9 / 16}
-                        controls={true}
-                        onProgress={handleVideoProgress}
-                        onEnded={() => updateProgression(null)}
-                        onReady={() => playAtLatestProgress()}
-                        />
+                ?   <View>
+                        <ReactPlayer
+                            ref={player}
+                            url={'https://www.youtube.com/v/' + clips[editIndex].videoId + '?start=' + Math.floor(clips[editIndex].start) + '&end=' + Math.ceil(clips[editIndex].end)}
+                            playing={playing}
+                            playbackRate={speed}
+                            width={panelWidth}
+                            height={panelWidth * 9 / 16}
+                            controls={true}
+                            onProgress={handleVideoProgress}
+                            />
+                        <ThumbnailSelector
+                            player={player}
+                            setPlaying={setPlaying}
+                            />
+                    </View>
+                :   <View>
+                        <ReactPlayer
+                            ref={player}
+                            url={'https://www.youtube.com/watch?v=' + contentID}
+                            playing={playing}
+                            playbackRate={speed}
+                            width={panelWidth}
+                            height={panelWidth * 9 / 16}
+                            controls={true}
+                            onProgress={handleVideoProgress}
+                            onEnded={() => updateProgression(null)}
+                            onReady={() => playAtLatestProgress()}
+                            />
+                        <Controls
+                            player={player}
+                            handleFinishClip={handleFinishClip}
+                            playing={playing}
+                            setPlaying={setPlaying}
+                            getVideoId={getContentID}
+                            />
+                    </View>
             }
-                <Controls
-                    player={player}
-                    handleFinishClip={handleFinishClip}
-                    playing={playing}
-                    setPlaying={setPlaying}
-                    getVideoId={getContentID}
-                    />
             </View>
         )
     }
