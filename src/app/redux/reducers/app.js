@@ -83,6 +83,8 @@ export default function app(state = initialState, action) {
             return {
                 ...state,
                 contentID: action.contentID,
+                speed: 1,
+                gotSomethingCursor: null,
             }
 
         case actions.SET_WEB_PANEL_WIDTH:
