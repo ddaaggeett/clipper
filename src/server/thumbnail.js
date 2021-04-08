@@ -16,7 +16,7 @@ const getThumbnail = (clipObject) => {
             if (current.isFile()) {
                 fs.unwatchFile(thumbnailUri)
                 console.log('thumbnail clipped from video. now adding text to image.')
-                addThumbnailText(thumbnailUri)
+                addThumbnailText(thumbnailUri, clipObject.title)
                 resolve({
                     ...clipObject,
                     thumbnailUri
@@ -34,15 +34,24 @@ const getThumbnail = (clipObject) => {
             if(error) console.log(error)
         })
     })
-
 }
 
-const addThumbnailText = async (thumbnailUri) => {
+const addThumbnailText = async (thumbnailUri, text) => {
     console.log('WRITING TEXT TO THUMBNAIL')
-    const text = 'hello world'
-    const font = await Jimp.loadFont(Jimp.FONT_SANS_32_BLACK);
+    const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
     const image = await Jimp.read(thumbnailUri);
-    image.print(font, 10, 10, text);
+    image.print(
+        font,
+        0,
+        0,
+        {
+            text,
+            alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
+            alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE
+        },
+        thumbWidth,
+        thumbHeight
+    );
     image.write(thumbnailUri)
 }
 
