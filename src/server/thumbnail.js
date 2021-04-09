@@ -10,12 +10,12 @@ const thumbHeight = 720
 const getThumbnail = (clipObject) => {
     return new Promise((resolve, reject) => {
         const videoDirectory = path.join(videoDataDirectory, clipObject.videoId)
+        const clipDirectory = path.join(videoDirectory, clipObject.id)
         const thumbnailFile = clipObject.id + '_thumbnail.png'
-        const thumbnailUri = path.join(videoDirectory, thumbnailFile)
+        const thumbnailUri = path.join(clipDirectory, thumbnailFile)
         fs.watchFile(thumbnailUri, (current, prev) => {
             if (current.isFile()) {
                 fs.unwatchFile(thumbnailUri)
-                console.log('thumbnail clipped from video. now adding text to image.')
                 addThumbnailText(thumbnailUri, clipObject.title)
                 resolve({
                     ...clipObject,
@@ -26,10 +26,10 @@ const getThumbnail = (clipObject) => {
             }
         })
 
-        const command = `ffmpeg -i ${path.basename(videoDirectory)}.mp4 -vframes 1 -an -s ${thumbWidth}x${thumbHeight} -ss ${clipObject.thumbnailTime} ${thumbnailFile}`
+        const command = `ffmpeg -ss ${clipObject.thumbnailTime} -i ../${path.basename(videoDirectory)}.mp4 -vframes 1 -s ${thumbWidth}x${thumbHeight} ${thumbnailFile}`
 
         exec(command, {
-            cwd: videoDirectory,
+            cwd: clipDirectory,
         }, (error, stdout, stderr) => {
             if(error) console.log(error)
         })

@@ -7,11 +7,12 @@ const { videoDataDirectory } = require('../../config')
 const generateClip = (clipObject) => {
     return new Promise((resolve, reject) => {
         const videoDirectory = path.join(videoDataDirectory, clipObject.videoId)
-        fs.mkdir(videoDirectory,{recursive:true}, err => {
+        const clipDirectory = path.join(videoDirectory, clipObject.id)
+        fs.mkdir(clipDirectory,{recursive:true}, err => {
             if (err) throw err;
             else {
                 downloadVideo(videoDirectory, clipObject.videoId).then(() => {
-                    clip(videoDirectory, clipObject).then(updatedClipObject => resolve(updatedClipObject))
+                    clip(clipDirectory, clipObject).then(updatedClipObject => resolve(updatedClipObject))
                 })
             }
         })

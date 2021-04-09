@@ -13,7 +13,7 @@ export default () => {
         if (Platform.OS === 'web') Linking.openURL(clips[editIndex].id)
     }
 
-    if (clips[editIndex].serverUri == undefined) return null
+    if (clips[editIndex].clipUri == undefined) return null
     else return (
         <TouchableOpacity style={[styles.controlButton, styles.downloadClip]} onPress={() => downloadClip()}>
             <Text style={styles.controlButtonText}>{'DOWNLOAD CLIP'}</Text>

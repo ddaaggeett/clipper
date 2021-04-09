@@ -16,7 +16,7 @@ nextapp.prepare().then(() => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').get(clipID).run(connection).then(response => {
                 if (response != null) {
-                    const filePath = response.serverUri
+                    const filePath = response.clipUri
                     var downloadName = ''
                     if(response.title.length == 0) downloadName = '_'
                     else downloadName = response.title
