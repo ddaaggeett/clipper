@@ -36,12 +36,9 @@ export default (props) => {
                 clip={clip}
                 />
             <EditTitleWhoComment />
-            <View style={styles.contentRow}>
-                { confirmDelete ? null : <DownloadClip /> }
-                <DeleteClip
-                    saveAndExit={saveAndExit}
-                    />
-            </View>
+            <DeleteClip
+                saveAndExit={saveAndExit}
+                />
         </ScrollView>
     )
 }
