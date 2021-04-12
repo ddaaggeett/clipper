@@ -4,6 +4,8 @@ const { dbConnxConfig, nextAppPort, appName } = require('../../config')
 const r = require('rethinkdb')
 const path = require('path')
 const next = require('next')
+const fs = require('fs')
+const { zipClip } = require('./zip')
 
 const dev = process.env.NODE_ENV !== 'production'
 const nextapp = next({ dev })
@@ -16,14 +18,33 @@ nextapp.prepare().then(() => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').get(clipID).run(connection).then(response => {
                 if (response != null) {
-                    const filePath = response.clipUri
-                    var downloadName = ''
-                    if(response.title.length == 0) downloadName = '_'
-                    else downloadName = response.title
-                    const downloadTo = downloadName + '.mp4'
-                    res.download(filePath, downloadTo, error => {
-                        if (error) console.log(error)
+
+                    const zipUri = path.join(path.dirname(response.clipUri), 'clip.zip')
+
+                    fs.watchFile(zipUri, (current, prev) => {
+                        if (current.isFile()) {
+                            fs.unwatchFile(zipUri)
+
+                            var downloadName = ''
+                            if(response.title.length == 0) downloadName = '_'
+                            else downloadName = response.title
+                            const downloadTo = downloadName + '.zip'
+                            res.download(zipUri, downloadTo, error => {
+                                if (error) console.log(error)
+                            })
+
+                        } else {
+                            console.log('no thumbnail file yet')
+                        }
                     })
+
+                    const clipObject = {
+                        ...response,
+                        zipUri
+                    }
+
+                    zipClip(clipObject)
+
                 }
             })
         })

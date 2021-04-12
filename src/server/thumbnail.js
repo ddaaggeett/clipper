@@ -14,17 +14,17 @@ const getThumbnail = (clipObject) => {
             const videoDirectory = path.join(videoDataDirectory, clipObject.videoId)
             const clipDirectory = path.join(videoDirectory, clipObject.id)
             const thumbnailFile_white = 'thumbnail_white.png'
-            const thumbnailUri_white = path.join(clipDirectory, thumbnailFile_white)
+            const thumbnail_white_uri = path.join(clipDirectory, thumbnailFile_white)
             const thumbnailFile_black = 'thumbnail_black.png'
-            const thumbnailUri_black = path.join(clipDirectory, thumbnailFile_black)
+            const thumbnail_black_uri = path.join(clipDirectory, thumbnailFile_black)
 
-            fs.watchFile(thumbnailUri_white, (current, prev) => {
+            fs.watchFile(thumbnail_white_uri, (current, prev) => {
                 if (current.isFile()) {
-                    fs.unwatchFile(thumbnailUri_white)
-                    addThumbnailText(thumbnailUri_white, clipObject.title, 'white')
+                    fs.unwatchFile(thumbnail_white_uri)
+                    addThumbnailText(thumbnail_white_uri, clipObject.title, 'white')
                     const updatedClipObject = {
                         ...clipObject,
-                        thumbnailUri_white
+                        thumbnail_white_uri
                     }
                     r.table('clips').update(updatedClipObject).run(connection)
                     resolve(updatedClipObject)
@@ -33,13 +33,13 @@ const getThumbnail = (clipObject) => {
                 }
             })
 
-            fs.watchFile(thumbnailUri_black, (current, prev) => {
+            fs.watchFile(thumbnail_black_uri, (current, prev) => {
                 if (current.isFile()) {
-                    fs.unwatchFile(thumbnailUri_black)
-                    addThumbnailText(thumbnailUri_black, clipObject.title, 'black')
+                    fs.unwatchFile(thumbnail_black_uri)
+                    addThumbnailText(thumbnail_black_uri, clipObject.title, 'black')
                     const updatedClipObject = {
                         ...clipObject,
-                        thumbnailUri_black
+                        thumbnail_black_uri
                     }
                     r.table('clips').update(updatedClipObject).run(connection)
                     resolve(updatedClipObject)
