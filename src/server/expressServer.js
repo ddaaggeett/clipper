@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const { dbConnxConfig, expressPort, appName } = require('../../config')
+const { dbConnxConfig, expressPort, appName, serverIP } = require('../../config')
 const r = require('rethinkdb')
 const path = require('path')
 const fs = require('fs')
@@ -46,5 +46,5 @@ app.get('/:clipID', (req, res) => {
 
 app.listen(expressPort, (err) => {
     if (err) throw err
-    console.log(`${appName} SSR application ready on http://localhost:${expressPort}`)
+    console.log(`${appName} expressJS server ready on http://${serverIP}:${expressPort}`)
 })

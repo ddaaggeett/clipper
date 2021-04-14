@@ -8,7 +8,7 @@ var fs = require('fs')
 var { getPlaylist, getAllPlaylists } = require('./youtube')
 var { userLog, getUserClips } = require('./user')
 require('./db')
-require('./clientDownloadClip')
+require('./expressServer')
 
 io.on('connection', (socket) => {
     socket.on('updateClip', (clip, returnToSender) => {
