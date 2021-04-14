@@ -17,7 +17,11 @@ export default () => {
     if (clips[editIndex].clipUri == undefined) return null
     else return (
         <TouchableOpacity style={[styles.controlButton, styles.downloadClip]} onPress={() => downloadClip()}>
-            <Text style={styles.controlButtonText}>{'DOWNLOAD CLIP'}</Text>
+        {
+            clips[editIndex].thumbnail_white_uri !== undefined || clips[editIndex].thumbnail_black_uri !== undefined
+            ?   <Text style={styles.controlButtonText}>{'DOWNLOAD CLIP + THUMBNAIL'}</Text>
+            :   <Text style={styles.controlButtonText}>{'DOWNLOAD CLIP'}</Text>
+        }
         </TouchableOpacity>
     )
 }

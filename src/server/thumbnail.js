@@ -19,31 +19,37 @@ const getThumbnail = (clipObject) => {
             const thumbnail_black_uri = path.join(clipDirectory, thumbnailFile_black)
 
             fs.watchFile(thumbnail_white_uri, (current, prev) => {
-                if (current.isFile()) {
+                if (current.isFile() && prev.isFile()) {
                     fs.unwatchFile(thumbnail_white_uri)
-                    addThumbnailText(thumbnail_white_uri, clipObject.title, 'white')
                     const updatedClipObject = {
                         ...clipObject,
                         thumbnail_white_uri
                     }
                     r.table('clips').update(updatedClipObject).run(connection)
                     resolve(updatedClipObject)
-                } else {
+                }
+                else if (current.isFile() && !prev.isFile()) {
+                    addThumbnailText(thumbnail_white_uri, clipObject.title, 'white')
+                }
+                else {
                     console.log('no thumbnail file yet')
                 }
             })
 
             fs.watchFile(thumbnail_black_uri, (current, prev) => {
-                if (current.isFile()) {
+                if (current.isFile() && prev.isFile()) {
                     fs.unwatchFile(thumbnail_black_uri)
-                    addThumbnailText(thumbnail_black_uri, clipObject.title, 'black')
                     const updatedClipObject = {
                         ...clipObject,
                         thumbnail_black_uri
                     }
                     r.table('clips').update(updatedClipObject).run(connection)
                     resolve(updatedClipObject)
-                } else {
+                }
+                else if (current.isFile() && !prev.isFile()) {
+                    addThumbnailText(thumbnail_black_uri, clipObject.title, 'black')
+                }
+                else {
                     console.log('no thumbnail file yet')
                 }
             })
