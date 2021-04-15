@@ -8,7 +8,6 @@ const { zipClip } = require('./zip')
 
 app.get('/:clipID', (req, res) => {
     const clipID = res.req.params.clipID
-    console.log(clipID)
     r.connect(dbConnxConfig).then(connection => {
         r.table('clips').get(clipID).run(connection).then(response => {
             if (response != null) {
