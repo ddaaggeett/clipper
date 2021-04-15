@@ -3,7 +3,6 @@ import { persistStore, persistReducer } from 'redux-persist'
 import thunk from 'redux-thunk'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import rootReducer from './reducers'
-import logger from 'redux-logger'
 
 const middleware = applyMiddleware(thunk)
 const persistConfig = {

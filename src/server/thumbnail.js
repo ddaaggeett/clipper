@@ -8,74 +8,64 @@ const r = require('rethinkdb')
 const thumbWidth = 1280
 const thumbHeight = 720
 
-const getThumbnail = (clipObject) => {
+const generateThumbnails = (clipObject) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
             const videoDirectory = path.join(videoDataDirectory, clipObject.videoId)
             const clipDirectory = path.join(videoDirectory, clipObject.id)
-            const thumbnailFile_white = 'thumbnail_white.png'
-            const thumbnail_white_uri = path.join(clipDirectory, thumbnailFile_white)
-            const thumbnailFile_black = 'thumbnail_black.png'
-            const thumbnail_black_uri = path.join(clipDirectory, thumbnailFile_black)
+            const singleFrameURI = path.join(clipDirectory, 'singleFrame.png')
+            const thumbnail_white_uri = path.join(clipDirectory, 'thumbnail_white.png')
+            const thumbnail_black_uri = path.join(clipDirectory, 'thumbnail_black.png')
 
-            fs.watchFile(thumbnail_white_uri, (current, prev) => {
-                if (current.isFile() && prev.isFile()) {
-                    fs.unwatchFile(thumbnail_white_uri)
-                    const updatedClipObject = {
-                        ...clipObject,
-                        thumbnail_white_uri
-                    }
-                    r.table('clips').update(updatedClipObject).run(connection)
-                    resolve(updatedClipObject)
-                }
-                else if (current.isFile() && !prev.isFile()) {
-                    addThumbnailText(thumbnail_white_uri, clipObject.title, 'white')
-                }
-                else {
-                    console.log('no thumbnail file yet')
-                }
-            })
+            clipObject = {
+                ...clipObject,
+                videoDirectory,
+                clipDirectory,
+                singleFrameURI,
+                thumbnails: [thumbnail_white_uri, thumbnail_black_uri]
+            }
 
-            fs.watchFile(thumbnail_black_uri, (current, prev) => {
-                if (current.isFile() && prev.isFile()) {
-                    fs.unwatchFile(thumbnail_black_uri)
-                    const updatedClipObject = {
-                        ...clipObject,
-                        thumbnail_black_uri
-                    }
-                    r.table('clips').update(updatedClipObject).run(connection)
-                    resolve(updatedClipObject)
-                }
-                else if (current.isFile() && !prev.isFile()) {
-                    addThumbnailText(thumbnail_black_uri, clipObject.title, 'black')
-                }
-                else {
-                    console.log('no thumbnail file yet')
-                }
-            })
+            if (!fs.existsSync(clipObject.singleFrameURI)) getFrame(clipObject)
+            else {
+                fs.rm(clipObject.singleFrameURI, () => {
+                    fs.rm(clipObject.thumbnails[0], () => {
+                        fs.rm(clipObject.thumbnails[1], () => {
+                            getFrame(clipObject)
+                        })
+                    })
+                })
+            }
 
-            const command_white = `ffmpeg -ss ${clipObject.thumbnailTime} -i ../${path.basename(videoDirectory)}.mp4 -vframes 1 -s ${thumbWidth}x${thumbHeight} ${thumbnailFile_white}`
-            const command_black = `ffmpeg -ss ${clipObject.thumbnailTime} -i ../${path.basename(videoDirectory)}.mp4 -vframes 1 -s ${thumbWidth}x${thumbHeight} ${thumbnailFile_black}`
-
-            exec(command_white, {
-                cwd: clipDirectory,
-            }, (error, stdout, stderr) => {
-                if(error) console.log(error)
-            })
-            exec(command_black, {
-                cwd: clipDirectory,
-            }, (error, stdout, stderr) => {
-                if(error) console.log(error)
-            })
+            r.table('clips').update(clipObject).run(connection)
+            resolve(clipObject)
         })
     })
 }
 
-const addThumbnailText = async (thumbnailUri, text, color) => {
-    console.log('WRITING TEXT TO THUMBNAIL')
+const getFrame = (clipObject) => {
+    const command = `ffmpeg -ss ${clipObject.thumbnailTime} -i ../${path.basename(clipObject.videoDirectory)}.mp4 -vframes 1 -s ${thumbWidth}x${thumbHeight} ${path.basename(clipObject.singleFrameURI)}`
+
+    exec(command, {
+        cwd: clipObject.clipDirectory,
+    }, (error, stdout, stderr) => {
+        if(error) console.log(error)
+        clipObject.thumbnails.forEach(thumbnailURI => thumbnailWatch(thumbnailURI, clipObject))
+    })
+}
+
+const thumbnailWatch = (thumbnailURI, clipObject) => {
+    fs.watchFile(thumbnailURI, (current, prev) => {
+        if (thumbnailURI.includes('white')) addThumbnailText(thumbnailURI, clipObject, 'white').then(() => fs.unwatchFile(thumbnailURI))
+        else addThumbnailText(thumbnailURI, clipObject, 'black').then(() => fs.unwatchFile(thumbnailURI))
+    })
+}
+
+const addThumbnailText = async (thumbnailURI, clipObject, color) => {
+    const text = clipObject.title
+    console.log(`WRITING "${text}" in ${color} to\n${thumbnailURI}`)
     var font
     color === 'white' ? font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE) : font = await Jimp.loadFont(Jimp.FONT_SANS_128_BLACK)
-    const image = await Jimp.read(thumbnailUri);
+    const image = await Jimp.read(clipObject.singleFrameURI);
     image.print(
         font,
         0,
@@ -83,14 +73,15 @@ const addThumbnailText = async (thumbnailUri, text, color) => {
         {
             text,
             alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
-            alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE
+            alignmentY: 10
         },
         thumbWidth,
         thumbHeight
     );
-    image.write(thumbnailUri)
+    image.write(thumbnailURI)
+    return
 }
 
 module.exports = {
-    getThumbnail,
+    generateThumbnails,
 }
