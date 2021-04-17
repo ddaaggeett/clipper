@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { styles } from "../styles"
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
+import Thumbnail from './Thumbnail'
 
 export default (props) => {
 
@@ -22,6 +23,7 @@ export default (props) => {
                 onLongPress={props.drag}
                 >
                 <View style={styles.contentRow}>
+                    <Thumbnail clip={props.clip} />
                     <Text style={styles.clipItemText}>{durationTimeFormat}</Text>
                     <View style={{flex:1}}>
                         <Text style={styles.clipItemText}>

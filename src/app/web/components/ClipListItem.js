@@ -7,7 +7,7 @@ import * as actions from '../../redux/actions/actionCreators'
 import DeleteClip from '../../components/DeleteClip'
 import EditTitleWhoComment from '../../components/EditTitleWhoComment'
 import DownloadClip from '../../components/DownloadClip'
-import { serverIP, expressPort } from '../../../../config'
+import Thumbnail from '../../components/Thumbnail'
 
 export default (props) => {
 
@@ -58,18 +58,4 @@ export default (props) => {
             </View>
         </div>
     )
-}
-
-const Thumbnail = (props) => {
-
-
-    var thumbnailURI
-    if (props.clip.thumbnails === undefined) thumbnailURI = `http://${serverIP}:${expressPort}/${props.clip.videoId}/${props.clip.videoId}.png`
-    else {
-        const dirArray = props.clip.thumbnails[0].split('/')
-        const thumbnailFile = dirArray[dirArray.length - 1]
-        thumbnailURI = `http://${serverIP}:${expressPort}/${props.clip.videoId}/${props.clip.id}/${thumbnailFile}`
-    }
-
-    return <Image source={{ uri: thumbnailURI }} style={nativeStyles.thumbnail} />
 }

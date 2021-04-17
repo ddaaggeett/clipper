@@ -113,6 +113,10 @@ export const styles = StyleSheet.create({
         fontSize: 18,
     },
     thumbnail: {
+        width: 160,
+        height: 90
+    },
+    thumbnailWeb: {
         width: 200,
         height: 113
     },
