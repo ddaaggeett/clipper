@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
-const { dbConnxConfig, expressPort, appName, serverIP } = require('../../config')
+const { dbConnxConfig, expressPort, appName, serverIP, videoDataDirectory } = require('../../config')
 const r = require('rethinkdb')
 const path = require('path')
 const fs = require('fs')
 const { zipClip } = require('./zip')
+
+app.use(express.static(path.join(__dirname, '/../..', videoDataDirectory)))
 
 app.get('/:clipID', (req, res) => {
     const clipID = res.req.params.clipID

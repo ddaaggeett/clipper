@@ -112,4 +112,8 @@ export const styles = StyleSheet.create({
         alignSelf: 'center',
         fontSize: 18,
     },
+    thumbnail: {
+        width: 200,
+        height: 113
+    },
 });

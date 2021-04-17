@@ -1,10 +1,10 @@
-const {
-    exec,
-} = require('child_process')
+const { exec } = require('child_process')
+const fs = require('fs')
+const path = require('path')
 
 const downloadVideo = (videoDirectory, videoId) => {
     return new Promise((resolve,reject) => {
-        const command = `youtube-dl -f best https://www.youtube.com/watch?v=${videoId} --id`
+        const command = `youtube-dl -f best https://www.youtube.com/watch?v=${videoId} --id --write-thumbnail`
         exec(command, {
             cwd: videoDirectory,
         }, (error, stdout, stderr) => {
@@ -25,9 +25,24 @@ const downloadVideo = (videoDirectory, videoId) => {
             lines.forEach(line => {
                 if(line.includes('[download] 100%')) {
                     console.log(`\nDOWNLOAD COMPLETE: ${videoId}`)
+                    formatThumbnail(videoDirectory, videoId)
                     resolve()
                 }
             })
+        })
+    })
+}
+
+const formatThumbnail = (videoDirectory, videoId) => {
+    fs.readdir(videoDirectory, (err, contents) => {
+        contents.forEach(item => {
+            if (item.match(/.(jpg|jpeg|png|webp)$/i)) {
+                const originalThumbURI = path.join(videoDirectory, item)
+                const newThumbnailURI = path.join(videoDirectory, videoId + '.png')
+                fs.rename(originalThumbURI, newThumbnailURI, (error) => {
+                    if (error) console.log(error)
+                })
+            }
         })
     })
 }
