@@ -70,20 +70,15 @@ export const styles = StyleSheet.create({
     },
     account: {
         alignItems: 'flex-end',
-        marginBottom: 0,
-    },
-    accountLoggedOut: {
-        borderWidth: 1,
-        margin: 5,
-        borderColor: 'purple',
-    },
-    accountLoggedIn: {
-        borderWidth: 1,
-        margin: 5,
-        borderColor: 'red',
+        zIndex: 1,
+        backgroundColor: 'black',
+        width: '100%',
+        paddingTop: 5,
+        margin: 0,
+        borderBottomWidth: 2,
     },
     accountButton: {
-        padding: 5,
+        padding: 7,
         paddingLeft: 25,
         paddingRight: 25,
     },
@@ -94,12 +89,13 @@ export const styles = StyleSheet.create({
         backgroundColor: 'purple',
     },
     username: {
-        padding: 5,
-        paddingLeft: 25,
-        paddingRight: 25,
+        padding: 7,
+        paddingLeft: 28,
+        paddingRight: 28,
         color:'white',
     },
     panelRow: {
+        top: 35,
         alignSelf: 'center',
     },
     videoPanel: {

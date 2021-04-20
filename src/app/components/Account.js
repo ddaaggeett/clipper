@@ -44,7 +44,7 @@ export default (props) => {
         scopes: [
             'profile',
             'email',
-            'https://www.googleapis.com/auth/youtube',
+            // 'https://www.googleapis.com/auth/youtube.readonly',
         ],
     }
 

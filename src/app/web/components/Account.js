@@ -66,7 +66,7 @@ export default (props) => {
         scopes: [
             'profile',
             'email',
-            'https://www.googleapis.com/auth/youtube',
+            // 'https://www.googleapis.com/auth/youtube.readonly',
             // 'offline' // TODO: for refreshToken retrieval
         ],
     }
@@ -113,11 +113,11 @@ export default (props) => {
     }, [response])
 
     return (
-        <View style={styles.account}>
+        <View style={[styles.account, { position: 'fixed', borderColor: loggedIn ? 'red' : 'purple' }]}>
         {
             loggedIn
-            ?   <View style={[styles.contentRow, styles.accountLoggedIn]}>
-                    <Text style={styles.username}>{`${appName}   ///   ${user.name}`}</Text>
+            ?   <View style={styles.contentRow}>
+                    <Text style={styles.username}>{`${appName}     ///     ${user.name}`}</Text>
                     <TouchableOpacity
                         style={[styles.accountButton, styles.loginButton]}
                         onPress={() => handleLogout()}
@@ -125,7 +125,7 @@ export default (props) => {
                         <Text style={styles.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
                 </View>
-            :   <View style={[styles.contentRow, styles.accountLoggedOut]}>
+            :   <View style={styles.contentRow}>
                     <Text style={styles.username}>{appName}</Text>
                     <TouchableOpacity
                         style={[styles.accountButton, styles.logoutButton]}
