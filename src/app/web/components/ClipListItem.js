@@ -5,7 +5,7 @@ import { styles as nativeStyles} from '../../styles'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../redux/actions/actionCreators'
 import DeleteClip from '../../components/DeleteClip'
-import EditTitleWhoComment from '../../components/EditTitleWhoComment'
+import EditClipInfo from '../../components/EditClipInfo'
 import DownloadClip from '../../components/DownloadClip'
 import Thumbnail from '../../components/Thumbnail'
 
@@ -21,7 +21,7 @@ export default (props) => {
     if(isSelected) return (
         <div style={styles.clipItem}>
             <Thumbnail clip={props.clip} />
-            <EditTitleWhoComment />
+            <EditClipInfo />
             <View style={nativeStyles.contentRow}>
                 { confirmDelete ? null : <DownloadClip /> }
                 <DeleteClip />
@@ -36,9 +36,6 @@ export default (props) => {
             <View style={nativeStyles.contentRow}>
                 <Thumbnail clip={props.clip} />
                 <View>
-                    <div style={styles.clipDetail}>
-                        {new Date(props.clip.duration * 1000).toISOString().substr(14, 8)}
-                    </div>
                     {
                         props.clip.title.length == 0
                         ?   null

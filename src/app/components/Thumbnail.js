@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Platform } from 'react-native'
+import { View, Text, Image, Platform } from 'react-native'
 import { styles } from '../styles'
 import { serverIP, expressPort } from '../../../config'
 
@@ -13,6 +13,25 @@ export default (props) => {
         thumbnailURI = `http://${serverIP}:${expressPort}/${props.clip.videoId}/${props.clip.id}/${thumbnailFile}`
     }
 
-    if (Platform.OS === 'web') return <Image source={{ uri: thumbnailURI }} style={styles.thumbnailWeb} />
-    else return <Image source={{ uri: thumbnailURI }} style={styles.thumbnail} />
+    if (Platform.OS === 'web') return (
+        <View>
+            <ClipTime clip={props.clip} />
+            <Image source={{ uri: thumbnailURI }} style={styles.thumbnailWeb} />
+        </View>
+    )
+    else return (
+        <View>
+            <ClipTime clip={props.clip} />
+            <Image source={{ uri: thumbnailURI }} style={styles.thumbnail} />
+        </View>
+    )
+}
+
+const ClipTime = (props) => {
+
+    return (
+        <View style={styles.clipDuration}>
+            <Text style={styles.clipDurationText}>{new Date(props.clip.duration * 1000).toISOString().substr(14, 5)}</Text>
+        </View>
+    )
 }

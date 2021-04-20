@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, Dimensions, ScrollView } from "react-native"
-import EditTitleWhoComment from './EditTitleWhoComment'
+import EditClipInfo from './EditClipInfo'
 import DeleteClip from './DeleteClip'
 import DownloadClip from './DownloadClip'
 import React, { useState, useEffect, useRef } from 'react'
@@ -35,7 +35,7 @@ export default (props) => {
             <ClipPlayer
                 clip={clip}
                 />
-            <EditTitleWhoComment />
+            <EditClipInfo />
             <DeleteClip
                 saveAndExit={saveAndExit}
                 />

@@ -9,8 +9,6 @@ export default (props) => {
 
     const redux = useDispatch()
 
-    const durationTimeFormat = new Date(props.clip.duration * 1000).toISOString().substr(14, 8)
-
     const selectClip = () => {
         redux(actions.setEditIndex(props.index))
         props.navigation.navigate('ClipDetails')
@@ -24,7 +22,6 @@ export default (props) => {
                 >
                 <View style={styles.contentRow}>
                     <Thumbnail clip={props.clip} />
-                    <Text style={styles.clipItemText}>{durationTimeFormat}</Text>
                     <View style={{flex:1}}>
                         <Text style={styles.clipItemText}>
                             {props.clip.title}

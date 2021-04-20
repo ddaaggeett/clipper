@@ -116,4 +116,25 @@ export const styles = StyleSheet.create({
         width: 200,
         height: 113
     },
+    clipDuration: {
+        position: 'absolute',
+        flex: 1,
+        alignItems: 'flex-end',
+        bottom: 0,
+        right: 0,
+        backgroundColor: 'black',
+        zIndex: 1,
+        marginBottom: 0,
+        borderWidth: 1,
+        borderColor: 'white',
+        borderRadius: 3,
+        padding: 2,
+        paddingLeft: 4,
+        paddingRight: 3,
+    },
+    clipDurationText: {
+        color:'white',
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
 });
