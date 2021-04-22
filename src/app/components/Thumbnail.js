@@ -1,9 +1,15 @@
 import React from 'react'
-import { View, Text, Image, Platform } from 'react-native'
+import { View, Text, Image, Platform, TouchableOpacity } from 'react-native'
 import { styles } from '../styles'
 import { serverIP, expressPort } from '../../../config'
+import * as actions from '../redux/actions/actionCreators'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default (props) => {
+
+    const { editIndex } = useSelector(state => state.app)
+    const { clips } = useSelector(state => state.clips)
+    const redux = useDispatch()
 
     var thumbnailURI
     if (props.clip.thumbnails === undefined) thumbnailURI = `http://${serverIP}:${expressPort}/${props.clip.videoId}/${props.clip.videoId}.png`
@@ -13,11 +19,15 @@ export default (props) => {
         thumbnailURI = `http://${serverIP}:${expressPort}/${props.clip.videoId}/${props.clip.id}/${thumbnailFile}`
     }
 
+    const handlePlayClip = () => redux(actions.setPlayingClip(true, clips[editIndex].videoId))
+
     if (Platform.OS === 'web') return (
-        <View>
+        <TouchableOpacity
+            onPress={() => handlePlayClip()}
+            >
             <ClipTime clip={props.clip} />
             <Image source={{ uri: thumbnailURI }} style={styles.thumbnailWeb} />
-        </View>
+        </TouchableOpacity>
     )
     else return (
         <View>

@@ -24,4 +24,5 @@ module.exports = {
     dbConnxConfig: {
         db: 'clipper',
     },
+    sourceCodeURL: `https://github.com/ddaaggeett/clipper`,
 }

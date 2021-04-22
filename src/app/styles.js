@@ -119,7 +119,6 @@ export const styles = StyleSheet.create({
     clipDuration: {
         position: 'absolute',
         flex: 1,
-        alignItems: 'flex-end',
         bottom: 0,
         right: 0,
         backgroundColor: 'black',
@@ -134,5 +133,14 @@ export const styles = StyleSheet.create({
         color:'white',
         fontWeight: 'bold',
         fontSize: 14,
+    },
+    sourceCodeLink: {
+        position: 'fixed',
+        justifyContent: 'center',
+        height: 20,
+        width: 20,
+        zIndex: 1,
+        top: 8,
+        left: 8,
     },
 });

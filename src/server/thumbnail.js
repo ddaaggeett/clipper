@@ -61,7 +61,7 @@ const thumbnailWatch = (thumbnailURI, clipObject) => {
 }
 
 const addThumbnailText = async (thumbnailURI, clipObject, color) => {
-    const text = clipObject.title
+    const text = clipObject.thumbnailText
     console.log(`WRITING "${text}" in ${color} to\n${thumbnailURI}`)
     var font
     color === 'white' ? font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE) : font = await Jimp.loadFont(Jimp.FONT_SANS_128_BLACK)

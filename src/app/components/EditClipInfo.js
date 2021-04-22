@@ -6,7 +6,7 @@ import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
 import { serverIP, port } from '../../../config'
-import SaveOrPlay from './SaveOrPlay'
+import EditClipOptions from './EditClipOptions'
 
 const socket = io('http://'+ serverIP + ':' + port)
 
@@ -32,7 +32,10 @@ export default (props) => {
     }, [editIndex])
 
     useEffect(() => {
-        return () => redux(actions.setEditIndex(null))
+        return () => {
+            redux(actions.setConfirmDelete(false))
+            redux(actions.setEditIndex(null))
+        }
     }, [])
 
     const controlEnterPress = (event) => {
@@ -68,7 +71,7 @@ export default (props) => {
 
     if(Platform.OS === 'web') return (
         <div style={webStyles.clipEdit}>
-            <SaveOrPlay
+            <EditClipOptions
                 handleEditClip={handleEditClip}
                 />
             <textarea

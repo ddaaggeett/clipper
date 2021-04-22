@@ -5,6 +5,7 @@ import { androidClientId, webClientId, webClientSecret, serverIP, port, appName 
 import * as AuthSession from 'expo-auth-session'
 import * as Google from 'expo-auth-session/providers/google'
 import * as WebBrowser from 'expo-web-browser'
+import SourceCodeLink from '../../components/SourceCodeLink'
 import * as actions from '../../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
@@ -117,6 +118,7 @@ export default (props) => {
         {
             loggedIn
             ?   <View style={styles.contentRow}>
+                    <SourceCodeLink />
                     <Text style={styles.username}>{`${appName}     ///     ${user.name}`}</Text>
                     <TouchableOpacity
                         style={[styles.accountButton, styles.loginButton]}
@@ -126,6 +128,7 @@ export default (props) => {
                     </TouchableOpacity>
                 </View>
             :   <View style={styles.contentRow}>
+                    <SourceCodeLink />
                     <Text style={styles.username}>{appName}</Text>
                     <TouchableOpacity
                         style={[styles.accountButton, styles.logoutButton]}
