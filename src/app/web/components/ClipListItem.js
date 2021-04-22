@@ -46,11 +46,6 @@ export default (props) => {
                         ?   null
                         :   <div style={styles.clipDetail}>{props.clip.who}</div>
                     }
-                    {
-                        props.clip.comment.length == 0
-                        ?   null
-                        :   <div style={styles.clipDetail}>{props.clip.comment}</div>
-                    }
                 </View>
             </View>
         </div>

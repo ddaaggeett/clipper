@@ -14,18 +14,18 @@ export default (props) => {
 
     const { editIndex } = useSelector(state => state.app)
     const { clips } = useSelector(state => state.clips)
-    const [comment, setComment] = useState()
+    const [thumbnailText, setThumbnailText] = useState()
     const [title, setTitle] = useState()
     const [who, setWho] = useState()
     const redux = useDispatch()
 
     const handleChangeTitle = (event) => setTitle(event.target.value)
     const handleChangeWho = (event) => setWho(event.target.value)
-    const handleChangeComment = (event) => setComment(event.target.value)
+    const handleChangeThumbnailText = (event) => setThumbnailText(event.target.value)
 
     useEffect(() => {
         if(editIndex != null) {
-            setComment(clips[editIndex].comment)
+            setThumbnailText(clips[editIndex].thumbnailText)
             setTitle(clips[editIndex].title)
             setWho(clips[editIndex].who)
         }
@@ -59,9 +59,9 @@ export default (props) => {
     const handleEditClip = () => {
         const editedClip = {
             ...clips[editIndex],
-            comment: comment,
-            title: title,
-            who: who,
+            thumbnailText,
+            title,
+            who,
         }
         updateEditedClip(editedClip)
     }
@@ -86,9 +86,9 @@ export default (props) => {
                 />
             <textarea
                 style={webStyles.clipDetail}
-                placeholder={'COMMENT'}
-                value={comment}
-                onChange={handleChangeComment}
+                placeholder={'THUMBNAIL TEXT'}
+                value={thumbnailText}
+                onChange={handleChangeThumbnailText}
                 />
         </div>
     )
@@ -115,10 +115,10 @@ export default (props) => {
             <TextInput
                 style={[styles.clipItemText, styles.commentInput]}
                 multiline={true}
-                onChangeText={text => setComment(text)}
+                onChangeText={text => setThumbnailText(text)}
                 onEndEditing={handleEditClip}
-                value={comment}
-                placeholder={"DESCRIPTION"}
+                value={thumbnailText}
+                placeholder={"THUMBNAIL TEXT"}
                 placeholderTextColor={"yellow"}
                 />
         </View>

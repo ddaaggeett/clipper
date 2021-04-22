@@ -27,11 +27,4 @@ export default (props) => {
     )
 }
 
-const ClipTime = (props) => {
-
-    return (
-        <View style={styles.clipDuration}>
-            <Text style={styles.clipDurationText}>{new Date(props.clip.duration * 1000).toISOString().substr(14, 5)}</Text>
-        </View>
-    )
-}
+const ClipTime = ({ clip }) => <Text style={styles.clipDuration}>{new Date(clip.duration * 1000).toISOString().substr(14, 5)}</Text>

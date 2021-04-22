@@ -13,7 +13,7 @@ module.exports = {
         duration: 0,
         videoId: '',
         title: '',
-        comment: '',
+        thumbnailText: '',
         who: '',
     },
     db: 'clipper',

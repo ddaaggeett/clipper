@@ -131,8 +131,6 @@ export const styles = StyleSheet.create({
         padding: 2,
         paddingLeft: 4,
         paddingRight: 3,
-    },
-    clipDurationText: {
         color:'white',
         fontWeight: 'bold',
         fontSize: 14,
