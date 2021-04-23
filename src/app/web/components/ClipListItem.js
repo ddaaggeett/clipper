@@ -18,7 +18,10 @@ export default (props) => {
 
     if(isSelected) return (
         <div style={styles.clipItem}>
-            <Thumbnail clip={props.clip} />
+            <Thumbnail
+                clip={props.clip}
+                index={props.index}
+                />
             <EditClipInfo />
         </div>
     )
@@ -28,7 +31,10 @@ export default (props) => {
             onClick={() => handleSelectClipItem()}
             >
             <View style={nativeStyles.contentRow}>
-                <Thumbnail clip={props.clip} />
+                <Thumbnail
+                    clip={props.clip}
+                    index={props.index}
+                    />
                 <View>
                     {
                         props.clip.title.length == 0

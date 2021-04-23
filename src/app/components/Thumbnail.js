@@ -19,11 +19,18 @@ export default (props) => {
         thumbnailURI = `http://${serverIP}:${expressPort}/${props.clip.videoId}/${props.clip.id}/${thumbnailFile}`
     }
 
-    const handlePlayClip = () => redux(actions.setPlayingClip(true, clips[editIndex].videoId))
+    const handlePlayClip = () => {
+        if (editIndex != null) redux(actions.setPlayingClip(true, clips[editIndex].videoId))
+        else {
+            redux(actions.setEditIndex(props.index))
+            redux(actions.setPlayingClip(true, clips[props.index].videoId))
+        }
+    }
 
     if (Platform.OS === 'web') return (
         <TouchableOpacity
             onPress={() => handlePlayClip()}
+            style={styles.thumbnailWeb}
             >
             <ClipTime clip={props.clip} />
             <Image source={{ uri: thumbnailURI }} style={styles.thumbnailWeb} />
