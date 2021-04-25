@@ -5,10 +5,10 @@ import { styles as webStyles } from '../web/styles'
 import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
-import { serverIP, port } from '../../../config'
+import { serverIP, socketPort } from '../../../config'
 import EditClipOptions from './EditClipOptions'
 
-const socket = io('http://'+ serverIP + ':' + port)
+const socket = io('http://'+ serverIP + ':' + socketPort)
 
 export default (props) => {
 

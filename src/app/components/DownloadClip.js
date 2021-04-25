@@ -3,7 +3,10 @@ import { View, Text, TouchableOpacity, Platform } from "react-native"
 import { styles } from "../styles"
 import { useSelector, useDispatch } from 'react-redux'
 import * as Linking from 'expo-linking'
-import { serverIP, expressPort } from '../../../config'
+import { serverIP, socketPort, expressPort } from '../../../config'
+import { io } from 'socket.io-client'
+
+const socket = io('http://'+ serverIP + ':' + socketPort)
 
 export default () => {
 
@@ -14,7 +17,13 @@ export default () => {
         if (Platform.OS === 'web') Linking.openURL(`http://${serverIP}:${expressPort}/${clips[editIndex].id}`)
     }
 
-    if (clips[editIndex].clipUri == undefined) return null
+    const reClip = () => socket.emit('reClip', clips[editIndex])
+
+    if (clips[editIndex].clipUri == undefined) return (
+        <TouchableOpacity style={[styles.controlButton, {backgroundColor: 'orange'}]} onPress={() => reClip()}>
+            <Text style={styles.controlButtonText}>{`Where's my download?`}</Text>
+        </TouchableOpacity>
+    )
     else return (
         <TouchableOpacity style={[styles.controlButton, styles.downloadClip]} onPress={() => downloadClip()}>
         {

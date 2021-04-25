@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import { styles } from '../styles'
 import { useSelector, useDispatch } from 'react-redux'
-import { serverIP, port } from '../../../config'
+import { serverIP, socketPort } from '../../../config'
 import * as AuthSession from 'expo-app-auth'
 import { io } from 'socket.io-client'
-const socket = io('http://'+ serverIP + ':' + port)
+const socket = io('http://'+ serverIP + ':' + socketPort)
 import * as actions from '../redux/actions/actionCreators'
 
 export default (props) => {

@@ -4,9 +4,9 @@ import { styles } from "../styles"
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import { io } from 'socket.io-client'
-import { serverIP, port } from '../../../config'
+import { serverIP, socketPort } from '../../../config'
 
-const socket = io('http://'+ serverIP + ':' + port)
+const socket = io('http://'+ serverIP + ':' + socketPort)
 
 export default (props) => {
 

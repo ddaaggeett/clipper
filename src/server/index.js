@@ -2,15 +2,16 @@ var express = require('express')
 var app = express()
 var http = require('http').Server(app)
 var io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
-var { port } = require('../../config')
+var { socketPort } = require('../../config')
 var { updateClip, deleteClip, handlePendingClips } = require('./handleReceiveClips')
-var fs = require('fs')
 var { getPlaylist, getAllPlaylists } = require('./youtube')
 var { userLog, getUserClips } = require('./user')
+var generateClip = require('./generateClip')
 require('./db')
 require('./expressServer')
 
 io.on('connection', (socket) => {
+    socket.on('reClip', clipObject => generateClip(clipObject))
     socket.on('updateClip', (clip, returnToSender) => {
         updateClip(clip).then(updatedClip => {
             returnToSender(updatedClip)
@@ -43,6 +44,6 @@ io.on('connection', (socket) => {
     })
 })
 
-http.listen(port, function(){
-    console.log('socket.io listening on *:' + port)
+http.listen(socketPort, function(){
+    console.log('socket.io listening on *:' + socketPort)
 })

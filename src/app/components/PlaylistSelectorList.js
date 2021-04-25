@@ -3,9 +3,9 @@ import { View, FlatList, TouchableOpacity, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { styles } from '../styles'
 import * as actions from '../redux/actions/actionCreators'
-import { serverIP, port } from '../../../config'
+import { serverIP, socketPort } from '../../../config'
 import { io } from 'socket.io-client'
-const socket = io('http://'+ serverIP + ':' + port)
+const socket = io('http://'+ serverIP + ':' + socketPort)
 
 export default (props) => {
 

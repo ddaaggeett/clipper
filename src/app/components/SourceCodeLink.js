@@ -11,7 +11,7 @@ export default () => {
             >
             <Image
                 source={require('../../../assets/GitHub-Mark-Light-32px.png')}
-                style={styles.sourceCodeLink}
+                style={[styles.sourceCodeLink, { position: 'fixed' }]}
                 />
         </TouchableOpacity>
     )

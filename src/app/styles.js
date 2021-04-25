@@ -135,8 +135,6 @@ export const styles = StyleSheet.create({
         fontSize: 14,
     },
     sourceCodeLink: {
-        position: 'fixed',
-        justifyContent: 'center',
         height: 20,
         width: 20,
         zIndex: 1,

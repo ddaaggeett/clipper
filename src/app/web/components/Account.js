@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text, TouchableOpacity, View, Platform } from 'react-native'
 import { styles } from '../../styles'
-import { androidClientId, webClientId, webClientSecret, serverIP, port, appName } from '../../../../config'
+import { androidClientId, webClientId, webClientSecret, serverIP, socketPort, appName } from '../../../../config'
 import * as AuthSession from 'expo-auth-session'
 import * as Google from 'expo-auth-session/providers/google'
 import * as WebBrowser from 'expo-web-browser'
@@ -10,7 +10,7 @@ import * as actions from '../../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
 
-const socket = io('http://'+ serverIP + ':' + port)
+const socket = io('http://'+ serverIP + ':' + socketPort)
 
 WebBrowser.maybeCompleteAuthSession()
 

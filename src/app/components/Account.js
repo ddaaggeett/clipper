@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { styles } from '../styles'
-import { androidClientId, serverIP, port, appName } from '../../../config'
+import { androidClientId, serverIP, socketPort, appName } from '../../../config'
 import * as Google from 'expo-google-app-auth'
 import * as AppAuth from 'expo-app-auth'
 import * as actions from '../redux/actions/actionCreators'
@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import Settings from './Settings'
 import { io } from 'socket.io-client'
 
-const socket = io('http://'+ serverIP + ':' + port)
+const socket = io('http://'+ serverIP + ':' + socketPort)
 
 export default (props) => {
 

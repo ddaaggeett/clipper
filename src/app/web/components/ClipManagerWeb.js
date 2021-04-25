@@ -2,10 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { styles } from '../styles'
 import { io } from 'socket.io-client'
-import { serverIP, port } from '../../../../config'
+import { serverIP, socketPort } from '../../../../config'
 import ClipListItem from './ClipListItem'
 
-const socket = io('http://'+ serverIP + ':' + port)
+const socket = io('http://'+ serverIP + ':' + socketPort)
 
 export default (props) => {
 

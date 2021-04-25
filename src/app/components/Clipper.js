@@ -7,11 +7,11 @@ import ThumbnailSelector from './ThumbnailSelector'
 import { styles } from "../styles"
 import getContentID from '../getContentID'
 import { io } from 'socket.io-client'
-import { serverIP, port, clipInitObject } from '../../../config'
+import { serverIP, socketPort, clipInitObject } from '../../../config'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 
-const socket = io('http://'+ serverIP + ':' + port)
+const socket = io('http://'+ serverIP + ':' + socketPort)
 
 export default (props) => {
 

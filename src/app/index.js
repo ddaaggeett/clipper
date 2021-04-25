@@ -7,10 +7,10 @@ import { styles } from './styles'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from './redux/actions/actionCreators'
-import { serverIP, port } from '../../config'
+import { serverIP, socketPort } from '../../config'
 import { io } from 'socket.io-client'
 import useDataSocketHook from './dataSocket'
-const socket = io('http://'+ serverIP + ':' + port)
+const socket = io('http://'+ serverIP + ':' + socketPort)
 
 const Tab = createBottomTabNavigator()
 

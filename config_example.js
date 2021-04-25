@@ -4,7 +4,7 @@ module.exports = {
     webClientSecret: 'webClientSecret',
     androidClientId: 'androidClientId',
     serverIP: 'ip address',
-    port: 'port number',
+    socketPort: 'port number',
     expressPort: 'port number',
     videoDataDirectory: '../clipper_data/',
     clipInitObject: {
