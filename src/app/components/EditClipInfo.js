@@ -38,18 +38,18 @@ export default (props) => {
         }
     }, [])
 
-    const controlEnterPress = (event) => {
+    const keyControls = (event) => {
         if (event.ctrlKey && event.keyCode == 13) handleEditClip()
         else if (event.key === 'Escape') redux(actions.setEditIndex(null))
     }
 
     useEffect(() => {
-        if (Platform.OS === 'web') window.addEventListener('keydown', controlEnterPress)
+        if (Platform.OS === 'web') window.addEventListener('keydown', keyControls)
 
         return () => {
-            if (Platform.OS === 'web') window.removeEventListener('keydown', controlEnterPress)
+            if (Platform.OS === 'web') window.removeEventListener('keydown', keyControls)
         }
-    }, [controlEnterPress])
+    }, [keyControls])
 
     const updateEditedClip = (updatedClip) => {
         if(Platform.OS === 'web') redux(actions.setEditIndex(null))

@@ -7,7 +7,7 @@ const updateClip = (clip) => {
     return new Promise((resolve,reject) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').insert(clip, { returnChanges: true, conflict: 'update' }).run(connection).then(result => {
-                if (result.changes[0].new_val != undefined) {
+                if (result.changes.length != 0 && result.changes[0].new_val != undefined) {
                     const updatedClip = result.changes[0].new_val
                     const oldClip = result.changes[0].old_val
                     if (oldClip == null) {
