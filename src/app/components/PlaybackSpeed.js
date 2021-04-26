@@ -4,7 +4,7 @@ import { styles } from "../styles"
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 
-export default (props) => {
+export default () => {
 
     const redux = useDispatch()
     const { speed } = useSelector(state => state.app)

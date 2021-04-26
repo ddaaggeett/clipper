@@ -12,7 +12,7 @@ export default (props) => {
     if (videoSelectorFocused) return null
     else return (
         <View>
-            <PlaybackSpeed {...props} />
+            <PlaybackSpeed />
             <ClippingButtons {...props} />
         </View>
     )

@@ -4,6 +4,7 @@ import YoutubePlayer from "./react-native-youtube-iframe"
 import ReactPlayer from 'react-player'
 import Controls from './Controls'
 import ThumbnailSelector from './ThumbnailSelector'
+import PlaybackSpeed from './PlaybackSpeed'
 import { styles } from "../styles"
 import getContentID from '../getContentID'
 import { io } from 'socket.io-client'
@@ -111,6 +112,7 @@ export default (props) => {
                             controls={true}
                             onProgress={handleVideoProgress}
                             />
+                        <PlaybackSpeed />
                         <ThumbnailSelector
                             player={player}
                             setPlaying={setPlaying}
@@ -134,7 +136,6 @@ export default (props) => {
                             handleFinishClip={handleFinishClip}
                             playing={playing}
                             setPlaying={setPlaying}
-                            getVideoId={getContentID}
                             />
                     </View>
             }
@@ -179,7 +180,6 @@ export default (props) => {
                             handleFinishClip={handleFinishClip}
                             playing={playing}
                             setPlaying={setPlaying}
-                            getVideoId={getContentID}
                             />
                     </View>
             }
