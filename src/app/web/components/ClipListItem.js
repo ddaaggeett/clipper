@@ -35,7 +35,7 @@ export default (props) => {
                     clip={props.clip}
                     index={props.index}
                     />
-                <View>
+                <View style={{flex:1}}>
                     {
                         props.clip.title.length == 0
                         ?   null

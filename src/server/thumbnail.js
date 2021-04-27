@@ -43,7 +43,9 @@ const generateThumbnails = (clipObject) => {
 }
 
 const getFrame = (clipObject) => {
-    const command = `ffmpeg -ss ${clipObject.thumbnailTime} -i ../${path.basename(clipObject.videoDirectory)}.mp4 -vframes 1 -s ${thumbWidth}x${thumbHeight} ${path.basename(clipObject.singleFrameURI)}`
+    var time = 0
+    if (clipObject.thumbnailTime != undefined) time = clipObject.thumbnailTime
+    const command = `ffmpeg -ss ${time} -i ../${path.basename(clipObject.videoDirectory)}.mp4 -vframes 1 -s ${thumbWidth}x${thumbHeight} ${path.basename(clipObject.singleFrameURI)}`
 
     exec(command, {
         cwd: clipObject.clipDirectory,
