@@ -98,7 +98,7 @@ export default (props) => {
     else return (
         <View>
             <TextInput
-                style={[styles.clipItemText, styles.titleInput]}
+                style={[styles.clipItemTextInput, styles.titleInput]}
                 multiline={true}
                 onChangeText={text => setTitle(text)}
                 onEndEditing={handleEditClip}
@@ -107,7 +107,7 @@ export default (props) => {
                 placeholderTextColor={"yellow"}
                 />
             <TextInput
-                style={[styles.clipItemText, styles.whoInput]}
+                style={[styles.clipItemTextInput, styles.whoInput]}
                 multiline={true}
                 onChangeText={text => setWho(text)}
                 onEndEditing={handleEditClip}
@@ -116,7 +116,7 @@ export default (props) => {
                 placeholderTextColor={"yellow"}
                 />
             <TextInput
-                style={[styles.clipItemText, styles.commentInput]}
+                style={[styles.clipItemTextInput, styles.commentInput]}
                 multiline={true}
                 onChangeText={text => setThumbnailText(text)}
                 onEndEditing={handleEditClip}

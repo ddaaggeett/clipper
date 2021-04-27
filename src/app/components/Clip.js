@@ -22,11 +22,15 @@ export default (props) => {
                 >
                 <View style={styles.contentRow}>
                     <Thumbnail clip={props.clip} />
-                    <View style={{flex:1}}>
-                        <Text style={styles.clipItemText}>
-                            {props.clip.title}
-                        </Text>
-                    </View>
+                    {
+                        props.clip.who.length == 0
+                        ?   <Text style={styles.clipItemText}>
+                                {props.clip.title}
+                            </Text>
+                        :   <Text style={styles.clipItemText}>
+                                {`${props.clip.title} /// ${props.clip.who}`}
+                            </Text>
+                    }
                 </View>
             </TouchableOpacity>
         </View>

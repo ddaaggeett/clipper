@@ -27,7 +27,7 @@ export default () => {
                 videoSelectorFocused || selectingFromPlaylist || selectingUnfinishedVideo || contentID.length == 0
                 ?   null
                 :   <TextInput
-                        style={[styles.clipItemText, styles.titleInput]}
+                        style={[styles.clipItemTextInput, styles.titleInput]}
                         onChangeText={text => setPendingTitle(text)}
                         value={pendingTitle}
                         placeholder={"PENDING TITLE"}
