@@ -3,6 +3,7 @@ const path = require('path')
 const downloadVideo = require('./downloadVideo')
 const clip = require('./clip')
 const { videoDataDirectory } = require('../../config')
+const { zipClip } = require('./zip')
 
 const generateClip = (clipObject) => {
     return new Promise((resolve, reject) => {
@@ -12,7 +13,7 @@ const generateClip = (clipObject) => {
             if (err) throw err;
             else {
                 downloadVideo(videoDirectory, clipObject.videoId).then(() => {
-                    clip(clipDirectory, clipObject).then(updatedClipObject => resolve(updatedClipObject))
+                    clip(clipDirectory, clipObject).then(updatedClipObject => zipClip(updatedClipObject).then(clipObject => resolve(clipObject)))
                 })
             }
         })

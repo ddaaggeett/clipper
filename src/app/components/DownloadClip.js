@@ -19,7 +19,7 @@ export default () => {
 
     const reClip = () => socket.emit('reClip', clips[editIndex])
 
-    if (clips[editIndex].clipUri == undefined) return (
+    if (clips[editIndex].zipUri == undefined) return (
         <TouchableOpacity style={[styles.controlButton, {backgroundColor: 'orange'}]} onPress={() => reClip()}>
             <Text style={styles.controlButtonText}>{`Where's my download?`}</Text>
         </TouchableOpacity>
