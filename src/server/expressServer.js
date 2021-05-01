@@ -9,6 +9,7 @@ const { zipClip } = require('./zip')
 app.use(express.static(path.join(__dirname, '/../..', videoDataDirectory)))
 
 app.get('/:clipID', (req, res) => {
+    // TODO: should be zipped already. donwload only here.
     const clipID = res.req.params.clipID
     r.connect(dbConnxConfig).then(connection => {
         r.table('clips').get(clipID).run(connection).then(response => {
