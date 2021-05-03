@@ -25,4 +25,5 @@ module.exports = {
         db: 'clipper',
     },
     sourceCodeURL: `https://github.com/ddaaggeett/clipper`,
+    userProgressBookmarkListLength: 5,
 }
