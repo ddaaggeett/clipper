@@ -142,4 +142,19 @@ export const styles = StyleSheet.create({
         top: 8,
         left: 8,
     },
+    recentVideos: {
+        borderTopWidth: 7,
+        borderColor: 'purple',
+        marginTop: 13,
+        marginLeft:20,
+        marginRight:20,
+    },
+    recentVideosText: {
+        paddingTop: 15,
+        paddingBottom: 10,
+        color: 'red',
+        fontSize: 16,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+    },
 });
