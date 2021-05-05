@@ -146,43 +146,24 @@ export default (props) => {
         if (contentID.length == 0) return null
         else return (
             <View>
-            {
-                selectingFromPlaylist || selectingUnfinishedVideo
-                ?   <View>
-                        <YoutubePlayer
-                            ref={player}
-                            height={100}
-                            width={178}
-                            play={playing}
-                            onReady={() => playAtLatestProgress()}
-                            videoId={contentID}
-                            playList={contentID}
-                            playbackRate={speed}
-                            onPlaybackRateChange={() => setPlaying(true)}
-                            onChangeState={handleChangeEvent}
-                            />
-                    </View>
-                :   <View>
-                        <YoutubePlayer
-                            ref={player}
-                            height={Dimensions.get('window').width * 9 / 16}
-                            width={Dimensions.get('window').width}
-                            play={playing}
-                            onReady={() => playAtLatestProgress()}
-                            videoId={contentID}
-                            playList={contentID}
-                            playbackRate={speed}
-                            onPlaybackRateChange={() => setPlaying(true)}
-                            onChangeState={handleChangeEvent}
-                            />
-                        <Controls
-                            player={player}
-                            handleFinishClip={handleFinishClip}
-                            playing={playing}
-                            setPlaying={setPlaying}
-                            />
-                    </View>
-            }
+                <YoutubePlayer
+                    ref={player}
+                    height={Dimensions.get('window').width * 9 / 16}
+                    width={Dimensions.get('window').width}
+                    play={playing}
+                    onReady={() => playAtLatestProgress()}
+                    videoId={contentID}
+                    playList={contentID}
+                    playbackRate={speed}
+                    onPlaybackRateChange={() => setPlaying(true)}
+                    onChangeState={handleChangeEvent}
+                    />
+                <Controls
+                    player={player}
+                    handleFinishClip={handleFinishClip}
+                    playing={playing}
+                    setPlaying={setPlaying}
+                    />
             </View>
         )
     }

@@ -12,7 +12,7 @@ export default (props) => {
     const redux = useDispatch()
 
     var thumbnailURI
-    if (props.clip.thumbnails === undefined) thumbnailURI = `http://${serverIP}:${expressPort}/${props.clip.videoId}/${props.clip.videoId}.png`
+    if (props.clip.thumbnails === undefined) thumbnailURI = `https://img.youtube.com/vi/${props.clip.videoId}/0.jpg`
     else {
         const dirArray = props.clip.thumbnails[0].split('/')
         const thumbnailFile = dirArray[dirArray.length - 1]

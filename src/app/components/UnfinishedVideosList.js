@@ -17,7 +17,7 @@ export default (props) => {
 
 
     const renderItem = ({ item, index }) => {
-        const thumbnailURI = `http://${serverIP}:${expressPort}/${item.videoId}/${item.videoId}.png`
+        const thumbnailURI = `https://img.youtube.com/vi/${item.videoId}/0.jpg`
         return(
             <View style={styles.clipItem}>
                 <TouchableOpacity
