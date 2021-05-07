@@ -4,13 +4,16 @@ import { styles } from '../styles'
 import { serverIP, expressPort } from '../../../config'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
+import { useNavigation } from '@react-navigation/native'
 
 export default (props) => {
 
+    const navigation = useNavigation()
     const { videoProgressions } = useSelector(state => state.library)
     const redux = useDispatch()
 
     const selectVideo = (item) => {
+        navigation.navigate('Clipper')
         redux(actions.updateContentID(item.videoId))
         redux(actions.selectingUnfinishedVideo(false))
     }
@@ -37,7 +40,6 @@ export default (props) => {
 
     if (videoProgressions.length == 0) return null
     else return (
-        <View>
             <View style={styles.recentVideos}>
                 <Text style={styles.recentVideosText}>RECENT VIDEOS</Text>
                 <FlatList
@@ -46,6 +48,5 @@ export default (props) => {
                     keyExtractor={item => item.videoId}
                     />
             </View>
-        </View>
     )
 }

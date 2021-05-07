@@ -7,6 +7,7 @@ import * as AppAuth from 'expo-app-auth'
 import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
+import UnfinishedVideosList from './UnfinishedVideosList'
 import Settings from './Settings'
 import { io } from 'socket.io-client'
 
@@ -131,6 +132,7 @@ export default (props) => {
                     </TouchableOpacity>
                     <Text style={[styles.username, styles.usernameNative]}>{`${appName}   ///   ${user.name}`}</Text>
                     <Settings navigation={props.navigation} />
+                    <UnfinishedVideosList />
                 </View>
             :   <View style={styles.accountLoggedOut}>
                     <TouchableOpacity

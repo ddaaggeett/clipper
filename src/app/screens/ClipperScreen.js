@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 import { StatusBar } from 'expo-status-bar';
 import Clipper from '../components/Clipper'
 import VideoSelector from '../components/VideoSelector'
-import UnfinishedVideosList from '../components/UnfinishedVideosList'
 import { styles } from '../styles'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -35,7 +34,6 @@ export default () => {
                         placeholderTextColor={"yellow"}
                         />
             }
-            <UnfinishedVideosList />
         </ScrollView>
         </SafeAreaView>
     )

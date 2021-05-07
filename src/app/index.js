@@ -48,12 +48,12 @@ export default () => {
         {
             loggedIn
             ?   <Tab.Navigator tabBarOptions={tabBarOptions}>
-                    <Tab.Screen name="Account" component={AccountScreen} />
+                    <Tab.Screen name="Home" component={AccountScreen} />
                     <Tab.Screen name="Clipper" component={ClipperScreen} />
                     <Tab.Screen name="Clips" component={ClipManagerScreen} />
                 </Tab.Navigator>
-            :   <Tab.Navigator tabBarOptions={tabBarOptions}>
-                    <Tab.Screen name="Account" component={AccountScreen} />
+            :   <Tab.Navigator>
+                    <Tab.Screen name="Home" component={AccountScreen} options={{tabBarVisible: false}} />
                 </Tab.Navigator>
 
         }
