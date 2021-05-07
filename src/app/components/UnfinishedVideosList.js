@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, FlatList, Image } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList, Image, Platform } from 'react-native'
 import { styles } from '../styles'
 import { serverIP, expressPort } from '../../../config'
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,12 +8,13 @@ import { useNavigation } from '@react-navigation/native'
 
 export default (props) => {
 
-    const navigation = useNavigation()
+    var navigation
+    if (Platform.OS !== 'web') navigation = useNavigation()
     const { videoProgressions } = useSelector(state => state.library)
     const redux = useDispatch()
 
     const selectVideo = (item) => {
-        navigation.navigate('Clipper')
+        if (Platform.OS !== 'web') navigation.navigate('Clipper')
         redux(actions.updateContentID(item.videoId))
         redux(actions.selectingUnfinishedVideo(false))
     }
