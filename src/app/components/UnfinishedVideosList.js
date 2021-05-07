@@ -16,7 +16,6 @@ export default (props) => {
     const selectVideo = (item) => {
         if (Platform.OS !== 'web') navigation.navigate('Clipper')
         redux(actions.updateContentID(item.videoId))
-        redux(actions.selectingUnfinishedVideo(false))
     }
 
 

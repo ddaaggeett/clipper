@@ -34,39 +34,11 @@ export function logout() {
     }
 }
 
-export function setPlaylists(playlists) {
-    return {
-        type: actions.SET_PLAYLISTS,
-        playlists
-    }
-}
-
-export function setPlaylist(playlist) {
-    return {
-        type: actions.SET_PLAYLIST,
-        playlist
-    }
-}
-
-export function selectingUnfinishedVideo(selecting) {
-    return {
-        type: actions.SELECTING_UNFINISHED_VIDEO,
-        selecting
-    }
-}
-
 export function setAccessToken(accessToken, accessExpirationTime) {
     return {
         type: actions.SET_ACCESS_TOKEN,
         accessToken,
         accessExpirationTime,
-    }
-}
-
-export function selectingFromPlaylist(isSelecting) {
-    return {
-        type: actions.SELECTING_FROM_PLAYLIST,
-        isSelecting,
     }
 }
 

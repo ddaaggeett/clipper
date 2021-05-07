@@ -10,7 +10,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 export default () => {
 
     const { contentID, boundCount, videoSelectorFocused } = useSelector(state => state.app)
-    const { selectingFromPlaylist, selectingUnfinishedVideo } = useSelector(state => state.library)
     const [pendingTitle, setPendingTitle] = useState('')
 
     useEffect(() => {
@@ -24,7 +23,7 @@ export default () => {
             <Clipper pendingTitle={pendingTitle} />
             <VideoSelector />
             {
-                videoSelectorFocused || selectingFromPlaylist || selectingUnfinishedVideo || contentID.length == 0
+                videoSelectorFocused || contentID.length == 0
                 ?   null
                 :   <TextInput
                         style={[styles.clipItemTextInput, styles.titleInput]}

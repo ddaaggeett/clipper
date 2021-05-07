@@ -22,7 +22,7 @@ export default (props) => {
 
     const { clips } = useSelector(state => state.clips)
     const { leftCursor, rightCursor, boundCount, editIndex, speed, contentID, panelWidth, playingClip } = useSelector(state => state.app)
-    const { selectingFromPlaylist, selectingUnfinishedVideo, videoProgressions } = useSelector(state => state.library)
+    const { videoProgressions } = useSelector(state => state.library)
     const { user } = useSelector(state => state.account)
     const redux = useDispatch()
 

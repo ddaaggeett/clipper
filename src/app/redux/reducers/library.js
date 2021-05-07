@@ -2,40 +2,11 @@ import * as actions from '../actions'
 import { userProgressBookmarkListLength } from '../../../../config'
 
 const initialState = {
-    selectingFromPlaylist: false,
-    selectingUnfinishedVideo: false,
-    playlists:[],
-    playlist: {
-        id: null,
-        title: '',
-        videos: [],
-    },
     videoProgressions: [],
 }
 
 export default function library(state = initialState, action) {
     switch(action.type) {
-
-        case actions.SELECTING_FROM_PLAYLIST:
-            return {
-                ...state,
-                selectingFromPlaylist: action.isSelecting,
-            }
-
-        case actions.SET_PLAYLISTS:
-            return {
-                ...state,
-                playlists: action.playlists,
-            }
-
-        case actions.SET_PLAYLIST:
-            return {
-                ...state,
-                playlist: {
-                    ...state.playlist,
-                    ...action.playlist,
-                }
-            }
 
         case actions.SET_VIDEO_PROGRESSION:
 
@@ -71,12 +42,6 @@ export default function library(state = initialState, action) {
                     action.progressionObject,
                     ...state.videoProgressions.slice(index + 1, state.videoProgressions.length)
                 ]
-            }
-
-        case actions.SELECTING_UNFINISHED_VIDEO:
-            return {
-                ...state,
-                selectingUnfinishedVideo: action.selecting
             }
 
         default:
