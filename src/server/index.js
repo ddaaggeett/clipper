@@ -4,7 +4,6 @@ var http = require('http').Server(app)
 var io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
 var { socketPort } = require('../../config')
 var { updateClip, deleteClip, handlePendingClips } = require('./handleReceiveClips')
-var { getPlaylist, getAllPlaylists } = require('./youtube')
 var { userLog, getUserClips } = require('./user')
 var generateClip = require('./generateClip')
 require('./db')
@@ -22,16 +21,6 @@ io.on('connection', (socket) => {
         deleteClip(clip).then(deletedClip => {
             returnToSender(deletedClip)
             socket.broadcast.emit('deleteClip',deletedClip)
-        })
-    })
-    socket.on('getPlaylist', (auth, returnPlaylist) => {
-        getPlaylist(auth).then(playlist => {
-            returnPlaylist(playlist)
-        })
-    })
-    socket.on('getAllPlaylists', (accessToken, returnPlaylists) => {
-        getAllPlaylists(accessToken).then(playlists => {
-            returnPlaylists(playlists)
         })
     })
     socket.on('userLog', (user, sendBack) => {
