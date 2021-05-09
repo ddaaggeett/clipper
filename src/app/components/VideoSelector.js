@@ -4,6 +4,10 @@ import { styles } from "../styles"
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import getContentID from '../getContentID'
+import { io } from 'socket.io-client'
+import { serverIP, socketPort } from '../../../config'
+
+const socket = io('http://'+ serverIP + ':' + socketPort)
 
 export default (props) => {
 
@@ -15,7 +19,17 @@ export default (props) => {
         redux(actions.updateContentID(getContentID(text)))
     }
 
-    useEffect(() => Keyboard.dismiss(), [contentID])
+    useEffect(() => {
+        Keyboard.dismiss()
+
+        if (contentID !== '') {
+            socket.emit('updateSourceVideo', {
+                videoID: contentID,
+            }, videoObject => {
+                // TODO: videoObject.title now exists
+            })
+        }
+    }, [contentID])
 
     const focusVideoSelector = () => redux(actions.setVideoSelectorFocused(true))
     const blurVideoSelector = () => redux(actions.setVideoSelectorFocused(false))

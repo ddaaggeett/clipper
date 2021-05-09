@@ -20,6 +20,7 @@ module.exports = {
     tables: {
         clips: 'clips',
         users: 'users',
+        sourceVideos: 'sourceVideos',
     },
     dbConnxConfig: {
         db: 'clipper',

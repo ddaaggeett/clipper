@@ -6,8 +6,15 @@ var { socketPort } = require('../../config')
 var { updateClip, deleteClip, handlePendingClips } = require('./handleReceiveClips')
 var { userLog, getUserClips } = require('./user')
 var generateClip = require('./generateClip')
+const { updateSourceVideo } = require('./sourceVideo')
 
 io.on('connection', (socket) => {
+    socket.on('updateSourceVideo', (videoObject, returnToSender) => {
+        updateSourceVideo(videoObject).then(videoObject => {
+            returnToSender(videoObject)
+            // socket.broadcast.emit('updateSourceVideo',videoObject)
+        })
+    })
     socket.on('reClip', clipObject => generateClip(clipObject))
     socket.on('updateClip', (clip, returnToSender) => {
         updateClip(clip).then(updatedClip => {
