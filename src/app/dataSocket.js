@@ -12,5 +12,6 @@ export default () => {
     useEffect(() => {
         socket.on('updateClip', clip => redux(actions.updateClip(clip)))
         socket.on('deleteClip', clip => redux(actions.deleteClip(clip)))
+        socket.on('updateSourceVideo', clip => redux(actions.updateSourceVideo(clip)))
     }, [])
 }

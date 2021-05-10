@@ -11,8 +11,9 @@ const { updateSourceVideo } = require('./sourceVideo')
 io.on('connection', (socket) => {
     socket.on('updateSourceVideo', (videoObject, returnToSender) => {
         updateSourceVideo(videoObject).then(videoObject => {
-            returnToSender(videoObject)
+            // returnToSender(videoObject)
             // socket.broadcast.emit('updateSourceVideo',videoObject)
+            io.emit('updateSourceVideo', videoObject)
         })
     })
     socket.on('reClip', clipObject => generateClip(clipObject))

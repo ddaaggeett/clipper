@@ -28,8 +28,12 @@ export default (props) => {
                     >
                     <View style={styles.contentRow}>
                         <Image source={{ uri: thumbnailURI }} style={styles.thumbnail} />
-                        <View>
-                            <Text style={styles.clipItemText}>{item.videoId}</Text>
+                        <View style={{flex: 1}}>
+                            {
+                                videoProgressions[index].title == undefined
+                                ?   <Text style={styles.clipItemText}>{item.videoId}</Text>
+                                :   <Text style={styles.clipItemText}>{item.title}</Text>
+                            }
                             <Text style={styles.clipItemText}>{item.progress}</Text>
                         </View>
                     </View>

@@ -77,6 +77,13 @@ export function setVideoProgression(progressionObject) {
     }
 }
 
+export function updateSourceVideo(videoObject) {
+    return {
+        type: actions.UPDATE_SOURCE_VIDEO,
+        videoObject
+    }
+}
+
 export function addPendingClip(clip) {
     return {
         type: actions.ADD_PENDING_CLIP,

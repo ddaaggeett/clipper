@@ -39,7 +39,26 @@ export default function library(state = initialState, action) {
                 ...state,
                 videoProgressions: [
                     ...state.videoProgressions.slice(0,index),
-                    action.progressionObject,
+                    {
+                        ...state.videoProgressions[index],
+                        ...action.progressionObject,
+                    },
+                    ...state.videoProgressions.slice(index + 1, state.videoProgressions.length)
+                ]
+            }
+
+        case actions.UPDATE_SOURCE_VIDEO:
+
+            var index = state.videoProgressions.findIndex(item => item.videoId === action.videoObject.videoID)
+
+            return {
+                ...state,
+                videoProgressions: [
+                    ...state.videoProgressions.slice(0,index),
+                    {
+                        ...state.videoProgressions[index],
+                        title: action.videoObject.title,
+                    },
                     ...state.videoProgressions.slice(index + 1, state.videoProgressions.length)
                 ]
             }
