@@ -11,6 +11,7 @@ import * as actions from '../redux/actions/actionCreators'
 import { serverIP, socketPort } from '../../../config'
 import { io } from 'socket.io-client'
 import useDataSocketHook from '../dataSocket'
+import Footer from '../components/Footer'
 const socket = io('http://'+ serverIP + ':' + socketPort)
 
 export default () => {
@@ -56,6 +57,7 @@ export default () => {
                     <UnfinishedVideosList />
                 </View>
             </View>
+            <Footer />
         </View>
     )
 }
