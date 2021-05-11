@@ -8,7 +8,7 @@ export default (props) => {
     const year = new Date().getFullYear()
 
     return (
-        <View style={styles.footer}>
+        <View style={[styles.footer, { backgroundImage: 'linear-gradient(black, #333)' }]}>
             <View
                 style={[styles.contentRow, styles.footerLinkGroup, {position: 'absolute'}]}>
                 <TouchableOpacity style={styles.footerLink}>

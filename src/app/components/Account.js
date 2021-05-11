@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View, ScrollView } from 'react-native'
 import { styles } from '../styles'
 import { androidClientId, serverIP, socketPort, appName } from '../../../config'
 import * as Google from 'expo-google-app-auth'
@@ -119,7 +119,7 @@ export default (props) => {
     }
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
         {
             loggedIn
             ?   <View style={styles.accountLoggedIn}>
@@ -142,6 +142,6 @@ export default (props) => {
                     <Text style={[styles.username, styles.usernameNative]}>{appName}</Text>
                 </View>
         }
-        </View>
+        </ScrollView>
     )
 }
