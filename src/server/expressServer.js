@@ -22,7 +22,7 @@ app.get('/:clipID', (req, res) => {
                         fs.unwatchFile(zipUri)
 
                         var downloadName = ''
-                        if(response.title.length == 0) downloadName = '_'
+                        if(response.title.length == 0) downloadName = 'clip_download'
                         else downloadName = response.title
                         const downloadTo = downloadName + '.zip'
                         res.download(zipUri, downloadTo, error => {

@@ -162,7 +162,7 @@ export const styles = StyleSheet.create({
         marginTop: 30,
         width: '100%',
         height: 150,
-        },
+    },
     footerText: {
         color: '#aaa',
         fontWeight: 'bold',
