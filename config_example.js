@@ -11,7 +11,7 @@ module.exports = {
         start: 0,
         end: 0,
         duration: 0,
-        videoId: '',
+        videoID: '',
         title: '',
         thumbnailText: '',
         who: '',

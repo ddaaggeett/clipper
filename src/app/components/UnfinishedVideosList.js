@@ -15,12 +15,12 @@ export default (props) => {
 
     const selectVideo = (item) => {
         if (Platform.OS !== 'web') navigation.navigate('Clipper')
-        redux(actions.updateContentID(item.videoId))
+        redux(actions.updateContentID(item.videoID))
     }
 
 
     const renderItem = ({ item, index }) => {
-        const thumbnailURI = `https://img.youtube.com/vi/${item.videoId}/0.jpg`
+        const thumbnailURI = `https://img.youtube.com/vi/${item.videoID}/0.jpg`
         return(
             <View style={styles.clipItem}>
                 <TouchableOpacity
@@ -31,7 +31,7 @@ export default (props) => {
                         <View style={{flex: 1}}>
                             {
                                 videoProgressions[index].title == undefined
-                                ?   <Text style={styles.clipItemText}>{item.videoId}</Text>
+                                ?   <Text style={styles.clipItemText}>{item.videoID}</Text>
                                 :   <Text style={styles.clipItemText}>{item.title}</Text>
                             }
                             <Text style={styles.clipItemText}>{item.progress}</Text>
@@ -49,7 +49,7 @@ export default (props) => {
                 <FlatList
                     data={videoProgressions}
                     renderItem={renderItem}
-                    keyExtractor={item => item.videoId}
+                    keyExtractor={item => item.videoID}
                     />
             </View>
     )

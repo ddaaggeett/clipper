@@ -2,13 +2,13 @@ const { exec } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 
-const downloadVideo = (videoDirectory, videoId) => {
+const downloadVideo = (videoDirectory, videoID) => {
     return new Promise((resolve,reject) => {
-        const command = `youtube-dl -f best https://www.youtube.com/watch?v=${videoId} --id --write-thumbnail`
+        const command = `youtube-dl -f best https://www.youtube.com/watch?v=${videoID} --id --write-thumbnail`
         exec(command, {
             cwd: videoDirectory,
         }, (error, stdout, stderr) => {
-            console.log(`\nERROR: downloadVideo() ${videoId}:\n${error}`)
+            console.log(`\nERROR: downloadVideo() ${videoID}:\n${error}`)
             if (error) {
                 if (error.toString().includes('[Errno -3] Temporary failure in name resolution')) {
                     /*
@@ -16,16 +16,16 @@ const downloadVideo = (videoDirectory, videoId) => {
                     instead is a networking issue so error should not persist and
                     recursion should not be endless
                     */
-                    downloadVideo(videoDirectory, videoId)
+                    downloadVideo(videoDirectory, videoID)
                 }
-                else console.log(`TODO: downloadVideo() ${videoId} error not yet caught\n`)
+                else console.log(`TODO: downloadVideo() ${videoID} error not yet caught\n`)
             }
             console.log(stdout)
             var lines = stdout.toString().split('\n')
             lines.forEach(line => {
                 if(line.includes('[download] 100%')) {
-                    console.log(`\nDOWNLOAD COMPLETE: ${videoId}`)
-                    formatThumbnail(videoDirectory, videoId)
+                    console.log(`\nDOWNLOAD COMPLETE: ${videoID}`)
+                    formatThumbnail(videoDirectory, videoID)
                     resolve()
                 }
             })
@@ -33,12 +33,12 @@ const downloadVideo = (videoDirectory, videoId) => {
     })
 }
 
-const formatThumbnail = (videoDirectory, videoId) => {
+const formatThumbnail = (videoDirectory, videoID) => {
     fs.readdir(videoDirectory, (err, contents) => {
         contents.forEach(item => {
             if (item.match(/.(jpg|jpeg|png|webp)$/i)) {
                 const originalThumbURI = path.join(videoDirectory, item)
-                const newThumbnailURI = path.join(videoDirectory, videoId + '.png')
+                const newThumbnailURI = path.join(videoDirectory, videoID + '.png')
                 fs.rename(originalThumbURI, newThumbnailURI, (error) => {
                     if (error) console.log(error)
                 })

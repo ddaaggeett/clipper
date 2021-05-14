@@ -7,7 +7,7 @@ const zipClip = (clipObject) => {
         zip.addLocalFile(clipObject.thumbnails[0])
         zip.addLocalFile(clipObject.thumbnails[1])
     }
-    const info = `${clipObject.title} /// ${clipObject.who}\nclipped from: https://www.youtube.com/watch?v=${clipObject.videoId}`
+    const info = `${clipObject.title} /// ${clipObject.who}\nclipped from: https://www.youtube.com/watch?v=${clipObject.videoID}`
     const buffer = Buffer.from(info, 'utf8')
     zip.addFile('info.txt', buffer)
     zip.writeZip(clipObject.zipUri)

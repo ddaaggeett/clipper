@@ -61,7 +61,7 @@ export default (props) => {
         if (Platform.OS === 'web') {
             clipObject = {
                 ...clipObject,
-                videoId: contentID,
+                videoID: contentID,
             }
             saveClip(clipObject)
         }
@@ -69,13 +69,13 @@ export default (props) => {
             clipObject = {
                 ...clipObject,
                 title: props.pendingTitle,
-                videoId: getContentID(videoUrl),
+                videoID: getContentID(videoUrl),
             }
             saveClip(clipObject)
         })
     }
 
-    const updateProgression = (time) => redux(actions.setVideoProgression({videoId: contentID, progress: time}))
+    const updateProgression = (time) => redux(actions.setVideoProgression({videoID: contentID, progress: time}))
     const handleVideoProgress = (progress) => updateProgression(progress.playedSeconds)
 
     const handleChangeEvent = (event) => {
@@ -85,7 +85,7 @@ export default (props) => {
 
     const [videoProgressionsIndex, setVideoProgressionsIndex] = useState(-1)
     useEffect(() => {
-        setVideoProgressionsIndex(videoProgressions.findIndex(item => item.videoId === contentID))
+        setVideoProgressionsIndex(videoProgressions.findIndex(item => item.videoID === contentID))
     }, [contentID])
 
     const playAtLatestProgress = () => {
@@ -104,7 +104,7 @@ export default (props) => {
                 ?   <View>
                         <ReactPlayer
                             ref={player}
-                            url={'https://www.youtube.com/v/' + clips[editIndex].videoId + '?start=' + Math.floor(clips[editIndex].start) + '&end=' + Math.ceil(clips[editIndex].end)}
+                            url={'https://www.youtube.com/v/' + clips[editIndex].videoID + '?start=' + Math.floor(clips[editIndex].start) + '&end=' + Math.ceil(clips[editIndex].end)}
                             playing={playing}
                             playbackRate={speed}
                             width={panelWidth}

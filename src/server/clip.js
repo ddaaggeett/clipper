@@ -9,7 +9,7 @@ const clip = (clipDirectory, clipObject) => {
             r.table('clips').get(clipObject.id).run(connection).then(storedClip => {
                 const clipFile = clipObject.id + '.mp4'
                 const clipUri = path.join(clipDirectory,clipFile)
-                const command = `ffmpeg -ss ${storedClip.start} -i ../${storedClip.videoId}.mp4 -t ${storedClip.duration} -c copy ${clipFile}`
+                const command = `ffmpeg -ss ${storedClip.start} -i ../${storedClip.videoID}.mp4 -t ${storedClip.duration} -c copy ${clipFile}`
                 exec(command, {
                     cwd: clipDirectory,
                 }, (error, stdout, stderr) => {

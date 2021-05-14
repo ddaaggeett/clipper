@@ -12,18 +12,18 @@ export default (props) => {
     const redux = useDispatch()
 
     var thumbnailURI
-    if (props.clip.thumbnails === undefined) thumbnailURI = `https://img.youtube.com/vi/${props.clip.videoId}/0.jpg`
+    if (props.clip.thumbnails === undefined) thumbnailURI = `https://img.youtube.com/vi/${props.clip.videoID}/0.jpg`
     else {
         const dirArray = props.clip.thumbnails[0].split('/')
         const thumbnailFile = dirArray[dirArray.length - 1]
-        thumbnailURI = `http://${serverIP}:${expressPort}/${props.clip.videoId}/${props.clip.id}/${thumbnailFile}`
+        thumbnailURI = `http://${serverIP}:${expressPort}/${props.clip.videoID}/${props.clip.id}/${thumbnailFile}`
     }
 
     const handlePlayClip = () => {
-        if (editIndex != null) redux(actions.setPlayingClip(true, clips[editIndex].videoId))
+        if (editIndex != null) redux(actions.setPlayingClip(true, clips[editIndex].videoID))
         else {
             redux(actions.setEditIndex(props.index))
-            redux(actions.setPlayingClip(true, clips[props.index].videoId))
+            redux(actions.setPlayingClip(true, clips[props.index].videoID))
         }
     }
 

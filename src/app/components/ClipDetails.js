@@ -54,7 +54,7 @@ const ClipPlayer = (props) => {
             play={playing}
             height={Dimensions.get('window').width * 9 / 16}
             width={Dimensions.get('window').width}
-            videoId={props.clip.videoId}
+            videoId={props.clip.videoID}
             playbackRate={speed}
             initialPlayerParams={{
                 // TODO: use exact values instead of integers

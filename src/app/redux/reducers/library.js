@@ -10,7 +10,7 @@ export default function library(state = initialState, action) {
 
         case actions.SET_VIDEO_PROGRESSION:
 
-            var index = state.videoProgressions.findIndex(item => item.videoId === action.progressionObject.videoId)
+            var index = state.videoProgressions.findIndex(item => item.videoID === action.progressionObject.videoID)
 
             if (action.progressionObject.progress == null) return {
                 ...state,
@@ -49,7 +49,7 @@ export default function library(state = initialState, action) {
 
         case actions.UPDATE_SOURCE_VIDEO:
 
-            var index = state.videoProgressions.findIndex(item => item.videoId === action.videoObject.videoID)
+            var index = state.videoProgressions.findIndex(item => item.videoID === action.videoObject.videoID)
 
             return {
                 ...state,

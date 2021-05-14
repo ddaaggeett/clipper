@@ -16,8 +16,8 @@ export default (props) => {
     const redux = useDispatch()
 
     const handleReorderedClips = (reorderedClips) => {
-        // socket.emit('allClips', reorderedClips, clipsFromServer => {})
         redux(actions.updateClips(reorderedClips))
+        // TODO: pending and fulfill reordered clips
     }
 
     const renderItem = ({ item, index, drag }) => {

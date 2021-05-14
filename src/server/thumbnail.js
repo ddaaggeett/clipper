@@ -11,7 +11,7 @@ const thumbHeight = 720
 const generateThumbnails = (clipObject) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
-            const videoDirectory = path.join(videoDataDirectory, clipObject.videoId)
+            const videoDirectory = path.join(videoDataDirectory, clipObject.videoID)
             const clipDirectory = path.join(videoDirectory, clipObject.id)
             const singleFrameURI = path.join(clipDirectory, 'singleFrame.png')
             const thumbnail_white_uri = path.join(clipDirectory, 'thumbnail_white.png')
