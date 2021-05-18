@@ -32,7 +32,18 @@ const getUserClips = (user_id) => {
     })
 }
 
+const addClip = (clip) => {
+    r.connect(dbConnxConfig).then(connection => {
+        r.table('users').get(clip.user_id)('clips').append(clip.id).run(connection).then(clips => {
+            r.table('users').get(clip.user_id).update({clips}, { returnChanges: true }).run(connection).then(result => {
+                const updatedUser = result.changes[0].new_val
+            })
+        })
+    })
+}
+
 module.exports = {
     userLog,
     getUserClips,
+    addClip,
 }

@@ -2,6 +2,7 @@ var r = require('rethinkdb')
 var { dbConnxConfig } = require('../../config')
 var generateClip = require('./generateClip')
 const { generateThumbnails } = require('./thumbnail')
+const user = require('./user')
 
 const updateClip = (clip) => {
     return new Promise((resolve,reject) => {
@@ -11,6 +12,7 @@ const updateClip = (clip) => {
                     const updatedClip = result.changes[0].new_val
                     const oldClip = result.changes[0].old_val
                     if (oldClip == null) {
+                        user.addClip(updatedClip)
                         generateClip(updatedClip).then(updatedClipObject => resolve(updatedClipObject))
                     }
                     else if(updatedClip.thumbnailTime != oldClip.thumbnailTime || updatedClip.thumbnailText != oldClip.thumbnailText) {
