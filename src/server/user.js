@@ -21,11 +21,19 @@ const userLog = (user) => {
 const getUserClips = (user_id) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
-            r.table('clips').filter({user_id}).run(connection).then(result => {
-                if (result._responses.length != 0) resolve(result._responses[0].r)
-            }).error(error => {
-                console.log(`\nuser clips retrieval error\n${error}`)
-            })
+            r.table('users').get(user_id)('clips').run(connection).then(clipIDlist => {
+                var userClips = []
+                clipIDlist.forEach(clipID => {
+                    r.table('clips').get(clipID).run(connection).then(clip => {
+                        userClips.push(clip)
+                        if (userClips.length == clipIDlist.length) {
+                            console.log('\nuserClips')
+                            console.log(userClips)
+                            resolve(userClips)
+                        }
+                    })
+                })
+            }).error(error => resolve([]))
         }).error(error => {
             console.log(`\ndb connection error\n${error}`)
         })
@@ -36,6 +44,11 @@ const addClip = (clip) => {
     r.connect(dbConnxConfig).then(connection => {
         r.table('users').get(clip.user_id)('clips').append(clip.id).run(connection).then(clips => {
             r.table('users').get(clip.user_id).update({clips}, { returnChanges: true }).run(connection).then(result => {
+                const updatedUser = result.changes[0].new_val
+            })
+        })
+        .error(error => {
+            r.table('users').get(clip.user_id).update({clips: [clip.id]}, { returnChanges: true }).run(connection).then(result => {
                 const updatedUser = result.changes[0].new_val
             })
         })

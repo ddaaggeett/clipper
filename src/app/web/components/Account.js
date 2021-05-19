@@ -91,7 +91,6 @@ export default (props) => {
                 email: userFromGoogle.email,
                 name: userFromGoogle.name,
                 picture: userFromGoogle.picture,
-                clips: [],
             }
             const account = {
                 accessToken: authentication.accessToken,
