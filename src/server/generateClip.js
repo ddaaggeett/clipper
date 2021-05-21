@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const downloadVideo = require('./downloadVideo')
-const clip = require('./clip')
+const ffmpeg = require('./ffmpeg')
 const { videoDataDirectory } = require('../../config')
 
 const generateClip = (clipObject) => {
@@ -12,7 +12,7 @@ const generateClip = (clipObject) => {
             if (err) throw err;
             else {
                 downloadVideo(videoDirectory, clipObject.videoID).then(() => {
-                    clip(clipDirectory, clipObject).then(updatedClipObject => resolve(updatedClipObject))
+                    ffmpeg(clipDirectory, clipObject).then(updatedClipObject => resolve(updatedClipObject))
                 })
             }
         })

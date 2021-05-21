@@ -3,7 +3,7 @@ var { dbConnxConfig } = require('../../config')
 var r = require('rethinkdb')
 const path = require('path')
 
-const clip = (clipDirectory, clipObject) => {
+const ffmpeg = (clipDirectory, clipObject) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').get(clipObject.id).run(connection).then(storedClip => {
@@ -35,4 +35,4 @@ const clip = (clipDirectory, clipObject) => {
     })
 }
 
-module.exports = clip
+module.exports = ffmpeg
