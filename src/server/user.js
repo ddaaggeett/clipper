@@ -55,8 +55,20 @@ const addClip = (clip) => {
     })
 }
 
+const deleteClip = (clip) => {
+    return new Promise((resolve, reject) => {
+        r.connect(dbConnxConfig).then(connection => {
+            r.table('users').get(clip.user_id)('clips').run(connection).then(result => {
+                const index = result.findIndex(id => id === clip.id)
+                r.table('users').get(clip.user_id).update({ clips: r.row('clips').deleteAt(index) }).run(connection).then(() => resolve())
+            })
+        })
+    })
+}
+
 module.exports = {
     userLog,
     getUserClips,
     addClip,
+    deleteClip,
 }

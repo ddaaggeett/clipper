@@ -33,12 +33,7 @@ const deleteClip = (clip) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').get(clip.id).delete({ returnChanges: true }).run(connection).then(result => {
                 const deletedClip = result.changes[0].old_val
-                r.table('users').get(clip.user_id)('clips').run(connection).then(result => {
-                    const index = result.findIndex(id => id === clip.id)
-                    r.table('users').get(clip.user_id).update({ clips: r.row('clips').deleteAt(index) }).run(connection).then(result => {
-                        resolve(deletedClip)
-                    })
-                })
+                user.deleteClip(clip).then(() => resolve(deletedClip))
             }).error(error => {
                 console.log(`\ndeleteClip error\n${error}`)
             })
