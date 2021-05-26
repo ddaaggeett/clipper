@@ -8,6 +8,12 @@ const initialState = {
 export default function library(state = initialState, action) {
     switch(action.type) {
 
+        case actions.UPDATE_PROGRESSIONS:
+            return {
+                ...state,
+                videoProgressions: action.progressions,
+            }
+
         case actions.SET_VIDEO_PROGRESSION:
 
             var index = state.videoProgressions.findIndex(item => item.videoID === action.progressionObject.videoID)

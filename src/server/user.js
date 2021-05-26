@@ -66,9 +66,56 @@ const deleteClip = (clip) => {
     })
 }
 
+const updateVideoProgress = (progressionObject) => {
+    return new Promise((resolve, reject) => {
+        r.connect(dbConnxConfig).then(connection => {
+            r.table('users').get(progressionObject.userID)('progressions').run(connection).then(progressions => {
+
+                var index = progressions.findIndex(item => item.videoID === progressionObject.videoID)
+
+                if (progressionObject.progress == null) {
+                    // TODO: null not working
+                    progressions = [
+                        ...progressions.slice(0,index),
+                        ...progressions.slice(index + 1, progressions.length)
+                    ]
+                }
+                else if (index == -1) {
+                    progressions = [
+                        progressionObject,
+                        ...progressions
+                    ]
+                }
+                else {
+                    progressions = [
+                        ...progressions.slice(0,index),
+                        {
+                            ...progressions[index],
+                            ...progressionObject,
+                        },
+                        ...progressions.slice(index + 1, progressions.length)
+                    ]
+                }
+
+                r.table('users').get(progressionObject.userID).update({progressions}, { returnChanges: true }).run(connection).then(result => {
+                    const updatedProgressions = result.changes[0].new_val.progressions
+                    resolve(updatedProgressions)
+                })
+            })
+            .error(error => {
+                r.table('users').get(progressionObject.userID).update({progressions: [progressionObject]}, { returnChanges: true }).run(connection).then(result => {
+                    const updatedProgressions = result.changes[0].new_val.progressions
+                    resolve(updatedProgressions)
+                })
+            })
+        })
+    })
+}
+
 module.exports = {
     userLog,
     getUserClips,
     addClip,
     deleteClip,
+    updateVideoProgress,
 }

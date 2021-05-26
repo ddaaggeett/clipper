@@ -75,7 +75,14 @@ export default (props) => {
         })
     }
 
-    const updateProgression = (time) => redux(actions.setVideoProgression({videoID: contentID, progress: time}))
+    const updateProgression = (time) => {
+        const progressionObject = {videoID: contentID, progress: time}
+        redux(actions.setVideoProgression(progressionObject))
+        socket.emit('videoProgress', {
+            ...progressionObject,
+            userID: user.id,
+        })
+    }
     const handleVideoProgress = (progress) => updateProgression(progress.playedSeconds)
 
     const handleChangeEvent = (event) => {

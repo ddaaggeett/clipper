@@ -13,5 +13,6 @@ export default () => {
         socket.on('updateClip', clip => redux(actions.updateClip(clip)))
         socket.on('deleteClip', clip => redux(actions.deleteClip(clip)))
         socket.on('updateSourceVideo', videoObject => redux(actions.updateSourceVideo(videoObject)))
+        socket.on('videoProgressions', progressions => redux(actions.updateProgressions(progressions)))
     }, [])
 }

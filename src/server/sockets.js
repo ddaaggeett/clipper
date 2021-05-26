@@ -4,11 +4,16 @@ var http = require('http').Server(app)
 var io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
 var { socketPort } = require('../../config')
 var { updateClip, deleteClip, handlePendingClips } = require('./handleReceiveClips')
-var { userLog, getUserClips } = require('./user')
+var { userLog, getUserClips, updateVideoProgress } = require('./user')
 var generateClip = require('./generateClip')
 const { updateSourceVideo } = require('./sourceVideo')
 
 io.on('connection', (socket) => {
+    socket.on('videoProgress', videoObject => {
+        updateVideoProgress(videoObject).then(progressions => {
+            socket.broadcast.emit('videoProgressions', progressions)
+        })
+    })
     socket.on('updateSourceVideo', (videoObject, returnToSender) => {
         updateSourceVideo(videoObject).then(videoObject => {
             // returnToSender(videoObject)

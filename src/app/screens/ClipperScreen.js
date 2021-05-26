@@ -16,6 +16,10 @@ export default () => {
         if (boundCount == 0) setPendingTitle('')
     }, [boundCount])
 
+    useEffect(() => {
+        setPendingTitle('')
+    }, [contentID])
+
     return (
         <SafeAreaView style={styles.container}>
         <ScrollView>

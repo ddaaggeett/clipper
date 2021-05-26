@@ -77,6 +77,13 @@ export function setVideoProgression(progressionObject) {
     }
 }
 
+export function updateProgressions(progressions) {
+    return {
+        type: actions.UPDATE_PROGRESSIONS,
+        progressions,
+    }
+}
+
 export function updateSourceVideo(videoObject) {
     return {
         type: actions.UPDATE_SOURCE_VIDEO,

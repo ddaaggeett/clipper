@@ -24,6 +24,7 @@ export default (props) => {
 
         if (contentID !== '') {
             socket.emit('updateSourceVideo', {
+                id: contentID,
                 videoID: contentID,
             }, videoObject => {
                 // TODO: videoObject.title now exists

@@ -18,7 +18,7 @@ const updateSourceVideo = (videoObject) => {
                 }
                 r.connect(dbConnxConfig).then(connection => {
                     r.table('sourceVideos').insert(videoObject, { returnChanges: true, conflict: 'update' }).run(connection).then(result => {
-                        resolve(result.changes[0].new_val)
+                        resolve(videoObject)
                     })
                 })
             }
