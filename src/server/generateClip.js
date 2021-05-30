@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const downloadVideo = require('./downloadVideo')
+const youtube = require('./youtube-dl')
 const ffmpeg = require('./ffmpeg')
 const { videoDataDirectory } = require('../../config')
 
@@ -11,8 +11,8 @@ const generateClip = (clipObject) => {
         fs.mkdir(clipDirectory,{recursive:true}, err => {
             if (err) throw err;
             else {
-                downloadVideo(videoDirectory, clipObject.videoID).then(() => {
-                    ffmpeg(clipDirectory, clipObject).then(updatedClipObject => resolve(updatedClipObject))
+                youtube.downloadVideo(videoDirectory, clipObject.videoID).then(() => {
+                    ffmpeg.executeClip(clipDirectory, clipObject).then(updatedClipObject => resolve(updatedClipObject))
                 })
             }
         })

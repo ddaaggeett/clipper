@@ -4,13 +4,13 @@ var http = require('http').Server(app)
 var io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
 var { socketPort } = require('../../config')
 var { updateClip, deleteClip, handlePendingClips } = require('./handleReceiveClips')
-var { userLog, getUserClips, updateVideoProgress } = require('./user')
+const user = require('./user')
 var generateClip = require('./generateClip')
-const { updateSourceVideo } = require('./sourceVideo')
+const { updateSourceVideo } = require('./youtube-dl')
 
 io.on('connection', (socket) => {
     socket.on('videoProgress', videoObject => {
-        updateVideoProgress(videoObject).then(progressions => {
+        user.updateVideoProgress(videoObject).then(progressions => {
             socket.broadcast.emit('videoProgressions', progressions)
         })
     })
@@ -35,11 +35,11 @@ io.on('connection', (socket) => {
         })
     })
     socket.on('userLog', (user, sendBack) => {
-        userLog(user).then(userData => sendBack(userData))
+        user.userLog(user).then(userData => sendBack(userData))
     })
     socket.on('getUserClips', ({user_id, pendingClips}, sendBack) => {
         handlePendingClips(pendingClips).then(() => {
-            getUserClips(user_id).then(userClips => sendBack(userClips))
+            user.getClips(user_id).then(userClips => sendBack(userClips))
         })
     })
 })

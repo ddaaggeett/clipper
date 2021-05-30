@@ -18,7 +18,7 @@ const userLog = (user) => {
     })
 }
 
-const getUserClips = (user_id) => {
+const getClips = (user_id) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('users').get(user_id)('clips').run(connection).then(clipIDlist => {
@@ -114,7 +114,7 @@ const updateVideoProgress = (progressionObject) => {
 
 module.exports = {
     userLog,
-    getUserClips,
+    getClips,
     addClip,
     deleteClip,
     updateVideoProgress,
