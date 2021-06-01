@@ -103,7 +103,7 @@ export default (props) => {
                 redux(actions.updateUser(userData))
             })
             const packet = {
-                user_id: user.id,
+                userID: user.id,
                 pendingClips: pending,
             }
             socket.emit('getUserClips', packet, userClips => {

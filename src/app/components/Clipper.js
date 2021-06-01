@@ -51,7 +51,7 @@ export default (props) => {
         const timestamp = Date.now().toString()
         var clipObject = {
             ...clipInitObject,
-            user_id: user.id,
+            userID: user.id,
             start: leftCursor,
             end: rightCursor,
             duration: clipDuration,

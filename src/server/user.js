@@ -18,10 +18,10 @@ const userLog = (user) => {
     })
 }
 
-const getClips = (user_id) => {
+const getClips = (userID) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
-            r.table('users').get(user_id)('clips').run(connection).then(clipIDlist => {
+            r.table('users').get(userID)('clips').run(connection).then(clipIDlist => {
                 var userClips = []
                 clipIDlist.forEach(clipID => {
                     r.table('clips').get(clipID).run(connection).then(clip => {
@@ -42,13 +42,13 @@ const getClips = (user_id) => {
 
 const addClip = (clip) => {
     r.connect(dbConnxConfig).then(connection => {
-        r.table('users').get(clip.user_id)('clips').append(clip.id).run(connection).then(clips => {
-            r.table('users').get(clip.user_id).update({clips}, { returnChanges: true }).run(connection).then(result => {
+        r.table('users').get(clip.userID)('clips').append(clip.id).run(connection).then(clips => {
+            r.table('users').get(clip.userID).update({clips}, { returnChanges: true }).run(connection).then(result => {
                 const updatedUser = result.changes[0].new_val
             })
         })
         .error(error => {
-            r.table('users').get(clip.user_id).update({clips: [clip.id]}, { returnChanges: true }).run(connection).then(result => {
+            r.table('users').get(clip.userID).update({clips: [clip.id]}, { returnChanges: true }).run(connection).then(result => {
                 const updatedUser = result.changes[0].new_val
             })
         })
@@ -58,9 +58,9 @@ const addClip = (clip) => {
 const deleteClip = (clip) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
-            r.table('users').get(clip.user_id)('clips').run(connection).then(result => {
+            r.table('users').get(clip.userID)('clips').run(connection).then(result => {
                 const index = result.findIndex(id => id === clip.id)
-                r.table('users').get(clip.user_id).update({ clips: r.row('clips').deleteAt(index) }).run(connection).then(() => resolve())
+                r.table('users').get(clip.userID).update({ clips: r.row('clips').deleteAt(index) }).run(connection).then(() => resolve())
             })
         })
     })

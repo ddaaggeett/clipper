@@ -26,7 +26,7 @@ export default () => {
     useEffect(() => {
         if (loggedIn) {
             const packet = {
-                user_id: user.id,
+                userID: user.id,
                 pendingClips: pending,
             }
             socket.emit('getUserClips', packet, userClips => {
