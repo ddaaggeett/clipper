@@ -1,5 +1,5 @@
 import * as actions from '../actions'
-import { userProgressBookmarkListLength } from '../../../../config'
+import { progressionsListLength } from '../../../../config'
 
 const initialState = {
     videoProgressions: [],
@@ -26,7 +26,7 @@ export default function library(state = initialState, action) {
                 ]
             }
             else if (index == -1) {
-                if (state.videoProgressions.length < userProgressBookmarkListLength) return {
+                if (state.videoProgressions.length < progressionsListLength) return {
                     ...state,
                     videoProgressions: [
                         action.progressionObject,
@@ -37,7 +37,7 @@ export default function library(state = initialState, action) {
                     ...state,
                     videoProgressions: [
                         action.progressionObject,
-                        ...state.videoProgressions.slice(0, userProgressBookmarkListLength - 1)
+                        ...state.videoProgressions.slice(0, progressionsListLength - 1)
                     ]
                 }
             }

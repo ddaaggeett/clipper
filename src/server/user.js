@@ -1,5 +1,5 @@
 var r = require('rethinkdb')
-var { dbConnxConfig } = require('../../config')
+var { dbConnxConfig, progressionsListLength } = require('../../config')
 
 const userLog = (user) => {
     return new Promise((resolve,reject) => {
@@ -81,9 +81,13 @@ const updateVideoProgress = (progressionObject) => {
                     ]
                 }
                 else if (index == -1) {
-                    progressions = [
+                    if (progressions.length < progressionsListLength) progressions = [
                         progressionObject,
                         ...progressions
+                    ]
+                    else progressions = [
+                        progressionObject,
+                        ...progressions.slice(0, progressionsListLength - 1)
                     ]
                 }
                 else {
