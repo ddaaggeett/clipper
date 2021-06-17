@@ -113,7 +113,16 @@ export default (props) => {
         }
     }, [response])
 
+    const handleGuestMode = () => {
+
+    }
+
+    const handleCreateAccount = () => {
+
+    }
+
     return (
+        <View>
         <View style={[styles.account, { position: 'fixed', borderColor: loggedIn ? 'red' : 'purple' }]}>
         {
             loggedIn
@@ -139,6 +148,30 @@ export default (props) => {
                     </TouchableOpacity>
                 </View>
         }
+        </View>
+
+        <View style={[{
+            top:100,
+            alignItems: 'center',
+            alignSelf: 'center',
+        }, styles.contentRow]}>
+            <TouchableOpacity
+                style={[styles.accountButton, styles.logoutButton]}
+                onPress={() => handleGuestMode()}
+                disabled={!request}
+                >
+                <Text style={styles.controlButtonText}>Continue as Guest</Text>
+            </TouchableOpacity>
+            <Text style={styles.controlButtonText}>    OR    </Text>
+            <TouchableOpacity
+                style={[styles.accountButton, styles.logoutButton]}
+                onPress={() => handleCreateAccount()}
+                disabled={!request}
+                >
+                <Text style={styles.controlButtonText}>Create Account</Text>
+            </TouchableOpacity>
+        </View>
+
         </View>
     )
 }
