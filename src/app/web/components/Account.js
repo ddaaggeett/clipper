@@ -9,6 +9,7 @@ import SourceCodeLink from '../../components/SourceCodeLink'
 import * as actions from '../../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
+import WelcomeUser from '../../components/WelcomeUser'
 
 const socket = io('http://'+ serverIP + ':' + socketPort)
 
@@ -113,14 +114,6 @@ export default (props) => {
         }
     }, [response])
 
-    const handleGuestMode = () => {
-
-    }
-
-    const handleCreateAccount = () => {
-
-    }
-
     return (
         <View>
         <View style={[styles.account, { position: 'fixed', borderColor: loggedIn ? 'red' : 'purple' }]}>
@@ -128,7 +121,11 @@ export default (props) => {
             loggedIn
             ?   <View style={styles.contentRow}>
                     <SourceCodeLink />
-                    <Text style={styles.username}>{`${appName}     ///     ${user.name}`}</Text>
+                    {
+                        user !== null
+                        ?   <Text style={styles.username}>{`${appName}     ///     ${user.name}`}</Text>
+                        :   <Text style={styles.username}>{`${appName}     ///     GUEST`}</Text>
+                    }
                     <TouchableOpacity
                         style={[styles.accountButton, styles.loginButton]}
                         onPress={() => handleLogout()}
@@ -138,7 +135,6 @@ export default (props) => {
                 </View>
             :   <View style={styles.contentRow}>
                     <SourceCodeLink />
-                    <Text style={styles.username}>{appName}</Text>
                     <TouchableOpacity
                         style={[styles.accountButton, styles.logoutButton]}
                         onPress={() => handleLogin()}
@@ -149,29 +145,7 @@ export default (props) => {
                 </View>
         }
         </View>
-
-        <View style={[{
-            top:100,
-            alignItems: 'center',
-            alignSelf: 'center',
-        }, styles.contentRow]}>
-            <TouchableOpacity
-                style={[styles.accountButton, styles.logoutButton]}
-                onPress={() => handleGuestMode()}
-                disabled={!request}
-                >
-                <Text style={styles.controlButtonText}>Continue as Guest</Text>
-            </TouchableOpacity>
-            <Text style={styles.controlButtonText}>    OR    </Text>
-            <TouchableOpacity
-                style={[styles.accountButton, styles.logoutButton]}
-                onPress={() => handleCreateAccount()}
-                disabled={!request}
-                >
-                <Text style={styles.controlButtonText}>Create Account</Text>
-            </TouchableOpacity>
-        </View>
-
+        <WelcomeUser />
         </View>
     )
 }

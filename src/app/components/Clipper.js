@@ -49,13 +49,16 @@ export default (props) => {
     const handleFinishClip = () => {
         const clipDuration = rightCursor - leftCursor
         const timestamp = Date.now().toString()
+        var userID
+        user === null ? userID = null : userID = user.id
+        // TODO: server handling userID = null
         var clipObject = {
             ...clipInitObject,
-            userID: user.id,
             start: leftCursor,
             end: rightCursor,
             duration: clipDuration,
             key: timestamp,
+            userID,
             timestamp,
         }
         if (Platform.OS === 'web') {

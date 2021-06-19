@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import UnfinishedVideosList from './UnfinishedVideosList'
 import { io } from 'socket.io-client'
+import WelcomeUser from './WelcomeUser'
 
 const socket = io('http://'+ serverIP + ':' + socketPort)
 
@@ -92,8 +93,8 @@ export default (props) => {
     }
 
     const handleLogout = async () => {
-        await Google.logOutAsync({accessToken, ...accountAccessConfig})
         redux(actions.logout())
+        await Google.logOutAsync({accessToken, ...accountAccessConfig})
     }
 
     const handleRefreshTokens = () => {
@@ -122,26 +123,30 @@ export default (props) => {
         <ScrollView style={styles.container}>
         {
             loggedIn
-            ?   <View style={styles.accountLoggedIn}>
+            ?   <View>
                     <TouchableOpacity
                         style={[styles.controlButton, {flex: 0, backgroundColor: 'red'}]}
                         onPress={() => handleLogout()}
                         >
                         <Text style={styles.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
-                    <Text style={[styles.username, styles.usernameNative]}>{`${appName}   ///   ${user.name}`}</Text>
+                    {
+                        user !== null
+                        ?   <Text style={[styles.username, styles.usernameNative]}>{`${appName}     ///     ${user.name}`}</Text>
+                        :   <Text style={[styles.username, styles.usernameNative]}>{`${appName}     ///     GUEST`}</Text>
+                    }
                     <UnfinishedVideosList />
                 </View>
-            :   <View style={styles.accountLoggedOut}>
+            :   <View>
                     <TouchableOpacity
                         style={[styles.controlButton, {flex: 0, backgroundColor: 'purple'}]}
                         onPress={() => handleLogin()}
                         >
                         <Text style={styles.controlButtonText}>Login with Google</Text>
                     </TouchableOpacity>
-                    <Text style={[styles.username, styles.usernameNative]}>{appName}</Text>
                 </View>
         }
+        <WelcomeUser />
         </ScrollView>
     )
 }

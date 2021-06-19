@@ -24,7 +24,7 @@ export default () => {
     useDataSocketHook()
 
     useEffect(() => {
-        if (loggedIn) {
+        if (loggedIn && user !== null) {
             const packet = {
                 userID: user.id,
                 pendingClips: pending,

@@ -176,4 +176,12 @@ export const styles = StyleSheet.create({
         right: 15,
         bottom: 10,
     },
+    welcome: {
+        alignItems: 'center',
+        alignSelf: 'center',
+        height: 300,
+    },
+    welcomeText: {
+        color: 'white',
+    },
 });

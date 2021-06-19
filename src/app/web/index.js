@@ -27,7 +27,7 @@ export default () => {
         const width = Dimensions.get('window').width / 2
         if (width > 640) redux(actions.setWebPanelWidth(640))
         else redux(actions.setWebPanelWidth(width))
-        if (loggedIn) {
+        if (loggedIn && user !== null) {
             const packet = {
                 userID: user.id,
                 pendingClips: pending,
