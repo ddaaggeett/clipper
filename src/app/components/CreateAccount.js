@@ -10,12 +10,42 @@ const socket = io('http://'+ serverIP + ':' + socketPort)
 
 export default (props) => {
 
+    const redux = useDispatch()
+
     const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
     const [password1, setPassword1] = useState('')
     const [password2, setPassword2] = useState('')
+    const [passwordsMatch, setPasswordsMatch] = useState(false)
 
     const handleCreateAccount = () => {
+        if (passwordsMatch) {
+            const newUser = {
+                id: email,
+                email: email,
+                name: name,
+                password: password1,
+            }
+            socket.emit('create account', newUser, returnObject => {
+                switch (returnObject.message) {
+                    case 'success':
+                        redux(actions.login({
+                            user: newUser,
+                        }))
+
+                    case 'account already exists':
+
+                    default:
+
+                }
+            })
+        }
     }
+
+    useEffect(() => {
+        if (password1 === password2) setPasswordsMatch(true)
+        else setPasswordsMatch(false)
+    }, [password1, password2])
 
     return (
         <View style={{width: '100%'}}>
@@ -25,6 +55,13 @@ export default (props) => {
                 onChangeText={text => setEmail(text)}
                 value={email}
                 placeholder={"email address"}
+                placeholderTextColor={"white"}
+                />
+            <TextInput
+                style={styles.urlText}
+                onChangeText={text => setName(text)}
+                value={name}
+                placeholder={"screen name"}
                 placeholderTextColor={"white"}
                 />
             <TextInput

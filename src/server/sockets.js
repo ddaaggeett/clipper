@@ -42,6 +42,11 @@ io.on('connection', (socket) => {
             user.getClips(userID).then(userClips => sendBack(userClips))
         })
     })
+    socket.on('create account', (account, returnObject) => {
+        user.createAccount(account).then(object => {
+            returnObject(object)
+        })
+    })
 })
 
 http.listen(socketPort, function(){
