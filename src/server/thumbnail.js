@@ -49,6 +49,7 @@ const getFrame = (clipObject) => {
 
     exec(command, {
         cwd: clipObject.clipDirectory,
+        // TODO: error - need maxBuffer
     }, (error, stdout, stderr) => {
         if(error) console.log(error)
         clipObject.thumbnails.forEach(thumbnailURI => thumbnailWatch(thumbnailURI, clipObject))
