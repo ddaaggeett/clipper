@@ -1,3 +1,8 @@
+/*
+license MIT
+copyright Dave Daggett @ ddaaggeett.xyz
+date 2021
+*/
 import React, { useState, useRef, useEffect } from 'react'
 import { View, Dimensions, TextInput, Platform } from 'react-native'
 import YoutubePlayer from "./react-native-youtube-iframe"

@@ -1,3 +1,8 @@
+/*
+license MIT
+copyright Dave Daggett @ ddaaggeett.xyz
+date 2021
+*/
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, FlatList, Image, Platform } from 'react-native'
 import { styles } from '../styles'

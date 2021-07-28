@@ -1,3 +1,8 @@
+/*
+license MIT
+copyright Dave Daggett @ ddaaggeett.xyz
+date 2021
+*/
 const { exec } = require('child_process')
 const fs = require('fs')
 const path = require('path')

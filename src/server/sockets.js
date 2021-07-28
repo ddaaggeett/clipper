@@ -1,3 +1,8 @@
+/*
+license MIT
+copyright Dave Daggett @ ddaaggeett.xyz
+date 2021
+*/
 var express = require('express')
 var app = express()
 var http = require('http').Server(app)

@@ -1,3 +1,8 @@
+/*
+license MIT
+copyright Dave Daggett @ ddaaggeett.xyz
+date 2021
+*/
 import { View, Text, TouchableOpacity, Platform } from "react-native"
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'

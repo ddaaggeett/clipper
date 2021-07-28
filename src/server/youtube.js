@@ -1,3 +1,8 @@
+/*
+license MIT
+copyright Dave Daggett @ ddaaggeett.xyz
+date 2021
+*/
 const { google } = require('googleapis')
 
 const youtube = (auth) => {

@@ -1,3 +1,7 @@
+license MIT
+copyright Dave Daggett @ ddaaggeett.xyz
+date 2021
+
 # clipper
 
 	npm install
