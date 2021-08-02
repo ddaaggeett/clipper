@@ -21,3 +21,5 @@ video_data/**/*
 data.json
 
 rethinkdb_data
+
+clipper.wiki/

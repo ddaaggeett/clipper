@@ -21,7 +21,10 @@ export default (props) => {
 
     const handleGetPlayContent = (text) => {
         redux(actions.setEditIndex(null))
-        redux(actions.updateContentID(getContentID(text)))
+        if (text.includes('https://www.youtube.com/watch?v=')) {
+            redux(actions.validateYoutubeID(true))
+            redux(actions.updateContentID(getContentID(text)))
+        }
     }
 
     useEffect(() => {

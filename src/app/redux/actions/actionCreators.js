@@ -216,3 +216,10 @@ export function setConfirmDelete(confirm) {
         confirm
     }
 }
+
+export function validateYoutubeID(valid) {
+    return {
+        type: actions.VALIDATE_YOUTUBE_ID,
+        valid
+    }
+}

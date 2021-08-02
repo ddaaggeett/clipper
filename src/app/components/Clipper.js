@@ -26,7 +26,7 @@ export default (props) => {
     const [clipPreDB, setClipPreDB] = useState(null)
 
     const { clips } = useSelector(state => state.clips)
-    const { leftCursor, rightCursor, boundCount, editIndex, speed, contentID, panelWidth, playingClip } = useSelector(state => state.app)
+    const { leftCursor, rightCursor, boundCount, editIndex, speed, contentID, panelWidth, playingClip, validYoutubeID } = useSelector(state => state.app)
     const { videoProgressions } = useSelector(state => state.library)
     const { user } = useSelector(state => state.account)
     const redux = useDispatch()
@@ -111,7 +111,7 @@ export default (props) => {
     }
 
     if (Platform.OS === 'web') {
-        if (contentID.length == 0) return null
+        if (!validYoutubeID) return null
         else return (
             <View>
             {
@@ -158,7 +158,7 @@ export default (props) => {
         )
     }
     else {
-        if (contentID.length == 0) return null
+        if (!validYoutubeID) return null
         else return (
             <View>
                 <YoutubePlayer

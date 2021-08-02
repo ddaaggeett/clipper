@@ -15,6 +15,7 @@ const initialState = {
     gotSomethingCursor: null,
     videoSelectorFocused: false,
     playingClip: false,
+    validYoutubeID: false,
 }
 
 export default function app(state = initialState, action) {
@@ -120,6 +121,12 @@ export default function app(state = initialState, action) {
             return {
                 ...state,
                 confirmDelete: action.confirm,
+            }
+
+        case actions.VALIDATE_YOUTUBE_ID:
+            return {
+                ...state,
+                validYoutubeID: action.valid,
             }
 
         default:
