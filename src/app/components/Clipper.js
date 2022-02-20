@@ -5,7 +5,7 @@ date 2021
 */
 import React, { useState, useRef, useEffect } from 'react'
 import { View, Dimensions, TextInput, Platform } from 'react-native'
-import YoutubePlayer from "./react-native-youtube-iframe"
+import YoutubePlayer from "react-native-youtube-iframe"
 import ReactPlayer from 'react-player'
 import Controls from './Controls'
 import ThumbnailSelector from './ThumbnailSelector'
