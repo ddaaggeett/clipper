@@ -4,8 +4,6 @@
 
 Please reach out to help with a fun project. [This youtube channel](https://www.youtube.com/c/ddaaggeett/videos) is an example of this software's output. If you listen to long conversations, this project could be for you. Let's fix the limited cultural narrative capacity.
 
-![demo mobile screenshot](/assets/demo.jpg)
-
 license MIT<br />
 copyright Dave Daggett @ ddaaggeett.xyz<br />
 date 2021<br />
@@ -26,3 +24,5 @@ date 2021<br />
   - `info.txt`
 
 # developers: visit the [wiki](https://github.com/ddaaggeett/clipper/wiki)
+
+<img src="/assets/demo.jpg" width="300" height="" alt="demo image">
