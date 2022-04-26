@@ -7,7 +7,7 @@ const { exec } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 const r = require('rethinkdb')
-const { dbConnxConfig, videoDataDirectory } = require('../../config')
+const { dbConnxConfig, fileData } = require('../../config')
 
 const downloadVideo = (videoDirectory, videoID) => {
     return new Promise((resolve,reject) => {
@@ -57,7 +57,7 @@ const formatThumbnail = (videoDirectory, videoID) => {
 const updateSourceVideo = (videoObject) => {
 
     return new Promise((resolve, reject) => {
-        const videoDirectory = path.join(videoDataDirectory, videoObject.videoID)
+        const videoDirectory = path.join(fileData, videoObject.videoID)
         const command = `youtube-dl -f best https://www.youtube.com/watch?v=${videoObject.videoID} --get-title`
         exec(command, {
             cwd: videoDirectory,
