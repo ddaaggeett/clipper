@@ -1,8 +1,3 @@
-/*
-license MIT
-copyright Dave Daggett @ ddaaggeett.xyz
-date 2021
-*/
 const fs = require('fs')
 const path = require('path')
 const youtube = require('./youtube-dl')

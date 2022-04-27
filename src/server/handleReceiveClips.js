@@ -1,8 +1,3 @@
-/*
-license MIT
-copyright Dave Daggett @ ddaaggeett.xyz
-date 2021
-*/
 var r = require('rethinkdb')
 var { dbConnxConfig } = require('../../config')
 var generateClip = require('./generateClip')

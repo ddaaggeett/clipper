@@ -1,8 +1,3 @@
-/*
-license MIT
-copyright Dave Daggett @ ddaaggeett.xyz
-date 2021
-*/
 import React, { useState, useRef } from 'react'
 import { View, Text, TouchableOpacity, Platform } from "react-native"
 import { styles } from "../styles"

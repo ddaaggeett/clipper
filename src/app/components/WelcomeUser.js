@@ -1,8 +1,3 @@
-/*
-license MIT
-copyright Dave Daggett @ ddaaggeett.xyz
-date 2021
-*/
 import React, { useState } from 'react'
 import { View, TouchableOpacity, Text, Platform } from 'react-native'
 import { appName } from '../../../config'

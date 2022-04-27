@@ -15,7 +15,7 @@ web-build/
 *-lock.json
 yarn.lock
 
-config.js
+config.*
 *.mp4
 video_data/**/*
 data.json

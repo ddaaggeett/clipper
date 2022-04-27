@@ -1,8 +1,3 @@
-/*
-license MIT
-copyright Dave Daggett @ ddaaggeett.xyz
-date 2021
-*/
 import { View, Text, TouchableOpacity, TextInput, Platform, Keyboard } from "react-native"
 import React, { useEffect } from 'react'
 import { styles } from "../styles"

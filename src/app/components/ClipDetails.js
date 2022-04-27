@@ -1,8 +1,3 @@
-/*
-license MIT
-copyright Dave Daggett @ ddaaggeett.xyz
-date 2021
-*/
 import { View, Text, TouchableOpacity, Dimensions, ScrollView } from "react-native"
 import EditClipInfo from './EditClipInfo'
 import DeleteClip from './DeleteClip'
