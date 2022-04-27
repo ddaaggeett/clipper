@@ -34,14 +34,6 @@ export function logout() {
     }
 }
 
-export function setAccessToken(accessToken, accessExpirationTime) {
-    return {
-        type: actions.SET_ACCESS_TOKEN,
-        accessToken,
-        accessExpirationTime,
-    }
-}
-
 export function updateClip(clip) {
     return {
         type: actions.UPDATE_CLIP,
