@@ -62,7 +62,7 @@ export default (props) => {
                 </View>
         }
         </View>
-        <WelcomeUser />
+        <WelcomeUser handleLogin={handleLogin} />
         </View>
     )
 }

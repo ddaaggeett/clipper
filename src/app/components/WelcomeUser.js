@@ -6,18 +6,12 @@ import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import CreateAccount from './CreateAccount'
 
-export default () => {
+export default (props) => {
 
     const redux = useDispatch()
     const { loggedIn } = useSelector(state => state.account)
 
     const [newAccount, setNewAccount] = useState(false)
-
-    const handleGuestMode = () => {
-        redux(actions.login({
-            user: null
-        }))
-    }
 
     var welcomeStyle
     var welcomeFontStyle
@@ -56,7 +50,7 @@ export default () => {
             <View style={styles.contentRow}>
                 <TouchableOpacity
                     style={[styles.accountButton, styles.logoutButton, { marginRight: 5 }]}
-                    onPress={() => handleGuestMode()}
+                    onPress={() => props.handleLogin()}
                     >
                     <Text style={styles.controlButtonText}>Continue as Guest</Text>
                 </TouchableOpacity>

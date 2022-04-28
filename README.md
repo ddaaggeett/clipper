@@ -1,12 +1,23 @@
-
 # ||--------CLIPPER--------||
 ### mobile [youtube, etc.] video clipper while watching
 
 Please reach out to help with a fun project. [This youtube channel](https://www.youtube.com/c/ddaaggeett/videos) is an example of this software's output. If you listen to long conversations, this project could be for you. Let's fix the limited cultural narrative capacity.
 
+prerequisite installs: [node.js](https://nodejs.org/en/download/), [rethinkDB](https://rethinkdb.com/docs/install/), [ffmpeg](https://ffmpeg.org/download.html#build-linux), [youtube-dl](https://ytdl-org.github.io/youtube-dl/download.html)
+
+read the [documentation](https://github.com/ddaaggeett/clipper/wiki)
+
+	git clone https://github.com/ddaaggeett/clipper.git
+	cd clipper
+	npm install
+
+    - `npm run server` - start server
+    - `npm run web` - start web app
+    - `npm start` - start native app
+
 license MIT<br />
 copyright Dave Daggett @ ddaaggeett.xyz<br />
-date 2021<br />
+date 2022<br />
 
 ### CURRENT FUNCTIONALITY
 
@@ -19,7 +30,7 @@ date 2021<br />
 **web**
 - create thumbnail images with image frame from video
 - download zip file:
-  -  `clip.mp4`
+  - `clip.mp4`
   - `thumbnails.png`
   - `info.txt`
 

@@ -1,9 +1,7 @@
 {
     "appName": "clipper",
+    "defaultUser": "defaultUser",
     "configFile": "./config.json",
-    "webClientId": "webClientId",
-    "webClientSecret": "webClientSecret",
-    "androidClientId": "androidClientId",
     "serverIP": "192.168.0.1",
     "socketPort": 3347,
     "expressPort": 3316,

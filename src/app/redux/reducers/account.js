@@ -1,11 +1,12 @@
 import * as actions from '../actions'
+import { defaultUser } from '../../../../config'
 
 const initialState = {
     loggedIn: false,
-    user: {},
-    accessToken: '',
-    accessExpirationTime: 0,
-    refreshToken: '',
+    user: {
+        id: defaultUser,
+        name: defaultUser,
+    },
 }
 
 export default function account(state = initialState, action) {
@@ -21,13 +22,6 @@ export default function account(state = initialState, action) {
         case actions.LOGOUT:
             return {
                 loggedIn: false
-            }
-
-        case actions.SET_ACCESS_TOKEN:
-            return {
-                ...state,
-                accessToken: action.accessToken,
-                accessExpirationTime: action.accessExpirationTime,
             }
 
         case actions.UPDATE_USER:
