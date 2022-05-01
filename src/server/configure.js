@@ -35,6 +35,10 @@ const settleIPConfig = () => {
             config.serverIP = results['wlp2s0'][0]
             writeConfigFile(config).then(() => resolve())
         }
+        else if (results['wlp13s0b1']) {
+            config.serverIP = results['wlp13s0b1'][0]
+            writeConfigFile(config).then(() => resolve())
+        }
         else if (results['enp8s0']) {
             config.serverIP = results['enp8s0'][0]
             writeConfigFile(config).then(() => resolve())
