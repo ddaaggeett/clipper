@@ -27,6 +27,9 @@ export default (props) => {
     }, [loggedIn])
 
     const handleLogin = () => {
+        const account = {
+            user, // TODO: rid default account
+        }
         redux(actions.login(account))
         socket.emit('userLog', user, userData => {
             redux(actions.updateUser(userData))
@@ -63,16 +66,9 @@ export default (props) => {
                     }
                     <UnfinishedVideosList />
                 </View>
-            :   <View>
-                    <TouchableOpacity
-                        style={[styles.controlButton, {flex: 0, backgroundColor: 'purple'}]}
-                        onPress={() => handleLogin()}
-                        >
-                        <Text style={styles.controlButtonText}>Login with Google</Text>
-                    </TouchableOpacity>
-                </View>
+            :   null
         }
-        <WelcomeUser />
+        <WelcomeUser handleLogin={handleLogin} />
         </ScrollView>
     )
 }

@@ -34,8 +34,8 @@ io.on('connection', (socket) => {
             socket.broadcast.emit('deleteClip',deletedClip)
         })
     })
-    socket.on('userLog', (user, sendBack) => {
-        user.userLog(user).then(userData => sendBack(userData))
+    socket.on('userLog', (log, sendBack) => {
+        user.userLog(log).then(userData => sendBack(userData))
     })
     socket.on('getUserClips', ({userID, pendingClips}, sendBack) => {
         handlePendingClips(pendingClips).then(() => {

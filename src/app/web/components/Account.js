@@ -18,7 +18,7 @@ export default (props) => {
 
     const handleLogin = () => {
         const account = {
-            user,
+            user, // TODO: rid default account
         }
         redux(actions.login(account))
         socket.emit('userLog', user, userData => {
@@ -59,6 +59,7 @@ export default (props) => {
                 </View>
             :   <View style={styles.contentRow}>
                     <SourceCodeLink />
+                    <Text style={styles.username}>{`${appName}`}</Text>
                 </View>
         }
         </View>
