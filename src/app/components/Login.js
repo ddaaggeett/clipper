@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, TouchableOpacity, Text, Platform } from 'react-native'
-import { appName } from '../../../config'
+import { appName, defaultUser } from '../../../config'
 import { styles } from '../styles'
 import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
@@ -12,6 +12,11 @@ export default (props) => {
     const { loggedIn } = useSelector(state => state.account)
 
     const [newAccount, setNewAccount] = useState(false)
+    const [account, setAccount] = useState(null)
+
+    React.useEffect(() => {
+        setAccount({user: defaultUser})
+    }, [])
 
     var welcomeStyle
     var welcomeFontStyle
@@ -50,7 +55,7 @@ export default (props) => {
             <View style={styles.contentRow}>
                 <TouchableOpacity
                     style={[styles.accountButton, styles.logoutButton, { marginRight: 5 }]}
-                    onPress={() => props.handleLogin()}
+                    onPress={() => props.handleLogin(account)}
                     >
                     <Text style={styles.controlButtonText}>Continue as Guest</Text>
                 </TouchableOpacity>

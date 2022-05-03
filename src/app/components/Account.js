@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, TouchableOpacity, View, ScrollView } from 'react-native'
+import { Text, TouchableOpacity, View, ScrollView, Platform } from 'react-native'
 import { styles } from '../styles'
 import { serverIP, socketPort, appName } from '../../../config'
 import * as actions from '../redux/actions/actionCreators'
@@ -7,29 +7,28 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import UnfinishedVideosList from './UnfinishedVideosList'
 import { io } from 'socket.io-client'
-import WelcomeUser from './WelcomeUser'
+import Login from './Login'
+import SourceCodeLink from '../components/SourceCodeLink'
 
 const socket = io('http://'+ serverIP + ':' + socketPort)
 
 export default (props) => {
 
     const redux = useDispatch()
-    const navigation = useNavigation()
     const { loggedIn, user } = useSelector(state => state.account)
     const { clips, pending } = useSelector(state => state.clips)
+    let navigation
+    Platform.OS !== 'web' ?  navigation = useNavigation() : null
 
     useEffect(() => {
-        if (loggedIn) navigation.navigate('Clipper')
+        if (Platform.OS !== 'web' && loggedIn) navigation.navigate('Clipper')
     }, [])
 
     useEffect(() => {
-        if(loggedIn) navigation.navigate('Clipper')
+        if(Platform.OS !== 'web' && loggedIn) navigation.navigate('Clipper')
     }, [loggedIn])
 
-    const handleLogin = () => {
-        const account = {
-            user, // TODO: rid default account
-        }
+    const handleLogin = (account) => {
         redux(actions.login(account))
         socket.emit('userLog', user, userData => {
             redux(actions.updateUser(userData))
@@ -48,7 +47,35 @@ export default (props) => {
         redux(actions.logout())
     }
 
-    return (
+    if (Platform.OS === 'web') return (
+        <View>
+        <View style={[styles.account, { position: 'fixed', borderColor: loggedIn ? 'red' : 'purple' }]}>
+        {
+            loggedIn
+            ?   <View style={styles.contentRow}>
+                    <SourceCodeLink />
+                    {
+                        user !== null
+                        ?   <Text style={styles.username}>{`${appName}     ///     ${user.name}`}</Text>
+                        :   <Text style={styles.username}>{`${appName}     ///     GUEST`}</Text>
+                    }
+                    <TouchableOpacity
+                        style={[styles.accountButton, styles.loginButton]}
+                        onPress={() => handleLogout()}
+                        >
+                        <Text style={styles.controlButtonText}>Logout</Text>
+                    </TouchableOpacity>
+                </View>
+            :   <View style={styles.contentRow}>
+                    <SourceCodeLink />
+                    <Text style={styles.username}>{`${appName}`}</Text>
+                </View>
+        }
+        </View>
+        <Login handleLogin={handleLogin} />
+        </View>
+    )
+    else return (
         <ScrollView style={styles.container}>
         {
             loggedIn
@@ -64,11 +91,11 @@ export default (props) => {
                         ?   <Text style={[styles.username, styles.usernameNative]}>{`${appName}     ///     ${user.name}`}</Text>
                         :   <Text style={[styles.username, styles.usernameNative]}>{`${appName}     ///     GUEST`}</Text>
                     }
-                    <UnfinishedVideosList />
+                    {/*<UnfinishedVideosList />*/}
                 </View>
             :   null
         }
-        <WelcomeUser handleLogin={handleLogin} />
+        <Login handleLogin={handleLogin} />
         </ScrollView>
     )
 }

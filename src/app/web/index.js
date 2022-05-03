@@ -1,7 +1,7 @@
 import Clipper from '../components/Clipper'
 import VideoSelector from '../components/VideoSelector'
 import ClipManager from './components/ClipManagerWeb'
-import Account from './components/Account'
+import Account from '../components/Account'
 import UnfinishedVideosList from '../components/UnfinishedVideosList'
 import React, { useEffect, useState } from 'react'
 import { View, Text, Dimensions } from 'react-native'
@@ -54,7 +54,7 @@ export default () => {
                 </View>
                 <View style={[styles.clipsPanel, {width: panelWidth}]}>
                     <ClipManager />
-                    <UnfinishedVideosList />
+                    {/*<UnfinishedVideosList />*/}
                 </View>
             </View>
             <Footer />
