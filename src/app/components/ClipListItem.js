@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, Image } from 'react-native'
-import { styles } from '../styles'
-import { styles as nativeStyles} from '../../styles'
+import { styles, webStyles } from '../styles'
 import { useSelector, useDispatch } from 'react-redux'
-import * as actions from '../../redux/actions/actionCreators'
-import EditClipInfo from '../../components/EditClipInfo'
-import Thumbnail from '../../components/Thumbnail'
+import * as actions from '../redux/actions/actionCreators'
+import EditClipInfo from './EditClipInfo'
+import Thumbnail from './Thumbnail'
 
 export default (props) => {
 
@@ -17,7 +16,7 @@ export default (props) => {
     const handleSelectClipItem = () => redux(actions.setEditIndex(props.index))
 
     if(isSelected) return (
-        <div style={styles.clipItem}>
+        <div style={webStyles.clipItem}>
             <Thumbnail
                 clip={props.clip}
                 index={props.index}
@@ -27,10 +26,10 @@ export default (props) => {
     )
     else return (
         <div
-            style={styles.clipItem}
+            style={webStyles.clipItem}
             onClick={() => handleSelectClipItem()}
             >
-            <View style={nativeStyles.contentRow}>
+            <View style={styles.contentRow}>
                 <Thumbnail
                     clip={props.clip}
                     index={props.index}
@@ -39,12 +38,12 @@ export default (props) => {
                     {
                         props.clip.title.length == 0
                         ?   null
-                        :   <div style={styles.clipDetail}>{props.clip.title}</div>
+                        :   <div style={webStyles.clipDetail}>{props.clip.title}</div>
                     }
                     {
                         props.clip.who.length == 0
                         ?   null
-                        :   <div style={styles.clipDetail}>{props.clip.who}</div>
+                        :   <div style={webStyles.clipDetail}>{props.clip.who}</div>
                     }
                 </View>
             </View>

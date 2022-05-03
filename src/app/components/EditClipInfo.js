@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, TouchableOpacity, TextInput, Platform } from 'react-native'
-import { styles } from '../styles'
-import { styles as webStyles } from '../web/styles'
+import { styles, webStyles } from '../styles'
 import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'

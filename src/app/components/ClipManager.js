@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { styles } from "../styles"
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
+import { styles, webStyles } from "../styles"
 import { io } from 'socket.io-client'
 import Clip from './Clip'
 import { serverIP, socketPort } from '../../../config'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import DraggableFlatList from 'react-native-draggable-flatlist'
+import ClipListItem from './ClipListItem'
 
 const socket = io('http://'+ serverIP + ':' + socketPort)
 
@@ -19,6 +20,16 @@ export default (props) => {
         redux(actions.updateClips(reorderedClips))
         // TODO: pending and fulfill reordered clips
     }
+
+    const renderClipItems = clips.map(clip => {
+        return (
+            <ClipListItem
+                key={clip.timestamp}
+                clip={clip}
+                index={clips.findIndex(item => item.timestamp === clip.timestamp)}
+                />
+        )
+    })
 
     const renderItem = ({ item, index, drag }) => {
         return (
@@ -33,7 +44,12 @@ export default (props) => {
         )
     }
 
-    return (
+    if (Platform.OS === 'web') return (
+        <div style={webStyles.clipManager}>
+            {renderClipItems}
+        </div>
+    )
+    else return (
         // TODO: https://stackoverflow.com/questions/44743904/virtualizedlist-you-have-a-large-list-that-is-slow-to-update
         <View style={styles.container}>
             <DraggableFlatList
