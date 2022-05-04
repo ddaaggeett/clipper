@@ -35,7 +35,9 @@ io.on('connection', (socket) => {
         })
     })
     socket.on('userLog', (log, sendBack) => {
-        user.userLog(log).then(userData => sendBack(userData))
+        user.userLog(log)
+        .then(userData => sendBack(userData))
+        .catch(error => {})
     })
     socket.on('getUserClips', ({userID, pendingClips}, sendBack) => {
         handlePendingClips(pendingClips).then(() => {

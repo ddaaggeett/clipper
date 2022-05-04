@@ -3,10 +3,7 @@ import { defaultUser } from '../../../../config'
 
 const initialState = {
     loggedIn: false,
-    user: {
-        id: defaultUser,
-        name: defaultUser,
-    },
+    user: null,
 }
 
 export default function account(state = initialState, action) {

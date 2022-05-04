@@ -8,12 +8,21 @@ const userLog = (user) => {
                 returnChanges: true,
                 conflict: "update"
             }).run(connection).then(result => {
-                r.table('users').get(user.id).run(connection).then(userData => resolve(userData))
-            }).error(error => {
-                console.log(`\nuser data retrieval error\n${error}`)
+                r.table('users').get(user.id).run(connection)
+                .then(userData => resolve(userData))
+                .catch(error => {
+                    console.log(`\nERROR getting user data\n${error}`)
+                    reject(error)
+                })
             })
-        }).error(error => {
+            .catch(error => {
+                console.log(`\nERROR user data retrieval\n${error}`)
+                reject(error)
+            })
+        })
+        .catch(error => {
             console.log(`\ndb connection error\n${error}`)
+            reject(error)
         })
     })
 }
@@ -21,10 +30,12 @@ const userLog = (user) => {
 const getClips = (userID) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
-            r.table('users').get(userID)('clips').run(connection).then(clipIDlist => {
+            r.table('users').get(userID)('clips').run(connection)
+            .then(clipIDlist => {
                 var userClips = []
                 clipIDlist.forEach(clipID => {
-                    r.table('clips').get(clipID).run(connection).then(clip => {
+                    r.table('clips').get(clipID).run(connection)
+                    .then(clip => {
                         userClips.push(clip)
                         if (userClips.length == clipIDlist.length) {
                             console.log('\nuserClips')
@@ -32,10 +43,17 @@ const getClips = (userID) => {
                             resolve(userClips)
                         }
                     })
+                    .catch(error => {
+                        console.log(`\nERROR getting user clips\n${error}`)
+                        reject(error)
+                    })
                 })
-            }).error(error => resolve([]))
-        }).error(error => {
+            })
+            .catch(error => resolve([]))
+        })
+        .catch(error => {
             console.log(`\ndb connection error\n${error}`)
+            reject(error)
         })
     })
 }

@@ -30,16 +30,16 @@ export default (props) => {
 
     const handleLogin = (account) => {
         redux(actions.login(account))
-        socket.emit('userLog', user, userData => {
-            redux(actions.updateUser(userData))
-        })
-        const packet = {
-            userID: user.id,
-            pendingClips: pending,
-        }
-        socket.emit('getUserClips', packet, userClips => {
-            redux(actions.clearPending())
-            redux(actions.updateClips(userClips))
+        socket.emit('userLog', account.user, userObject => {
+            redux(actions.updateUser(userObject))
+            const packet = {
+                userID: userObject.id,
+                pendingClips: pending,
+            }
+            socket.emit('getUserClips', packet, userClips => {
+                redux(actions.clearPending())
+                redux(actions.updateClips(userClips))
+            })
         })
     }
 

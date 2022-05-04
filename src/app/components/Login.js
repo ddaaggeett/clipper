@@ -15,7 +15,10 @@ export default (props) => {
     const [account, setAccount] = useState(null)
 
     React.useEffect(() => {
-        setAccount({user: defaultUser})
+        setAccount({user: {
+            id: defaultUser,
+            name: defaultUser,
+        }})
     }, [])
 
     var welcomeStyle
