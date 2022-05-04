@@ -49,7 +49,7 @@ const addClip = (clip) => {
         })
         .error(error => {
             r.table('users').get(clip.userID).update({clips: [clip.id]}, { returnChanges: true }).run(connection).then(result => {
-                const updatedUser = result.changes[0].new_val
+                // const updatedUser = result.changes[0].new_val
             })
         })
     })
