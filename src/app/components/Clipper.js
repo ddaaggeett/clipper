@@ -5,6 +5,7 @@ import ReactPlayer from 'react-player'
 import Controls from './Controls'
 import ThumbnailSelector from './ThumbnailSelector'
 import PlaybackSpeed from './PlaybackSpeed'
+import RwdFfd from './RwdFfd'
 import { styles } from "../styles"
 import getContentID from '../getContentID'
 import { io } from 'socket.io-client'
@@ -167,6 +168,9 @@ export default (props) => {
                     playbackRate={speed}
                     onPlaybackRateChange={() => setPlaying(true)}
                     onChangeState={handleChangeEvent}
+                    />
+                <RwdFfd
+                    player={player}
                     />
                 <Controls
                     player={player}
