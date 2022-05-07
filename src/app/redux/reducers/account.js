@@ -18,7 +18,8 @@ export default function account(state = initialState, action) {
 
         case actions.LOGOUT:
             return {
-                loggedIn: false
+                loggedIn: false,
+                user: null,
             }
 
         case actions.UPDATE_USER:
