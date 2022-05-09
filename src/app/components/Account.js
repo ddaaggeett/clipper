@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import UnfinishedVideosList from './UnfinishedVideosList'
 import { io } from 'socket.io-client'
 import Login from './Login'
+import SyncServer from './SyncServer'
 import SourceCodeLink from '../components/SourceCodeLink'
 
 const socket = io('http://'+ serverIP + ':' + socketPort)
@@ -54,11 +55,7 @@ export default (props) => {
             loggedIn
             ?   <View style={styles.contentRow}>
                     <SourceCodeLink />
-                    {
-                        user !== null
-                        ?   <Text style={styles.username}>{`${appName}     ///     ${user.name}`}</Text>
-                        :   <Text style={styles.username}>{`${appName}     ///     GUEST`}</Text>
-                    }
+                    <Text style={styles.username}>{`${appName}     ///     ${user.name}`}</Text>
                     <TouchableOpacity
                         style={[styles.accountButton, styles.loginButton]}
                         onPress={() => handleLogout()}
@@ -86,12 +83,9 @@ export default (props) => {
                         >
                         <Text style={styles.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
-                    {
-                        user !== null
-                        ?   <Text style={[styles.username, styles.usernameNative]}>{`${appName}     ///     ${user.name}`}</Text>
-                        :   <Text style={[styles.username, styles.usernameNative]}>{`${appName}     ///     GUEST`}</Text>
-                    }
+                    <Text style={[styles.username, styles.usernameNative]}>{`${appName}     ///     ${user.name}`}</Text>
                     {/*<UnfinishedVideosList />*/}
+                    <SyncServer />
                 </View>
             :   null
         }
