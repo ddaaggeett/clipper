@@ -61,14 +61,12 @@ const getClips = (userID) => {
 const addClip = (clip) => {
     r.connect(dbConnxConfig).then(connection => {
         r.table('users').get(clip.userID)('clips').append(clip.id).run(connection).then(clips => {
-            r.table('users').get(clip.userID).update({clips}, { returnChanges: true }).run(connection).then(result => {
-                const updatedUser = result.changes[0].new_val
-            })
+            r.table('users').get(clip.userID).update({clips}, { returnChanges: true }).run(connection)
+            .then(result => resolve())
         })
         .error(error => {
-            r.table('users').get(clip.userID).update({clips: [clip.id]}, { returnChanges: true }).run(connection).then(result => {
-                // const updatedUser = result.changes[0].new_val
-            })
+            r.table('users').get(clip.userID).update({clips: [clip.id]}, { returnChanges: true }).run(connection)
+            .then(result => resolve())
         })
     })
 }
@@ -78,7 +76,8 @@ const deleteClip = (clip) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('users').get(clip.userID)('clips').run(connection).then(result => {
                 const index = result.findIndex(id => id === clip.id)
-                r.table('users').get(clip.userID).update({ clips: r.row('clips').deleteAt(index) }).run(connection).then(() => resolve())
+                r.table('users').get(clip.userID).update({ clips: r.row('clips').deleteAt(index) }).run(connection)
+                .then(() => resolve())
             })
         })
     })

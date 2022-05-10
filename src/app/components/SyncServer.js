@@ -20,7 +20,6 @@ export default () => {
                 pendingClips: pending,
             }
             socket.emit('getUserClips', packet, userClips => {
-                console.log('some')
                 redux(actions.clearPending())
                 redux(actions.updateClips(userClips))
             })

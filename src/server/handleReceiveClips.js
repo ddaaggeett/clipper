@@ -12,8 +12,8 @@ const updateClip = (clip) => {
                     const updatedClip = result.changes[0].new_val
                     const oldClip = result.changes[0].old_val
                     if (oldClip == null) {
-                        user.addClip(updatedClip)
-                        generateClip(updatedClip).then(updatedClipObject => resolve(updatedClipObject))
+                        generateClip(updatedClip) //.then(updatedClipObject => resolve(updatedClipObject))
+                        user.addClip(updatedClip).then(() => resolve())
                     }
                     else if(updatedClip.thumbnailTime != oldClip.thumbnailTime || updatedClip.thumbnailText != oldClip.thumbnailText) {
                         generateThumbnails(updatedClip).then(updatedClipObject => resolve(updatedClipObject))
@@ -33,7 +33,7 @@ const deleteClip = (clip) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').get(clip.id).delete({ returnChanges: true }).run(connection).then(result => {
                 const deletedClip = result.changes[0].old_val
-                user.deleteClip(clip).then(() => resolve(deletedClip))
+                user.deleteClip(clip).then(() => resolve())
             }).error(error => {
                 console.log(`\ndeleteClip error\n${error}`)
             })
