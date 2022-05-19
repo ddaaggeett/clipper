@@ -3,7 +3,7 @@
 
 Please reach out to help with a fun project. [This youtube channel](https://www.youtube.com/c/ddaaggeett/videos) is an example of this software's output. If you listen to long conversations, this project could be for you. Let's fix the limited cultural narrative capacity.
 
-prerequisite installs: [node.js](https://nodejs.org/en/download/), [rethinkDB](https://rethinkdb.com/docs/install/), [ffmpeg](https://ffmpeg.org/download.html#build-linux), [youtube-dl](https://ytdl-org.github.io/youtube-dl/download.html), [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable)
+prerequisite installs: [node.js](https://nodejs.org/en/download/), [rethinkDB](https://rethinkdb.com/docs/install/), [ffmpeg](https://ffmpeg.org/download.html#build-linux), [youtube-dl](https://ytdl-org.github.io/youtube-dl/download.html), [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable), [expo-cli](https://docs.expo.dev/get-started/installation/)
 
 read the [documentation](https://github.com/ddaaggeett/clipper/wiki)
 
