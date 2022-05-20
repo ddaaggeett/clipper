@@ -1,5 +1,12 @@
 import * as actions from '.'
 
+export function purgeRedux(purge) {
+    return {
+        type: actions.PURGE_REDUX,
+        purge,
+    }
+}
+
 export function updateClips(clips) {
     return {
         type: actions.UPDATE_CLIPS,

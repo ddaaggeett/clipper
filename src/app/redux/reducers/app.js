@@ -16,10 +16,17 @@ const initialState = {
     videoSelectorFocused: false,
     playingClip: false,
     validYoutubeID: false,
+    purgeRedux: false,
 }
 
 export default function app(state = initialState, action) {
     switch(action.type) {
+
+        case actions.PURGE_REDUX:
+            return {
+                ...state,
+                purgeRedux: action.purge,
+            }
 
         case actions.SET_LEFT_CURSOR:
             return {

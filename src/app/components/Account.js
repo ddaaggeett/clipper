@@ -9,6 +9,7 @@ import UnfinishedVideosList from './UnfinishedVideosList'
 import { io } from 'socket.io-client'
 import Login from './Login'
 import SyncServer from './SyncServer'
+import ReduxPurge from './ReduxPurge'
 import SourceCodeLink from '../components/SourceCodeLink'
 
 const socket = io('http://'+ serverIP + ':' + socketPort)
@@ -86,6 +87,7 @@ export default (props) => {
                     <Text style={[styles.username, styles.usernameNative]}>{`${appName}     ///     ${user.name}`}</Text>
                     {/*<UnfinishedVideosList />*/}
                     <SyncServer />
+                    <ReduxPurge />
                 </View>
             :   null
         }

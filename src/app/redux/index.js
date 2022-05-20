@@ -1,3 +1,4 @@
+import { useSelector, useDispatch } from 'react-redux'
 import { createStore , applyMiddleware } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import thunk from 'redux-thunk'
@@ -13,8 +14,18 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export default () => {
+
+    const redux = useDispatch()
+    const app = useSelector(state => state.app)
+
     let store = createStore(persistedReducer, middleware)
     let persistor = persistStore(store)
-    // persistor.purge() // TODO: run as separate script when necessary
-    return { store, persistor }
+
+    if (app.purgeRedux) {
+        persistor.purge()
+        redux(actions.purgeRedux(false))
+        return { store, persistor }
+    }
+    else return { store, persistor }
+
 }
