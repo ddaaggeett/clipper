@@ -59,14 +59,16 @@ const getClips = (userID) => {
 }
 
 const addClip = (clip) => {
-    r.connect(dbConnxConfig).then(connection => {
-        r.table('users').get(clip.userID)('clips').append(clip.id).run(connection).then(clips => {
-            r.table('users').get(clip.userID).update({clips}, { returnChanges: true }).run(connection)
-            .then(result => resolve())
-        })
-        .error(error => {
-            r.table('users').get(clip.userID).update({clips: [clip.id]}, { returnChanges: true }).run(connection)
-            .then(result => resolve())
+    return new Promise((resolve, reject) => {
+        r.connect(dbConnxConfig).then(connection => {
+            r.table('users').get(clip.userID)('clips').append(clip.id).run(connection).then(clips => {
+                r.table('users').get(clip.userID).update({clips}, { returnChanges: true }).run(connection)
+                .then(result => resolve())
+            })
+            .error(error => {
+                r.table('users').get(clip.userID).update({clips: [clip.id]}, { returnChanges: true }).run(connection)
+                .then(result => resolve())
+            })
         })
     })
 }

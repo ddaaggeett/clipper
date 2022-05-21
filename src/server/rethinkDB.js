@@ -11,8 +11,7 @@ var dbConnx = null
 const createTables = (tables) => {
     for(var table in tables) {
         r.db(db).tableCreate(table).run(dbConnx).then(result => {
-            console.log(`\nTABLE RESULT:\n${JSON.stringify(result,null,4)}`)
-            console.log("\nRethinkDB table '%s' created", table)
+            console.log(`\nTABLE RESULT:\n${JSON.stringify(result)}`)
         }).error(error => {
             console.log("\nRethinkDB table '%s' already exists (%s:%s)\n%s", table, error.name, error.msg, error.message)
         })
@@ -23,8 +22,7 @@ const initDB = () => {
     r.connect(dbConnxConfig).then(connection => {
         dbConnx = connection
         r.dbCreate(db).run(connection).then(result => {
-            console.log(`\nDB RESULT:\n${JSON.stringify(result,null,4)}`)
-            console.log("\nRethinkDB database '%s' created", db)
+            console.log(`\nDB RESULT:\n${JSON.stringify(result)}`)
             createTables(tables)
         }).error(error => {
             console.log("\nRethinkDB database '%s' already exists (%s:%s)\n%s", db, error.name, error.msg, error.message)
