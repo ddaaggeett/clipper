@@ -3,6 +3,7 @@ import { View, Platform, Dimensions } from 'react-native'
 import AccountScreen from './screens/AccountScreen'
 import ClipManagerScreen from './screens/ClipManagerScreen'
 import ClipperScreen from './screens/ClipperScreen'
+import AudioScreen from '../audio/app'
 import Account from './components/Account'
 import Clipper from './components/Clipper'
 import Footer from './components/Footer'
@@ -82,6 +83,7 @@ export default () => {
         {
             loggedIn
             ?   <Tab.Navigator tabBarOptions={tabBarOptions}>
+                    <Tab.Screen name="Audio" component={AudioScreen} />
                     <Tab.Screen name="Home" component={AccountScreen} />
                     <Tab.Screen name="Clipper" component={ClipperScreen} />
                     <Tab.Screen name="Clips" component={ClipManagerScreen} />
