@@ -9,15 +9,6 @@
         "clipper": "./data_clipper/",
         "audio": "./data_audio/"
     },
-    "clipInitObject": {
-        "start": 0,
-        "end": 0,
-        "duration": 0,
-        "videoID": "",
-        "title": "",
-        "thumbnailText": "",
-        "who": ""
-    },
     "tables": {
         "recordings": "recordings",
         "clips": "clips",
