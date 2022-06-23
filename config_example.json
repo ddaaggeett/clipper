@@ -5,6 +5,7 @@
     "serverIP": "192.168.0.1",
     "socketPort": 3347,
     "expressPort": 3316,
+    "audioFileExt": "wav",
     "fileData": {
         "clipper": "./data_clipper/",
         "audio": "./data_audio/"
