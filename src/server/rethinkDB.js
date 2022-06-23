@@ -1,7 +1,6 @@
 const process = require('process')
 var r = require('rethinkdb')
 var {
-    db,
     tables,
     dbConnxConfig,
 } = require('../../config')
@@ -10,7 +9,7 @@ var dbConnx = null
 
 const createTables = (tables) => {
     for(var table in tables) {
-        r.db(db).tableCreate(table).run(dbConnx)
+        r.db(dbConnxConfig.db).tableCreate(table).run(dbConnx)
         .then(result => {
             console.log(`\nTABLE RESULT:\n${JSON.stringify(result)}`)
         })
@@ -24,7 +23,7 @@ const initDB = () => {
     r.connect(dbConnxConfig)
     .then(connection => {
         dbConnx = connection
-        r.dbCreate(db).run(connection)
+        r.dbCreate(dbConnxConfig.db).run(connection)
         .then(result => {
             console.log(`\nDB RESULT:\n${JSON.stringify(result)}`)
             createTables(tables)

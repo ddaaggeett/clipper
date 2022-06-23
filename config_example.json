@@ -18,7 +18,6 @@
         "thumbnailText": "",
         "who": ""
     },
-    "db": "clipper",
     "tables": {
         "recordings": "recordings",
         "clips": "clips",
@@ -26,8 +25,8 @@
         "sourceVideos": "sourceVideos"
     },
     "dbConnxConfig": {
-        "db": "clipper"
+        "db": "xyz"
     },
-    "sourceCodeURL": "https://github.com/ddaaggeett/clipper",
+    "sourceCodeURL": "https://github.com/ddaaggeett/xyz",
     "progressionsListLength": 5
 }
