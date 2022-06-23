@@ -6,8 +6,11 @@ const { networkInterfaces } = require('os')
 const nets = networkInterfaces()
 
 const initFileDataDirectory = () => {
-    fs.mkdir(path.join(config.fileData), {recursive:true}, error => {
-        if(error) console.error(error)
+    const directoryArray = Object.values(config.fileData)
+    directoryArray.forEach(dir => {
+        fs.mkdir(path.join(dir), {recursive:true}, error => {
+            if(error) console.error(error)
+        })
     })
 }
 
