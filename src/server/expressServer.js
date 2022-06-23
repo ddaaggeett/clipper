@@ -6,7 +6,7 @@ const path = require('path')
 const fs = require('fs')
 const { zipClip } = require('./zip')
 
-app.use(express.static(path.join(__dirname, '/../..', fileData)))
+app.use(express.static(path.join(__dirname, '/../..', fileData.clipper)))
 
 app.get('/:clipID', (req, res) => {
     // TODO: should be zipped already. donwload only here.
