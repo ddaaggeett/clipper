@@ -46,6 +46,11 @@ app.get('/:clipID', (req, res) => {
     })
 })
 
+app.patch('/patchAudioFile', (req, res) => {
+    req.pipe(fs.createWriteStream(`${fileData.audio}/${Date.now()}.wav`));
+    res.end('OK');
+});
+
 app.listen(expressPort, (err) => {
     if (err) throw err
     console.log(`${appName} expressJS server ready on http://${serverIP}:${expressPort}`)
