@@ -9,7 +9,7 @@ import RwdFfd from './RwdFfd'
 import { styles } from "../styles"
 import getContentID from '../getContentID'
 import { io } from 'socket.io-client'
-import { serverIP, socketPort, clipInitObject } from '../../../config'
+import { serverIP, socketPort } from '../../../config'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 
@@ -53,6 +53,16 @@ export default (props) => {
         var userID
         user === null ? userID = null : userID = user.id
         // TODO: server handling userID = null
+
+        const clipInitObject = {
+            start: 0,
+            end: 0,
+            duration: 0,
+            videoID: "",
+            title: "",
+            thumbnailText: "",
+            who: "",
+        }
         var clipObject = {
             ...clipInitObject,
             start: leftCursor,

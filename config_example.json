@@ -5,25 +5,20 @@
     "serverIP": "192.168.0.1",
     "socketPort": 3347,
     "expressPort": 3316,
-    "fileData": "./clipper_data/",
-    "clipInitObject": {
-        "start": 0,
-        "end": 0,
-        "duration": 0,
-        "videoID": "",
-        "title": "",
-        "thumbnailText": "",
-        "who": ""
+    "audioFileExt": "wav",
+    "fileData": {
+        "clipper": "./data_clipper/",
+        "audio": "./data_audio/"
     },
-    "db": "clipper",
     "tables": {
+        "recordings": "recordings",
         "clips": "clips",
         "users": "users",
         "sourceVideos": "sourceVideos"
     },
     "dbConnxConfig": {
-        "db": "clipper"
+        "db": "xyz"
     },
-    "sourceCodeURL": "https://github.com/ddaaggeett/clipper",
+    "sourceCodeURL": "https://github.com/ddaaggeett/xyz",
     "progressionsListLength": 5
 }

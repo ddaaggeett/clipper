@@ -1,7 +1,6 @@
 const process = require('process')
 var r = require('rethinkdb')
 var {
-    db,
     tables,
     dbConnxConfig,
 } = require('../../config')
@@ -10,25 +9,31 @@ var dbConnx = null
 
 const createTables = (tables) => {
     for(var table in tables) {
-        r.db(db).tableCreate(table).run(dbConnx).then(result => {
+        r.db(dbConnxConfig.db).tableCreate(table).run(dbConnx)
+        .then(result => {
             console.log(`\nTABLE RESULT:\n${JSON.stringify(result)}`)
-        }).error(error => {
-            console.log("\nRethinkDB table '%s' already exists (%s:%s)\n%s", table, error.name, error.msg, error.message)
+        })
+        .error(error => {
+            console.log(`\n${error}`)
         })
     }
 }
 
 const initDB = () => {
-    r.connect(dbConnxConfig).then(connection => {
+    r.connect(dbConnxConfig)
+    .then(connection => {
         dbConnx = connection
-        r.dbCreate(db).run(connection).then(result => {
+        r.dbCreate(dbConnxConfig.db).run(connection)
+        .then(result => {
             console.log(`\nDB RESULT:\n${JSON.stringify(result)}`)
             createTables(tables)
-        }).error(error => {
-            console.log("\nRethinkDB database '%s' already exists (%s:%s)\n%s", db, error.name, error.msg, error.message)
+        })
+        .error(error => {
+            console.log(`\n${error}`)
             createTables(tables)
         })
-    }).error(error => {
+    })
+    .error(error => {
         console.log('\nError connecting to RethinkDB!\n',error)
     })
 }

@@ -4,6 +4,8 @@ import { Audio } from 'expo-av'
 import { useSelector } from 'react-redux'
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context'
+import * as FileSystem from 'expo-file-system'
+import { serverIP, expressPort } from '../../../config'
 
 export default () => {
     const [recording, setRecording] = React.useState()
@@ -36,14 +38,34 @@ export default () => {
         console.log('Recording stopped and stored at', uri)
     }
 
+    React.useEffect(() => {
+        if(uri != undefined) {
+            const url = `http://${serverIP}:${expressPort}/patchAudioFile`
+            FileSystem.uploadAsync(url, uri, {
+                fieldName: "file",
+                httpMethod: "PATCH",
+                uploadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
+            })
+            .then(object => {
+                console.log('\nupload working')
+                console.log(JSON.stringify(object,null,4))
+            })
+            .catch(error => {
+                console.log('\nerror upload')
+                console.log(error)
+            })
+        }
+    }, [uri])
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
+                <StatusBar style="light" />
                 <Button
                     title={recording ? 'Stop Recording' : 'Start Recording'}
                     onPress={recording ? stopRecording : startRecording}
-                />
-                <Text style={styles.text}>{`last recording uri:\n${uri}`}</Text> 
+                    />
+                <Text style={styles.text}>{`last recording uri:\n${uri}`}</Text>
             </ScrollView>
         </SafeAreaView>
     )

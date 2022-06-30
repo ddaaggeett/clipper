@@ -50,7 +50,7 @@ const formatThumbnail = (videoDirectory, videoID) => {
 const updateSourceVideo = (videoObject) => {
 
     return new Promise((resolve, reject) => {
-        const videoDirectory = path.join(fileData, videoObject.videoID)
+        const videoDirectory = path.join(fileData.clipper, videoObject.videoID)
         const command = `youtube-dl -f best https://www.youtube.com/watch?v=${videoObject.videoID} --get-title`
         exec(command, {
             cwd: videoDirectory,
