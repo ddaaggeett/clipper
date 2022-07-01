@@ -48,13 +48,6 @@ export default () => {
         }
     }, [])
 
-    const tabBarOptions = {
-        activeBackgroundColor: '#222',
-        inactiveBackgroundColor: 'black',
-        labelPosition: 'beside-icon',
-        labelStyle:{fontSize:20,position:'absolute',color:'white'},
-    }
-
     if (Platform.OS === 'web') {
         if(!loggedIn) return (
             <View style={styles.container}>
@@ -78,21 +71,30 @@ export default () => {
             </View>
         )
     }
-    else return (
-        <View style={styles.container}>
-        {
-            loggedIn
-            ?   <Tab.Navigator tabBarOptions={tabBarOptions}>
-                    <Tab.Screen name="Audio" component={AudioScreen} />
-                    <Tab.Screen name="Home" component={AccountScreen} />
-                    <Tab.Screen name="Clipper" component={ClipperScreen} />
-                    <Tab.Screen name="Clips" component={ClipManagerScreen} />
-                </Tab.Navigator>
-            :   <Tab.Navigator>
-                    <Tab.Screen name="Home" component={AccountScreen} options={{tabBarVisible: false}} />
-                </Tab.Navigator>
-
+    else {
+        const tabBarOptions = {
+            tabBarActiveBackgroundColor: '#222',
+            tabBarInactiveBackgroundColor: 'black',
+            tabBarLabelPosition: 'beside-icon',
+            tabBarLabelStyle:{fontSize:20,position:'absolute',color:'white'},
+            tabBarShowIcon: false,
         }
-        </View>
-    )
+        return (
+            <View style={styles.container}>
+            {
+                loggedIn
+                ?   <Tab.Navigator screenOptions={{ headerShown: false }}>
+                        <Tab.Screen options={tabBarOptions} name="Audio" component={AudioScreen} />
+                        <Tab.Screen options={tabBarOptions} name="Home" component={AccountScreen} />
+                        <Tab.Screen options={tabBarOptions} name="Clipper" component={ClipperScreen} />
+                        <Tab.Screen options={tabBarOptions} name="Clips" component={ClipManagerScreen} />
+                    </Tab.Navigator>
+                :   <Tab.Navigator screenOptions={{ headerShown: false }}>
+                        <Tab.Screen name="Home" component={AccountScreen} options={{tabBarStyle: { display: 'none' }}} />
+                    </Tab.Navigator>
+
+            }
+            </View>
+        )
+    }
 }

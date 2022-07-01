@@ -11,9 +11,9 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-community/masked-view": "^0.1.11",
-    "@react-navigation/bottom-tabs": "^5.11.2",
-    "@react-navigation/native": "^5.8.10",
-    "@react-navigation/stack": "^5.12.8",
+    "@react-navigation/bottom-tabs": "^6.3.1",
+    "@react-navigation/native": "^6.0.10",
+    "@react-navigation/stack": "^6.2.1",
     "adm-zip": "^0.5.5",
     "events": "^3.3.0",
     "expo": "^45.0.0",
