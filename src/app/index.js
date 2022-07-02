@@ -12,6 +12,7 @@ import ClipManager from './components/ClipManager'
 import UnfinishedVideosList from './components/UnfinishedVideosList'
 import { styles } from './styles'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from './redux/actions/actionCreators'
 import { serverIP, socketPort } from '../../config'
@@ -20,6 +21,7 @@ import useDataSocketHook from './dataSocket'
 const socket = io('http://'+ serverIP + ':' + socketPort)
 
 const Tab = createBottomTabNavigator()
+const Drawer = createDrawerNavigator()
 
 export default () => {
 
@@ -72,29 +74,33 @@ export default () => {
         )
     }
     else {
-        const tabBarOptions = {
-            tabBarActiveBackgroundColor: '#222',
-            tabBarInactiveBackgroundColor: 'black',
-            tabBarLabelPosition: 'beside-icon',
-            tabBarLabelStyle:{fontSize:20,position:'absolute',color:'white'},
-            tabBarShowIcon: false,
-        }
-        return (
-            <View style={styles.container}>
-            {
-                loggedIn
-                ?   <Tab.Navigator screenOptions={{ headerShown: false }}>
-                        <Tab.Screen options={tabBarOptions} name="Audio" component={AudioScreen} />
-                        <Tab.Screen options={tabBarOptions} name="Home" component={AccountScreen} />
-                        <Tab.Screen options={tabBarOptions} name="Clipper" component={ClipperScreen} />
-                        <Tab.Screen options={tabBarOptions} name="Clips" component={ClipManagerScreen} />
-                    </Tab.Navigator>
-                :   <Tab.Navigator screenOptions={{ headerShown: false }}>
-                        <Tab.Screen name="Home" component={AccountScreen} options={{tabBarStyle: { display: 'none' }}} />
-                    </Tab.Navigator>
-
-            }
-            </View>
+        if(!loggedIn) return (
+            <Drawer.Navigator screenOptions={{ headerShown: false }}>
+                <Drawer.Screen name="User" component={AccountScreen} />
+            </Drawer.Navigator>
+        )
+        else return (
+            <Drawer.Navigator screenOptions={{ headerShown: false }}>
+                <Drawer.Screen name="User" component={AccountScreen} />
+                <Drawer.Screen name="Audio" component={AudioScreen} />
+                <Drawer.Screen name="Clipper" component={Tab_Clipper} />
+            </Drawer.Navigator>
         )
     }
+}
+
+const Tab_Clipper = () => {
+    const tabBarOptions = {
+        tabBarActiveBackgroundColor: '#222',
+        tabBarInactiveBackgroundColor: 'black',
+        tabBarLabelPosition: 'beside-icon',
+        tabBarLabelStyle:{fontSize:20,position:'absolute',color:'white'},
+        tabBarShowIcon: false,
+    }
+    return (
+        <Tab.Navigator screenOptions={{ headerShown: false }}>
+            <Tab.Screen options={tabBarOptions} name="Clipper" component={ClipperScreen} />
+            <Tab.Screen options={tabBarOptions} name="Clips" component={ClipManagerScreen} />
+        </Tab.Navigator>
+    )
 }

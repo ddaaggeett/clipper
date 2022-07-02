@@ -21,14 +21,6 @@ export default (props) => {
     let navigation
     Platform.OS !== 'web' ?  navigation = useNavigation() : null
 
-    useEffect(() => {
-        if (Platform.OS !== 'web' && loggedIn) navigation.navigate('Clipper')
-    }, [])
-
-    useEffect(() => {
-        if(Platform.OS !== 'web' && loggedIn) navigation.navigate('Clipper')
-    }, [loggedIn])
-
     const handleLogin = (account) => {
         redux(actions.login(account))
         socket.emit('userLog', account.user, userObject => {
