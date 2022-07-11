@@ -3,7 +3,10 @@
     "defaultUser": "defaultUser",
     "configFile": "./config.json",
     "serverIP": "192.168.0.1",
-    "socketPort": 3347,
+    "socketPort": {
+        "audio": 3347,
+        "clipper": 3348,
+    },
     "expressPort": 3316,
     "audioFileExt": "wav",
     "fileData": {

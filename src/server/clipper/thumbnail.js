@@ -2,7 +2,7 @@ const fs = require('fs')
 const Jimp = require('jimp')
 const path = require('path')
 const { exec } = require('child_process')
-const { fileData, dbConnxConfig } = require('../../config')
+const { fileData, dbConnxConfig } = require('../../../config')
 const r = require('rethinkdb')
 
 const thumbWidth = 1280

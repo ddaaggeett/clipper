@@ -1,5 +1,5 @@
 const { exec } = require('child_process')
-var { dbConnxConfig } = require('../../config')
+var { dbConnxConfig } = require('../../../config')
 var r = require('rethinkdb')
 const path = require('path')
 

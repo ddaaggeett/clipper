@@ -3,7 +3,7 @@ const { dbConnxConfig, fileData } = require('../../../config')
 const r = require('rethinkdb')
 const path = require('path')
 const fs = require('fs')
-const { zipClip } = require('../zip')
+const { zipClip } = require('./zip')
 
 const clipperExpress = app => {
     app.use(express.static(path.join(__dirname, '/../../..', fileData.clipper)))

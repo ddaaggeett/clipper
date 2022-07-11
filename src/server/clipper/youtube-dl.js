@@ -2,7 +2,7 @@ const { exec, spawn } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 const r = require('rethinkdb')
-const { dbConnxConfig, fileData } = require('../../config')
+const { dbConnxConfig, fileData } = require('../../../config')
 
 const downloadVideo = (videoDirectory, videoID) => {
     return new Promise((resolve,reject) => {

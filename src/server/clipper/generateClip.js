@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const youtube = require('./youtube-dl')
 const ffmpeg = require('./ffmpeg')
-const { fileData } = require('../../config')
+const { fileData } = require('../../../config')
 
 const generateClip = (clipObject) => {
     return new Promise((resolve, reject) => {

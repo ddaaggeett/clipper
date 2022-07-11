@@ -1,5 +1,5 @@
 var r = require('rethinkdb')
-var { dbConnxConfig } = require('../../config')
+var { dbConnxConfig } = require('../../../config')
 var generateClip = require('./generateClip')
 const { generateThumbnails } = require('./thumbnail')
 const user = require('./user')
