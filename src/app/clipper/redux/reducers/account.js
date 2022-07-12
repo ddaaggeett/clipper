@@ -1,5 +1,5 @@
 import * as actions from '../actions'
-import { defaultUser } from '../../../../config'
+import { defaultUser } from '../../../../../config'
 
 const initialState = {
     loggedIn: false,

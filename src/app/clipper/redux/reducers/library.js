@@ -1,5 +1,5 @@
 import * as actions from '../actions'
-import { progressionsListLength } from '../../../../config'
+import { progressionsListLength } from '../../../../../config'
 
 const initialState = {
     videoProgressions: [],

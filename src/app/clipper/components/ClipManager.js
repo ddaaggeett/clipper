@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import { styles, webStyles } from "../styles"
 import { io } from 'socket.io-client'
 import Clip from './Clip'
-import { serverIP, socketPort } from '../../../config'
+import { serverIP, socketPort } from '../../../../config'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import DraggableFlatList from 'react-native-draggable-flatlist'

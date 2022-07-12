@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { View, TextInput, ScrollView } from 'react-native'
 import { useSelector } from 'react-redux'
 import { StatusBar } from 'expo-status-bar';
-import Clipper from '../components/Clipper'
-import VideoSelector from '../components/VideoSelector'
-import { styles } from '../styles'
+import Clipper from './components/Clipper'
+import VideoSelector from './components/VideoSelector'
+import { styles } from './styles'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default () => {

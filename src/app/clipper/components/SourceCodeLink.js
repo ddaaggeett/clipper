@@ -2,7 +2,7 @@ import React from 'react'
 import { TouchableOpacity, Image } from 'react-native'
 import * as Linking from 'expo-linking'
 import { styles } from '../styles'
-import { sourceCodeURL } from '../../../config'
+import { sourceCodeURL } from '../../../../config'
 
 export default () => {
     return (
@@ -10,7 +10,7 @@ export default () => {
             onPress={() => Linking.openURL(sourceCodeURL)}
             >
             <Image
-                source={require('../../../assets/GitHub-Mark-Light-32px.png')}
+                source={require('../../../../assets/GitHub-Mark-Light-32px.png')}
                 style={[styles.sourceCodeLink, { position: 'fixed' }]}
                 />
         </TouchableOpacity>

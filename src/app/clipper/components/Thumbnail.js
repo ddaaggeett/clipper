@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Image, Platform, TouchableOpacity } from 'react-native'
 import { styles } from '../styles'
-import { serverIP, expressPort } from '../../../config'
+import { serverIP, expressPort } from '../../../../config'
 import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 

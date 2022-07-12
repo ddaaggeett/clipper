@@ -1,11 +1,8 @@
 import React from 'react'
-import {
-    View,
-} from 'react-native'
-import { styles } from '../styles'
-import ClipManager from '../components/ClipManager'
-import ClipDetails from '../components/ClipDetails'
+import { View } from 'react-native'
+import { styles } from './clipper/styles'
 import { StatusBar } from 'expo-status-bar';
+import Account from './clipper/components/Account'
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator()
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -15,8 +12,7 @@ export default () => {
         <SafeAreaView style={styles.container}>
             <StatusBar style="light" />
             <Stack.Navigator>
-                <Stack.Screen name="ClipManager" component={ClipManager} options={{headerShown: false}} />
-                <Stack.Screen name="ClipDetails" component={ClipDetails} options={{headerShown: false}} />
+                <Stack.Screen name="Account" component={Account} options={{headerShown: false}} />
             </Stack.Navigator>
         </SafeAreaView>
     )

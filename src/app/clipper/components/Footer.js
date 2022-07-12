@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { styles } from '../styles'
-import { appName } from '../../../config'
+import { appName } from '../../../../config'
 
 export default (props) => {
 

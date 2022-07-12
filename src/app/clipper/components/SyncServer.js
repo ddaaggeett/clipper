@@ -2,7 +2,7 @@ import React from 'react'
 import * as actions from '../redux/actions/actionCreators'
 import { Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useSelector, useDispatch } from 'react-redux'
-import { serverIP, socketPort } from '../../../config'
+import { serverIP, socketPort } from '../../../../config'
 import { io } from 'socket.io-client'
 
 const socket = io(`http://${serverIP}:${socketPort}`)

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Platform } from "react-native"
 import { styles } from "../styles"
 import { useSelector, useDispatch } from 'react-redux'
 import * as Linking from 'expo-linking'
-import { serverIP, socketPort, expressPort } from '../../../config'
+import { serverIP, socketPort, expressPort } from '../../../../config'
 import { io } from 'socket.io-client'
 
 const socket = io('http://'+ serverIP + ':' + socketPort)

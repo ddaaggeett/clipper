@@ -7,7 +7,7 @@ import YoutubePlayer from "react-native-youtube-iframe"
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import { io } from 'socket.io-client'
-import { serverIP, socketPort } from '../../../config'
+import { serverIP, socketPort } from '../../../../config'
 
 const socket = io('http://'+ serverIP + ':' + socketPort)
 

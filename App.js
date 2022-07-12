@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import React from 'react';
 import { View, Platform } from 'react-native';
 import AppMain from './src/app'
-import { styles } from "./src/app/styles"
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from './src/app/redux';
