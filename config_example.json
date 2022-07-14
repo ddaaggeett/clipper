@@ -1,27 +1,40 @@
 {
-    "appName": "clipper",
+    "appName": "ddaaggeett.xyz",
+    "sourceCodeURL": "https://github.com/ddaaggeett/xyz",
     "defaultUser": "defaultUser",
     "configFile": "./config.json",
     "serverIP": "192.168.0.1",
     "socketPort": {
         "audio": 3347,
+        "whitesocket": 3349,
         "clipper": 3348
     },
     "expressPort": 3316,
     "audioFileExt": "wav",
     "fileData": {
         "clipper": "./data_clipper/",
+        "imageData": "./data_whitesocket/",
         "audio": "./data_audio/"
     },
     "tables": {
         "recordings": "recordings",
         "clips": "clips",
         "users": "users",
+        "diffs": "diffs",
         "sourceVideos": "sourceVideos"
     },
     "dbConnxConfig": {
         "db": "xyz"
     },
-    "sourceCodeURL": "https://github.com/ddaaggeett/xyz",
+    "defaultDiff": {
+        "mode": "write",
+        "shape":{"height":600,"width":800},
+        "prev_uri": "blank.jpg",
+        "result_uri": "result.jpg",
+        "uri": "image.jpg"
+    },
+    "defaultImage": "blank.jpg",
+    "borderWidth": 5,
+    "arucoMargin": 3,
     "progressionsListLength": 5
 }
