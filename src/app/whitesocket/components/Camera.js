@@ -13,9 +13,9 @@ const socket = io.connect(`http://${config.serverIP}:${config.socketPort}`)
 
         useEffect(() => {
 
-            // TODO: ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT)
-
             (async () => {
+                ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT)
+                // TODO: set screen orientation to portrait on camera exit navigation
                 const { status } = await Camera.requestCameraPermissionsAsync()
                 setHasPermission(status === 'granted')
             })()
