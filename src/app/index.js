@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View, Platform, Dimensions } from 'react-native'
 import AccountScreen from './AccountScreen'
-import ClipManagerScreen from './clipper/ClipManagerScreen'
-import ClipperScreen from './clipper/ClipperScreen'
 import AudioScreen from '../app/audio/'
 import Account from './clipper/components/Account'
 import Clipper from './clipper/components/Clipper'
@@ -10,8 +8,9 @@ import Footer from './clipper/components/Footer'
 import VideoSelector from './clipper/components/VideoSelector'
 import ClipManager from './clipper/components/ClipManager'
 import UnfinishedVideosList from './clipper/components/UnfinishedVideosList'
+import Drawer_Clipper from './clipper/nav'
+import Drawer_Whitesocket from './whitesocket/nav'
 import { styles } from './clipper/styles'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from './clipper/redux/actions/actionCreators'
@@ -20,7 +19,6 @@ import { io } from 'socket.io-client'
 import useDataSocketHook from './dataSocket'
 const socket = io('http://'+ serverIP + ':' + socketPort)
 
-const Tab = createBottomTabNavigator()
 const Drawer = createDrawerNavigator()
 
 export default () => {
@@ -83,24 +81,9 @@ export default () => {
             <Drawer.Navigator screenOptions={{ headerShown: false }}>
                 <Drawer.Screen name="User" component={AccountScreen} />
                 <Drawer.Screen name="Audio" component={AudioScreen} />
-                <Drawer.Screen name="Clipper" component={Tab_Clipper} />
+                <Drawer.Screen name="Clipper" component={Drawer_Clipper} />
+                <Drawer.Screen name="Whitesocket" component={Drawer_Whitesocket} />
             </Drawer.Navigator>
         )
     }
-}
-
-const Tab_Clipper = () => {
-    const tabBarOptions = {
-        tabBarActiveBackgroundColor: '#222',
-        tabBarInactiveBackgroundColor: 'black',
-        tabBarLabelPosition: 'beside-icon',
-        tabBarLabelStyle:{fontSize:20,position:'absolute',color:'white'},
-        tabBarShowIcon: false,
-    }
-    return (
-        <Tab.Navigator screenOptions={{ headerShown: false }}>
-            <Tab.Screen options={tabBarOptions} name="Clipper" component={ClipperScreen} />
-            <Tab.Screen options={tabBarOptions} name="Clips" component={ClipManagerScreen} />
-        </Tab.Navigator>
-    )
 }

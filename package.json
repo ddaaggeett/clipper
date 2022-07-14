@@ -1,5 +1,5 @@
 {
-  "name": "ddaaggeett.xyz",
+  "name": "xyz",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "server": "nodemon src/server --ignore ./config.json --ignore ./data_clipper --ignore ./data_audio --ignore ./data_whitesocket --ignore ./rethinkdb_data",
