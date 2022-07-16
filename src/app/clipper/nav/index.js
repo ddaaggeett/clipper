@@ -4,7 +4,7 @@ import ClipManagerScreen from '../ClipManagerScreen'
 
 const Tab = createBottomTabNavigator()
 
-const Drawer_Clipper = () => {
+export default () => {
     const tabBarOptions = {
         tabBarActiveBackgroundColor: '#222',
         tabBarInactiveBackgroundColor: 'black',
@@ -19,5 +19,3 @@ const Drawer_Clipper = () => {
         </Tab.Navigator>
     )
 }
-
-module.exports = Drawer_Clipper
