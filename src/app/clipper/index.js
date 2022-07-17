@@ -1,10 +1,14 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ClipperScreen from './ClipperScreen'
 import ClipManagerScreen from './ClipManagerScreen'
+import useDataSocketHook from './dataSocket'
 
 const Tab = createBottomTabNavigator()
 
 export default () => {
+
+    useDataSocketHook()
+
     const tabBarOptions = {
         tabBarActiveBackgroundColor: '#222',
         tabBarInactiveBackgroundColor: 'black',
