@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import ClipperScreen from '../ClipperScreen'
-import ClipManagerScreen from '../ClipManagerScreen'
+import ClipperScreen from './ClipperScreen'
+import ClipManagerScreen from './ClipManagerScreen'
 
 const Tab = createBottomTabNavigator()
 
