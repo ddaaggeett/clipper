@@ -47,6 +47,4 @@ const clipperExpress = app => {
     })
 }
 
-module.exports = {
-    clipperExpress,
-}
+module.exports = clipperExpress

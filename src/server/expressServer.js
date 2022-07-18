@@ -1,13 +1,13 @@
 const express = require('express')
 const app = express()
-const { audioExpress } = require('./audio/express')
-const { clipperExpress } = require('./clipper/express')
-const whitesocketExpress = require('./whitesocket/express')
+const podware = require('./podware/express')
+const clipper = require('./clipper/express')
+const whitesocket = require('./whitesocket/express')
 const { expressPort, appName, serverIP } = require('../../config')
 
-clipperExpress(app)
-audioExpress(app)
-whitesocketExpress(app)
+clipper(app)
+podware(app)
+whitesocket(app)
 
 app.listen(expressPort, (err) => {
     if (err) throw err
