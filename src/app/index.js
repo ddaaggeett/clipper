@@ -23,12 +23,12 @@ export default () => {
     else {
         if(!loggedIn) return (
             <Drawer.Navigator screenOptions={{ headerShown: false }}>
-                <Drawer.Screen name="User" component={Drawer_Account} />
+                <Drawer.Screen name="Profile" component={Drawer_Account} />
             </Drawer.Navigator>
         )
         else return (
             <Drawer.Navigator screenOptions={{ headerShown: false }}>
-                <Drawer.Screen name="User" component={Drawer_Account} />
+                <Drawer.Screen name="Profile" component={Drawer_Account} />
                 <Drawer.Screen name="Podware" component={Drawer_Podware} />
                 <Drawer.Screen name="Clipper" component={Drawer_Clipper} />
                 <Drawer.Screen name="Whitesocket" component={Drawer_Whitesocket} />

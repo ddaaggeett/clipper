@@ -24,7 +24,8 @@ const linking = {
     config: {
         screens: {
         },
-    }
+    },
+}
 
 export default function App() {
     if (Platform.OS === 'web') return (
