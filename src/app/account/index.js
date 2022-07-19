@@ -1,8 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
-import { styles } from './clipper/styles'
+import { styles } from '../clipper/styles'
 import { StatusBar } from 'expo-status-bar';
-import Account from './clipper/components/Account'
+import AccountScreen from './components/Account'
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator()
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -12,7 +12,7 @@ export default () => {
         <SafeAreaView style={styles.container}>
             <StatusBar style="light" />
             <Stack.Navigator>
-                <Stack.Screen name="Account" component={Account} options={{headerShown: false}} />
+                <Stack.Screen name="Account" component={AccountScreen} options={{headerShown: false}} />
             </Stack.Navigator>
         </SafeAreaView>
     )

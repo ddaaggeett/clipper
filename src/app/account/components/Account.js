@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { Text, TouchableOpacity, View, ScrollView, Platform } from 'react-native'
-import { styles } from '../styles'
+import { styles } from '../../clipper/styles'
 import { serverIP, socketPort, appName } from '../../../../config'
-import * as actions from '../redux/actions/actionCreators'
+import * as actions from '../../clipper/redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
-import UnfinishedVideosList from './UnfinishedVideosList'
+// import UnfinishedVideosList from './UnfinishedVideosList'
 import { io } from 'socket.io-client'
 import Login from './Login'
 import SyncServer from './SyncServer'
 import SourceCodeLink from './SourceCodeLink'
 
-const socket = io('http://'+ serverIP + ':' + socketPort)
+const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default (props) => {
 

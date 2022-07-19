@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Platform, Dimensions } from 'react-native'
 import { useSelector } from 'react-redux'
-import AccountScreen from './AccountScreen'
+import Drawer_Account from './account'
 import Drawer_Podware from './podware'
 import Drawer_Clipper from './clipper'
 import Drawer_Whitesocket from './whitesocket'
@@ -23,12 +23,12 @@ export default () => {
     else {
         if(!loggedIn) return (
             <Drawer.Navigator screenOptions={{ headerShown: false }}>
-                <Drawer.Screen name="User" component={AccountScreen} />
+                <Drawer.Screen name="User" component={Drawer_Account} />
             </Drawer.Navigator>
         )
         else return (
             <Drawer.Navigator screenOptions={{ headerShown: false }}>
-                <Drawer.Screen name="User" component={AccountScreen} />
+                <Drawer.Screen name="User" component={Drawer_Account} />
                 <Drawer.Screen name="Podware" component={Drawer_Podware} />
                 <Drawer.Screen name="Clipper" component={Drawer_Clipper} />
                 <Drawer.Screen name="Whitesocket" component={Drawer_Whitesocket} />

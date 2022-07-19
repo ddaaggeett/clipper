@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import { styles } from "../styles"
+import { styles } from "../../clipper/styles"
 import { io } from 'socket.io-client'
 import { serverIP, socketPort } from '../../../../config'
 import { useSelector, useDispatch } from 'react-redux'
-import * as actions from '../redux/actions/actionCreators'
+import * as actions from '../../clipper/redux/actions/actionCreators'
 
-const socket = io('http://'+ serverIP + ':' + socketPort)
+const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default (props) => {
 

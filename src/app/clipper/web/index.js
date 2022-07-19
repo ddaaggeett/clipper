@@ -1,7 +1,7 @@
 import { View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { styles } from '../styles'
-import Account from '../components/Account'
+import Account from '../../account/components/Account'
 import Clipper from '../components/Clipper'
 import Footer from '../components/Footer'
 import VideoSelector from '../components/VideoSelector'

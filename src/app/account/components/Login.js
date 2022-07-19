@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { View, TouchableOpacity, Text, Platform } from 'react-native'
 import { appName, defaultUser } from '../../../../config'
-import { styles } from '../styles'
-import * as actions from '../redux/actions/actionCreators'
+import { styles } from '../../clipper/styles'
+import * as actions from '../../clipper/redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import CreateAccount from './CreateAccount'
 
