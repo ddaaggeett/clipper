@@ -6,7 +6,7 @@ import { styles } from "../styles"
 import { io } from 'socket.io-client'
 import { serverIP, socketPort } from '../../../../config'
 
-const socket = io('http://'+ serverIP + ':' + socketPort)
+const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default (props) => {
 

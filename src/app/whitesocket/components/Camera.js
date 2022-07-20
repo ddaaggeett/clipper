@@ -4,7 +4,7 @@ import { Camera } from 'expo-camera'
 import io from 'socket.io-client'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import config from '../../../../config'
-const socket = io.connect(`http://${config.serverIP}:${config.socketPort}`)
+const socket = io.connect(`http://${config.serverIP}:${config.socketPort.whitesocket}`)
 
     export default () => {
         const [hasPermission, setHasPermission] = useState(null)

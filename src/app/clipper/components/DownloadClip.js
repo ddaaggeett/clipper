@@ -6,7 +6,7 @@ import * as Linking from 'expo-linking'
 import { serverIP, socketPort, expressPort } from '../../../../config'
 import { io } from 'socket.io-client'
 
-const socket = io('http://'+ serverIP + ':' + socketPort)
+const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default () => {
 

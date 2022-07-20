@@ -48,7 +48,7 @@ export default () => {
     }
     return (
         <Tab.Navigator screenOptions={{ headerShown: false }}>
-            <Tab.Screen options={tabBarOptions} name="Clipper" component={ClipperScreen} />
+            <Tab.Screen options={tabBarOptions} name="Clip" component={ClipperScreen} />
             <Tab.Screen options={tabBarOptions} name="Clips" component={ClipManagerScreen} />
         </Tab.Navigator>
     )

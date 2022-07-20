@@ -13,7 +13,7 @@ import { serverIP, socketPort } from '../../../../config'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 
-const socket = io('http://'+ serverIP + ':' + socketPort)
+const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default (props) => {
 

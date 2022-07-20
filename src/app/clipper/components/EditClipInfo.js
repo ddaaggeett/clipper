@@ -7,7 +7,7 @@ import { io } from 'socket.io-client'
 import { serverIP, socketPort } from '../../../../config'
 import EditClipOptions from './EditClipOptions'
 
-const socket = io('http://'+ serverIP + ':' + socketPort)
+const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default (props) => {
 

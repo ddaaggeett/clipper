@@ -14,7 +14,7 @@ export default (props) => {
     const redux = useDispatch()
 
     const selectVideo = (item) => {
-        if (Platform.OS !== 'web') navigation.navigate('Clipper')
+        if (Platform.OS !== 'web') navigation.navigate('Clip')
         redux(actions.updateContentID(item.videoID))
     }
 

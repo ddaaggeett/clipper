@@ -9,7 +9,7 @@ import * as actions from '../redux/actions/actionCreators'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 import ClipListItem from './ClipListItem'
 
-const socket = io('http://'+ serverIP + ':' + socketPort)
+const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default (props) => {
 
