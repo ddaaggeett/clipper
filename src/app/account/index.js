@@ -1,14 +1,20 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, Platform } from 'react-native'
 import { styles } from '../clipper/styles'
 import { StatusBar } from 'expo-status-bar';
 import AccountScreen from './components/Account'
 import { createStackNavigator } from '@react-navigation/stack';
-const Stack = createStackNavigator()
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+const Stack = createStackNavigator()
+
 export default () => {
-    return (
+    if (Platform.OS === 'web') return (
+        <View style={styles.container}>
+            <AccountScreen />
+        </View>
+    )
+    else return (
         <SafeAreaView style={styles.container}>
             <StatusBar style="light" />
             <Stack.Navigator>

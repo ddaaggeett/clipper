@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import App_Clipper from '../clipper/web'
 import App_Whitesocket from '../whitesocket/web'
+import AccountScreen from '../account'
 
 export default () => {
 
@@ -15,5 +16,5 @@ export default () => {
 
     if (subdomain == 'clipper') return <App_Clipper />
     else if (subdomain == 'whitesocket') return <App_Whitesocket />
-    else return null // TODO: return app at profile
+    else return <AccountScreen />
 }
