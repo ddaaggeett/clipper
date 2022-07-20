@@ -10,7 +10,7 @@ const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default (props) => {
 
-    const { editIndex, panelWidth, confirmDelete } = useSelector(state => state.app)
+    const { editIndex, panelWidth, confirmDelete } = useSelector(state => state.clipper)
     const { clips } = useSelector(state => state.clips)
     const clip = clips[editIndex]
     const redux = useDispatch()

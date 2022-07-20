@@ -7,7 +7,7 @@ import * as actions from '../redux/actions/actionCreators'
 export default (props) => {
 
     const redux = useDispatch()
-    const { leftCursor, rightCursor, handlingLeft, handlingRight, speed } = useSelector(state => state.app)
+    const { leftCursor, rightCursor, handlingLeft, handlingRight, speed } = useSelector(state => state.clipper)
 
     const [rewindToPause, setRewindToPause] = useState()
 
@@ -57,7 +57,7 @@ export default (props) => {
 
 const CheckCursor = (props) => {
 
-    const { leftCursor, rightCursor, handlingLeft, handlingRight } = useSelector(state => state.app)
+    const { leftCursor, rightCursor, handlingLeft, handlingRight } = useSelector(state => state.clipper)
 
     const handleCheckCursor = () => {
         if(handlingLeft) props.player.current.seekTo(leftCursor)

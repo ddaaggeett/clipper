@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 
 export default (props) => {
 
-    const { confirmDelete } = useSelector(state => state.app)
+    const { confirmDelete } = useSelector(state => state.clipper)
 
     return (
         <View style={styles.contentRow}>

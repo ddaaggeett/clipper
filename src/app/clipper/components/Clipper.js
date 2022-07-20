@@ -22,7 +22,7 @@ export default (props) => {
     const [clipPreDB, setClipPreDB] = useState(null)
 
     const { clips } = useSelector(state => state.clips)
-    const { leftCursor, rightCursor, boundCount, editIndex, speed, contentID, panelWidth, playingClip, validYoutubeID } = useSelector(state => state.app)
+    const { leftCursor, rightCursor, boundCount, editIndex, speed, contentID, panelWidth, playingClip, validYoutubeID } = useSelector(state => state.clipper)
     const { videoProgressions } = useSelector(state => state.library)
     const { user } = useSelector(state => state.account)
     const redux = useDispatch()

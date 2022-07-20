@@ -10,7 +10,7 @@ const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default () => {
 
-    const { editIndex } = useSelector(state => state.app)
+    const { editIndex } = useSelector(state => state.clipper)
     const { clips } = useSelector(state => state.clips)
 
     const downloadClip = () => {

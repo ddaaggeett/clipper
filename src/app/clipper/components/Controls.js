@@ -7,7 +7,7 @@ import PlaybackSpeed from './PlaybackSpeed'
 
 export default (props) => {
 
-    const { videoSelectorFocused } = useSelector(state => state.app)
+    const { videoSelectorFocused } = useSelector(state => state.clipper)
 
     if (videoSelectorFocused) return null
     else return (

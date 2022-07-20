@@ -13,7 +13,7 @@ const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default (props) => {
 
-    const { editIndex, confirmDelete } = useSelector(state => state.app)
+    const { editIndex, confirmDelete } = useSelector(state => state.clipper)
     const { clips } = useSelector(state => state.clips)
     const clip = clips[editIndex]
     const redux = useDispatch()
@@ -44,7 +44,7 @@ export default (props) => {
 
 const ClipPlayer = (props) => {
 
-    const { speed } = useSelector(state => state.app)
+    const { speed } = useSelector(state => state.clipper)
     const player = useRef()
     const [playing, setPlaying] = useState(false)
 

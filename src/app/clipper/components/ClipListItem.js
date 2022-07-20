@@ -8,7 +8,7 @@ import Thumbnail from './Thumbnail'
 
 export default (props) => {
 
-    const { editIndex } = useSelector(state => state.app)
+    const { editIndex } = useSelector(state => state.clipper)
     const isSelected = props.index == editIndex
     const redux = useDispatch()
     const { clips } = useSelector(state => state.clips)

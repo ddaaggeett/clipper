@@ -11,7 +11,7 @@ import GotSomething from './GotSomething'
 export default (props) => {
 
     const redux = useDispatch()
-    const { gotSomethingCursor } = useSelector(state => state.app)
+    const { gotSomethingCursor } = useSelector(state => state.clipper)
 
     const setGotSomethingCursorOffset = () => {
         props.setPlaying(true)
@@ -35,7 +35,7 @@ export default (props) => {
 
 const CursorPlacements = (props) => {
 
-    const { handlingLeft, handlingRight } = useSelector(state => state.app)
+    const { handlingLeft, handlingRight } = useSelector(state => state.clipper)
 
     if (!handlingLeft && !handlingRight) return (
         <View style={styles.contentRow}>

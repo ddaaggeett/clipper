@@ -11,7 +11,7 @@ const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default (props) => {
 
-    const { contentID, panelWidth } = useSelector(state => state.app)
+    const { contentID, panelWidth } = useSelector(state => state.clipper)
     const redux = useDispatch()
 
     const handleGetPlayContent = (text) => {

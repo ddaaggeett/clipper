@@ -8,7 +8,7 @@ import GotSomething from './GotSomething'
 export const ExecuteLeft = (props) => {
 
     const redux = useDispatch()
-    const { boundCount } = useSelector(state => state.app)
+    const { boundCount } = useSelector(state => state.clipper)
 
     const handleExecuteLeft = () => {
         redux(actions.setLeftClipped(true))
@@ -33,7 +33,7 @@ export const ExecuteLeft = (props) => {
 export const ExecuteRight = (props) => {
 
     const redux = useDispatch()
-    const { boundCount } = useSelector(state => state.app)
+    const { boundCount } = useSelector(state => state.clipper)
 
     const handleExecuteRight = () => {
         if (boundCount + 1 == 1) props.setGotSomethingCursorOffset()

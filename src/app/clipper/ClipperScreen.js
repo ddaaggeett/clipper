@@ -9,7 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default () => {
 
-    const { contentID, boundCount, videoSelectorFocused } = useSelector(state => state.app)
+    const { contentID, boundCount, videoSelectorFocused } = useSelector(state => state.clipper)
     const [pendingTitle, setPendingTitle] = useState('')
 
     useEffect(() => {

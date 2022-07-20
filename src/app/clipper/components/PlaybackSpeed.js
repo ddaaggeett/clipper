@@ -7,7 +7,7 @@ import * as actions from '../redux/actions/actionCreators'
 export default () => {
 
     const redux = useDispatch()
-    const { speed } = useSelector(state => state.app)
+    const { speed } = useSelector(state => state.clipper)
 
     const selectedSpeed = (selectedSpeed) => {
         if (selectedSpeed != speed) return "#440075"

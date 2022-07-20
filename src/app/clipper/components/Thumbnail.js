@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 export default (props) => {
 
-    const { editIndex } = useSelector(state => state.app)
+    const { editIndex } = useSelector(state => state.clipper)
     const { clips } = useSelector(state => state.clips)
     const redux = useDispatch()
 

@@ -14,7 +14,7 @@ export default (props) => {
 
     const redux = useDispatch()
     const { clips } = useSelector(state => state.clips)
-    const { editIndex } = useSelector(state => state.app)
+    const { editIndex } = useSelector(state => state.clipper)
 
     useEffect(() => {
         return () => setThumbnailTime(null)

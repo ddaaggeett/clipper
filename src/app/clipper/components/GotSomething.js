@@ -7,7 +7,7 @@ import * as actions from '../redux/actions/actionCreators'
 export default (props) => {
 
     const redux = useDispatch()
-    const { gotSomethingCursor } = useSelector(state => state.app)
+    const { gotSomethingCursor } = useSelector(state => state.clipper)
 
     const handleGotSomething = () => {
         if(Platform.OS === 'web') redux(actions.setGotSomethingCursor(props.player.current.getCurrentTime()))
@@ -31,7 +31,7 @@ export default (props) => {
 const RewindOrCancel = (props) => {
 
     const redux = useDispatch()
-    const { rightClipped, boundCount, gotSomethingCursor } = useSelector(state => state.app)
+    const { rightClipped, boundCount, gotSomethingCursor } = useSelector(state => state.clipper)
 
     const handleGotSomethingCancel = () => redux(actions.setGotSomethingCursor(null))
 

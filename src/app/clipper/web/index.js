@@ -11,7 +11,7 @@ import UnfinishedVideosList from '../components/UnfinishedVideosList'
 export default () => {
 
     const { loggedIn } = useSelector(state => state.account)
-    const { panelWidth } = useSelector(state => state.app)
+    const { panelWidth } = useSelector(state => state.clipper)
 
     if(!loggedIn) return (
         <View style={styles.container}>
