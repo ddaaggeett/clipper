@@ -8,40 +8,32 @@ import Drawer_Clipper from './clipper'
 import Drawer_Whitesocket from './whitesocket'
 import { styles } from './clipper/styles'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import Web_Clipper from './clipper/web'
-import Web_Whitesocket from './whitesocket/web'
-const { webapps } = require('./web')
+import WebSwitcher, { webapps } from './web'
 
 const Drawer = createDrawerNavigator()
 
 export default () => {
 
     const { loggedIn } = useSelector(state => state.account)
-
     const [subdomain, setSubdomain] = useState(null)
 
     useEffect(() => {
         const host = window.location.host
         const array = host.split('.')
-        const birray = array.slice(0, host.includes('localhost') ? -1 : -2)
+        const cutIndex = host.includes('localhost') ? -1 : -2
+        const birray = array.slice(0, cutIndex)
         if (birray.length > 0) setSubdomain(birray[0].toLowerCase())
     }, [])
 
-    useEffect(() => {
-        setRequestedWebApp(subdomain)
-    }, [subdomain])
-
-    const [requestedWebApp,setRequestedWebApp] = useState(webapps.find((app) => app.name === subdomain))
-
     if (Platform.OS === 'web') {
-        if (subdomain) {
-            if (requestedWebApp) {
-                if (requestedWebApp == 'clipper') return <Web_Clipper />
-                else if (requestedWebApp == 'whitesocket') return <Web_Whitesocket />
-            }
-            else return <Account />
-        }
-        else return <Account />
+        return (
+            <View>
+            <Account />
+            <WebSwitcher
+                subdomain={subdomain}
+                />
+            </View>
+        )
     }
     else {
         if(!loggedIn) return (
