@@ -10,6 +10,7 @@ import { io } from 'socket.io-client'
 import Login from './Login'
 import SyncServer from './SyncServer'
 import SourceCodeLink from './SourceCodeLink'
+import TitleLink, { TitleText } from './TitleText'
 
 const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
@@ -47,7 +48,7 @@ export default (props) => {
             loggedIn
             ?   <View style={styles.contentRow}>
                     <SourceCodeLink />
-                    <Text style={styles.username}>{`${appName}     ///     ${user.name}`}</Text>
+                    <TitleLink />
                     <TouchableOpacity
                         style={[styles.accountButton, styles.loginButton]}
                         onPress={() => handleLogout()}
@@ -57,7 +58,7 @@ export default (props) => {
                 </View>
             :   <View style={styles.contentRow}>
                     <SourceCodeLink />
-                    <Text style={styles.username}>{`${appName}`}</Text>
+                    <TitleLink />
                 </View>
         }
         </View>
@@ -75,7 +76,7 @@ export default (props) => {
                         >
                         <Text style={styles.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
-                    <Text style={[styles.username, styles.usernameNative]}>{`${appName}     ///     ${user.name}`}</Text>
+                    <TitleText />
                     {/*<UnfinishedVideosList />*/}
                     <SyncServer />
                 </View>

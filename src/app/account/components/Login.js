@@ -70,6 +70,7 @@ export default (props) => {
                     <Text style={styles.controlButtonText}>Create an Account</Text>
                 </TouchableOpacity>
             </View>
+            <Nav />
             </View>
         }
         </View>
