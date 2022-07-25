@@ -6,3 +6,10 @@ export const updateWebApp = (app) => {
         app,
     }
 }
+
+export const updateDomain = (domain) => {
+    return {
+        type: actions.UPDATE_DOMAIN,
+        domain,
+    }
+}

@@ -1,5 +1,7 @@
 const UPDATE_WEB_APP = 'UPDATE_WEB_APP'
+const UPDATE_DOMAIN = 'UPDATE_DOMAIN'
 
 module.exports = {
     UPDATE_WEB_APP,
+    UPDATE_DOMAIN,
 }

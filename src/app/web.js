@@ -26,6 +26,8 @@ export default (props) => {
         const array = host.split('.')
         const cutIndex = host.includes('localhost') ? -1 : -2
         const subdomain = array.slice(0, cutIndex)
+        const domain = array.slice(cutIndex)
+        redux(actions.updateDomain(domain))
         if (subdomain.length > 0) redux(actions.updateWebApp(subdomain[0].toLowerCase()))
     }, [])
 
