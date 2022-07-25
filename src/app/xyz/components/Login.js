@@ -5,7 +5,6 @@ import { styles } from '../../clipper/styles'
 import * as actions from '../../clipper/redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import CreateAccount from './CreateAccount'
-import Nav from './Nav'
 
 export default (props) => {
 
@@ -46,7 +45,7 @@ export default (props) => {
         }
     }
 
-    if (loggedIn) return <Nav />
+    if (loggedIn) return null
     else return (
         <View style={[welcomeStyle, styles.welcome]}>
         {
@@ -70,7 +69,6 @@ export default (props) => {
                     <Text style={styles.controlButtonText}>Create an Account</Text>
                 </TouchableOpacity>
             </View>
-            <Nav />
             </View>
         }
         </View>

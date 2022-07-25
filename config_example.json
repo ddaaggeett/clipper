@@ -1,5 +1,22 @@
 {
     "appName": "xyz",
+    "apps": [
+        {
+            "name": "clipper",
+            "socketPort": 3348,
+            "fileData": "./data_clipper/"
+        },
+        {
+            "name": "whitesocket",
+            "socketPort": 3349,
+            "fileData": "./data_whitesocket/"
+        },
+        {
+            "name": "podware",
+            "socketPort": 3348,
+            "fileData": "./data_audio/"
+        }
+    ],
     "sourceCodeURL": "https://github.com/ddaaggeett/xyz",
     "defaultUser": "defaultUser",
     "configFile": "./config.json",

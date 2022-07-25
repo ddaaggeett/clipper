@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { styles as styles_ } from '../styles'
+import { styles as styles_ } from '../../clipper/styles'
 import { appName } from '../../../../config'
 
 export default (props) => {

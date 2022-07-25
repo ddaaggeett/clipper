@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import * as Linking from 'expo-linking'
 import * as actions from '../../redux/actions/actionCreators'
-import { webapps } from '../../web'
+import { apps } from '../../../../config'
 
 export default () => {
     return (
@@ -20,7 +20,7 @@ const AppButtons = () => {
     return (
         <View>
         {
-            webapps.map((app, index) => {
+            apps.map((app, index) => {
                 return (
                     <TouchableOpacity
                         key={index}
@@ -35,7 +35,6 @@ const AppButtons = () => {
         </View>
     )
 }
-
 
 export const styles = StyleSheet.create({
     linkText: {

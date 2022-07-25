@@ -9,12 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const Stack = createStackNavigator()
 
 export default () => {
-    if (Platform.OS === 'web') return (
-        <View style={styles.container}>
-            <AccountScreen />
-        </View>
-    )
-    else return (
+    return (
         <SafeAreaView style={styles.container}>
             <StatusBar style="light" />
             <Stack.Navigator>

@@ -3,12 +3,11 @@ import { StyleSheet, View, Platform, Dimensions } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import * as WebBrowser from 'expo-web-browser'
 import Account from './xyz'
-import Footer from './clipper/components/Footer'
 import Drawer_Podware from './podware'
 import Drawer_Clipper from './clipper'
 import Drawer_Whitesocket from './whitesocket'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import WebSwitcher from './web'
+import WebApp from './web'
 
 const Drawer = createDrawerNavigator()
 
@@ -19,11 +18,7 @@ export default () => {
 
     if (Platform.OS === 'web') {
         return (
-            <View style={styles.browser} >
-                <Account />
-                <Footer />
-                <WebSwitcher />
-            </View>
+            <WebApp />
         )
     }
     else {
@@ -42,11 +37,3 @@ export default () => {
         )
     }
 }
-
-export const styles = StyleSheet.create({
-    browser: {
-        width: '100%',
-        height: '100%',
-        // backgroundColor: 'black',
-    },
-})
