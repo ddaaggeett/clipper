@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
-import { styles } from '../styles'
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { styles as styles_ } from '../styles'
 import { appName } from '../../../../config'
 
 export default (props) => {
@@ -10,7 +10,7 @@ export default (props) => {
     return (
         <View style={[styles.footer, { backgroundImage: 'linear-gradient(black, #333)' }]}>
             <View
-                style={[styles.contentRow, styles.footerLinkGroup, {position: 'absolute'}]}>
+                style={[styles_.contentRow, styles.footerLinkGroup, {position: 'absolute'}]}>
                 <TouchableOpacity style={styles.footerLink}>
                     <Text style={styles.footerText}>{`about ${appName}`}</Text>
                 </TouchableOpacity>
@@ -21,3 +21,27 @@ export default (props) => {
         </View>
     )
 }
+
+export const styles = StyleSheet.create({
+    footer: {
+        margin: 0,
+        // marginTop: 30,
+        width: '100%',
+        height: 150,
+        zIndex: -1,
+        bottom: 0,
+    },
+    footerText: {
+        color: '#aaa',
+        fontWeight: 'bold',
+        fontFamily: 'sans',
+    },
+    footerLink: {
+        marginRight: 20,
+    },
+    footerLinkGroup: {
+        right: 15,
+        bottom: 10,
+    },
+
+})
