@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { View, TouchableOpacity, Text, Platform } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text, Platform } from 'react-native'
 import { appName, defaultUser } from '../../../../config'
-import { styles } from '../../clipper/styles'
+import { styles as styles_ } from '../../clipper/styles'
 import * as actions from '../../clipper/redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import CreateAccount from './CreateAccount'
@@ -47,26 +47,26 @@ export default (props) => {
 
     if (loggedIn) return null
     else return (
-        <View style={[welcomeStyle, styles.welcome]}>
+        <View style={[welcomeStyle, styles_.welcome]}>
         {
         newAccount
         ?   <CreateAccount
                 setNewAccount={setNewAccount}
                 />
         :   <View>
-            <Text style={[welcomeFontStyle, styles.welcomeText]}>{`welcome to ${appName.toUpperCase()}!`}</Text>
-            <View style={styles.contentRow}>
+            <Text style={[welcomeFontStyle, styles_.welcomeText]}>{`welcome to ${appName.toUpperCase()}!`}</Text>
+            <View style={styles_.contentRow}>
                 <TouchableOpacity
-                    style={[styles.accountButton, styles.logoutButton, { marginRight: 5 }]}
+                    style={[styles.accountButton, styles_.logoutButton, { marginRight: 5 }]}
                     onPress={() => props.handleLogin(account)}
                     >
-                    <Text style={styles.controlButtonText}>Continue as Guest</Text>
+                    <Text style={styles_.controlButtonText}>Continue as Guest</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.accountButton, styles.logoutButton, { marginLeft: 5 }]}
+                    style={[styles.accountButton, styles_.logoutButton, { marginLeft: 5 }]}
                     onPress={() => setNewAccount(true)}
                     >
-                    <Text style={styles.controlButtonText}>Create an Account</Text>
+                    <Text style={styles_.controlButtonText}>Create an Account</Text>
                 </TouchableOpacity>
             </View>
             </View>
@@ -75,3 +75,11 @@ export default (props) => {
     )
 
 }
+
+export const styles = StyleSheet.create({
+    accountButton: {
+        padding: 7,
+        paddingLeft: 25,
+        paddingRight: 25,
+    },
+})

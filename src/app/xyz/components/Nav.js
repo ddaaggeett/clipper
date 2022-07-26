@@ -7,18 +7,10 @@ import * as actions from '../../redux/actions/actionCreators'
 import { apps } from '../../../../config'
 
 export default () => {
-    return (
-        <View style={styles.appnav}>
-            <AppButtons />
-        </View>
-    )
-}
-
-const AppButtons = () => {
     const { webapp, domain } = useSelector(state => state.xyz)
 
     return (
-        <View>
+        <View style={styles.appnav}>
         {
             apps.map((app, index) => {
                 return (
@@ -27,7 +19,7 @@ const AppButtons = () => {
                         onPress={() => Linking.openURL(`http://${app.name}.${domain}`)}
                         style={styles.button}
                         >
-                        <Text style={styles.linkText}>{app.name}</Text>
+                        <Text style={styles.buttonText}>{app.name}</Text>
                     </TouchableOpacity>
                 )
             })
@@ -37,17 +29,18 @@ const AppButtons = () => {
 }
 
 export const styles = StyleSheet.create({
-    linkText: {
-        color: 'white',
-    },
     appnav: {
-        margin: 100,
+        flex: 1,
+        flexDirection: 'row',
+        marginRight: 100,
+        marginLeft: 100,
     },
     button: {
-        backgroundColor: '#222',
-        borderColor: 'green',
-        borderWidth: 2,
-        padding: 15,
-        margin: 5,
+        flex: 1,
+        justifyContent: 'center',
+        padding: 0,
+    },
+    buttonText: {
+        color: 'white',
     },
 })

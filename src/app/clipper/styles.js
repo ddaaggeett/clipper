@@ -82,14 +82,6 @@ export const styles = StyleSheet.create({
         margin: 0,
         borderBottomWidth: 2,
     },
-    accountButton: {
-        padding: 7,
-        paddingLeft: 25,
-        paddingRight: 25,
-    },
-    loginButton: {
-        backgroundColor: 'red',
-    },
     logoutButton: {
         backgroundColor: 'purple',
     },
@@ -134,13 +126,6 @@ export const styles = StyleSheet.create({
         color:'white',
         fontWeight: 'bold',
         fontSize: 14,
-    },
-    sourceCodeLink: {
-        height: 20,
-        width: 20,
-        zIndex: 1,
-        top: 8,
-        left: 8,
     },
     recentVideos: {
         borderTopWidth: 7,

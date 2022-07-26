@@ -35,7 +35,6 @@ export default () => {
     return (
         <TouchableOpacity
             onPress={() => Linking.openURL(fullAppDomain)}
-            style={styles.button}
             >
             <TitleText />
         </TouchableOpacity>

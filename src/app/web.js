@@ -32,18 +32,19 @@ const AppSwitcher = () => {
 }
 
 export default () => {
+    const { webapp } = useSelector(state => state.xyz)
     return (
         <View style={styles.browser} >
-            <Account />
-            <Nav />
+            {webapp === 'whitesocket' ? null : <Account />}
             <AppSwitcher />
-            <Footer />
+            {webapp === 'whitesocket' ? null : <Footer />}
         </View>
     )
 }
 
 export const styles = StyleSheet.create({
     browser: {
+        flex: 1,
         width: '100%',
         height: '100%',
         backgroundColor: 'black',

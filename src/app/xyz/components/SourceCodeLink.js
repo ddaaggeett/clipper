@@ -1,7 +1,6 @@
 import React from 'react'
-import { TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, TouchableOpacity, Image } from 'react-native'
 import * as Linking from 'expo-linking'
-import { styles } from '../../clipper/styles'
 import { sourceCodeURL } from '../../../../config'
 
 export default () => {
@@ -11,8 +10,16 @@ export default () => {
             >
             <Image
                 source={require('../../../../assets/GitHub-Mark-Light-32px.png')}
-                style={[styles.sourceCodeLink, { position: 'fixed' }]}
+                style={styles.sourceCodeLink}
                 />
         </TouchableOpacity>
     )
 }
+
+export const styles = StyleSheet.create({
+    sourceCodeLink: {
+        height: 20,
+        width: 20,
+        margin: 8,
+    },
+})

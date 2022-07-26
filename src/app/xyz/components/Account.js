@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Text, TouchableOpacity, View, ScrollView, Platform } from 'react-native'
-import { styles } from '../../clipper/styles'
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Platform } from 'react-native'
+import { styles as styles_  } from '../../clipper/styles'
 import { serverIP, socketPort, appName } from '../../../../config'
 import * as actions from '../../clipper/redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
@@ -11,6 +11,8 @@ import Login from './Login'
 import SyncServer from './SyncServer'
 import SourceCodeLink from './SourceCodeLink'
 import TitleLink, { TitleText } from './TitleText'
+import LogoutButton from './Logout'
+import Nav from './Nav'
 
 const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
@@ -37,44 +39,27 @@ export default (props) => {
         })
     }
 
-    const handleLogout = async () => {
-        redux(actions.logout())
-    }
-
     if (Platform.OS === 'web') return (
         <View>
-        <View style={[styles.account, { position: 'fixed', borderColor: loggedIn ? 'red' : 'purple' }]}>
-        {
-            loggedIn
-            ?   <View style={styles.contentRow}>
-                    <SourceCodeLink />
-                    <TitleLink />
-                    <TouchableOpacity
-                        style={[styles.accountButton, styles.loginButton]}
-                        onPress={() => handleLogout()}
-                        >
-                        <Text style={styles.controlButtonText}>Logout</Text>
-                    </TouchableOpacity>
-                </View>
-            :   <View style={styles.contentRow}>
-                    <SourceCodeLink />
-                    <TitleLink />
-                </View>
-        }
-        </View>
-        <Login handleLogin={handleLogin} />
+            <View style={[styles.homeMenu, { borderColor: loggedIn ? 'red' : 'purple' }]}>
+                <SourceCodeLink />
+                <Nav />
+                <TitleLink />
+                { loggedIn ? <LogoutButton /> : null }
+            </View>
+            <Login handleLogin={handleLogin} />
         </View>
     )
     else return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles_.container}>
         {
             loggedIn
             ?   <View>
                     <TouchableOpacity
-                        style={[styles.controlButton, {flex: 0, backgroundColor: 'red'}]}
+                        style={[styles_.controlButton, {flex: 0, backgroundColor: 'red'}]}
                         onPress={() => handleLogout()}
                         >
-                        <Text style={styles.controlButtonText}>Logout</Text>
+                        <Text style={styles_.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
                     <TitleText />
                     {/*<UnfinishedVideosList />*/}
@@ -86,3 +71,14 @@ export default (props) => {
         </ScrollView>
     )
 }
+
+export const styles = StyleSheet.create({
+    homeMenu: {
+        flexDirection:"row",
+        zIndex: 1,
+        width: '100%',
+        paddingTop: 5,
+        margin: 0,
+        borderBottomWidth: 2,
+    },
+})
