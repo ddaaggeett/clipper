@@ -34,19 +34,9 @@ io.on('connection', (socket) => {
             socket.broadcast.emit('deleteClip',deletedClip)
         })
     })
-    socket.on('userLog', (log, sendBack) => {
-        user.userLog(log)
-        .then(userData => sendBack(userData))
-        .catch(error => {})
-    })
     socket.on('getUserClips', ({userID, pendingClips}, sendBack) => {
         handlePendingClips(pendingClips).then(() => {
             user.getClips(userID).then(userClips => sendBack(userClips))
-        })
-    })
-    socket.on('create account', (account, returnObject) => {
-        user.createAccount(account).then(object => {
-            returnObject(object)
         })
     })
 })

@@ -135,39 +135,10 @@ const updateVideoProgress = (progressionObject) => {
     })
 }
 
-const createAccount = (account) => {
-    return new Promise((resolve, reject) => {
-        checkIfAccountExists(account.id).then(exists => {
-            if (exists) resolve({
-                message: 'account already exists',
-            })
-            else r.connect(dbConnxConfig).then(connection => {
-                r.table('users').insert(account, { returnChanges: true }).run(connection).then(user => {
-                    resolve({
-                        message: 'success',
-                    })
-                })
-            })
-        })
-    })
-}
-
-const checkIfAccountExists = (userID) => {
-    return new Promise((resolve, reject) => {
-        r.connect(dbConnxConfig).then(connection => {
-            r.table('users').get(userID).run(connection).then(user => {
-                if (user == null) resolve(false)
-                else resolve(true)
-            })
-        })
-    })
-}
-
 module.exports = {
     userLog,
     getClips,
     addClip,
     deleteClip,
     updateVideoProgress,
-    createAccount
 }

@@ -6,7 +6,7 @@ import { serverIP, socketPort } from '../../../../config'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../clipper/redux/actions/actionCreators'
 
-const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
+const socket = io('http://'+ serverIP + ':' + socketPort.xyz)
 
 export default (props) => {
 
@@ -27,16 +27,13 @@ export default (props) => {
                 password: password1,
             }
             socket.emit('create account', newUser, returnObject => {
-                switch (returnObject.message) {
-                    case 'success':
-                        redux(actions.login({
-                            user: newUser,
-                        }))
-
-                    case 'account already exists':
-
-                    default:
-
+                const message = returnObject.message
+                if (message == 'success') {
+                    redux(actions.login({
+                        user: newUser,
+                    }))
+                }
+                else if (message === 'account already exists') {
                 }
             })
         }

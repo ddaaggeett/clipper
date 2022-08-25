@@ -34,6 +34,7 @@ const settleIPConfig = () => {
                 }
             }
         }
+        // TODO: find universal net.family
         if (results['wlp2s0']) {
             config.serverIP = results['wlp2s0'][0]
             writeConfigFile(config).then(() => resolve())

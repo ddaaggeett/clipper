@@ -2,6 +2,11 @@
     "appName": "xyz",
     "apps": [
         {
+            "name": "xyz",
+            "socketPort": 3343,
+            "fileData": "./data_xyz/"
+        },
+        {
             "name": "clipper",
             "socketPort": 3348,
             "fileData": "./data_clipper/"
@@ -22,6 +27,7 @@
     "configFile": "./config.json",
     "serverIP": "192.168.0.1",
     "socketPort": {
+        "xyz": 3343,
         "audio": 3347,
         "whitesocket": 3349,
         "clipper": 3348
