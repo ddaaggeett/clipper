@@ -26,7 +26,7 @@ export default (props) => {
 
     const handleLogin = (account) => {
         redux(actions.login(account))
-        socket.emit('userLog', account.user, userObject => {
+        socket.emit('userLog', account, userObject => {
             redux(actions.updateUser(userObject))
             const packet = {
                 userID: userObject.id,

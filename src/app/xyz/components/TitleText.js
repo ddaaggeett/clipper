@@ -13,10 +13,9 @@ export const TitleText = () => {
     const { loggedIn, user } = useSelector(state => state.account)
 
     useEffect(() => {
-        const fullAppName = webapp != undefined ? `${appName}.${webapp}` : appName
-        if (loggedIn) setTitleText(`${fullAppName}     ///     ${user.name}`)
-        else setTitleText(fullAppName)
-    }, [])
+        if (loggedIn) setTitleText(`${appName}     ///     ${user.name}`)
+        else setTitleText(appName)
+    }, [loggedIn])
 
     if(Platform.OS === 'web') return <Text style={styles.username}>{titleText}</Text>
     else return <Text style={[styles.username, styles.usernameNative]}>{titleText}</Text>

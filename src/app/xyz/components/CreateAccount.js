@@ -17,6 +17,7 @@ export default (props) => {
     const [password1, setPassword1] = useState('')
     const [password2, setPassword2] = useState('')
     const [passwordsMatch, setPasswordsMatch] = useState(false)
+    const [newAccountFail, setNewAccountFail] = useState(false)
 
     const handleCreateAccount = () => {
         if (passwordsMatch) {
@@ -34,6 +35,7 @@ export default (props) => {
                     }))
                 }
                 else if (message === 'account already exists') {
+                    setNewAccountFail(true)
                 }
             })
         }
@@ -47,6 +49,7 @@ export default (props) => {
     return (
         <View style={{width: '100%'}}>
             <Text style={[{margin: 10}, styles.controlButtonText]}>Create an account</Text>
+            {newAccountFail ? <Text style={{color: 'red', fontWeight: 'bold', fontSize: '18px'}}>{`Already exists. Try logging into this account instead.`}</Text> : null}
             <TextInput
                 style={styles.urlText}
                 onChangeText={text => setEmail(text)}
@@ -86,7 +89,7 @@ export default (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.controlButton, {backgroundColor: 'red'}]}
-                    onPress={() => props.setNewAccount(false)}
+                    onPress={() => props.setAccountOption(undefined)}
                     >
                     <Text style={styles.controlButtonText}>Cancel</Text>
                 </TouchableOpacity>

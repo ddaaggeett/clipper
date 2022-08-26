@@ -13,7 +13,7 @@ export default () => {
         <View style={styles.appnav}>
         {
             apps.map((app, index) => {
-                return (
+                if (app.name !== 'xyz') return (
                     <TouchableOpacity
                         key={index}
                         onPress={() => Linking.openURL(`http://${app.name}.${domain}`)}

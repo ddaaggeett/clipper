@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { StyleSheet, View, TouchableOpacity, Text, Platform } from 'react-native'
+import { useState, useEffect } from 'react'
+import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput } from 'react-native'
 import { appName, defaultUser } from '../../../../config'
 import { styles as styles_ } from '../../clipper/styles'
 import * as actions from '../../clipper/redux/actions/actionCreators'
@@ -10,16 +10,6 @@ export default (props) => {
 
     const redux = useDispatch()
     const { loggedIn } = useSelector(state => state.account)
-
-    const [newAccount, setNewAccount] = useState(false)
-    const [account, setAccount] = useState(null)
-
-    React.useEffect(() => {
-        setAccount({user: {
-            id: defaultUser,
-            name: defaultUser,
-        }})
-    }, [])
 
     var welcomeStyle
     var welcomeFontStyle
@@ -46,34 +36,89 @@ export default (props) => {
     }
 
     if (loggedIn) return null
+    else return <AccountOptions handleLogin={props.handleLogin} welcomeFontStyle={welcomeFontStyle} />
+}
+
+const AccountOptions = (props) => {
+
+    const [newAccount, setNewAccount] = useState(false)
+    const [accountOption, setAccountOption] = useState(undefined)
+
+    useEffect(() => {
+        setAccountOption(undefined)
+    }, [])
+
+    if (accountOption == 'create') return <CreateAccount setAccountOption={setAccountOption} />
+    else if (accountOption == 'signin') return <SignInAccount setAccountOption={setAccountOption} />
     else return (
-        <View style={[welcomeStyle, styles_.welcome]}>
-        {
-        newAccount
-        ?   <CreateAccount
-                setNewAccount={setNewAccount}
-                />
-        :   <View>
-            <Text style={[welcomeFontStyle, styles_.welcomeText]}>{`welcome to ${appName.toUpperCase()}!`}</Text>
+        <View>
+            <Text style={[props.welcomeFontStyle, styles_.welcomeText]}>{`welcome to ${appName.toUpperCase()}!`}</Text>
             <View style={styles_.contentRow}>
                 <TouchableOpacity
                     style={[styles.accountButton, styles_.logoutButton, { marginRight: 5 }]}
-                    onPress={() => props.handleLogin(account)}
+                    onPress={() => setAccountOption('signin')}
                     >
-                    <Text style={styles_.controlButtonText}>Continue as Guest</Text>
+                    <Text style={styles_.controlButtonText}>Sign In</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.accountButton, styles_.logoutButton, { marginLeft: 5 }]}
-                    onPress={() => setNewAccount(true)}
+                    onPress={() => setAccountOption('create')}
                     >
                     <Text style={styles_.controlButtonText}>Create an Account</Text>
                 </TouchableOpacity>
             </View>
-            </View>
-        }
         </View>
     )
+}
 
+const SignInAccount = (props) => {
+
+    const [id, setId] = useState('')
+    const [password, setPassword] = useState('')
+    const [account, setAccount] = useState(null)
+
+    useEffect(() => {
+        setAccount({
+            id,
+            password,
+        })
+    }, [id, password])
+
+    return (
+        <View style={{width: '100%'}}>
+            <View>
+                <TextInput
+                    style={styles_.urlText}
+                    onChangeText={text => setId(text)}
+                    value={id}
+                    placeholder={"screen name"}
+                    placeholderTextColor={"white"}
+                    />
+                <TextInput
+                    style={styles_.urlText}
+                    onChangeText={text => setPassword(text)}
+                    value={password}
+                    placeholder={"password"}
+                    placeholderTextColor={"white"}
+                    secureTextEntry={true}
+                    />
+            </View>
+            <View style={styles_.contentRow}>
+                <TouchableOpacity
+                    style={[styles_.controlButton, {backgroundColor: 'green'}]}
+                    onPress={() => props.handleLogin(account)}
+                    >
+                    <Text style={styles_.controlButtonText}>Create</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={[styles_.controlButton, {backgroundColor: 'red'}]}
+                    onPress={() => props.setAccountOption(undefined)}
+                    >
+                    <Text style={styles_.controlButtonText}>Cancel</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    )
 }
 
 export const styles = StyleSheet.create({
