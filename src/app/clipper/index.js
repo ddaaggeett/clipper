@@ -22,11 +22,6 @@ export default () => {
     const { pending } = useSelector(state => state.clips)
 
     useEffect(() => {
-        if (Platform.OS === 'web') {
-            const width = Dimensions.get('window').width / 2
-            if (width > 640) redux(actions.setWebPanelWidth(640))
-            else redux(actions.setWebPanelWidth(width))
-        }
         if (loggedIn && user !== null) {
             const packet = {
                 userID: user.id,

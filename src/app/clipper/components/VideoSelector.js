@@ -1,6 +1,5 @@
-import { View, Text, TouchableOpacity, TextInput, Platform, Keyboard } from "react-native"
+import { View, Text, TouchableOpacity, TextInput, Platform, Keyboard, StyleSheet } from "react-native"
 import React, { useEffect } from 'react'
-import { styles } from "../styles"
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import getContentID from '../getContentID'
@@ -60,3 +59,14 @@ export default (props) => {
     )
 
 }
+
+const styles = StyleSheet.create({
+    urlText: {
+        borderColor: 'white',
+        borderWidth: 1,
+        color: 'white',
+        padding: 10,
+        marginTop: 5,
+        marginBottom: 5,
+    },
+})

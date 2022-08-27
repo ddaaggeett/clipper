@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Platform } from 'react-native';
-import { styles, webStyles } from "../styles"
+import { webStyles } from "../styles"
+import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native';
 import { io } from 'socket.io-client'
 import Clip from './Clip'
 import { serverIP, socketPort } from '../../../../config'
@@ -62,3 +62,13 @@ export default (props) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#000',
+    },
+    clipManager:{
+        color:'white'
+    },
+})
