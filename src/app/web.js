@@ -12,6 +12,7 @@ const AppSwitcher = () => {
 
     const redux = useDispatch()
     const { webapp } = useSelector(state => state.xyz)
+    const { loggedIn } = useSelector(state => state.account)
 
     useEffect(() => {
         const host = window.location.host
@@ -23,21 +24,21 @@ const AppSwitcher = () => {
         if (subdomain.length > 0) redux(actions.updateWebApp(subdomain[0].toLowerCase()))
     }, [])
 
-    if (webapp) {
-        if (webapp == 'clipper') return <Web_Clipper />
-        else if (webapp == 'whitesocket') return <Web_Whitesocket />
-        else return null
-    }
+    if (webapp == 'clipper' && loggedIn) return <Web_Clipper />
+    else if (webapp == 'whitesocket' && loggedIn) return <Web_Whitesocket />
     else return null
 }
 
 export default () => {
+
+    const redux = useDispatch()
     const { webapp } = useSelector(state => state.xyz)
+
     return (
         <View style={styles.browser} >
-            {webapp === 'whitesocket' ? null : <Account />}
+            <Account />
             <AppSwitcher />
-            {webapp === 'whitesocket' ? null : <Footer />}
+            <Footer />
         </View>
     )
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput } from 'react-native'
-import { appName, defaultUser } from '../../../../config'
+import { appName } from '../../../../config'
 import { styles as styles_ } from '../../clipper/styles'
 import * as actions from '../../clipper/redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
