@@ -30,14 +30,11 @@ const userLog = (user) => {
 const createAccount = (account) => {
     return new Promise((resolve, reject) => {
         checkIfAccountExists(account.id).then(exists => {
-            if (exists) resolve({
-                message: 'account already exists',
-            })
+            if (exists) resolve(null)
             else r.connect(dbConnxConfig).then(connection => {
-                r.table('users').insert(account, { returnChanges: true }).run(connection).then(user => {
-                    resolve({
-                        message: 'success',
-                    })
+                r.table('users').insert(account, { returnChanges: true }).run(connection).then(object => {
+                    const account = object.changes[0].new_val
+                    resolve(account)
                 })
             })
         })
@@ -48,15 +45,8 @@ const checkIfAccountExists = (userID) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('users').get(userID).run(connection).then(user => {
-
-                if (user == null) {
-                    console.log(`new user = ${JSON.stringify(user,null,4)}`)
-                    resolve(false)
-                }
-                else {
-                    console.log(`user exists already\n${JSON.stringify(user,null,4)}`)
-                    resolve(true)
-                }
+                if (user == null) resolve(false)
+                else resolve(true)
             })
         })
     })

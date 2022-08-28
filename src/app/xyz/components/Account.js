@@ -24,21 +24,6 @@ export default (props) => {
     let navigation
     Platform.OS !== 'web' ?  navigation = useNavigation() : null
 
-    const handleLogin = (account) => {
-        redux(actions.login(account))
-        socket.emit('userLog', account, userObject => {
-            redux(actions.updateUser(userObject))
-            const packet = {
-                userID: userObject.id,
-                pendingClips: pending,
-            }
-            socket.emit('getUserClips', packet, userClips => {
-                redux(actions.clearPending())
-                redux(actions.updateClips(userClips))
-            })
-        })
-    }
-
     if (Platform.OS === 'web') return (
         <View>
             <View style={[styles.homeMenu, { borderColor: loggedIn ? 'red' : 'purple' }]}>
@@ -47,7 +32,7 @@ export default (props) => {
                 <TitleLink />
                 { loggedIn ? <LogoutButton /> : null }
             </View>
-            <Login handleLogin={handleLogin} />
+            <Login />
         </View>
     )
     else return (
@@ -67,7 +52,7 @@ export default (props) => {
                 </View>
             :   null
         }
-        <Login handleLogin={handleLogin} />
+        <Login />
         </ScrollView>
     )
 }

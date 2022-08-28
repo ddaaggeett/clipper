@@ -27,16 +27,9 @@ export default (props) => {
                 name: name,
                 password: password1,
             }
-            socket.emit('create account', newUser, returnObject => {
-                const message = returnObject.message
-                if (message == 'success') {
-                    redux(actions.login({
-                        user: newUser,
-                    }))
-                }
-                else if (message === 'account already exists') {
-                    setNewAccountFail(true)
-                }
+            socket.emit('create account', newUser, (account) => {
+                if (account) redux(actions.login({ user: account }))
+                else setNewAccountFail(true)
             })
         }
     }
@@ -49,7 +42,7 @@ export default (props) => {
     return (
         <View style={{width: '100%'}}>
             <Text style={[{margin: 10}, styles.controlButtonText]}>Create an account</Text>
-            {newAccountFail ? <Text style={{color: 'red', fontWeight: 'bold', fontSize: '18px'}}>{`Already exists. Try logging into this account instead.`}</Text> : null}
+            {newAccountFail ? <Text style={{color: 'red', fontWeight: 'bold', fontSize: '18px'}}>{`"${name}" already exists. Try logging into this account instead.`}</Text> : null}
             <TextInput
                 style={styles.urlText}
                 onChangeText={text => setEmail(text)}

@@ -6,9 +6,9 @@ var { socketPort } = require('../../../config')
 const user = require('./user')
 
 io.on('connection', (socket) => {
-    socket.on('create account', (account, returnObject) => {
-        user.createAccount(account).then(object => {
-            returnObject(object)
+    socket.on('create account', (newUser, returnObject) => {
+        user.createAccount(newUser).then(account => {
+            returnObject(account)
         })
     })
     socket.on('userLog', (log, sendBack) => {

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput } from 'react-native'
 import { appName } from '../../../../config'
-import { styles as styles_ } from '../../clipper/styles'
 import * as actions from '../../clipper/redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import CreateAccount from './CreateAccount'
@@ -36,7 +35,7 @@ export default (props) => {
     }
 
     if (loggedIn) return null
-    else return <AccountOptions handleLogin={props.handleLogin} welcomeFontStyle={welcomeFontStyle} />
+    else return <AccountOptions welcomeFontStyle={welcomeFontStyle} />
 }
 
 const AccountOptions = (props) => {
@@ -52,19 +51,19 @@ const AccountOptions = (props) => {
     else if (accountOption == 'signin') return <SignInAccount setAccountOption={setAccountOption} />
     else return (
         <View>
-            <Text style={[props.welcomeFontStyle, styles_.welcomeText]}>{`welcome to ${appName.toUpperCase()}!`}</Text>
-            <View style={styles_.contentRow}>
+            <Text style={[props.welcomeFontStyle, styles.welcomeText]}>{`welcome to ${appName.toUpperCase()}!`}</Text>
+            <View style={styles.contentRow}>
                 <TouchableOpacity
-                    style={[styles.accountButton, styles_.logoutButton, { marginRight: 5 }]}
+                    style={[styles.accountButton, styles.logoutButton, { marginRight: 5 }]}
                     onPress={() => setAccountOption('signin')}
                     >
-                    <Text style={styles_.controlButtonText}>Sign In</Text>
+                    <Text style={styles.controlButtonText}>Sign In</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.accountButton, styles_.logoutButton, { marginLeft: 5 }]}
+                    style={[styles.accountButton, styles.logoutButton, { marginLeft: 5 }]}
                     onPress={() => setAccountOption('create')}
                     >
-                    <Text style={styles_.controlButtonText}>Create an Account</Text>
+                    <Text style={styles.controlButtonText}>Create an Account</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -73,6 +72,7 @@ const AccountOptions = (props) => {
 
 const SignInAccount = (props) => {
 
+    const redux = useDispatch()
     const [id, setId] = useState('')
     const [password, setPassword] = useState('')
     const [account, setAccount] = useState(null)
@@ -84,18 +84,34 @@ const SignInAccount = (props) => {
         })
     }, [id, password])
 
+    const handleLogin = (account) => {
+        redux(actions.login(account))
+        socket.emit('userLog', account, userObject => {
+            redux(actions.updateUser(userObject))
+            const packet = {
+                userID: userObject.id,
+                pendingClips: pending,
+            }
+            socket.emit('getUserClips', packet, userClips => {
+                redux(actions.clearPending())
+                redux(actions.updateClips(userClips))
+            })
+        })
+    }
+
     return (
         <View style={{width: '100%'}}>
+        <Text style={[{margin: 10}, styles.controlButtonText]}>Sign into your account</Text>
             <View>
                 <TextInput
-                    style={styles_.urlText}
+                    style={styles.urlText}
                     onChangeText={text => setId(text)}
                     value={id}
                     placeholder={"screen name"}
                     placeholderTextColor={"white"}
                     />
                 <TextInput
-                    style={styles_.urlText}
+                    style={styles.urlText}
                     onChangeText={text => setPassword(text)}
                     value={password}
                     placeholder={"password"}
@@ -103,28 +119,64 @@ const SignInAccount = (props) => {
                     secureTextEntry={true}
                     />
             </View>
-            <View style={styles_.contentRow}>
+            <View style={styles.contentRow}>
                 <TouchableOpacity
-                    style={[styles_.controlButton, {backgroundColor: 'green'}]}
-                    onPress={() => props.handleLogin(account)}
+                    style={[styles.controlButton, {backgroundColor: 'green'}]}
+                    onPress={() => handleLogin(account)}
                     >
-                    <Text style={styles_.controlButtonText}>Create</Text>
+                    <Text style={styles.controlButtonText}>Enter</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles_.controlButton, {backgroundColor: 'red'}]}
+                    style={[styles.controlButton, {backgroundColor: 'red'}]}
                     onPress={() => props.setAccountOption(undefined)}
                     >
-                    <Text style={styles_.controlButtonText}>Cancel</Text>
+                    <Text style={styles.controlButtonText}>Cancel</Text>
                 </TouchableOpacity>
             </View>
         </View>
     )
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
+    welcomeText: {
+        color: 'white',
+    },
+    logoutButton: {
+        backgroundColor: 'purple',
+    },
     accountButton: {
         padding: 7,
         paddingLeft: 25,
         paddingRight: 25,
+    },
+    controlButtonText: {
+        textAlign:"center",
+        color: 'white',
+        fontWeight:"bold",
+    },
+    urlText: {
+        borderColor: 'white',
+        borderWidth: 1,
+        color: 'white',
+        padding: 10,
+        marginTop: 5,
+        marginBottom: 5,
+    },
+    controlButton: {
+        flex: 1,
+        borderColor: 'black',
+        borderWidth: 1,
+        padding: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        backgroundColor:'black',
+    },
+    controlButtonText: {
+        textAlign:"center",
+        color: 'white',
+        fontWeight:"bold",
+    },
+    contentRow: {
+        flexDirection:"row",
     },
 })
