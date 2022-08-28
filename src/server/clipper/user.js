@@ -1,32 +1,6 @@
 var r = require('rethinkdb')
 var { dbConnxConfig, progressionsListLength } = require('../../../config')
 
-const userLog = (user) => {
-    return new Promise((resolve,reject) => {
-        r.connect(dbConnxConfig).then(connection => {
-            r.table('users').insert(user, {
-                returnChanges: true,
-                conflict: "update"
-            }).run(connection).then(result => {
-                r.table('users').get(user.id).run(connection)
-                .then(userData => resolve(userData))
-                .catch(error => {
-                    console.log(`\nERROR getting user data\n${error}`)
-                    reject(error)
-                })
-            })
-            .catch(error => {
-                console.log(`\nERROR user data retrieval\n${error}`)
-                reject(error)
-            })
-        })
-        .catch(error => {
-            console.log(`\ndb connection error\n${error}`)
-            reject(error)
-        })
-    })
-}
-
 const getClips = (userID) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
@@ -136,7 +110,6 @@ const updateVideoProgress = (progressionObject) => {
 }
 
 module.exports = {
-    userLog,
     getClips,
     addClip,
     deleteClip,

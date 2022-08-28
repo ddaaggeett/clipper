@@ -16,7 +16,11 @@ io.on('connection', (socket) => {
         .then(userData => sendBack(userData))
         .catch(error => {})
     })
-
+    socket.on('login', (loginInfo, sendBack) => {
+        user.login(loginInfo)
+        .then(account => sendBack(account))
+        .catch(error => {})
+    })
 })
 
 http.listen(socketPort.xyz, function(){

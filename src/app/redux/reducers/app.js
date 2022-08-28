@@ -15,7 +15,7 @@ export default function app(state = initialState, action) {
             return {
                 ...state,
                 loggedIn: true,
-                ...action.account,
+                user: action.account,
             }
 
         case actions.LOGOUT:

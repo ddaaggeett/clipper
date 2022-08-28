@@ -1,6 +1,19 @@
 var r = require('rethinkdb')
 var { dbConnxConfig, progressionsListLength } = require('../../../config')
 
+const login = (loginInfo) => {
+    return new Promise((resolve, reject) => {
+        r.connect(dbConnxConfig).then(connection => {
+            r.table('users').get(loginInfo.id).run(connection)
+            .then(account => {
+                if (loginInfo.password === account.password) resolve(account)
+                else resolve(null)
+            })
+            .catch(error => resolve(null))
+        })
+    })
+}
+
 const userLog = (user) => {
     return new Promise((resolve,reject) => {
         r.connect(dbConnxConfig).then(connection => {
@@ -53,6 +66,7 @@ const checkIfAccountExists = (userID) => {
 }
 
 module.exports = {
+    login,
     userLog,
     createAccount
 }

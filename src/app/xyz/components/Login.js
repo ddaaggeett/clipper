@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput } from 'react-native'
-import { appName } from '../../../../config'
+import { appName, serverIP, socketPort } from '../../../../config'
 import * as accountActions from '../../redux/actions/actionCreators'
 import * as actions from '../../clipper/redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import CreateAccount from './CreateAccount'
+import { io } from 'socket.io-client'
+
+const socket = io('http://'+ serverIP + ':' + socketPort.xyz)
 
 export default (props) => {
 
@@ -76,27 +79,18 @@ const SignInAccount = (props) => {
     const redux = useDispatch()
     const [id, setId] = useState('')
     const [password, setPassword] = useState('')
-    const [account, setAccount] = useState(null)
+    const [loginInfo, setLoginInfo] = useState(null)
 
     useEffect(() => {
-        setAccount({
+        setLoginInfo({
             id,
             password,
         })
     }, [id, password])
 
-    const handleLogin = (account) => {
-        redux(accountActions.login(account))
-        socket.emit('userLog', account, userObject => {
-            redux(accountActions.updateUser(userObject))
-            const packet = {
-                userID: userObject.id,
-                pendingClips: pending,
-            }
-            socket.emit('getUserClips', packet, userClips => {
-                redux(actions.clearPending())
-                redux(actions.updateClips(userClips))
-            })
+    const handleLogin = (loginInfo) => {
+        socket.emit('login', loginInfo, account => {
+            if (account) redux(accountActions.login(account))
         })
     }
 
@@ -123,7 +117,7 @@ const SignInAccount = (props) => {
             <View style={styles.contentRow}>
                 <TouchableOpacity
                     style={[styles.controlButton, {backgroundColor: 'green'}]}
-                    onPress={() => handleLogin(account)}
+                    onPress={() => handleLogin(loginInfo)}
                     >
                     <Text style={styles.controlButtonText}>Enter</Text>
                 </TouchableOpacity>

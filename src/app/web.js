@@ -25,6 +25,7 @@ const AppSwitcher = () => {
         if (subdomain.length > 0) redux(actions.updateWebApp(subdomain[0].toLowerCase()))
     }, [])
 
+    // TODO: only loggedIn for podware ?
     if (webapp == 'clipper' && loggedIn) return <ClipperWeb />
     else if (webapp == 'whitesocket' && loggedIn) return <WhitesocketWeb />
     else if (webapp == 'podware' && loggedIn) return <PodwareWeb />

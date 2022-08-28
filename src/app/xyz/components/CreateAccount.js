@@ -27,8 +27,12 @@ export default (props) => {
                 name: name,
                 password: password1,
             }
+
+
+
+
             socket.emit('create account', newUser, (account) => {
-                if (account) redux(actions.login({ user: account }))
+                if (account) redux(actions.login(account))
                 else setNewAccountFail(true)
             })
         }
