@@ -1,9 +1,11 @@
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from './redux/actions/actionCreators'
-import Web_Clipper from './clipper/web'
-import Web_Whitesocket from './whitesocket/web'
+import ClipperWeb from './clipper/web'
+import WhitesocketWeb from './whitesocket/web'
+import PodwareWeb from './podware/web'
 import Account from './xyz/components/Account'
 import Nav from './xyz/components/Nav'
 import Footer from './xyz/components/Footer'
@@ -23,8 +25,9 @@ const AppSwitcher = () => {
         if (subdomain.length > 0) redux(actions.updateWebApp(subdomain[0].toLowerCase()))
     }, [])
 
-    if (webapp == 'clipper' && loggedIn) return <Web_Clipper />
-    else if (webapp == 'whitesocket' && loggedIn) return <Web_Whitesocket />
+    if (webapp == 'clipper' && loggedIn) return <ClipperWeb />
+    else if (webapp == 'whitesocket' && loggedIn) return <WhitesocketWeb />
+    else if (webapp == 'podware' && loggedIn) return <PodwareWeb />
     else return null
 }
 
@@ -34,11 +37,13 @@ export default () => {
     const { webapp } = useSelector(state => state.xyz)
 
     return (
+        <SafeAreaProvider>
         <View style={styles.browser} >
             <Account />
             <AppSwitcher />
             <Footer />
         </View>
+        </SafeAreaProvider>
     )
 }
 

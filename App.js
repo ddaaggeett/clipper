@@ -4,6 +4,7 @@ import * as Linking from 'expo-linking'
 import React from 'react';
 import { View, Platform } from 'react-native';
 import AppMain from './src/app'
+import WebApp from './src/app/web'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from './src/app/redux';
@@ -32,7 +33,7 @@ export default function App() {
         <Provider store={storeWeb}>
         <PersistGate loading={null} persistor={persistorWeb}>
         <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
-            <AppMain />
+            <WebApp />
         </NavigationContainer>
         </PersistGate>
         </Provider>
