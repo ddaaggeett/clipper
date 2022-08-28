@@ -10,7 +10,7 @@ const socket = io(`http://${serverIP}:${socketPort.clipper}`)
 export default () => {
 
     const { pending } = useSelector(state => state.clips)
-    const { user } = useSelector(state => state.account)
+    const { user } = useSelector(state => state.xyz)
     const redux = useDispatch()
 
     const handleSync = () => {

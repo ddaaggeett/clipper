@@ -24,10 +24,9 @@ export default (props) => {
 
 export const styles = StyleSheet.create({
     footer: {
+        flex:1,
         margin: 0,
-        // marginTop: 30,
         width: '100%',
-        height: 150,
         zIndex: -1,
         bottom: 0,
     },

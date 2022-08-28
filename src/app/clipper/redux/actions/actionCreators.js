@@ -21,19 +21,6 @@ export function updateContentID(contentID) {
     }
 }
 
-export function login(account) {
-    return {
-        type: actions.LOGIN,
-        account,
-    }
-}
-
-export function logout() {
-    return {
-        type: actions.LOGOUT
-    }
-}
-
 export function updateClip(clip) {
     return {
         type: actions.UPDATE_CLIP,
@@ -52,13 +39,6 @@ export function setEditIndex(index) {
     return {
         type: actions.SET_EDIT_INDEX,
         index,
-    }
-}
-
-export function updateUser(user) {
-    return {
-        type: actions.UPDATE_USER,
-        user,
     }
 }
 

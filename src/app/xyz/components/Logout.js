@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import * as Linking from 'expo-linking'
-import * as actions from '../../clipper/redux/actions/actionCreators'
+import * as actions from '../../redux/actions/actionCreators'
 import { styles as styles_ } from '../../clipper/styles'
 
 export default () => {

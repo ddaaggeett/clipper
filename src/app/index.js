@@ -13,8 +13,7 @@ const Drawer = createDrawerNavigator()
 
 export default () => {
 
-    const { loggedIn } = useSelector(state => state.account)
-    const { webapp } = useSelector(state => state.xyz)
+    const { loggedIn, webapp } = useSelector(state => state.xyz)
 
     if (Platform.OS === 'web') {
         return (

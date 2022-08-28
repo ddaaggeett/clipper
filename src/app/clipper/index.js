@@ -18,7 +18,7 @@ export default () => {
     useDataSocketHook()
 
     const redux = useDispatch()
-    const { loggedIn, user } = useSelector(state => state.account)
+    const { loggedIn, user } = useSelector(state => state.xyz)
     const { pending } = useSelector(state => state.clips)
 
     useEffect(() => {

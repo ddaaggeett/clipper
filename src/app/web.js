@@ -11,8 +11,7 @@ import Footer from './xyz/components/Footer'
 const AppSwitcher = () => {
 
     const redux = useDispatch()
-    const { webapp } = useSelector(state => state.xyz)
-    const { loggedIn } = useSelector(state => state.account)
+    const { loggedIn, webapp } = useSelector(state => state.xyz)
 
     useEffect(() => {
         const host = window.location.host

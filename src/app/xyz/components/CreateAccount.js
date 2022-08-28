@@ -4,7 +4,7 @@ import { styles } from "../../clipper/styles"
 import { io } from 'socket.io-client'
 import { serverIP, socketPort } from '../../../../config'
 import { useSelector, useDispatch } from 'react-redux'
-import * as actions from '../../clipper/redux/actions/actionCreators'
+import * as actions from '../../redux/actions/actionCreators'
 
 const socket = io('http://'+ serverIP + ':' + socketPort.xyz)
 

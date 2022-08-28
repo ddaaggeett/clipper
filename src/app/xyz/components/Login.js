@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput } from 'react-native'
 import { appName } from '../../../../config'
+import * as accountActions from '../../redux/actions/actionCreators'
 import * as actions from '../../clipper/redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import CreateAccount from './CreateAccount'
@@ -8,7 +9,7 @@ import CreateAccount from './CreateAccount'
 export default (props) => {
 
     const redux = useDispatch()
-    const { loggedIn } = useSelector(state => state.account)
+    const { loggedIn } = useSelector(state => state.xyz)
 
     var welcomeStyle
     var welcomeFontStyle
@@ -85,9 +86,9 @@ const SignInAccount = (props) => {
     }, [id, password])
 
     const handleLogin = (account) => {
-        redux(actions.login(account))
+        redux(accountActions.login(account))
         socket.emit('userLog', account, userObject => {
-            redux(actions.updateUser(userObject))
+            redux(accountActions.updateUser(userObject))
             const packet = {
                 userID: userObject.id,
                 pendingClips: pending,

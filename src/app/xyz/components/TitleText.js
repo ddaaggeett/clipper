@@ -8,9 +8,8 @@ import { sourceCodeURL } from '../../../../config'
 
 export const TitleText = () => {
 
-    const { webapp } = useSelector(state => state.xyz)
     const [titleText, setTitleText] = useState(appName)
-    const { loggedIn, user } = useSelector(state => state.account)
+    const { loggedIn, user, webapp } = useSelector(state => state.xyz)
 
     useEffect(() => {
         if (loggedIn) setTitleText(`${appName}     ///     ${user.name}`)

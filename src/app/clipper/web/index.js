@@ -15,7 +15,7 @@ const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 export default () => {
 
     const redux = useDispatch()
-    const { loggedIn,user } = useSelector(state => state.account)
+    const { loggedIn, user } = useSelector(state => state.xyz)
     const { panelWidth } = useSelector(state => state.clipper)
     const { pending } = useSelector(state => state.clips)
 
