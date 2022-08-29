@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
-import { styles as styles_ } from '../../clipper/styles'
 import { appName } from '../../../../config'
 
 export default (props) => {
@@ -10,7 +9,7 @@ export default (props) => {
     return (
         <View style={[styles.footer, { backgroundImage: 'linear-gradient(black, #333)' }]}>
             <View
-                style={[styles_.contentRow, styles.footerLinkGroup, {position: 'absolute'}]}>
+                style={[styles.contentRow, styles.footerLinkGroup, {position: 'absolute'}]}>
                 <TouchableOpacity style={styles.footerLink}>
                     <Text style={styles.footerText}>{`about ${appName}`}</Text>
                 </TouchableOpacity>
@@ -42,5 +41,7 @@ export const styles = StyleSheet.create({
         right: 15,
         bottom: 10,
     },
-
+    contentRow: {
+        flexDirection:"row",
+    },
 })

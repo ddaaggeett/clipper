@@ -3,17 +3,17 @@ import { StyleSheet } from "react-native"
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import * as Linking from 'expo-linking'
-import * as actions from '../../redux/actions/actionCreators'
+import * as actions from '../redux/actions/actionCreators'
 import { apps } from '../../../../config'
 
 export default () => {
-    const { webapp, domain } = useSelector(state => state.xyz)
+    const { webapp, domain } = useSelector(state => state.account)
 
     return (
         <View style={styles.appnav}>
         {
             apps.map((app, index) => {
-                if (app.name !== 'xyz') return (
+                if (app.name !== 'account') return (
                     <TouchableOpacity
                         key={index}
                         onPress={() => Linking.openURL(`http://${app.name}.${domain}`)}

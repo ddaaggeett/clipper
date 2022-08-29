@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Platform, Dimensions } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import Account from './xyz'
+import Account from './account'
 import Drawer_Podware from './podware'
 import Drawer_Clipper from './clipper'
 import Drawer_Whitesocket from './whitesocket'
@@ -11,7 +11,7 @@ const Drawer = createDrawerNavigator()
 
 export default () => {
 
-    const { loggedIn, webapp } = useSelector(state => state.xyz)
+    const { loggedIn, webapp } = useSelector(state => state.account)
 
     if(!loggedIn) return (
         <Drawer.Navigator screenOptions={{ headerShown: false }}>

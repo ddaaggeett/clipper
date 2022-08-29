@@ -23,6 +23,6 @@ io.on('connection', (socket) => {
     })
 })
 
-http.listen(socketPort.xyz, function(){
-    console.log('socket.io listening on *:' + socketPort.xyz)
+http.listen(socketPort.account, function(){
+    console.log('socket.io listening on *:' + socketPort.account)
 })

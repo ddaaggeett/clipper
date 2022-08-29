@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { View, StyleSheet, Dimensions } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import Account from '../../xyz/components/Account'
+import Account from '../../account/components/Account'
 import Clipper from '../components/Clipper'
 import VideoSelector from '../components/VideoSelector'
 import ClipManager from '../components/ClipManager'
@@ -15,7 +15,7 @@ const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 export default () => {
 
     const redux = useDispatch()
-    const { loggedIn, user } = useSelector(state => state.xyz)
+    const { loggedIn, user } = useSelector(state => state.account)
     const { panelWidth } = useSelector(state => state.clipper)
     const { pending } = useSelector(state => state.clips)
 

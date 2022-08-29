@@ -7,8 +7,8 @@ import AppMain from './src/app'
 import WebApp from './src/app/web'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import configureStore from './src/app/redux';
-import configureStoreWeb from './src/app/redux/web';
+import configureStore from './src/app/account/redux';
+import configureStoreWeb from './src/app/account/redux/web';
 
 const store = configureStore().store
 const persistor = configureStore().persistor

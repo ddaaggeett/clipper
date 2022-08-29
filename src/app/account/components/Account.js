@@ -19,7 +19,7 @@ const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 export default (props) => {
 
     const redux = useDispatch()
-    const { loggedIn, user } = useSelector(state => state.xyz)
+    const { loggedIn, user } = useSelector(state => state.account)
     const { clips, pending } = useSelector(state => state.clips)
     let navigation
     Platform.OS !== 'web' ?  navigation = useNavigation() : null

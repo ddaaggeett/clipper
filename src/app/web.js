@@ -2,18 +2,18 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import * as actions from './redux/actions/actionCreators'
+import * as actions from './account/redux/actions/actionCreators'
 import ClipperWeb from './clipper/web'
 import WhitesocketWeb from './whitesocket/web'
 import PodwareWeb from './podware/web'
-import Account from './xyz/components/Account'
-import Nav from './xyz/components/Nav'
-import Footer from './xyz/components/Footer'
+import Account from './account/components/Account'
+import Nav from './account/components/Nav'
+import Footer from './account/components/Footer'
 
 const AppSwitcher = () => {
 
     const redux = useDispatch()
-    const { loggedIn, webapp } = useSelector(state => state.xyz)
+    const { loggedIn, webapp } = useSelector(state => state.account)
 
     useEffect(() => {
         const host = window.location.host
@@ -25,7 +25,6 @@ const AppSwitcher = () => {
         if (subdomain.length > 0) redux(actions.updateWebApp(subdomain[0].toLowerCase()))
     }, [])
 
-    // TODO: only loggedIn for podware ?
     if (webapp == 'clipper' && loggedIn) return <ClipperWeb />
     else if (webapp == 'whitesocket' && loggedIn) return <WhitesocketWeb />
     else if (webapp == 'podware' && loggedIn) return <PodwareWeb />
@@ -35,7 +34,7 @@ const AppSwitcher = () => {
 export default () => {
 
     const redux = useDispatch()
-    const { webapp } = useSelector(state => state.xyz)
+    const { webapp } = useSelector(state => state.account)
 
     return (
         <SafeAreaProvider>

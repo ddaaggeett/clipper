@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput } from 'react-native'
 import { appName, serverIP, socketPort } from '../../../../config'
-import * as accountActions from '../../redux/actions/actionCreators'
-import * as actions from '../../clipper/redux/actions/actionCreators'
+import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import CreateAccount from './CreateAccount'
 import { io } from 'socket.io-client'
 
-const socket = io('http://'+ serverIP + ':' + socketPort.xyz)
+const socket = io('http://'+ serverIP + ':' + socketPort.account)
 
 export default (props) => {
 
     const redux = useDispatch()
-    const { loggedIn } = useSelector(state => state.xyz)
+    const { loggedIn } = useSelector(state => state.account)
 
     var welcomeStyle
     var welcomeFontStyle
@@ -90,7 +89,7 @@ const SignInAccount = (props) => {
 
     const handleLogin = (loginInfo) => {
         socket.emit('login', loginInfo, account => {
-            if (account) redux(accountActions.login(account))
+            if (account) redux(actions.login(account))
         })
     }
 

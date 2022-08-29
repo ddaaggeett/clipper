@@ -2,7 +2,7 @@
     "appName": "xyz",
     "apps": [
         {
-            "name": "xyz",
+            "name": "account",
             "socketPort": 3343,
             "fileData": "./data_xyz/"
         },
@@ -26,7 +26,7 @@
     "configFile": "./config.json",
     "serverIP": "192.168.0.1",
     "socketPort": {
-        "xyz": 3343,
+        "account": 3343,
         "audio": 3347,
         "whitesocket": 3349,
         "clipper": 3348
