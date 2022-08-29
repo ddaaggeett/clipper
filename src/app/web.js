@@ -25,9 +25,12 @@ const AppSwitcher = () => {
         if (subdomain.length > 0) redux(actions.updateWebApp(subdomain[0].toLowerCase()))
     }, [])
 
-    if (webapp == 'clipper' && loggedIn) return <ClipperWeb />
-    else if (webapp == 'whitesocket' && loggedIn) return <WhitesocketWeb />
-    else if (webapp == 'podware' && loggedIn) return <PodwareWeb />
+    if (loggedIn && webapp) {
+        if (webapp === 'clipper') return <ClipperWeb />
+        else if (webapp === 'whitesocket') return null
+        // else if (webapp == 'whitesocket') return <WhitesocketWeb />
+        else if (webapp === 'podware') return <PodwareWeb />
+    }
     else return null
 }
 

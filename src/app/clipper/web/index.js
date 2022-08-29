@@ -54,14 +54,10 @@ export default () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flex:1,
-        borderColor:'white',
-        borderWidth:1,
         width:'100%',
         backgroundColor: '#000',
     },
     panelRow: {
-        // top: 35,
         alignSelf: 'center',
     },
     contentRow: {

@@ -53,7 +53,7 @@ const AccountOptions = (props) => {
     if (accountOption == 'create') return <CreateAccount setAccountOption={setAccountOption} />
     else if (accountOption == 'signin') return <SignInAccount setAccountOption={setAccountOption} />
     else return (
-        <View>
+        <View style={styles.loginOptions}>
             <Text style={[props.welcomeFontStyle, styles.welcomeText]}>{`welcome to ${appName.toUpperCase()}!`}</Text>
             <View style={styles.contentRow}>
                 <TouchableOpacity
@@ -132,6 +132,9 @@ const SignInAccount = (props) => {
 }
 
 const styles = StyleSheet.create({
+    loginOptions: {
+        alignItems: 'center',
+    },
     welcomeText: {
         color: 'white',
     },

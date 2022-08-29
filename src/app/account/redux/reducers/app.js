@@ -3,7 +3,7 @@ import * as actions from '../actions'
 const initialState = {
     loggedIn: false,
     user: null,
-    webapp: undefined,
+    webapp: null,
     domain: undefined,
 }
 

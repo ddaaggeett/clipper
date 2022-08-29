@@ -10,7 +10,6 @@ const initialState = {
         height: window.innerHeight,
     },
     prepping: false,
-    id: 'defaultUser', // userID
 }
 
 export default function app(state = initialState, action) {
