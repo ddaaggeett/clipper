@@ -3,15 +3,17 @@ import React from 'react'
 
 export default (props) => {
 
+    const seekInterval = 5
+
     const rewind = () => {
         props.player.current.getCurrentTime().then(time => {
-            props.player.current.seekTo(time - 10)
+            props.player.current.seekTo(time - seekInterval)
         })
     }
 
     const fastForward = () => {
         props.player.current.getCurrentTime().then(time => {
-            props.player.current.seekTo(time + 10)
+            props.player.current.seekTo(time + seekInterval)
         })
     }
 
