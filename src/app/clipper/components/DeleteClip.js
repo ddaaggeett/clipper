@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { View, Text, TouchableOpacity, Dimensions, Platform } from "react-native"
-import { styles } from "../styles"
+import { View, Text, TouchableOpacity, Dimensions, Platform, StyleSheet } from "react-native"
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import { io } from 'socket.io-client'
@@ -40,3 +39,26 @@ export default (props) => {
             </TouchableOpacity>
     )
 }
+
+const styles = StyleSheet.create({
+    controlButton: {
+        flex: 1,
+        borderColor: 'black',
+        borderWidth: 1,
+        padding: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        backgroundColor:'black',
+    },
+    controlButtonText: {
+        textAlign:"center",
+        color: 'white',
+        fontWeight:"bold",
+    },
+    contentRow: {
+        flexDirection:"row",
+    },
+    deleteClip: {
+        backgroundColor: 'red',
+    },
+})

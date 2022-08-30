@@ -50,7 +50,7 @@ export default () => {
     )
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     browser: {
         flex: 1,
         width: '100%',

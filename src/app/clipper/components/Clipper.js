@@ -6,7 +6,6 @@ import Controls from './Controls'
 import ThumbnailSelector from './ThumbnailSelector'
 import PlaybackSpeed from './PlaybackSpeed'
 import RwdFfd from './RwdFfd'
-import { styles } from "../styles"
 import getContentID from '../getContentID'
 import { io } from 'socket.io-client'
 import { serverIP, socketPort } from '../../../../config'

@@ -1,6 +1,5 @@
-import { View, Text, TouchableOpacity, Dimensions, Platform } from "react-native"
+import { View, Text, TouchableOpacity, Dimensions, Platform, StyleSheet } from "react-native"
 import React from 'react'
-import { styles } from "../styles"
 import { useDispatch, useSelector } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 
@@ -75,3 +74,20 @@ export const ClipInitOrDeleteRight = (props) => {
             </TouchableOpacity>
     )
 }
+
+const styles = StyleSheet.create({
+    controlButton: {
+        flex: 1,
+        borderColor: 'black',
+        borderWidth: 1,
+        padding: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        backgroundColor:'black',
+    },
+    controlButtonText: {
+        textAlign:"center",
+        color: 'white',
+        fontWeight:"bold",
+    },
+})

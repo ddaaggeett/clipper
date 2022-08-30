@@ -16,7 +16,7 @@ export default () => {
     )
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     sourceCodeLink: {
         height: 20,
         width: 20,

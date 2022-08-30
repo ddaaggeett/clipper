@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity, TextInput, Platform } from 'react-native'
-import { styles, webStyles } from '../styles'
+import { View, Text, TouchableOpacity, TextInput, Platform, StyleSheet } from 'react-native'
 import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import { io } from 'socket.io-client'
@@ -125,4 +124,29 @@ export default (props) => {
                 />
         </View>
     )
+}
+const styles = StyleSheet.create({
+    clipItemTextInput: {
+        color: 'white',
+        fontSize:16,
+        padding:15,
+    },
+    commentInput: {
+        backgroundColor:'purple',
+    },
+    titleInput: {
+        backgroundColor:'#444',
+    },
+    whoInput: {
+        backgroundColor:'#666',
+    },
+})
+
+const webStyles = {
+    clipDetail:{
+        margin:2,
+        backgroundColor:'#222',
+        padding: 3,
+        color:'white',
+    },
 }

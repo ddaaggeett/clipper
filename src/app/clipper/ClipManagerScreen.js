@@ -1,6 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
-import { styles } from './styles'
+import { View, StyleSheet } from 'react-native'
 import ClipManager from './components/ClipManager'
 import ClipDetails from './components/ClipDetails'
 import { StatusBar } from 'expo-status-bar';
@@ -19,3 +18,10 @@ export default () => {
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#000',
+    },
+})

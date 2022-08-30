@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import { styles } from "../../clipper/styles"
+import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { io } from 'socket.io-client'
 import { serverIP, socketPort } from '../../../../config'
 import { useSelector, useDispatch } from 'react-redux'
@@ -94,3 +93,31 @@ export default (props) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    urlText: {
+        borderColor: 'white',
+        borderWidth: 1,
+        color: 'white',
+        padding: 10,
+        marginTop: 5,
+        marginBottom: 5,
+    },
+    controlButton: {
+        flex: 1,
+        borderColor: 'black',
+        borderWidth: 1,
+        padding: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        backgroundColor:'black',
+    },
+    controlButtonText: {
+        textAlign:"center",
+        color: 'white',
+        fontWeight:"bold",
+    },
+    contentRow: {
+        flexDirection:"row",
+    },
+})

@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { View, Text, TouchableOpacity, Platform } from "react-native"
-import { styles } from "../styles"
+import { View, Text, TouchableOpacity, Platform, StyleSheet } from "react-native"
 import { useSelector, useDispatch } from 'react-redux'
 import * as Linking from 'expo-linking'
 import { serverIP, socketPort, expressPort } from '../../../../config'
@@ -34,3 +33,23 @@ export default () => {
         </TouchableOpacity>
     )
 }
+
+const styles = StyleSheet.create({
+    controlButton: {
+        flex: 1,
+        borderColor: 'black',
+        borderWidth: 1,
+        padding: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        backgroundColor:'black',
+    },
+    controlButtonText: {
+        textAlign:"center",
+        color: 'white',
+        fontWeight:"bold",
+    },
+    downloadClip: {
+        backgroundColor: 'green',
+    },
+})

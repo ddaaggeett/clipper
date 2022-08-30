@@ -1,8 +1,7 @@
-import { View, Text, TouchableOpacity, Dimensions, Platform } from "react-native"
+import { View, Text, TouchableOpacity, Dimensions, Platform, StyleSheet } from "react-native"
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
-import { styles } from "../styles"
 import { ExecuteLeft, ExecuteRight } from './ClipExecute'
 import CursorShifts from './Cursor'
 import { ClipInitOrDeleteLeft, ClipInitOrDeleteRight } from './ClipInitOrDelete'
@@ -47,3 +46,9 @@ const CursorPlacements = (props) => {
     else if(handlingLeft) return  <ExecuteLeft {...props} />
     else if(handlingRight) return  <ExecuteRight {...props} />
 }
+
+const styles = StyleSheet.create({
+    contentRow: {
+        flexDirection:"row",
+    },
+})

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { webStyles } from "../styles"
 import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native';
 import { io } from 'socket.io-client'
 import Clip from './Clip'
@@ -68,7 +67,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#000',
     },
+})
+
+const webStyles = {
     clipManager:{
         color:'white'
     },
-})
+}

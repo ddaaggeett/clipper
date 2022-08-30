@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TouchableOpacity, FlatList, Image, Platform } from 'react-native'
-import { styles } from '../styles'
+import { View, Text, TouchableOpacity, FlatList, Image, Platform, StyleSheet } from 'react-native'
 import { serverIP, expressPort } from '../../../../config'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
@@ -54,3 +53,38 @@ export default (props) => {
             </View>
     )
 }
+
+const styles = StyleSheet.create({
+    contentRow: {
+        flexDirection:"row",
+    },
+    clipItem: {
+        backgroundColor:'#222',
+        marginBottom: 3,
+    },
+    clipItemText: {
+        flex: 1,
+        color: 'white',
+        fontSize:16,
+        padding:5,
+    },
+    thumbnail: {
+        width: 160,
+        height: 90
+    },
+    recentVideos: {
+        borderTopWidth: 7,
+        borderColor: 'purple',
+        marginTop: 13,
+        marginLeft:20,
+        marginRight:20,
+    },
+    recentVideosText: {
+        paddingTop: 15,
+        paddingBottom: 10,
+        color: 'red',
+        fontSize: 16,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+    },
+})

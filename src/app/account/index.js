@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Platform } from 'react-native'
-import { styles } from '../clipper/styles'
+import { View, Platform, StyleSheet } from 'react-native'
 import { StatusBar } from 'expo-status-bar';
 import AccountScreen from './components/Account'
 import { createStackNavigator } from '@react-navigation/stack';
@@ -18,3 +17,10 @@ export default () => {
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#000',
+    },
+})

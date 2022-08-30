@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
-import { TouchableOpacity, Text, Platform } from 'react-native'
+import { TouchableOpacity, Text, Platform, StyleSheet } from 'react-native'
 import { useSelector } from 'react-redux'
 import * as Linking from 'expo-linking'
 import { appName } from '../../../../config'
-import { styles } from '../../clipper/styles'
 import { sourceCodeURL } from '../../../../config'
 
 export const TitleText = () => {
@@ -38,3 +37,17 @@ export default () => {
         </TouchableOpacity>
     )
 }
+
+const styles = StyleSheet.create({
+    username: {
+        padding: 7,
+        paddingLeft: 28,
+        paddingRight: 28,
+        color:'white',
+    },
+    usernameNative: {
+        alignSelf: 'center',
+        fontSize: 18,
+    },
+
+})

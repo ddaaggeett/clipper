@@ -1,8 +1,7 @@
-import { View, Text, TouchableOpacity, Dimensions, ScrollView } from "react-native"
+import { View, Text, TouchableOpacity, Dimensions, ScrollView, StyleSheet } from "react-native"
 import EditClipInfo from './EditClipInfo'
 import DeleteClip from './DeleteClip'
 import React, { useState, useEffect, useRef } from 'react'
-import { styles } from "../styles"
 import YoutubePlayer from "react-native-youtube-iframe"
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
@@ -65,3 +64,24 @@ const ClipPlayer = (props) => {
     )
     else return null
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#000',
+    },
+    controlButton: {
+        flex: 1,
+        borderColor: 'black',
+        borderWidth: 1,
+        padding: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        backgroundColor:'black',
+    },
+    controlButtonText: {
+        textAlign:"center",
+        color: 'white',
+        fontWeight:"bold",
+    },
+})

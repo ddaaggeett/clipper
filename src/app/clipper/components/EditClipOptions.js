@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
-import { styles } from '../styles'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import DeleteClip from './DeleteClip'
 import DownloadClip from './DownloadClip'
 import { useSelector } from 'react-redux'
@@ -28,3 +27,23 @@ export default (props) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    controlButton: {
+        flex: 1,
+        borderColor: 'black',
+        borderWidth: 1,
+        padding: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        backgroundColor:'black',
+    },
+    controlButtonText: {
+        textAlign:"center",
+        color: 'white',
+        fontWeight:"bold",
+    },
+    contentRow: {
+        flexDirection:"row",
+    },
+})

@@ -21,7 +21,7 @@ export default (props) => {
     )
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     footer: {
         flex:1,
         margin: 0,

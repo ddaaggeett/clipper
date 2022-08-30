@@ -28,7 +28,7 @@ export default () => {
     )
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     appnav: {
         flex: 1,
         flexDirection: 'row',

@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, Image, Platform, TouchableOpacity } from 'react-native'
-import { styles } from '../styles'
+import { View, Text, Image, Platform, TouchableOpacity, StyleSheet } from 'react-native'
 import { serverIP, expressPort } from '../../../../config'
 import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
@@ -45,3 +44,28 @@ export default (props) => {
 }
 
 const ClipTime = ({ clip }) => <Text style={styles.clipDuration}>{new Date(clip.duration * 1000).toISOString().substr(14, 5)}</Text>
+
+const styles = StyleSheet.create({
+    thumbnail: {
+        width: 160,
+        height: 90
+    },
+    thumbnailWeb: {
+        width: 200,
+        height: 113
+    },
+    clipDuration: {
+        position: 'absolute',
+        flex: 1,
+        bottom: 0,
+        right: 0,
+        backgroundColor: 'black',
+        zIndex: 1,
+        padding: 3,
+        paddingLeft: 4,
+        paddingBottom: 2,
+        color:'white',
+        fontWeight: 'bold',
+        fontSize: 14,
+    },
+})

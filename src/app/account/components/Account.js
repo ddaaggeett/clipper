@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Platform } from 'react-native'
-import { styles as styles_  } from '../../clipper/styles'
 import { serverIP, socketPort, appName } from '../../../../config'
 import * as actions from '../../clipper/redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
@@ -36,15 +35,15 @@ export default (props) => {
         </View>
     )
     else return (
-        <ScrollView style={styles_.container}>
+        <ScrollView style={styles.container}>
         {
             loggedIn
             ?   <View>
                     <TouchableOpacity
-                        style={[styles_.controlButton, {flex: 0, backgroundColor: 'red'}]}
+                        style={[styles.controlButton, {flex: 0, backgroundColor: 'red'}]}
                         onPress={() => handleLogout()}
                         >
-                        <Text style={styles_.controlButtonText}>Logout</Text>
+                        <Text style={styles.controlButtonText}>Logout</Text>
                     </TouchableOpacity>
                     <TitleText />
                     {/*<UnfinishedVideosList />*/}
@@ -57,7 +56,11 @@ export default (props) => {
     )
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#000',
+    },
     homeMenu: {
         flexDirection:"row",
         zIndex: 1,
@@ -66,4 +69,19 @@ export const styles = StyleSheet.create({
         margin: 0,
         borderBottomWidth: 2,
     },
+    controlButton: {
+        flex: 1,
+        borderColor: 'black',
+        borderWidth: 1,
+        padding: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+        backgroundColor:'black',
+    },
+    controlButtonText: {
+        textAlign:"center",
+        color: 'white',
+        fontWeight:"bold",
+    },
+
 })

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View, Image } from 'react-native'
-import { styles, webStyles } from '../styles'
+import { View, Image, StyleSheet } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import EditClipInfo from './EditClipInfo'
@@ -49,4 +48,24 @@ export default (props) => {
             </View>
         </div>
     )
+}
+
+const styles = StyleSheet.create({
+    contentRow: {
+        flexDirection:"row",
+    },
+})
+
+const webStyles = {
+    clipItem: {
+        display: 'flex',
+        flexFlow: 'column nowrap',
+        fontFamily: 'Sans',
+        fontSize: 14,
+        color:'yellow',
+        backgroundColor:'#222',
+        borderRadius: 5,
+        margin: 5,
+        padding: 5,
+    },
 }
