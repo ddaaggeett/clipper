@@ -11,7 +11,7 @@ const socket = io('http://'+ serverIP + ':' + socketPort.account)
 export default (props) => {
 
     const redux = useDispatch()
-    const { loggedIn } = useSelector(state => state.account)
+    const { user } = useSelector(state => state.account)
 
     var welcomeStyle
     var welcomeFontStyle
@@ -37,7 +37,7 @@ export default (props) => {
         }
     }
 
-    if (loggedIn) return null
+    if (user) return null
     else return <AccountOptions welcomeFontStyle={welcomeFontStyle} />
 }
 

@@ -13,7 +13,7 @@ import Footer from './account/components/Footer'
 const AppSwitcher = () => {
 
     const redux = useDispatch()
-    const { loggedIn, webapp } = useSelector(state => state.account)
+    const { user, webapp } = useSelector(state => state.account)
 
     useEffect(() => {
         const host = window.location.host
@@ -25,7 +25,7 @@ const AppSwitcher = () => {
         if (subdomain.length > 0) redux(actions.updateWebApp(subdomain[0].toLowerCase()))
     }, [])
 
-    if (loggedIn && webapp) {
+    if (user && webapp) {
         if (webapp === 'clipper') return <ClipperWeb />
         else if (webapp === 'whitesocket') return null
         // else if (webapp == 'whitesocket') return <WhitesocketWeb />

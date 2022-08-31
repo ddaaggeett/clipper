@@ -18,18 +18,18 @@ const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 export default (props) => {
 
     const redux = useDispatch()
-    const { loggedIn, user } = useSelector(state => state.account)
+    const { user } = useSelector(state => state.account)
     const { clips, pending } = useSelector(state => state.clips)
     let navigation
     Platform.OS !== 'web' ?  navigation = useNavigation() : null
 
     if (Platform.OS === 'web') return (
         <View>
-            <View style={[styles.homeMenu, { borderColor: loggedIn ? 'red' : 'purple' }]}>
+            <View style={[styles.homeMenu, { borderColor: user ? 'red' : 'purple' }]}>
                 <SourceCodeLink />
                 <Nav />
                 <TitleLink />
-                { loggedIn ? <LogoutButton /> : null }
+                { user ? <LogoutButton /> : null }
             </View>
             <Login />
         </View>
@@ -37,7 +37,7 @@ export default (props) => {
     else return (
         <ScrollView style={styles.container}>
         {
-            loggedIn
+            user
             ?   <View>
                     <TouchableOpacity
                         style={[styles.controlButton, {flex: 0, backgroundColor: 'red'}]}

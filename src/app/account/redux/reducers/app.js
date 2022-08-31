@@ -1,7 +1,6 @@
 import * as actions from '../actions'
 
 const initialState = {
-    loggedIn: false,
     user: null,
     webapp: null,
     domain: undefined,
@@ -14,13 +13,12 @@ export default function app(state = initialState, action) {
         case actions.LOGIN:
             return {
                 ...state,
-                loggedIn: true,
                 user: action.account,
             }
 
         case actions.LOGOUT:
             return {
-                loggedIn: false,
+                ...state,
                 user: null,
             }
 

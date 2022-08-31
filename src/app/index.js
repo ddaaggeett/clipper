@@ -11,9 +11,9 @@ const Drawer = createDrawerNavigator()
 
 export default () => {
 
-    const { loggedIn, webapp } = useSelector(state => state.account)
+    const { webapp } = useSelector(state => state.account)
 
-    if(!loggedIn) return (
+    if(!user) return (
         <Drawer.Navigator screenOptions={{ headerShown: false }}>
             <Drawer.Screen name="Profile" component={Account} />
         </Drawer.Navigator>

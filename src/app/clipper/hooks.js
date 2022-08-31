@@ -8,11 +8,11 @@ const socket = io(`http://${serverIP}:${socketPort.clipper}`)
 export const useInitUserSession = () => {
 
     const redux = useDispatch()
-    const { loggedIn, user } = useSelector(state => state.account)
+    const { user } = useSelector(state => state.account)
     const { pending } = useSelector(state => state.clips)
 
     useEffect(() => {
-        if (loggedIn && user !== null) {
+        if (user) {
             const packet = {
                 userID: user.id,
                 pendingClips: pending,

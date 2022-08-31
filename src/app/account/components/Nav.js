@@ -7,6 +7,8 @@ import * as actions from '../redux/actions/actionCreators'
 import { apps } from '../../../../config'
 
 export default () => {
+
+    const redux = useDispatch()
     const { webapp, domain } = useSelector(state => state.account)
 
     return (
@@ -16,7 +18,7 @@ export default () => {
                 if (app.name !== 'account') return (
                     <TouchableOpacity
                         key={index}
-                        onPress={() => Linking.openURL(`http://${app.name}.${domain}`)}
+                        onPress={() => redux(actions.updateWebApp(app.name))}
                         style={styles.button}
                         >
                         <Text style={styles.buttonText}>{app.name}</Text>

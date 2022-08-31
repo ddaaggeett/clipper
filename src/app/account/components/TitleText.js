@@ -8,12 +8,12 @@ import { sourceCodeURL } from '../../../../config'
 export const TitleText = () => {
 
     const [titleText, setTitleText] = useState(appName)
-    const { loggedIn, user, webapp } = useSelector(state => state.account)
+    const { user, webapp } = useSelector(state => state.account)
 
     useEffect(() => {
-        if (loggedIn) setTitleText(`${appName}     ///     ${user.name}`)
+        if (user) setTitleText(`${appName}     ///     ${user.name}`)
         else setTitleText(appName)
-    }, [loggedIn])
+    }, [user])
 
     if(Platform.OS === 'web') return <Text style={styles.username}>{titleText}</Text>
     else return <Text style={[styles.username, styles.usernameNative]}>{titleText}</Text>
