@@ -8,8 +8,8 @@ const updateClip = (clip) => {
     return new Promise((resolve,reject) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('clips').insert(clip, { returnChanges: true, conflict: 'update' }).run(connection).then(result => {
-                if (result.changes.length != 0 && result.changes[0].new_val != undefined) {
-                    const updatedClip = result.changes[0].new_val
+                const updatedClip = result.changes[0].new_val
+                if (result.changes.length != 0 && updatedClip != undefined) {
                     const oldClip = result.changes[0].old_val
                     if (oldClip == null) {
                         generateClip(updatedClip) //.then(updatedClipObject => resolve(updatedClipObject))
@@ -18,6 +18,7 @@ const updateClip = (clip) => {
                     else if(updatedClip.thumbnailTime != oldClip.thumbnailTime || updatedClip.thumbnailText != oldClip.thumbnailText) {
                         generateThumbnails(updatedClip).then(updatedClipObject => resolve(updatedClipObject))
                     }
+                    else resolve(updatedClip)
                 }
             }).error(error => {
                 console.log(`\nupdateClip error\n${error}`)
@@ -57,6 +58,7 @@ const handlePendingClips = (pendingClips) => {
                 if(count == pendingClips.lenth) resolve()
             })
         })
+        else resolve()
     })
 }
 

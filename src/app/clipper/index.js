@@ -3,14 +3,12 @@ import { Platform, Dimensions } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ClipperScreen from './ClipperScreen'
 import ClipManagerScreen from './ClipManagerScreen'
-import useDataSocketHook from './dataSocket'
 import { useInitUserSession } from './hooks'
 
 const Tab = createBottomTabNavigator()
 
 export default () => {
 
-    useDataSocketHook()
     useInitUserSession()
 
     const tabBarOptions = {
