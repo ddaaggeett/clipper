@@ -1,13 +1,12 @@
 import { useEffect } from 'react'
 import { View, StyleSheet, Dimensions } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import Account from '../../account/components/Account'
-import Clipper from '../components/Clipper'
-import VideoSelector from '../components/VideoSelector'
-import ClipManager from '../components/ClipManager'
-import UnfinishedVideosList from '../components/UnfinishedVideosList'
-import * as actions from '../redux/actions/actionCreators'
-import { useInitUserSession } from '../hooks'
+import Clipper from './components/Clipper'
+import VideoSelector from './components/VideoSelector'
+import ClipManager from './components/ClipManager'
+import UnfinishedVideosList from './components/UnfinishedVideosList'
+import * as actions from './redux/actions/actionCreators'
+import { useInitUserSession } from './hooks'
 
 export default () => {
 
