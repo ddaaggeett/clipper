@@ -12,8 +12,6 @@ const getClips = (userID) => {
                     .then(clip => {
                         userClips.push(clip)
                         if (userClips.length == clipIDlist.length) {
-                            console.log('\nuserClips')
-                            console.log(userClips)
                             resolve(userClips)
                         }
                     })
