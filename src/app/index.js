@@ -11,7 +11,7 @@ const Drawer = createDrawerNavigator()
 
 export default () => {
 
-    const { webapp } = useSelector(state => state.account)
+    const { user, webapp } = useSelector(state => state.account)
 
     if(!user) return (
         <Drawer.Navigator screenOptions={{ headerShown: false }}>
