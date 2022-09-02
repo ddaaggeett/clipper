@@ -10,6 +10,7 @@ const initialState = {
         height: window.innerHeight,
     },
     prepping: false,
+    appOpened: false,
 }
 
 export default function app(state = initialState, action) {
@@ -31,6 +32,12 @@ export default function app(state = initialState, action) {
             return {
                 ...state,
                 outputShape: action.shape,
+            }
+
+        case actions.UPDATE_APP_OPENED:
+            return {
+                ...state,
+                appOpened: action.opened,
             }
 
         default:

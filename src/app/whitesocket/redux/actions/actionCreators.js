@@ -20,3 +20,10 @@ export const updateOutputShape = shape => {
         shape
     }
 }
+
+export const updateAppOpened = opened => {
+    return {
+        type: actions.UPDATE_APP_OPENED,
+        opened
+    }
+}
