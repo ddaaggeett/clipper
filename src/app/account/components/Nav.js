@@ -9,7 +9,6 @@ import { apps } from '../../../../config'
 export default () => {
 
     const redux = useDispatch()
-    const { webapp, domain } = useSelector(state => state.account)
 
     return (
         <View style={styles.appnav}>
@@ -21,13 +20,21 @@ export default () => {
                         onPress={() => redux(actions.updateWebApp(app.name))}
                         style={styles.button}
                         >
-                        <Text style={styles.buttonText}>{app.name}</Text>
+                        <AppNavButtonText app={app} />
                     </TouchableOpacity>
                 )
             })
         }
         </View>
     )
+}
+
+const AppNavButtonText = (props) => {
+
+    const { webapp } = useSelector(state => state.account)
+
+    if (props.app.name === webapp) return <Text style={[styles.buttonText, styles.selectedButtonText]}>{props.app.name.toUpperCase()}</Text>
+    else return <Text style={styles.buttonText}>{props.app.name}</Text>
 }
 
 const styles = StyleSheet.create({
@@ -44,5 +51,8 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
+    },
+    selectedButtonText: {
+        fontWeight: 'bold',
     },
 })
