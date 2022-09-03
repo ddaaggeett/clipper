@@ -31,9 +31,9 @@ export default () => {
 
 const AppNavButtonText = (props) => {
 
-    const { webapp } = useSelector(state => state.account)
+    const { webapp, user } = useSelector(state => state.account)
 
-    if (props.app.name === webapp) return <Text style={[styles.buttonText, styles.selectedButtonText]}>{props.app.name.toUpperCase()}</Text>
+    if (user && props.app.name === webapp) return <Text style={[styles.buttonText, styles.selectedButtonText]}>{props.app.name.toUpperCase()}</Text>
     else return <Text style={styles.buttonText}>{props.app.name}</Text>
 }
 

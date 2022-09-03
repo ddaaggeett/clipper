@@ -7,16 +7,28 @@ import { sourceCodeURL } from '../../../../config'
 
 export const TitleText = () => {
 
-    const [titleText, setTitleText] = useState(appName)
+    const [titleText, setTitleText] = useState(`about ${appName}`)
     const { user, webapp } = useSelector(state => state.account)
+    const divider = `     ///     `
 
     useEffect(() => {
-        if (user) setTitleText(`${appName}     ///     ${user.name}`)
-        else setTitleText(appName)
+        if (user) {
+            setTitleText(`${appName}${divider}${user.name}`)
+        }
+        else setTitleText(`about ${appName}`)
     }, [user])
 
-    if(Platform.OS === 'web') return <Text style={styles.username}>{titleText}</Text>
-    else return <Text style={[styles.username, styles.usernameNative]}>{titleText}</Text>
+    return (
+        <TouchableOpacity
+            onPress={() => Linking.openURL(sourceCodeURL)}
+            >
+            {
+                Platform.OS === 'web'
+                ?   <Text style={styles.username}>{titleText}</Text>
+                :   <Text style={[styles.username, styles.usernameNative]}>{titleText}</Text>
+            }
+        </TouchableOpacity>
+    )
 }
 
 export default () => {
@@ -29,13 +41,7 @@ export default () => {
         else setFullAppDomain(domain)
     }, [])
 
-    return (
-        <TouchableOpacity
-            onPress={() => Linking.openURL(fullAppDomain)}
-            >
-            <TitleText />
-        </TouchableOpacity>
-    )
+    return <TitleText />
 }
 
 const styles = StyleSheet.create({
