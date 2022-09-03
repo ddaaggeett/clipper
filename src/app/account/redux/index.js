@@ -1,10 +1,15 @@
+import { Platform } from 'react-native'
 import { createStore , applyMiddleware } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import thunk from 'redux-thunk'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import logger from 'redux-logger'
 import rootReducer from './reducers'
 
-const middleware = applyMiddleware(thunk)
+let middleware
+if (Platform.OS === 'web') middleware = applyMiddleware(thunk, logger)
+else middleware = applyMiddleware(thunk)
+
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,

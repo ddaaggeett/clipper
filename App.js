@@ -8,12 +8,10 @@ import WebApp from './src/app/web'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import configureStore from './src/app/account/redux';
-import configureStoreWeb from './src/app/account/redux/web';
 
-const store = configureStore().store
-const persistor = configureStore().persistor
-const storeWeb = configureStoreWeb().store
-const persistorWeb = configureStoreWeb().persistor
+const redux = configureStore()
+const store = redux.store
+const persistor = redux.persistor
 
 const linking = {
     prefixes: [
@@ -30,8 +28,8 @@ const linking = {
 
 export default function App() {
     if (Platform.OS === 'web') return (
-        <Provider store={storeWeb}>
-        <PersistGate loading={null} persistor={persistorWeb}>
+        <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
             <WebApp />
         </NavigationContainer>
