@@ -7,15 +7,22 @@ var {
 const { spawn } = require('child_process')
 var dbConnx = null
 
+const printUnhandledError = (error) => {
+    return new  Promise((resolve, reject) => {
+        if (!error.message.includes('already exists')) {
+            console.log(`\n${error.message}`)
+            resolve()
+        }
+    })
+}
+
 const createTables = (tables) => {
     for(var table in tables) {
         r.db(dbConnxConfig.db).tableCreate(table).run(dbConnx)
         .then(result => {
             console.log(`\nTABLE RESULT:\n${JSON.stringify(result)}`)
         })
-        .error(error => {
-            console.log(`\n${error}`)
-        })
+        .error(error => printUnhandledError(error))
     }
 }
 
@@ -29,7 +36,7 @@ const initDB = () => {
             createTables(tables)
         })
         .error(error => {
-            console.log(`\n${error}`)
+            printUnhandledError(error)
             createTables(tables)
         })
     })
@@ -38,6 +45,7 @@ const initDB = () => {
     })
 }
 
+// TODO: this doesn't necessarily work. still continues to run sometimes.
 const rethinkdb = spawn('rethinkdb',[])
 rethinkdb.stdout.on('data', data => {
     console.log(`\nRethinkDB output\n${data}`)
