@@ -10,10 +10,23 @@ import Login from './Login'
 import SyncServer from './SyncServer'
 import SourceCodeLink from './SourceCodeLink'
 import TitleLink, { TitleText } from './TitleText'
-import LogoutButton from './Logout'
+import Logout from './Logout'
 import Nav from './Nav'
 
-const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
+const socket = io(`http://${serverIP}:${socketPort.clipper}`)
+
+const WebBar = () => {
+    const { user } = useSelector(state => state.account)
+
+    return (
+        <View style={[styles.homeMenu, { borderColor: user ? 'red' : 'purple' }]}>
+            <SourceCodeLink />
+            <Nav />
+            <TitleLink />
+            { user ? <Logout /> : null }
+        </View>
+    )
+}
 
 export default (props) => {
 
@@ -25,12 +38,7 @@ export default (props) => {
 
     if (Platform.OS === 'web') return (
         <View>
-            <View style={[styles.homeMenu, { borderColor: user ? 'red' : 'purple' }]}>
-                <SourceCodeLink />
-                <Nav />
-                <TitleLink />
-                { user ? <LogoutButton /> : null }
-            </View>
+            <WebBar />
             <Login />
         </View>
     )
@@ -39,12 +47,7 @@ export default (props) => {
         {
             user
             ?   <View>
-                    <TouchableOpacity
-                        style={[styles.controlButton, {flex: 0, backgroundColor: 'red'}]}
-                        onPress={() => handleLogout()}
-                        >
-                        <Text style={styles.controlButtonText}>Logout</Text>
-                    </TouchableOpacity>
+                    <Logout />
                     <TitleText />
                     {/*<UnfinishedVideosList />*/}
                     <SyncServer />
@@ -69,19 +72,4 @@ const styles = StyleSheet.create({
         margin: 0,
         borderBottomWidth: 2,
     },
-    controlButton: {
-        flex: 1,
-        borderColor: 'black',
-        borderWidth: 1,
-        padding: 10,
-        paddingTop: 20,
-        paddingBottom: 20,
-        backgroundColor:'black',
-    },
-    controlButtonText: {
-        textAlign:"center",
-        color: 'white',
-        fontWeight:"bold",
-    },
-
 })

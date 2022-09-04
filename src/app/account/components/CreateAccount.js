@@ -5,7 +5,7 @@ import { serverIP, socketPort } from '../../../../config'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 
-const socket = io('http://'+ serverIP + ':' + socketPort.account)
+const socket = io(`http://${serverIP}:${socketPort.account}`)
 
 export default (props) => {
 
@@ -26,10 +26,6 @@ export default (props) => {
                 name: name,
                 password: password1,
             }
-
-
-
-
             socket.emit('create account', newUser, (account) => {
                 if (account) redux(actions.login(account))
                 else setNewAccountFail(true)
@@ -45,13 +41,19 @@ export default (props) => {
     return (
         <View style={{width: '100%'}}>
             <Text style={[{margin: 10}, styles.controlButtonText]}>Create an account</Text>
-            {newAccountFail ? <Text style={{color: 'red', fontWeight: 'bold', fontSize: '18px'}}>{`"${name}" already exists. Try logging into this account instead.`}</Text> : null}
+            {
+                newAccountFail
+                ?   <Text style={styles.newAccountFail}>{`"${name}" already exists. Try logging into this account instead.`}</Text>
+                :   null
+            }
             <TextInput
                 style={styles.urlText}
                 onChangeText={text => setEmail(text)}
                 value={email}
                 placeholder={"email address"}
                 placeholderTextColor={"white"}
+                autoFocus={true}
+                autoCapitalize={'none'}
                 />
             <TextInput
                 style={styles.urlText}
@@ -59,6 +61,7 @@ export default (props) => {
                 value={name}
                 placeholder={"screen name"}
                 placeholderTextColor={"white"}
+                autoCapitalize={'none'}
                 />
             <TextInput
                 style={styles.urlText}
@@ -67,6 +70,7 @@ export default (props) => {
                 placeholder={"password"}
                 placeholderTextColor={"white"}
                 secureTextEntry={true}
+                autoCapitalize={'none'}
                 />
             <TextInput
                 style={styles.urlText}
@@ -75,6 +79,7 @@ export default (props) => {
                 placeholder={"repeat password"}
                 placeholderTextColor={"white"}
                 secureTextEntry={true}
+                autoCapitalize={'none'}
                 />
             <View style={styles.contentRow}>
                 <TouchableOpacity
@@ -119,5 +124,10 @@ const styles = StyleSheet.create({
     },
     contentRow: {
         flexDirection:"row",
+    },
+    newAccountFail: {
+        color: 'red',
+        fontWeight: 'bold',
+        fontSize: 18,
     },
 })

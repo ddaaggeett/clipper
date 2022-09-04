@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { View, Text, TextInput, ScrollView, StyleSheet, Button } from 'react-native'
 import { Audio } from 'expo-av'
 import { useSelector } from 'react-redux'
@@ -8,8 +8,8 @@ import * as FileSystem from 'expo-file-system'
 import { serverIP, expressPort } from '../../../config'
 
 export default () => {
-    const [recording, setRecording] = React.useState()
-    const [uri, setUri] = React.useState()
+    const [recording, setRecording] = useState()
+    const [uri, setUri] = useState()
 
     async function startRecording() {
         try {
@@ -33,12 +33,12 @@ export default () => {
     async function stopRecording() {
         console.log('Stopping recording..');
         setRecording(undefined);
-        await recording.stopAndUnloadAsync();
+        await recording.stopAndUnloadAsync()
         setUri(recording.getURI())
         console.log('Recording stopped and stored at', uri)
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if(uri != undefined) {
             const url = `http://${serverIP}:${expressPort}/patchAudioFile`
             FileSystem.uploadAsync(url, uri, {

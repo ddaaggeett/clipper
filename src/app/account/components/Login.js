@@ -103,6 +103,7 @@ const SignInAccount = (props) => {
                     value={id}
                     placeholder={"screen name"}
                     placeholderTextColor={"white"}
+                    autoFocus={true}
                     />
                 <TextInput
                     style={styles.urlText}

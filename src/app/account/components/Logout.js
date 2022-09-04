@@ -1,5 +1,4 @@
-import React from 'react'
-import { StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { Platform, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import * as Linking from 'expo-linking'
 import * as actions from '../redux/actions/actionCreators'
@@ -12,9 +11,13 @@ export default () => {
         redux(actions.logout())
     }
 
+    let logoutStyle
+    if (Platform.OS === 'web') logoutStyle = [styles.webButton, styles.buttonColor]
+    else logoutStyle = [styles.nativeButton, styles.buttonColor]
+
     return (
         <TouchableOpacity
-            style={[styles.accountButton, styles.loginButton]}
+            style={logoutStyle}
             onPress={() => handleLogout()}
             >
             <Text style={styles.controlButtonText}>Logout</Text>
@@ -23,17 +26,25 @@ export default () => {
 }
 
 const styles = StyleSheet.create({
+    nativeButton: {
+        flex: 1,
+        borderColor: 'black',
+        borderWidth: 1,
+        padding: 10,
+        paddingTop: 20,
+        paddingBottom: 20,
+    },
     controlButtonText: {
         textAlign:"center",
         color: 'white',
         fontWeight:"bold",
     },
-    accountButton: {
+    webButton: {
         padding: 7,
         paddingLeft: 25,
         paddingRight: 25,
     },
-    loginButton: {
+    buttonColor: {
         backgroundColor: 'red',
     },
 })
