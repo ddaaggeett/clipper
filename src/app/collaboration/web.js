@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { View, Text, TextInput, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 const actions = require('./redux/actions/actionCreators')
-const { initCollaboration } = require('./hooks')
+const { useGroupSession } = require('./hooks')
 
 export default () => {
     return (
@@ -36,7 +36,7 @@ const Messages = () => {
 
     return (
         <View>
-            <Text style={styles.text}>{`GroupSession ${room} messages`}</Text>
+            <Text style={styles.text}>{`${room.id} messages`}</Text>
             <View>{renderMessages}</View>
         </View>
     )
@@ -44,12 +44,10 @@ const Messages = () => {
 
 const MessageInput = () => {
 
-    const { sendMessage } = initCollaboration()
-
     const [messageText, setMessageText] = useState('')
 
     const handleSendMessage = () => {
-        sendMessage(messageText)
+        // sendMessage(messageText)
         setMessageText('')
     }
 
@@ -81,6 +79,18 @@ const MessageInput = () => {
 
 const GroupSession = () => {
 
+    const { rooms } = useSelector(state => state.collaboration)
+
+    return (
+        <View style={styles.session}>
+            { rooms.length == 0 ? null : <SelectGroupSession /> }
+            <CreateGroupSession />
+        </View>
+    )
+}
+
+const SelectGroupSession = () => {
+
     const redux = useDispatch()
     const { rooms } = useSelector(state => state.collaboration)
 
@@ -95,7 +105,7 @@ const GroupSession = () => {
                 onPress={() => updateRoom(room)}
                 key={key}
                 >
-                <Text style={styles.text}>{`GroupSession ${room}`}</Text>
+                <Text style={styles.text}>{`${room.id}`}</Text>
             </TouchableOpacity>
         )
     })
@@ -104,7 +114,22 @@ const GroupSession = () => {
         <View style={styles.session}>
             <Text style={[styles.sessionButton, styles.text]}>{`select session`}</Text>
             <View style={styles.sessionButtons}>{renderRoomSelections}</View>
+            <Text style={[styles.sessionButton, styles.text]}>{`or`}</Text>
         </View>
+    )
+}
+
+const CreateGroupSession = () => {
+
+    const { setNewAvailableRoom } = useGroupSession()
+
+    return (
+        <TouchableOpacity
+            style={[styles.sessionButton, styles.button, styles.createGroup]}
+            onPress={() => setNewAvailableRoom(Date.now())}
+            >
+            <Text style={styles.text}>{`Create Group Session`}</Text>
+        </TouchableOpacity>
     )
 }
 
@@ -128,12 +153,16 @@ const styles = StyleSheet.create({
     },
     session: {
         flexDirection: 'row',
+        margin: 3,
     },
     sessionButton: {
         padding: 10,
     },
     sessionButtons: {
         flexDirection: 'row',
+    },
+    createGroup: {
+        backgroundColor: 'green'
     },
     button: {
         padding: 40,

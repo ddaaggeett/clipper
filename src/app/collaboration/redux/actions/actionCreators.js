@@ -6,3 +6,10 @@ export const updateRoom = (room) => {
         room,
     }
 }
+
+export const updateAvailableRooms = (rooms) => {
+    return {
+        type: actions.UPDATE_AVAILABLE_ROOMS,
+        rooms,
+    }
+}

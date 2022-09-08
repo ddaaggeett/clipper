@@ -1,7 +1,7 @@
 import * as actions from '../actions'
 
 const initialState = {
-    rooms: ['A','B'], // TODO: init []
+    rooms: [],
     room: null,
     messages: [],
 }
@@ -14,6 +14,12 @@ export default function app(state = initialState, action) {
             return {
                 ...state,
                 room: action.room,
+            }
+
+        case actions.UPDATE_AVAILABLE_ROOMS:
+            return {
+                ...state,
+                rooms: action.rooms,
             }
 
         default:

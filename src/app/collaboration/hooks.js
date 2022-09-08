@@ -1,38 +1,34 @@
 const { useEffect, useState } = require('react')
 const { serverIP, socketPort } = require('../../../config')
-const { useSelector } = require('react-redux')
+const { useDispatch, useSelector } = require('react-redux')
+const actions = require('./redux/actions/actionCreators')
 const { io } = require('socket.io-client')
 const socket = io(`http://${serverIP}:${socketPort.podware}`)
 
-export const initCollaboration = () => {
+export const useGroupSession = (roomID) => {
 
+    const redux = useDispatch()
     const { user } = useSelector(state => state.account)
-    const { room } = useSelector(state => state.collaboration)
+    const [newAvailableRoom, setNewAvailableRoom] = useState(null)
 
     useEffect(() => {
-        if (room) {
+        socket.on('broadcast_rooms_available', (rooms, callback) => {
+            redux(actions.updateAvailableRooms(rooms))
+            callback()
+        })
+    }, [])
+
+    useEffect(() => {
+        if (newAvailableRoom) {
             const packet = {
-                room,
+                room: newAvailableRoom,
                 user,
             }
-            // socket.emit('broadcast_room_available', packet)
+            socket.emit('new_available_room', packet, room => {
+                redux(actions.updateRoom(room))
+            })
         }
-    }, [room])
+    }, [newAvailableRoom])
 
-    const sendMessage = (text) => {
-        const packet = {
-            room,
-            message: text,
-        }
-        // socket.to('send_message', (packet, message) => {
-        //     console.log(`incoming message: ${message}`)
-        //     setMessages(messages.push(message))
-        // })
-    }
-
-
-    return {
-        sendMessage,
-    }
-
+    return { setNewAvailableRoom }
 }
