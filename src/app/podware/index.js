@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as FileSystem from 'expo-file-system'
 import { serverIP, expressPort } from '../../../config'
+import Collaboration from '../collaboration/web'
 
 export default () => {
     const [recording, setRecording] = useState()
@@ -66,6 +67,7 @@ export default () => {
                     onPress={recording ? stopRecording : startRecording}
                     />
                 <Text style={styles.text}>{`last recording uri:\n${uri}`}</Text>
+                <Collaboration />
             </ScrollView>
         </SafeAreaView>
     )

@@ -94,6 +94,10 @@ const SelectGroupSession = () => {
     const { rooms } = useSelector(state => state.collaboration)
     const { setSelectedRoom } = joinRoom()
 
+    const renderSessionUserList = (room) => room.users.map((user, key) => {
+        return <Text style={styles.text} key={key}>{`${user.id}`}</Text>
+    })
+
     const renderRoomSelections = rooms.map((room, key) => {
         return (
             <TouchableOpacity
@@ -101,7 +105,7 @@ const SelectGroupSession = () => {
                 onPress={() => setSelectedRoom(room)}
                 key={key}
                 >
-                <Text style={styles.text}>{`${room.id}`}</Text>
+                <View style={styles.sessionButtons}>{renderSessionUserList(room)}</View>
             </TouchableOpacity>
         )
     })
