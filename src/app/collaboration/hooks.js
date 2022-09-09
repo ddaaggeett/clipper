@@ -5,7 +5,7 @@ const actions = require('./redux/actions/actionCreators')
 const { io } = require('socket.io-client')
 const socket = io(`http://${serverIP}:${socketPort.podware}`)
 
-export const useGroupSession = (roomID) => {
+export const useGroupSession = () => {
 
     const redux = useDispatch()
     const { user } = useSelector(state => state.account)
@@ -31,4 +31,28 @@ export const useGroupSession = (roomID) => {
     }, [newAvailableRoom])
 
     return { setNewAvailableRoom }
+}
+
+export const joinRoom = () => {
+
+    const redux = useDispatch()
+    const { user } = useSelector(state => state.account)
+    const [selectedRoom, setSelectedRoom] = useState(null)
+
+    useEffect(() => {
+        if (selectedRoom) {
+
+            const packet = {
+                room: selectedRoom,
+                user,
+            }
+
+            socket.emit('join_room', packet, room => {
+                redux(actions.updateRoom(room))
+            })
+        }
+    }, [selectedRoom])
+
+    return { setSelectedRoom }
+
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { View, Text, TextInput, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 const actions = require('./redux/actions/actionCreators')
-const { useGroupSession } = require('./hooks')
+const { useGroupSession, joinRoom } = require('./hooks')
 
 export default () => {
     return (
@@ -91,18 +91,14 @@ const GroupSession = () => {
 
 const SelectGroupSession = () => {
 
-    const redux = useDispatch()
     const { rooms } = useSelector(state => state.collaboration)
-
-    const updateRoom = (room) => {
-        redux(actions.updateRoom(room))
-    }
+    const { setSelectedRoom } = joinRoom()
 
     const renderRoomSelections = rooms.map((room, key) => {
         return (
             <TouchableOpacity
                 style={[styles.sessionButton, styles.button]}
-                onPress={() => updateRoom(room)}
+                onPress={() => setSelectedRoom(room)}
                 key={key}
                 >
                 <Text style={styles.text}>{`${room.id}`}</Text>
@@ -159,7 +155,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     sessionButtons: {
-        flexDirection: 'row',
+        flexDirection: 'column',
     },
     createGroup: {
         backgroundColor: 'green'
