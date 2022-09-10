@@ -5,59 +5,50 @@ const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
 const { serverIP, socketPort } = require('../../../config')
+const { getUserOldRoomInfo } = require('./rooms')
 
 let rooms = []
 
 io.on('connection', (socket) => {
-
-    socket.on('new_available_room', (packet, callback) => {
-
-        // socket.join(room.id) // TODO:
-
-        const room = {
-            id: packet.room,
-            users: [packet.user],
-        }
-
-        rooms.push(room)
-
-        io.emit('broadcast_rooms_available', rooms, () => {
-            callback(room)
-        })
-    })
 
     socket.on('join_room', (packet, callback) => {
 
         // socket.join(room.id) // TODO:
 
         const user = packet.user
-        const id = packet.room.id
-        let users = packet.room.users
+        let updatedRoom = {}
 
-        var userAlreadyInRoom = false
-        for(var i = 0; i < users.length; i++) {
-            if (users[i].id === user.id) {
-                userAlreadyInRoom = true
-                break
+        // find old room, then delete user from room.users
+        const { userInOldRoom, roomIndex, userIndex } = getUserOldRoomInfo(user, rooms)
+
+        if (userInOldRoom) {
+
+            roomUsers = rooms[roomIndex].users
+            roomID = rooms[roomIndex].id
+
+            // delete user from previous room
+            const updatedUsers = [
+                ...roomUsers.slice(0, userIndex),
+                ...roomUsers.slice(userIndex + 1, roomUsers.length),
+            ]
+
+            updatedRoom = {
+                id: roomID,
+                users: updatedUsers,
             }
+
+            rooms = [
+                ...rooms.slice(0, roomIndex),
+                updatedRoom, // previous room without user
+                ...rooms.slice(roomIndex + 1, rooms.length),
+            ]
         }
-        if (!userAlreadyInRoom) users.push(user)
-
-        const room = {
-            id,
-            users,
+        else { // user in new room or doesn't exist in old room
+            rooms.push(packet.room)
         }
-
-        const index = rooms.findIndex(item => item.id === room.id)
-
-        rooms = [
-            ...rooms.slice(0, index),
-            room,
-            ...rooms.slice(index + 1, rooms.length),
-        ]
 
         io.emit('broadcast_rooms_available', rooms, () => {
-            callback(room)
+            callback(updatedRoom)
         })
     })
 

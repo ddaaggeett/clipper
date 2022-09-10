@@ -79,6 +79,7 @@ const MessageInput = () => {
 
 const GroupSession = () => {
 
+    useGroupSession()
     const { rooms } = useSelector(state => state.collaboration)
 
     return (
@@ -94,6 +95,7 @@ const SelectGroupSession = () => {
     const { rooms } = useSelector(state => state.collaboration)
     const { setSelectedRoom } = joinRoom()
 
+    // TODO: error occurring here. But shouldn't be rendering because rooms = empty[]
     const renderSessionUserList = (room) => room.users.map((user, key) => {
         return <Text style={styles.text} key={key}>{`${user.id}`}</Text>
     })
@@ -121,12 +123,12 @@ const SelectGroupSession = () => {
 
 const CreateGroupSession = () => {
 
-    const { setNewAvailableRoom } = useGroupSession()
+    const { setSelectedRoom } = joinRoom()
 
     return (
         <TouchableOpacity
             style={[styles.sessionButton, styles.button, styles.createGroup]}
-            onPress={() => setNewAvailableRoom(Date.now())}
+            onPress={() => setSelectedRoom('new')}
             >
             <Text style={styles.text}>{`Create Group Session`}</Text>
         </TouchableOpacity>

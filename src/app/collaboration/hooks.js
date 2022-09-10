@@ -8,8 +8,6 @@ const socket = io(`http://${serverIP}:${socketPort.podware}`)
 export const useGroupSession = () => {
 
     const redux = useDispatch()
-    const { user } = useSelector(state => state.account)
-    const [newAvailableRoom, setNewAvailableRoom] = useState(null)
 
     useEffect(() => {
         socket.on('broadcast_rooms_available', (rooms, callback) => {
@@ -18,19 +16,6 @@ export const useGroupSession = () => {
         })
     }, [])
 
-    useEffect(() => {
-        if (newAvailableRoom) {
-            const packet = {
-                room: newAvailableRoom,
-                user,
-            }
-            socket.emit('new_available_room', packet, room => {
-                redux(actions.updateRoom(room))
-            })
-        }
-    }, [newAvailableRoom])
-
-    return { setNewAvailableRoom }
 }
 
 export const joinRoom = () => {
@@ -40,17 +25,34 @@ export const joinRoom = () => {
     const [selectedRoom, setSelectedRoom] = useState(null)
 
     useEffect(() => {
-        if (selectedRoom) {
 
-            const packet = {
-                room: selectedRoom,
+        let packet = {}
+
+        if (selectedRoom === 'new') {
+            packet = {
+                room: {
+                    id: Date.now(),
+                    users: [user]
+                },
                 user,
             }
-
-            socket.emit('join_room', packet, room => {
-                redux(actions.updateRoom(room))
-            })
         }
+        else if (selectedRoom) {
+            packet = {
+                room: {
+                    ...selectedRoom,
+                    users: [...selectedRoom.users, user]
+                },
+                user,
+            }
+        }
+
+        socket.emit('join_room', packet, room => {
+            redux(actions.updateRoom(room))
+        })
+
+        return () => setSelectedRoom(null)
+
     }, [selectedRoom])
 
     return { setSelectedRoom }
