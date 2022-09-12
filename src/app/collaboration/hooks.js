@@ -30,34 +30,28 @@ export const joinRoom = () => {
     const [selectedRoom, setSelectedRoom] = useState(null)
 
     useEffect(() => {
-
         let packet = {}
-
-        if (selectedRoom === 'new') {
-            packet = {
-                room: {
-                    id: Date.now(),
-                    users: [user]
-                },
-                user,
+        if (selectedRoom) {
+            if (selectedRoom === 'new') {
+                packet = {
+                    room: {
+                        id: Date.now(),
+                        users: [],
+                    },
+                    user,
+                }
             }
-        }
-        else if (selectedRoom) {
-            packet = {
-                room: {
-                    ...selectedRoom,
-                    users: [...selectedRoom.users, user]
-                },
-                user,
+            else {
+                packet = {
+                    room: selectedRoom,
+                    user,
+                }
             }
+            socket.emit('join_room', packet, room => {
+                redux(actions.updateRoom(room))
+            })
         }
-
-        socket.emit('join_room', packet, room => {
-            redux(actions.updateRoom(room))
-        })
-
         return () => setSelectedRoom(null)
-
     }, [selectedRoom])
 
     return { setSelectedRoom }

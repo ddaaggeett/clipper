@@ -95,9 +95,8 @@ const SelectGroupSession = () => {
     const { rooms } = useSelector(state => state.collaboration)
     const { setSelectedRoom } = joinRoom()
 
-    // TODO: error occurring here. But shouldn't be rendering because rooms = empty[]
     const renderSessionUserList = (room) => room.users.map((user, key) => {
-        return <Text style={styles.text} key={key}>{`${user.id}`}</Text>
+        return <Text style={styles.text} key={key}>{`${room.id} ${user.id}`}</Text>
     })
 
     const renderRoomSelections = rooms.map((room, key) => {
