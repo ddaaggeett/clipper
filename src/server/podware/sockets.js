@@ -50,6 +50,8 @@ io.on('connection', (socket) => {
         io.emit('broadcast_rooms_available', rooms, () => {
             callback(updatedRoom)
         })
+    socket.on('get_rooms_available', (callback) => {
+        callback(rooms)
     })
 
     socket.on('disconnect', () => {

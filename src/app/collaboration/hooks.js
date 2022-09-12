@@ -10,6 +10,11 @@ export const useGroupSession = () => {
     const redux = useDispatch()
 
     useEffect(() => {
+
+        socket.emit('get_rooms_available', (rooms) => {
+            redux(actions.updateAvailableRooms(rooms))
+        })
+
         socket.on('broadcast_rooms_available', (rooms, callback) => {
             redux(actions.updateAvailableRooms(rooms))
             callback()
