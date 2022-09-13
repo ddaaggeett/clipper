@@ -18,10 +18,10 @@ io.on('connection', (socket) => {
             rooms,
         }
         getRooms(packet)
-        .then(({updatedRooms, room}) => {
+        .then(({updatedRooms, updatedRoom}) => {
             rooms = updatedRooms
             io.emit('broadcast_rooms_available', rooms, () => {
-                callback(room)
+                callback(updatedRoom)
             })
         })
     })
