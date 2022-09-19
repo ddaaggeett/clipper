@@ -4,28 +4,15 @@ const getRooms = (packet) => {
         let room = packet.room
         let rooms = packet.rooms
 
-        const {updatedRooms, updatedRoom} = updateRooms(rooms, room, user)
+        rooms = leaveRoom(user, rooms)
 
-        console.log(`updatedRooms = ${JSON.stringify(updatedRooms,null,4)}`)
+        const {updatedRooms, updatedRoom} = joinRoom(rooms, room, user)
 
         resolve({
             updatedRooms,
             updatedRoom,
         })
     })
-}
-
-const updateRooms = (rooms, room, user) => {
-
-    rooms = leaveRoom(user, rooms)
-
-    const {updatedRooms, updatedRoom} = joinRoom(rooms, room, user)
-
-    return {
-        updatedRooms,
-        updatedRoom,
-    }
-
 }
 
 const leaveRoom = (user, rooms) => {
@@ -66,80 +53,40 @@ const leaveRoom = (user, rooms) => {
 
 const joinRoom = (rooms, room, user) => {
 
-    const { userInJoiningRoom, indexJoiningRoom, indexUserJoiningRoom} = getJoiningRoomInfo(rooms, room, user)
+    const indexJoiningRoom = rooms.findIndex(item => item.id === room.id)
+    let updatedRoom
+    let updatedUsers
 
-    let updatedUsers = room.users
-
-    if (!userInJoiningRoom) {
-
+    if (indexJoiningRoom == -1) {
         updatedUsers = [
-            ...room.users,
             user,
         ]
-
-    }
-
-    updatedRoom = {
-        ...room,
-        users: updatedUsers
-    }
-
-    const {exists, index} = getIfRoomExists(updatedRoom, rooms)
-
-    if (!exists) {
-
+        updatedRoom = {
+            id: room.id,
+            users: updatedUsers,
+        }
         rooms = [
             ...rooms,
             updatedRoom,
         ]
     }
     else {
+        updatedUsers = [
+            ...rooms[indexJoiningRoom].users,
+            user,
+        ]
+        updatedRoom = {
+            id: room.id,
+            users: updatedUsers,
+        }
         rooms = [
-            ...rooms.slice(0, index),
+            ...rooms.slice(0, indexJoiningRoom),
             updatedRoom,
-            ...rooms.slice(index + 1, rooms.length),
+            ...rooms.slice(indexJoiningRoom + 1, rooms.length),
         ]
     }
-
-
     updatedRooms = rooms
-
     return {updatedRooms, updatedRoom}
-
-}
-
-const getIfRoomExists = (room, rooms) => {
-    let exists = false
-    let index
-    for (var i = 0; i < rooms.length; i++) {
-        if (rooms[i].id == room.id) {
-            exists = true
-            index = i
-            break
-        }
-    }
-    return {exists, index}
-}
-
-const getJoiningRoomInfo = (rooms, room, user) => {
-
-    let userInJoiningRoom = false
-    let indexJoiningRoom
-    let indexUserJoiningRoom
-
-    for (var i = 0; i < rooms.length; i++) {
-        for (var j = 0; j < rooms[i].users.length; j++) {
-            if (user.id === rooms[i].users[j].id) {
-
-                userInJoiningRoom = true
-                indexJoiningRoom = i
-                indexUserJoiningRoom = j
-                break
-
-            }
-        }
-    }
-    return { userInJoiningRoom, indexJoiningRoom, indexUserJoiningRoom}
 }
 
 const getLeavingRoomInfo = (user, rooms) => {

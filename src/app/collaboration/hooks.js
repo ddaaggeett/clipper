@@ -15,9 +15,8 @@ export const useGroupSession = () => {
             redux(actions.updateAvailableRooms(rooms))
         })
 
-        socket.on('broadcast_rooms_available', (rooms, callback) => {
+        socket.on('broadcast_rooms_available', (rooms) => {
             redux(actions.updateAvailableRooms(rooms))
-            callback()
         })
     }, [])
 
@@ -47,8 +46,9 @@ export const joinRoom = () => {
                     user,
                 }
             }
-            socket.emit('join_room', packet, room => {
-                redux(actions.updateRoom(room))
+            socket.emit('join_room', packet, ({updatedRooms, updatedRoom}) => {
+                redux(actions.updateAvailableRooms(updatedRooms))
+                redux(actions.updateRoom(updatedRoom))
             })
         }
         return () => setSelectedRoom(null)
