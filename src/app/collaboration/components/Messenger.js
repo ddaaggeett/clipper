@@ -18,16 +18,26 @@ export default () => {
 
 const Messages = () => {
 
-    const { room, messages } = useSelector(state => state.collaboration)
+    const { rooms, room } = useSelector(state => state.collaboration)
 
-    const renderMessages = messages.map((message, key) => {
-        return <Text style={styles.text} key={key}>{`${message}`}</Text>
+    const index = rooms.findIndex(item => item.id === room.id)
+
+    let roomMessages
+    if (rooms[index].messages != undefined) roomMessages = rooms[index].messages
+    else roomMessages = null
+
+    // TODO: roomMessages[] will not map. check redux
+    const renderMessages = roomMessages.map((message, key) => {
+        return <Text style={styles.text} key={key}>{`${message.userID} says: ${message.text}`}</Text>
     })
 
     return (
         <View>
             <Text style={styles.text}>{`${room.id} messages`}</Text>
-            <View>{renderMessages}</View>
+            {() => {
+                if (roomMessages) return null
+                else return <View>{renderMessages}</View>
+            }}
         </View>
     )
 }
@@ -39,11 +49,13 @@ const MessageInput = () => {
     const { room } = useSelector(state => state.collaboration)
 
     const handleSendMessage = () => {
-        sendMessage({
-            message: messageText,
-            user,
+        const messageObject = {
+            timestamp: Date.now(),
+            text: messageText,
+            userID: user.id,
             roomID: room.id,
-        })
+        }
+        sendMessage(messageObject)
         setMessageText('')
     }
 

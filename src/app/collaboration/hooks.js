@@ -19,8 +19,8 @@ export const useGroupSession = () => {
             redux(actions.updateAvailableRooms(rooms))
         })
 
-        socket.on('message', packet => {
-            console.log(`packet = ${JSON.stringify(packet,null,4)}`)
+        socket.on('message', messageObject => {
+            redux(actions.updatedRoomMessages(messageObject))
         })
 
     }, [])
