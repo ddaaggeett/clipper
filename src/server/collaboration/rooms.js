@@ -4,13 +4,14 @@ const getRooms = (packet) => {
         let room = packet.room
         let rooms = packet.rooms
 
-        rooms = leaveRoom(user, rooms)
+        const { roomsAfterLeaving, prevRoomID } = leaveRoom(user, rooms)
 
-        const {updatedRooms, updatedRoom} = joinRoom(rooms, room, user)
+        const {updatedRooms, updatedRoom} = joinRoom(roomsAfterLeaving, room, user)
 
         resolve({
             updatedRooms,
             updatedRoom,
+            prevRoomID,
         })
     })
 }
@@ -19,9 +20,12 @@ const leaveRoom = (user, rooms) => {
 
     const { userNeedsToLeave, indexRoomLeaving, indexUserLeaving } = getLeavingRoomInfo(user, rooms)
 
+    let prevRoomID = null
+
     if (userNeedsToLeave) { // leave a previous room
 
         let prevRoom = rooms[indexRoomLeaving]
+        prevRoomID = prevRoom.id
 
         const updatedPrevRoomUsers = [
             ...prevRoom.users.slice(0, indexUserLeaving),
@@ -48,7 +52,9 @@ const leaveRoom = (user, rooms) => {
         }
     }
 
-    return rooms
+    const roomsAfterLeaving = rooms
+
+    return {roomsAfterLeaving, prevRoomID}
 }
 
 const joinRoom = (rooms, room, user) => {

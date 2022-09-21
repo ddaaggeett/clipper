@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
+import { sendMessage } from '../hooks'
 
 export default () => {
 
@@ -34,9 +35,15 @@ const Messages = () => {
 const MessageInput = () => {
 
     const [messageText, setMessageText] = useState('')
+    const { user } = useSelector(state => state.account)
+    const { room } = useSelector(state => state.collaboration)
 
     const handleSendMessage = () => {
-        // sendMessage(messageText)
+        sendMessage({
+            message: messageText,
+            user,
+            roomID: room.id,
+        })
         setMessageText('')
     }
 

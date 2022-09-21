@@ -11,14 +11,23 @@ let rooms = []
 
 io.on('connection', (socket) => {
 
+    socket.on('message', packet => {
+        io.to(packet.roomID).emit('message', packet)
+    })
+
     socket.on('join_room', (packet, callback) => {
-        // socket.join(room.id) // TODO:
+
+        socket.join(packet.room.id)
+
         packet = {
             ...packet,
             rooms,
         }
         getRooms(packet)
-        .then(({updatedRooms, updatedRoom}) => {
+        .then(({updatedRooms, updatedRoom, prevRoomID}) => {
+
+            if (prevRoomID) socket.leave(prevRoomID)
+
             rooms = updatedRooms
             callback({updatedRooms, updatedRoom})
             io.emit('broadcast_rooms_available', rooms) // TODO: socket.broadcast.emit instead?

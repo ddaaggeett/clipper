@@ -18,6 +18,11 @@ export const useGroupSession = () => {
         socket.on('broadcast_rooms_available', (rooms) => {
             redux(actions.updateAvailableRooms(rooms))
         })
+
+        socket.on('message', packet => {
+            console.log(`packet = ${JSON.stringify(packet,null,4)}`)
+        })
+
     }, [])
 
 }
@@ -56,4 +61,8 @@ export const joinRoom = () => {
 
     return { setSelectedRoom }
 
+}
+
+export const sendMessage = (packet) => {
+    socket.emit('message', packet)
 }
