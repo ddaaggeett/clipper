@@ -11,8 +11,8 @@ let rooms = []
 
 io.on('connection', (socket) => {
 
-    socket.on('message', packet => {
-        io.to(packet.roomID).emit('message', packet)
+    socket.on('message', (message, callback) => {
+        io.to(message.roomID).emit('message', message)
     })
 
     socket.on('join_room', (packet, callback) => {

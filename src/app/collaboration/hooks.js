@@ -19,8 +19,8 @@ export const useGroupSession = () => {
             redux(actions.updateAvailableRooms(rooms))
         })
 
-        socket.on('message', messageObject => {
-            redux(actions.updatedRoomMessages(messageObject))
+        socket.on('message', message => {
+            redux(actions.updateRoomMessages(message))
         })
 
     }, [])
@@ -41,6 +41,7 @@ export const joinRoom = () => {
                     room: {
                         id: Date.now(),
                         users: [],
+                        messages: [],
                     },
                     user,
                 }
@@ -63,6 +64,6 @@ export const joinRoom = () => {
 
 }
 
-export const sendMessage = (packet) => {
-    socket.emit('message', packet)
+export const sendMessage = (message) => {
+    socket.emit('message', message)
 }

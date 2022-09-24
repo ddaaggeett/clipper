@@ -14,9 +14,9 @@ export const updateAvailableRooms = (rooms) => {
     }
 }
 
-export const updatedRoomMessages = (messageObject) => {
+export const updateRoomMessages = (message) => {
     return {
         type: actions.UPDATE_ROOM_MESSAGES,
-        messageObject,
+        message,
     }
 }

@@ -68,6 +68,7 @@ const joinRoom = (rooms, room, user) => {
             user,
         ]
         updatedRoom = {
+            ...room,
             id: room.id,
             users: updatedUsers,
         }
@@ -82,6 +83,7 @@ const joinRoom = (rooms, room, user) => {
             user,
         ]
         updatedRoom = {
+            ...room,
             id: room.id,
             users: updatedUsers,
         }

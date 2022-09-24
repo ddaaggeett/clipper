@@ -49,13 +49,13 @@ const MessageInput = () => {
     const { room } = useSelector(state => state.collaboration)
 
     const handleSendMessage = () => {
-        const messageObject = {
+        const message = {
             timestamp: Date.now(),
             text: messageText,
             userID: user.id,
             roomID: room.id,
         }
-        sendMessage(messageObject)
+        sendMessage(message)
         setMessageText('')
     }
 

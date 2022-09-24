@@ -23,17 +23,17 @@ export default function app(state = initialState, action) {
 
         case actions.UPDATE_ROOM_MESSAGES:
 
-            const index = rooms.findIndex(item => item.id === action.messageObject.roomID)
+            const index = state.rooms.findIndex(item => item.id === action.message.roomID)
 
             let newMessages
-            if (state.rooms[index].messages != undefined) {
+            if (state.rooms[index].messages.length != 0) {
                 newMessages = [
                     ...state.rooms[index].messages,
-                    action.messageObject,
+                    action.message,
                 ]
             }
             else {
-                newMessages = [action.messageObject]
+                newMessages = [action.message]
             }
 
             return {
@@ -44,7 +44,7 @@ export default function app(state = initialState, action) {
                         ...state.rooms[index],
                         messages: newMessages,
                     },
-                    ...state.rooms.slice(index + 1, rooms.length),
+                    ...state.rooms.slice(index + 1, state.rooms.length),
 
                 ]
             }
