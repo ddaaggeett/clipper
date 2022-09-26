@@ -118,6 +118,24 @@ const getLeavingRoomInfo = (user, rooms) => {
     return { userNeedsToLeave, indexRoomLeaving, indexUserLeaving }
 }
 
+const addRoomMessage = (message, rooms) => {
+    const roomIndex = rooms.findIndex(item => item.id == message.roomID)
+    const updatedRoom = {
+        ...rooms[roomIndex],
+        messages: [
+            ...rooms[roomIndex].messages,
+            message,
+        ]
+    }
+    const updatedRooms = [
+        ...rooms.slice(0, roomIndex),
+        updatedRoom,
+        ...rooms.slice(roomIndex + 1, rooms.length),
+    ]
+    return { updatedRoom, updatedRooms }
+}
+
 module.exports = {
     getRooms,
+    addRoomMessage,
 }

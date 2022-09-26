@@ -5,14 +5,16 @@ const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
 const { serverIP, socketPort } = require('../../../config')
-const { getRooms } = require('./rooms')
+const { getRooms, addRoomMessage } = require('./rooms')
 
 let rooms = []
 
 io.on('connection', (socket) => {
 
-    socket.on('message', (message, callback) => {
-        io.to(message.roomID).emit('message', message)
+    socket.on('message', message => {
+        const { updatedRoom, updatedRooms } = addRoomMessage(message, rooms)
+        rooms = updatedRooms
+        io.to(message.roomID).emit('update_room', updatedRoom)
     })
 
     socket.on('join_room', (packet, callback) => {

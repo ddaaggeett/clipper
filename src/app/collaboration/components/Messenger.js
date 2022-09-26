@@ -20,24 +20,14 @@ const Messages = () => {
 
     const { rooms, room } = useSelector(state => state.collaboration)
 
-    const index = rooms.findIndex(item => item.id === room.id)
-
-    let roomMessages
-    if (rooms[index].messages != undefined) roomMessages = rooms[index].messages
-    else roomMessages = null
-
-    // TODO: roomMessages[] will not map. check redux
-    const renderMessages = roomMessages.map((message, key) => {
+    const renderMessages = room.messages.map((message, key) => {
         return <Text style={styles.text} key={key}>{`${message.userID} says: ${message.text}`}</Text>
     })
 
     return (
         <View>
             <Text style={styles.text}>{`${room.id} messages`}</Text>
-            {() => {
-                if (roomMessages) return null
-                else return <View>{renderMessages}</View>
-            }}
+            { room.messages.length == 0 ? null : <View>{renderMessages}</View> }
         </View>
     )
 }
