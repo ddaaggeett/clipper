@@ -9,11 +9,34 @@ export default () => {
 
     if (room) return (
         <View>
+            <RoomMembers />
             <MessageInput />
             <Messages />
         </View>
     )
     else return null
+}
+
+const RoomMembers = () => {
+
+    const { room } = useSelector(state => state.collaboration)
+
+    const renderRoomMembers = () => room.users.map((user, index) => {
+        // TODO: not mapping because room == null ?
+        return (
+            <View key={index}>
+                { index == 0 ? null : <Text style={styles.text} key={index}>{`, `}</Text>}
+                <Text style={styles.text} key={index}>{`${user.id}`}</Text>
+            </View>
+        )
+    })
+
+    return (
+        <View style={styles.roomMembersRow}>
+            <Text  style={styles.text}>{`Members include: `}</Text>
+            <View style={styles.roomMembers}>{renderRoomMembers}</View>
+        </View>
+    )
 }
 
 const Messages = () => {
@@ -25,7 +48,7 @@ const Messages = () => {
     })
 
     return (
-        <View>
+        <View style={styles.messages}>
             <Text style={styles.text}>{`${room.id} messages`}</Text>
             { room.messages.length == 0 ? null : <View>{renderMessages}</View> }
         </View>
@@ -78,24 +101,39 @@ const MessageInput = () => {
 const styles = StyleSheet.create({
     messageInput: {
         flexDirection: 'row',
+        padding: 5,
     },
     textInput: {
         flex: 1,
         borderColor: 'white',
         borderWidth: 1,
         color: 'white',
-        padding: 10,
-        margin: 5,
+        padding: 11,
+        margin: 3,
     },
     button: {
-        padding: 40,
-        paddingTop: 10,
-        paddingBottom: 10,
+        padding: 30,
+        paddingTop: 11,
+        paddingBottom: 11,
         backgroundColor:'#444',
         alignSelf: 'center',
-        margin: 1,
+        borderRadius: 5,
+        margin: 3,
     },
     text: {
         color: 'white',
+    },
+    roomMembersRow: {
+        flexDirection: 'row',
+        margin: 10,
+    },
+    roomMembers: {
+        flex: 1,
+        flexDirection: 'column',
+        borderColor: 'green',
+        borderWidth:1,
+    },
+    messages: {
+        margin: 10,
     },
 })
