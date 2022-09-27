@@ -4,37 +4,32 @@ import { useSelector, useDispatch } from 'react-redux'
 import { sendMessage } from '../hooks'
 
 export default () => {
-
-    const { room } = useSelector(state => state.collaboration)
-
-    if (room) return (
+    return (
         <View>
             <RoomMembers />
             <MessageInput />
             <Messages />
         </View>
     )
-    else return null
 }
 
 const RoomMembers = () => {
 
     const { room } = useSelector(state => state.collaboration)
 
-    const renderRoomMembers = () => room.users.map((user, index) => {
-        // TODO: not mapping because room == null ?
+    const renderRoomMembers = (users) => users.map((user, index) => {
         return (
-            <View key={index}>
-                { index == 0 ? null : <Text style={styles.text} key={index}>{`, `}</Text>}
-                <Text style={styles.text} key={index}>{`${user.id}`}</Text>
+            <View style={styles.names} key={index}>
+                { index == 0 ? null : <Text style={styles.text}>{`, `}</Text>}
+                <Text style={[styles.text, {fontWeight: 'bold',}]}>{`${user.id}`}</Text>
             </View>
         )
     })
 
     return (
         <View style={styles.roomMembersRow}>
-            <Text  style={styles.text}>{`Members include: `}</Text>
-            <View style={styles.roomMembers}>{renderRoomMembers}</View>
+            <Text style={styles.text}>{`Members in this group:  `}</Text>
+            <View style={styles.names}>{renderRoomMembers(room.users)}</View>
         </View>
     )
 }
@@ -127,11 +122,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         margin: 10,
     },
+    names: {
+        flexDirection: 'row',
+    },
     roomMembers: {
         flex: 1,
         flexDirection: 'column',
-        borderColor: 'green',
-        borderWidth:1,
     },
     messages: {
         margin: 10,

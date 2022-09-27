@@ -5,10 +5,13 @@ import Messenger from './components/Messenger'
 import GroupSession from './components/Groups'
 
 export default () => {
+
+    const { room } = useSelector(state => state.collaboration)
+
     return (
         <View style={styles.container}>
             <View style={[styles.column, styles.groups]} ><GroupSession /></View>
-            <View style={[styles.column, styles.messages]} ><Messenger /></View>
+            { !room ? null : <View style={[styles.column, styles.messages]} ><Messenger /></View>}
         </View>
     )
 }

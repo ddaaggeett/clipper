@@ -40,7 +40,7 @@ const SelectGroupSession = () => {
 
     return (
         <View style={styles.session}>
-            <Text style={[styles.sessionButton, styles.text]}>{`or select session`}</Text>
+            <Text style={[styles.sessionButton, styles.text]}>{`or join another:`}</Text>
             <View style={styles.sessionButtons}>{renderRoomSelections}</View>
         </View>
     )
@@ -55,7 +55,7 @@ const CreateGroupSession = () => {
             style={[styles.sessionButton, styles.button, styles.createGroup]}
             onPress={() => setSelectedRoom('new')}
             >
-            <Text style={styles.text}>{`Create Group Session`}</Text>
+            <Text style={styles.text}>{`Start a conversation`}</Text>
         </TouchableOpacity>
     )
 }
@@ -81,11 +81,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'green'
     },
     button: {
-        padding: 40,
-        paddingTop: 10,
-        paddingBottom: 10,
+        padding: 30,
+        paddingTop: 11,
+        paddingBottom: 11,
         backgroundColor:'#444',
         alignSelf: 'center',
+        borderRadius: 5,
         margin: 1,
     },
     text: {
