@@ -20,14 +20,23 @@ export default () => {
 const SelectGroupSession = () => {
 
     const { rooms } = useSelector(state => state.collaboration)
+    const { user } = useSelector(state => state.account)
     const { setSelectedRoom } = joinRoom()
 
     const renderSessionUserList = (room) => room.users.map((user, key) => {
         return <Text style={styles.text} key={key}>{`${user.id}`}</Text>
     })
 
+    const userInRoom = (room) => {
+        for (var x = 0; x < room.users.length; x++) {
+            if (room.users[x].id === user.id) return true
+        }
+        return false
+    }
+
     const renderRoomSelections = rooms.map((room, key) => {
-        return (
+        if (userInRoom(room)) return null
+        else return (
             <TouchableOpacity
                 style={[styles.sessionButton, styles.button]}
                 onPress={() => setSelectedRoom(room)}
