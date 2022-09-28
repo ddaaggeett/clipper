@@ -15,23 +15,20 @@ io.on('connection', (socket) => {
         const { updatedRoom, updatedRooms } = addRoomMessage(message, rooms)
         rooms = updatedRooms
         io.to(message.roomID).emit('update_room', updatedRoom)
+        io.emit('broadcast_rooms_available', rooms) // TODO: socket.broadcast.emit instead?
     })
 
-    socket.on('join_room', (packet, callback) => {
-
+    socket.on('join_room', (packet) => {
         socket.join(packet.room.id)
-
         packet = {
             ...packet,
             rooms,
         }
         getRooms(packet)
         .then(({updatedRooms, updatedRoom, prevRoomID}) => {
-
             if (prevRoomID) socket.leave(prevRoomID)
-
             rooms = updatedRooms
-            callback({updatedRooms, updatedRoom})
+            io.to(packet.room.id).emit('update_room', updatedRoom)
             io.emit('broadcast_rooms_available', rooms) // TODO: socket.broadcast.emit instead?
         })
     })

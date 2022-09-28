@@ -36,7 +36,7 @@ const RoomMembers = () => {
 
 const Messages = () => {
 
-    const { rooms, room } = useSelector(state => state.collaboration)
+    const { room } = useSelector(state => state.collaboration)
 
     const renderMessages = room.messages.map((message, key) => {
         return <Text style={styles.text} key={key}>{`${message.userID} says: ${message.text}`}</Text>

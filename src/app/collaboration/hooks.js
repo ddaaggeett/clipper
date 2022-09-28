@@ -52,10 +52,7 @@ export const joinRoom = () => {
                     user,
                 }
             }
-            socket.emit('join_room', packet, ({updatedRooms, updatedRoom}) => {
-                redux(actions.updateAvailableRooms(updatedRooms))
-                redux(actions.updateRoom(updatedRoom))
-            })
+            socket.emit('join_room', packet)
         }
         return () => setSelectedRoom(null)
     }, [selectedRoom])
