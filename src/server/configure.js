@@ -5,9 +5,8 @@ const config = require('../../config_example')
 const { exec } = require('child_process')
 
 const initFileDataDirectory = () => {
-    const directoryArray = Object.values(config.fileData)
-    directoryArray.forEach(dir => {
-        fs.mkdir(path.join(dir), {recursive:true}, error => {
+    config.apps.forEach((app, i) => {
+        fs.mkdir(path.join(app.fileData), {recursive:true}, error => {
             if(error) console.error(error)
         })
     })

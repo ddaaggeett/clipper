@@ -2,7 +2,10 @@ const { exec, spawn } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 const r = require('rethinkdb')
-const { dbConnxConfig, fileData } = require('../../../config')
+const { dbConnxConfig } = require('../../../config')
+const functions = require('../functions')
+
+const clipper = functions.getAppObject('clipper')
 
 const downloadVideo = (videoDirectory, videoID) => {
     return new Promise((resolve,reject) => {
@@ -50,7 +53,7 @@ const formatThumbnail = (videoDirectory, videoID) => {
 const updateSourceVideo = (videoObject) => {
 
     return new Promise((resolve, reject) => {
-        const videoDirectory = path.join(fileData.clipper, videoObject.videoID)
+        const videoDirectory = path.join(clipper.fileData, videoObject.videoID)
         const command = `youtube-dl -f best https://www.youtube.com/watch?v=${videoObject.videoID} --get-title`
         exec(command, {
             cwd: videoDirectory,

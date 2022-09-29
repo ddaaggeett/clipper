@@ -1,12 +1,15 @@
 const express = require('express')
-const { dbConnxConfig, fileData } = require('../../../config')
+const { dbConnxConfig } = require('../../../config')
 const r = require('rethinkdb')
 const path = require('path')
 const fs = require('fs')
 const { zipClip } = require('./zip')
+const functions = require('../functions')
+
+const clipper = functions.getAppObject('clipper')
 
 const clipperExpress = app => {
-    app.use(express.static(path.join(__dirname, '/../../..', fileData.clipper)))
+    app.use(express.static(path.join(__dirname, '/../../..', clipper.fileData)))
 
     app.get('/:clipID', (req, res) => {
         // TODO: should be zipped already. donwload only here.

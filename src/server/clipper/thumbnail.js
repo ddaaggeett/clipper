@@ -2,8 +2,11 @@ const fs = require('fs')
 const Jimp = require('jimp')
 const path = require('path')
 const { exec } = require('child_process')
-const { fileData, dbConnxConfig } = require('../../../config')
+const { dbConnxConfig } = require('../../../config')
 const r = require('rethinkdb')
+const functions = require('../functions')
+
+const clipper = functions.getAppObject('clipper')
 
 const thumbWidth = 1280
 const thumbHeight = 720
@@ -11,7 +14,7 @@ const thumbHeight = 720
 const generateThumbnails = (clipObject) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
-            const videoDirectory = path.join(fileData.clipper, clipObject.videoID)
+            const videoDirectory = path.join(clipper.fileData, clipObject.videoID)
             const clipDirectory = path.join(videoDirectory, clipObject.id)
             const singleFrameURI = path.join(clipDirectory, 'singleFrame.png')
             const thumbnail_white_uri = path.join(clipDirectory, 'thumbnail_white.png')

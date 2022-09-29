@@ -16,11 +16,8 @@ web-build/
 
 config.*
 *.mp4
-video_data/**/*
-data.json
 
 rethinkdb_data
-clipper_data
-data_*
+data
 
 docs

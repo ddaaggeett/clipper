@@ -4,45 +4,34 @@
         {
             "name": "account",
             "socketPort": 3343,
-            "fileData": "./data_xyz/"
+            "fileData": "./data/xyz/"
         },
         {
             "name": "clipper",
             "socketPort": 3348,
-            "fileData": "./data_clipper/"
+            "fileData": "./data/clipper/"
         },
         {
             "name": "whitesocket",
             "socketPort": 3349,
-            "fileData": "./data_whitesocket/"
+            "fileData": "./data/whitesocket/"
         },
         {
             "name": "collaboration",
             "socketPort": 3351,
-            "fileData": "./data_collaboration/"
+            "fileData": "./data/collaboration/"
         },
         {
             "name": "podware",
             "socketPort": 3348,
-            "fileData": "./data_audio/"
+            "fileData": "./data/podware/"
         }
     ],
     "sourceCodeURL": "https://github.com/ddaaggeett/xyz",
     "configFile": "./config.json",
     "serverIP": "192.168.0.1",
-    "socketPort": {
-        "account": 3343,
-        "podware": 3347,
-        "whitesocket": 3349,
-        "clipper": 3348
-    },
     "expressPort": 3316,
     "audioFileExt": "wav",
-    "fileData": {
-        "clipper": "./data_clipper/",
-        "imageData": "./data_whitesocket/",
-        "audio": "./data_audio/"
-    },
     "tables": {
         "recordings": "recordings",
         "clips": "clips",
