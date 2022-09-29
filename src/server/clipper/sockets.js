@@ -1,12 +1,14 @@
-var express = require('express')
-var app = express()
-var http = require('http').Server(app)
-var io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
-var { socketPort } = require('../../../config')
-var { updateClip, deleteClip, handlePendingClips } = require('./handleReceiveClips')
+const express = require('express')
+const app = express()
+const http = require('http').Server(app)
+const io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
+const functions = require('../functions')
+const { updateClip, deleteClip, handlePendingClips } = require('./handleReceiveClips')
 const { updateVideoProgress, getClips } = require('./user')
-var generateClip = require('./generateClip')
+const generateClip = require('./generateClip')
 const { updateSourceVideo } = require('./youtube-dl')
+
+const clipper = functions.getAppObject('clipper')
 
 io.on('connection', (socket) => {
     socket.on('videoProgress', videoObject => {
@@ -41,6 +43,6 @@ io.on('connection', (socket) => {
     })
 })
 
-http.listen(socketPort.clipper, function(){
-    console.log('socket.io listening on *:' + socketPort.clipper)
+http.listen(clipper.socketPort, function(){
+    console.log('socket.io listening on *:' + clipper.socketPort)
 })

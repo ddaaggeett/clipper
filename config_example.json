@@ -17,6 +17,11 @@
             "fileData": "./data_whitesocket/"
         },
         {
+            "name": "collaboration",
+            "socketPort": 3351,
+            "fileData": "./data_collaboration/"
+        },
+        {
             "name": "podware",
             "socketPort": 3348,
             "fileData": "./data_audio/"

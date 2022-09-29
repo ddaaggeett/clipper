@@ -1,7 +1,9 @@
 const express = require('express')
-const { socketPort } = require('../../../config')
+const functions = require('../functions')
 const diff = require('./diff')
 const user = require('./user')
+
+const whitesocket = functions.getAppObject('whitesocket')
 
 var app = express()
 var http = require('http').Server(app)
@@ -23,6 +25,6 @@ io.on('connection', (socket) => {
     socket.on('capturePrepped', () => io.emit('capturePrepped'))
 })
 
-http.listen(socketPort.whitesocket, function(){
-    console.log('socket.io listening on *:' + socketPort.whitesocket)
+http.listen(whitesocket.socketPort, function(){
+    console.log('socket.io listening on *:' + whitesocket.socketPort)
 })

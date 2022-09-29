@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, ScrollView, Platform } from 'react-native'
-import { serverIP, socketPort, appName } from '../../../../config'
 import * as actions from '../../clipper/redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
@@ -12,8 +11,6 @@ import SourceCodeLink from './SourceCodeLink'
 import TitleLink, { TitleText } from './TitleText'
 import Logout from './Logout'
 import Nav from './Nav'
-
-const socket = io(`http://${serverIP}:${socketPort.clipper}`)
 
 const WebBar = () => {
     const { user } = useSelector(state => state.account)

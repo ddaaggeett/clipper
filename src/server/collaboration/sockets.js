@@ -4,8 +4,10 @@ const express = require('express')
 const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
-const { serverIP, socketPort } = require('../../../config')
 const { getRooms, addRoomMessage } = require('./rooms')
+const functions = require('../functions')
+
+const collaboration = functions.getAppObject('collaboration')
 
 let rooms = []
 
@@ -42,6 +44,6 @@ io.on('connection', (socket) => {
 
 })
 
-http.listen(socketPort.podware, function(){
-    console.log('socket.io listening on *:' + socketPort.podware)
+http.listen(collaboration.socketPort, function(){
+    console.log('socket.io listening on *:' + collaboration.socketPort)
 })

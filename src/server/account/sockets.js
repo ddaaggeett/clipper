@@ -1,9 +1,11 @@
-var express = require('express')
-var app = express()
-var http = require('http').Server(app)
-var io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
-var { socketPort } = require('../../../config')
+const express = require('express')
+const app = express()
+const http = require('http').Server(app)
+const io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
+const functions = require('../functions')
 const user = require('./user')
+
+const account = functions.getAppObject('account')
 
 io.on('connection', (socket) => {
     socket.on('create account', (newUser, returnObject) => {
@@ -23,6 +25,6 @@ io.on('connection', (socket) => {
     })
 })
 
-http.listen(socketPort.account, function(){
-    console.log('socket.io listening on *:' + socketPort.account)
+http.listen(account.socketPort, function(){
+    console.log('socket.io listening on *:' + account.socketPort)
 })
