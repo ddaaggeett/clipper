@@ -4,12 +4,13 @@ import { Camera } from 'expo-camera'
 import io from 'socket.io-client'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import config from '../../../../config'
-const socket = io.connect(`http://${config.serverIP}:${config.socketPort.whitesocket}`)
+import { useSocket } from '../hooks'
 
     export default () => {
         const [hasPermission, setHasPermission] = useState(null)
         const [cameraReady, setCameraReady] = useState(false)
         const [mode, setMode] = useState(null)
+        const socket = useSocket()
 
         useEffect(() => {
 

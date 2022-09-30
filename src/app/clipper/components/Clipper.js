@@ -7,18 +7,16 @@ import ThumbnailSelector from './ThumbnailSelector'
 import PlaybackSpeed from './PlaybackSpeed'
 import RwdFfd from './RwdFfd'
 import getContentID from '../getContentID'
-import { io } from 'socket.io-client'
-import { serverIP, socketPort } from '../../../../config'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
-
-const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
+import { useSocket } from '../hooks'
 
 export default (props) => {
 
     const player = useRef()
     const [playing, setPlaying] = useState(true)
     const [clipPreDB, setClipPreDB] = useState(null)
+    const socket = useSocket()
 
     const { clips } = useSelector(state => state.clips)
     const { leftCursor, rightCursor, boundCount, editIndex, speed, contentID, panelWidth, playingClip, validYoutubeID } = useSelector(state => state.clipper)

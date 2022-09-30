@@ -2,15 +2,14 @@ import React, { useState, useRef } from 'react'
 import { View, Text, TouchableOpacity, Platform, StyleSheet } from "react-native"
 import { useSelector, useDispatch } from 'react-redux'
 import * as Linking from 'expo-linking'
-import { serverIP, socketPort, expressPort } from '../../../../config'
-import { io } from 'socket.io-client'
-
-const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
+import { serverIP, expressPort } from '../../../../config'
+import { useSocket } from '../hooks'
 
 export default () => {
 
     const { editIndex } = useSelector(state => state.clipper)
     const { clips } = useSelector(state => state.clips)
+    const socket = useSocket()
 
     const downloadClip = () => {
         if (Platform.OS === 'web') Linking.openURL(`http://${serverIP}:${expressPort}/${clips[editIndex].id}`)

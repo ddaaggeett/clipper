@@ -1,17 +1,14 @@
-import React from 'react'
 import * as actions from '../../clipper/redux/actions/actionCreators'
 import { Text, TouchableOpacity, StyleSheet } from "react-native"
 import { useSelector, useDispatch } from 'react-redux'
-import { serverIP, socketPort } from '../../../../config'
-import { io } from 'socket.io-client'
-
-const socket = io(`http://${serverIP}:${socketPort.clipper}`)
+import { useSocket } from '../hooks'
 
 export default () => {
 
     const { pending } = useSelector(state => state.clips)
     const { user } = useSelector(state => state.account)
     const redux = useDispatch()
+    const socket = useSocket()
 
     const handleSync = () => {
         if (user !== null) {

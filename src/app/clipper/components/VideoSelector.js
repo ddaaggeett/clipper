@@ -3,15 +3,13 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import getContentID from '../getContentID'
-import { io } from 'socket.io-client'
-import { serverIP, socketPort } from '../../../../config'
-
-const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
+import { useSocket } from '../hooks'
 
 export default (props) => {
 
     const { contentID, panelWidth } = useSelector(state => state.clipper)
     const redux = useDispatch()
+    const socket = useSocket()
 
     const handleGetPlayContent = (text) => {
         redux(actions.setEditIndex(null))

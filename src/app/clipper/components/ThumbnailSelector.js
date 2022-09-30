@@ -2,10 +2,7 @@ import { View, Text, TouchableOpacity, Platform, StyleSheet } from "react-native
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
-import { io } from 'socket.io-client'
-import { serverIP, socketPort } from '../../../../config'
-
-const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
+import { useSocket } from '../hooks'
 
 export default (props) => {
 
@@ -14,6 +11,7 @@ export default (props) => {
     const redux = useDispatch()
     const { clips } = useSelector(state => state.clips)
     const { editIndex } = useSelector(state => state.clipper)
+    const socket = useSocket()
 
     useEffect(() => {
         return () => setThumbnailTime(null)

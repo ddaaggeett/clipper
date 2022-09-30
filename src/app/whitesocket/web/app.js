@@ -2,9 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import Whiteboard from './Whiteboard'
 import Arucos from './Arucos'
-import io from 'socket.io-client'
-import { serverIP, socketPort, borderWidth } from '../../../../config'
-const socket = io.connect(`http://${serverIP}:${socketPort.whitesocket}`)
+import { borderWidth } from '../../../../config'
 
 export default () => {
 

@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { io } from 'socket.io-client'
-import { serverIP, socketPort } from '../../../config'
 import { useDispatch } from 'react-redux'
 import * as actions from './redux/actions/actionCreators'
-const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
+import { useSocket } from './hooks'
 
 export default () => {
 
     const redux = useDispatch()
+    const socket = useSocket()
 
     useEffect(() => {
         socket.on('updateClip', clip => redux(actions.updateClip(clip)))

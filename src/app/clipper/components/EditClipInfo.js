@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, TouchableOpacity, TextInput, Platform, StyleSheet } from 'react-native'
 import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
-import { io } from 'socket.io-client'
-import { serverIP, socketPort } from '../../../../config'
 import EditClipOptions from './EditClipOptions'
-
-const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
+import { useSocket } from '../hooks'
 
 export default (props) => {
 
@@ -16,6 +13,7 @@ export default (props) => {
     const [title, setTitle] = useState()
     const [who, setWho] = useState()
     const redux = useDispatch()
+    const socket = useSocket()
 
     const handleChangeTitle = (event) => setTitle(event.target.value)
     const handleChangeWho = (event) => setWho(event.target.value)

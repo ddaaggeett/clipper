@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, Platform, TextInput } from 'react-native'
-import { appName, serverIP, socketPort } from '../../../../config'
+import { appName } from '../../../../config'
 import * as actions from '../redux/actions/actionCreators'
 import { useSelector, useDispatch } from 'react-redux'
 import CreateAccount from './CreateAccount'
-import { io } from 'socket.io-client'
-
-const socket = io('http://'+ serverIP + ':' + socketPort.account)
+import { useSocket } from '../hooks'
 
 export default (props) => {
 
@@ -79,6 +77,7 @@ const SignInAccount = (props) => {
     const [id, setId] = useState('')
     const [password, setPassword] = useState('')
     const [loginInfo, setLoginInfo] = useState(null)
+    const socket = useSocket()
 
     useEffect(() => {
         setLoginInfo({

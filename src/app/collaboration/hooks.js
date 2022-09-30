@@ -1,9 +1,12 @@
 const { useEffect, useState } = require('react')
-const { serverIP, socketPort } = require('../../../config')
+const { serverIP } = require('../../../config')
 const { useDispatch, useSelector } = require('react-redux')
 const actions = require('./redux/actions/actionCreators')
 const { io } = require('socket.io-client')
-const socket = io(`http://${serverIP}:${socketPort.podware}`)
+import functions from '../../server/functions'
+
+const collaboration = functions.getAppObject('collaboration')
+const socket = io(`http://${serverIP}:${collaboration.socketPort}`)
 
 export const useGroupSession = () => {
 

@@ -2,10 +2,7 @@ import React, { useState, useRef } from 'react'
 import { View, Text, TouchableOpacity, Dimensions, Platform, StyleSheet } from "react-native"
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
-import { io } from 'socket.io-client'
-import { serverIP, socketPort } from '../../../../config'
-
-const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
+import { useSocket } from '../hooks'
 
 export default (props) => {
 
@@ -13,6 +10,7 @@ export default (props) => {
     const { clips } = useSelector(state => state.clips)
     const clip = clips[editIndex]
     const redux = useDispatch()
+    const socket = useSocket()
 
     const deleteClip = () => {
         redux(actions.setEditIndex(null))

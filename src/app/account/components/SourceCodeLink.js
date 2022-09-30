@@ -1,4 +1,3 @@
-import React from 'react'
 import { StyleSheet, TouchableOpacity, Image } from 'react-native'
 import * as Linking from 'expo-linking'
 import { sourceCodeURL } from '../../../../config'

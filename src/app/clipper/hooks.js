@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { serverIP, socketPort } from '../../../config'
+import { serverIP } from '../../../config'
 import * as actions from './redux/actions/actionCreators'
 import useDataSocketHook from './dataSocket'
 import { io } from 'socket.io-client'
+const functions = require('../../server/functions')
 
-const socket = io(`http://${serverIP}:${socketPort.clipper}`)
+const clipper = functions.getAppObject('clipper')
+const socket = io(`http://${serverIP}:${clipper.socketPort}`)
 
 export const useInitUserSession = () => {
 
@@ -31,4 +33,8 @@ export const useInitUserSession = () => {
             redux(actions.updateClips([]))
         }
     }, [])
+}
+
+export const useSocket = () => {
+    return socket
 }

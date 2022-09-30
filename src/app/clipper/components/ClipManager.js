@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native';
-import { io } from 'socket.io-client'
 import Clip from './Clip'
-import { serverIP, socketPort } from '../../../../config'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../redux/actions/actionCreators'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 import ClipListItem from './ClipListItem'
-
-const socket = io('http://'+ serverIP + ':' + socketPort.clipper)
 
 export default (props) => {
 
