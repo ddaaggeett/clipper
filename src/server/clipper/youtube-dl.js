@@ -9,16 +9,27 @@ const clipper = functions.getAppObject('clipper')
 
 const downloadVideo = (videoDirectory, videoID) => {
     return new Promise((resolve,reject) => {
-        const command = spawn(`youtube-dl`, [`-f`, `best`, `https://www.youtube.com/watch?v=${videoID}`, `--id`, `--write-thumbnail`], {
+        const command = spawn(`yt-dlp`, [
+            `https://www.youtube.com/watch?v=${videoID}`,
+            `-f`, `"\"bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4] / bv*+ba/b\""`, // 1 video + 1 audio file
+            `-o`, `${videoID}.mp4`,
+            `--write-thumbnail`
+        ], {
             cwd: videoDirectory,
         })
         command.stdout.on('data', data => {
             const line = data.toString()
             console.log(line)
+            // file count for complete download = 2: 1 video + 1 audio
+            let fileCount = 0
             if(line.includes('[download] 100%')) {
-                console.log(`\nDOWNLOAD COMPLETE: ${videoID}`)
-                formatThumbnail(videoDirectory, videoID)
-                resolve()
+                // TODO: fix this with checking if output file exists instead
+                fileCount = fileCount + 1
+                if ( fileCount == 2 ) {
+                    console.log(`\n\n\n\nDOWNLOAD COMPLETE: ${videoID}`)
+                    formatThumbnail(videoDirectory, videoID) // TODO: could need fixing
+                    resolve()
+                }
             }
         })
         command.stderr.on('data', error => {
@@ -54,6 +65,7 @@ const updateSourceVideo = (videoObject) => {
 
     return new Promise((resolve, reject) => {
         const videoDirectory = path.join(clipper.fileData, videoObject.videoID)
+        // TODO: change youtube-dl -> yt-dlp
         const command = `youtube-dl -f best https://www.youtube.com/watch?v=${videoObject.videoID} --get-title`
         exec(command, {
             cwd: videoDirectory,
