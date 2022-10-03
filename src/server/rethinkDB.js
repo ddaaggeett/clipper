@@ -54,6 +54,11 @@ rethinkdb.stdout.on('data', data => {
 rethinkdb.stderr.on('data', error => {
     console.error(`\nERROR starting RethinkDB\n${error}`)
 })
-process.on('exit', (code) => {
-    rethinkdb.kill()
+
+process.on('SIGINT', (code) => {
+    rethinkdb.kill(0)
+    setTimeout(() => {
+        console.log(`\nRethinkDB proper shutdown? -> ${rethinkdb.exitCode == 0}\n`)
+        process.kill(process.pid)
+    }, 500)
 })
