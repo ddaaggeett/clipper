@@ -1,7 +1,6 @@
 const r = require('rethinkdb')
 const { dbConnxConfig } = require('../../../config')
-const express = require('express')
-const app = express()
+const app = require('../expressServer')
 const http = require('http').Server(app)
 const io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
 const { getRooms, addRoomMessage } = require('./rooms')

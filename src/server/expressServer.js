@@ -13,3 +13,5 @@ app.listen(expressPort, (err) => {
     if (err) throw err
     console.log(`${appName} expressJS server ready on http://${serverIP}:${expressPort}`)
 })
+
+module.exprots = app

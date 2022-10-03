@@ -1,11 +1,10 @@
-const express = require('express')
+const app = require('../expressServer')
 const functions = require('../functions')
 const diff = require('./diff')
 const user = require('./user')
 
 const whitesocket = functions.getAppObject('whitesocket')
 
-var app = express()
 var http = require('http').Server(app)
 var io = require('socket.io')(http, {
     cors: { origin: "*", methods: ["GET", "POST"] },
