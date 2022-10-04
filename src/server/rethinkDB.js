@@ -4,7 +4,7 @@ var {
     tables,
     dbConnxConfig,
 } = require('../../config')
-const { spawn } = require('child_process')
+const { spawn, exec } = require('child_process')
 var dbConnx = null
 
 const printUnhandledError = (error) => {
@@ -55,10 +55,31 @@ rethinkdb.stderr.on('data', error => {
     console.error(`\nERROR starting RethinkDB\n${error}`)
 })
 
-process.on('SIGINT', (code) => {
-    rethinkdb.kill(0)
-    setTimeout(() => {
-        console.log(`\nRethinkDB proper shutdown? -> ${rethinkdb.exitCode == 0}\n`)
-        process.kill(process.pid)
-    }, 500)
-})
+const getPids = () => {
+    return new Promise((resolve,reject) => {
+        exec(`pidof rethinkdb`, (error, stdout, stderror) => {
+            if (!error) resolve(stdout.split(' '))
+        })
+    })
+}
+
+const kill = () => {
+    return new Promise((resolve,reject) => {
+        getPids().then(pids => {
+            let pidsString = ''
+            pids.forEach((pid, i) => {
+                pidsString = pidsString.concat(`${pid} `)
+                if (i == pids.length - 1) {
+                    exec(`kill -9 ${pidsString}`, (error, stdout, stderror) => {
+                        console.log(`\nall rethinkdb processes killed`)
+                        if(!error) resolve()
+                    })
+                }
+            })
+        })
+    })
+}
+
+module.exports = {
+    kill,
+}
