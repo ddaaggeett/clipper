@@ -42,13 +42,6 @@
     "dbConnxConfig": {
         "db": "xyz"
     },
-    "defaultDiff": {
-        "mode": "write",
-        "shape":{"height":600,"width":800},
-        "prev_uri": "blank.jpg",
-        "result_uri": "result.jpg",
-        "uri": "image.jpg"
-    },
     "defaultImage": "blank.jpg",
     "borderWidth": 5,
     "arucoMargin": 3,

@@ -2,7 +2,7 @@
   "name": "xyz",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "server": "nodemon src/server --ignore ./config.json --ignore ./data_clipper --ignore ./data_audio --ignore ./data_whitesocket --ignore ./rethinkdb_data",
+    "server": "nodemon src/server --ignore ./config.json --ignore ./data --ignore ./rethinkdb_data",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
