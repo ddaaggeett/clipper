@@ -46,7 +46,7 @@ const initDB = () => {
 }
 
 // TODO: this doesn't necessarily work. still continues to run sometimes.
-const rethinkdb = spawn('rethinkdb',[])
+const rethinkdb = spawn('rethinkdb', [`--daemon`])
 rethinkdb.stdout.on('data', data => {
     console.log(`\nRethinkDB output\n${data}`)
     initDB()
@@ -73,6 +73,7 @@ const kill = () => {
                     exec(`kill -9 ${pidsString}`, (error, stdout, stderror) => {
                         console.log(`\nall rethinkdb processes killed`)
                         if(!error) resolve()
+                        else console.log(`kill rethinkdb error = ${error}`)
                     })
                 }
             })

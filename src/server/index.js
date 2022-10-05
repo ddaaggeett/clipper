@@ -10,6 +10,7 @@ initConfig().then(() => {
 process.on('SIGINT', (code) => {
     rethinkdb.kill()
     .then(() => {
+        // kill node process that hosts all ports
         process.kill(process.pid)
     })
 })
