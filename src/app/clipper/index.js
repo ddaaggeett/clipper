@@ -3,13 +3,13 @@ import { Platform, Dimensions } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ClipperScreen from './ClipperScreen'
 import ClipManagerScreen from './ClipManagerScreen'
-import { useInitUserSession } from './hooks'
+import initApp from './hooks'
 
 const Tab = createBottomTabNavigator()
 
 export default () => {
 
-    useInitUserSession()
+    initApp()
 
     const tabBarOptions = {
         tabBarActiveBackgroundColor: '#222',

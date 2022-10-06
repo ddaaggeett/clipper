@@ -6,7 +6,7 @@ import VideoSelector from './components/VideoSelector'
 import ClipManager from './components/ClipManager'
 import UnfinishedVideosList from './components/UnfinishedVideosList'
 import * as actions from './redux/actions/actionCreators'
-import { useInitUserSession } from './hooks'
+import initApp from './hooks'
 
 export default () => {
 
@@ -19,7 +19,7 @@ export default () => {
         else redux(actions.setWebPanelWidth(width))
     }, [])
 
-    useInitUserSession()
+    initApp()
 
     return (
         <View style={[styles.container,styles.panelRow, styles.contentRow]}>

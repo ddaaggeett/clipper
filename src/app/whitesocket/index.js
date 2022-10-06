@@ -1,10 +1,10 @@
 import { View } from 'react-native'
 import Camera from './components/Camera'
-import useDataSocketHook from './dataSocket'
+import initApp from './hooks'
 
 export default () => {
 
-    useDataSocketHook()
+    initApp()
 
     return (
         <Camera />
