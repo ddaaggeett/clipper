@@ -6,6 +6,7 @@ import * as actions from './account/redux/actions/actionCreators'
 import ClipperWeb from './clipper/web'
 import WhitesocketWeb from './whitesocket/web'
 import PodwareWeb from './podware/web'
+import CollaborationWeb from './collaboration/web'
 import Account from './account/components/Account'
 import Nav from './account/components/Nav'
 import Footer from './account/components/Footer'
@@ -19,7 +20,7 @@ const AppSwitcher = () => {
     if (user && webapp) {
         if (webapp === 'clipper') return <ClipperWeb />
         else if (webapp === 'whitesocket') return null
-        // else if (webapp == 'whitesocket') return <WhitesocketWeb />
+        else if (webapp == 'collaboration') return <CollaborationWeb />
         else if (webapp === 'podware') return <PodwareWeb />
     }
     else return null
