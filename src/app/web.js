@@ -19,7 +19,7 @@ const AppSwitcher = () => {
 
     if (user && webapp) {
         if (webapp === 'clipper') return <ClipperWeb />
-        else if (webapp === 'whitesocket') return null
+        else if (webapp === 'whitesocket') return <WhitesocketWeb />
         else if (webapp == 'collaboration') return <CollaborationWeb />
         else if (webapp === 'podware') return <PodwareWeb />
     }

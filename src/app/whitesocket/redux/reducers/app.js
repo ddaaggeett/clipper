@@ -1,5 +1,5 @@
 import * as actions from '../actions'
-import { defaultImage } from '../../../../../config'
+import { defaultImage } from '../../constants'
 
 const initialState = {
     current: {

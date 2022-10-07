@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Whitesocket from './web/app'
 import Arucos from './web/Arucos'
 import * as actions from './redux/actions/actionCreators'
+const { borderWidth } = require('./constants')
 
 const OpenWhitesocket = () => {
 
@@ -33,8 +34,6 @@ export default () => {
         </View>
     )
 }
-
-const borderWidth = 5
 
 const styles = StyleSheet.create({
     container: {

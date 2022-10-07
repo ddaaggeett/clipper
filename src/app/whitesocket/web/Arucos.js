@@ -4,7 +4,7 @@ const aruco0 = require('../../../../assets/aruco_0.svg')
 const aruco1 = require('../../../../assets/aruco_1.svg')
 const aruco2 = require('../../../../assets/aruco_2.svg')
 const aruco3 = require('../../../../assets/aruco_3.svg')
-const { borderWidth } = require('../../../../config')
+const { borderWidth } = require('../constants')
 
 export default () => {
 

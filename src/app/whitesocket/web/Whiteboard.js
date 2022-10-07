@@ -2,19 +2,20 @@ import React, { useRef, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ImageBackground, View, Image, StyleSheet } from 'react-native'
 import * as actions from '../redux/actions/actionCreators'
-const config = require('../../../../config')
+const { serverIP, expressPort } = require('../../../../config')
+const { borderWidth, defaultImage } = require('../constants')
 
 export default (props) => {
 
     const redux = useDispatch()
     const { current, prepping, outputShape } = useSelector(state => state.whitesocket)
-    const [height, setHeight] = useState(window.innerHeight - (2*config.borderWidth))
-    const [width, setWidth] = useState(window.innerWidth - (2*config.borderWidth))
-    const imageBaseURI = `http://${config.serverIP}:${config.expressPort}/`
+    const [height, setHeight] = useState(window.innerHeight - (2*borderWidth))
+    const [width, setWidth] = useState(window.innerWidth - (2*borderWidth))
+    const imageBaseURI = `http://${serverIP}:${expressPort}/`
     const [imageURI, setImageURI] = useState(`${imageBaseURI}${current.result_uri}`)
 
     useEffect(() => {
-        if(prepping) setImageURI(`${imageBaseURI}${config.defaultImage}`)
+        if(prepping) setImageURI(`${imageBaseURI}${defaultImage}`)
     }, [prepping])
 
     useEffect(() => {
@@ -24,20 +25,20 @@ export default (props) => {
     const scaleImage = () => {
         if(current.shape != undefined){
             if(outputShape.width/outputShape.height <= current.shape.width/current.shape.height) {
-                setWidth(window.innerWidth - (2*config.borderWidth))
-                setHeight((window.innerWidth - (2*config.borderWidth))/current.shape.width*current.shape.height)
+                setWidth(window.innerWidth - (2*borderWidth))
+                setHeight((window.innerWidth - (2*borderWidth))/current.shape.width*current.shape.height)
             }
             else {
-                setHeight(window.innerHeight - (2*config.borderWidth))
-                setWidth((window.innerHeight - (2*config.borderWidth))/current.shape.height*current.shape.width)
+                setHeight(window.innerHeight - (2*borderWidth))
+                setWidth((window.innerHeight - (2*borderWidth))/current.shape.height*current.shape.width)
             }
         }
     }
 
     const handleResize = () => {
         redux(actions.updateOutputShape({
-            width: window.innerWidth - (2*config.borderWidth),
-            height: window.innerHeight - (2*config.borderWidth),
+            width: window.innerWidth - (2*borderWidth),
+            height: window.innerHeight - (2*borderWidth),
         }))
         scaleImage()
     }
@@ -50,7 +51,7 @@ export default (props) => {
 
     return (
         <ImageBackground
-            source={{uri: `${imageBaseURI}${config.defaultImage}`}}
+            source={{uri: `${imageBaseURI}${defaultImage}`}}
             style={{width: outputShape.width, height: outputShape.height}}
             >
             <Image

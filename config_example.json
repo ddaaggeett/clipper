@@ -42,6 +42,5 @@
     "dbConnxConfig": {
         "db": "xyz"
     },
-    "defaultImage": "blank.jpg",
     "progressionsListLength": 5
 }
