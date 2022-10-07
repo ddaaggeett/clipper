@@ -1,3 +1,4 @@
+const { useState } = require('react')
 const { useDispatch } = require('react-redux')
 const actions = require('../redux/actions/actionCreators')
 const aruco0 = require('../../../../assets/aruco_0.svg')
@@ -12,12 +13,16 @@ export default () => {
 
     const handleArucoClick = () => redux(actions.updateAppOpened(false))
 
+    const [cursor, setCursor] = useState('default')
+    const handleHover = () => setCursor('pointer')
+    const handleUnhover = () => setCursor('default')
+
     return (
         <div>
-            <img src={aruco0} style={{...arucoStyle, left:borderWidth,top:borderWidth}} onClick={handleArucoClick} />
-            <img src={aruco1} style={{...arucoStyle, right:borderWidth,top:borderWidth}} onClick={handleArucoClick} />
-            <img src={aruco2} style={{...arucoStyle, right:borderWidth,bottom:borderWidth}} onClick={handleArucoClick} />
-            <img src={aruco3} style={{...arucoStyle, left:borderWidth,bottom:borderWidth}} onClick={handleArucoClick} />
+            <img src={aruco0} style={{...arucoStyle, cursor, left:borderWidth, top:borderWidth}} onClick={handleArucoClick} onMouseOver={handleHover} onMouseOut={handleUnhover} />
+            <img src={aruco1} style={{...arucoStyle, cursor, right:borderWidth, top:borderWidth}} onClick={handleArucoClick} onMouseOver={handleHover} onMouseOut={handleUnhover} />
+            <img src={aruco2} style={{...arucoStyle, cursor, right:borderWidth, bottom:borderWidth}} onClick={handleArucoClick} onMouseOver={handleHover} onMouseOut={handleUnhover} />
+            <img src={aruco3} style={{...arucoStyle, cursor, left:borderWidth, bottom:borderWidth}} onClick={handleArucoClick} onMouseOver={handleHover} onMouseOut={handleUnhover} />
         </div>
     )
 }

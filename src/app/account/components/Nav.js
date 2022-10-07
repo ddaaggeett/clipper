@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
+        alignSelf: 'center',
     },
     selectedButtonText: {
         fontWeight: 'bold',

@@ -15,7 +15,7 @@ const OpenWhitesocket = () => {
             style={styles.button}
             onPress={() => redux(actions.updateAppOpened(true))}
             >
-            <Text>Open Whitesocket App</Text>
+            <Text>Open Whiteboard Projection</Text>
         </TouchableOpacity>
     )
 }
@@ -38,11 +38,6 @@ export default () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        position: 'absolute',
-        top: borderWidth,
-        bottom: borderWidth,
-        left: borderWidth,
-        right: borderWidth,
     },
     button: {
         alignSelf:'center',

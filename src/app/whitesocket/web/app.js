@@ -15,18 +15,11 @@ export default () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        position: 'absolute',
-        top: borderWidth,
-        bottom: borderWidth,
-        left: borderWidth,
-        right: borderWidth,
     },
     arucos: {
-        position: 'absolute',
         zIndex: 1,
     },
     whiteboard: {
-        position: 'absolute',
         zIndex: 0,
     },
 })

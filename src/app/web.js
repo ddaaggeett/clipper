@@ -30,9 +30,11 @@ export default () => {
 
     const redux = useDispatch()
     const { webapp } = useSelector(state => state.account)
+    const whitesocket = useSelector(state => state.whitesocket)
     initWebApp()
 
-    return (
+    if (whitesocket.appOpened) return <WhitesocketWeb />
+    else return (
         <SafeAreaProvider>
         <View style={styles.browser} >
             <Account />
