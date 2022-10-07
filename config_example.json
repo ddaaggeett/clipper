@@ -43,7 +43,5 @@
         "db": "xyz"
     },
     "defaultImage": "blank.jpg",
-    "borderWidth": 5,
-    "arucoMargin": 3,
     "progressionsListLength": 5
 }

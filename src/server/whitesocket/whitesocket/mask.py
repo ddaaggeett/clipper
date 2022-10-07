@@ -3,7 +3,7 @@ import numpy
 import json
 import colors
 config = json.loads(open('config.json').read())
-arucoMargin = config['arucoMargin']
+arucoMargin = 3
 
 def applyDiffMask(diffMask, prevImage):
     # TODO: assume diffMask is already size of standard output

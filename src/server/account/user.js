@@ -1,5 +1,5 @@
 var r = require('rethinkdb')
-var { dbConnxConfig, progressionsListLength } = require('../../../config')
+var { dbConnxConfig } = require('../../../config')
 
 const login = (loginInfo) => {
     return new Promise((resolve, reject) => {
