@@ -9,28 +9,27 @@ const clipper = functions.getAppObject('clipper')
 
 const downloadVideo = (videoDirectory, videoID) => {
     return new Promise((resolve,reject) => {
+        const video = `${videoID}.mp4`
         const command = spawn(`yt-dlp`, [
             `https://www.youtube.com/watch?v=${videoID}`,
-            `-f`, `"\"bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4] / bv*+ba/b\""`, // 1 video + 1 audio file
-            `-o`, `${videoID}.mp4`,
+            `-f`, `"\"bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4] / bv*+ba/b\""`,
+            `-o`, `${video}`,
             `--write-thumbnail`
         ], {
             cwd: videoDirectory,
         })
+        const file = path.join(videoDirectory,video)
+        fs.watchFile(file, (current, prev) => {
+            if (current.isFile()) {
+                fs.unwatchFile(file)
+                console.log(`\n\nDOWNLOAD COMPLETE: ${videoID}`)
+                formatThumbnail(videoDirectory, videoID) // TODO: could need fixing
+                resolve()
+            }
+        })
         command.stdout.on('data', data => {
             const line = data.toString()
-            console.log(line)
-            // file count for complete download = 2: 1 video + 1 audio
-            let fileCount = 0
-            if(line.includes('[download] 100%')) {
-                // TODO: fix this with checking if output file exists instead
-                fileCount = fileCount + 1
-                if ( fileCount == 2 ) {
-                    console.log(`\n\n\n\nDOWNLOAD COMPLETE: ${videoID}`)
-                    formatThumbnail(videoDirectory, videoID) // TODO: could need fixing
-                    resolve()
-                }
-            }
+            process.stdout.write(line)
         })
         command.stderr.on('data', error => {
             console.log(`\nERROR: downloadVideo() ${videoID}:\n${error}`)
