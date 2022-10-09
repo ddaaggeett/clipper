@@ -24,12 +24,15 @@ const downloadVideo = (videoDirectory, videoID) => {
                 fs.unwatchFile(file)
                 console.log(`\n\nDOWNLOAD COMPLETE: ${videoID}`)
                 formatThumbnail(videoDirectory, videoID) // TODO: could need fixing
-                resolve()
+                resolve(true)
             }
         })
         command.stdout.on('data', data => {
             const line = data.toString()
             process.stdout.write(line)
+            if (line.includes(`already been downloaded`)) {
+                resolve(false)
+            }
         })
         command.stderr.on('data', error => {
             console.log(`\nERROR: downloadVideo() ${videoID}:\n${error}`)

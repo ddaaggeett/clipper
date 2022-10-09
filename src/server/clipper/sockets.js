@@ -22,7 +22,12 @@ io.on('connection', (socket) => {
             io.emit('updateSourceVideo', videoObject)
         })
     })
-    socket.on('reClip', clipObject => generateClip(clipObject))
+    socket.on('reClip', (clipObject, callback) => {
+        generateClip(clipObject)
+        .then(object => {
+            callback(object)
+        })
+    })
     socket.on('updateClip', (clip, returnToSender) => {
         updateClip(clip).then(updatedClip => {
             returnToSender(updatedClip)

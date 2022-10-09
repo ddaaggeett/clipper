@@ -1,4 +1,6 @@
 const fs = require('fs')
+var { dbConnxConfig } = require('../../../config')
+const r = require('rethinkdb')
 const path = require('path')
 const youtube = require('./youtube')
 const ffmpeg = require('./ffmpeg')
@@ -13,8 +15,22 @@ const generateClip = (clipObject) => {
         fs.mkdir(clipDirectory,{recursive:true}, err => {
             if (err) throw err;
             else {
-                youtube.downloadVideo(videoDirectory, clipObject.videoID).then(() => {
-                    ffmpeg.executeClip(clipDirectory, clipObject).then(updatedClipObject => resolve(updatedClipObject))
+                youtube.downloadVideo(videoDirectory, clipObject.videoID).then(downloaded => {
+                    if (downloaded) {
+                        ffmpeg.executeClip(clipDirectory, clipObject).then(updatedClipObject =>
+                         {
+                             resolve(updatedClipObject)
+                         })
+                    }
+                    else {
+                        r.connect(dbConnxConfig).then(connection => {
+                            r.table('clips').get(clipObject.id).run(connection).then(storedClip => {
+                                resolve(storedClip)
+                            }).error(error => {
+                                console.log(`\nget clip object error\n${error}`)
+                            })
+                        })
+                    }
                 })
             }
         })

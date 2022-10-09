@@ -4,18 +4,22 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as Linking from 'expo-linking'
 import { serverIP, expressPort } from '../../../../config'
 import { useSocket } from '../hooks'
+import * as actions from '../redux/actions/actionCreators'
 
 export default () => {
 
     const { editIndex } = useSelector(state => state.clipper)
     const { clips } = useSelector(state => state.clips)
     const socket = useSocket()
+    const redux = useDispatch()
 
     const downloadClip = () => {
         if (Platform.OS === 'web') Linking.openURL(`http://${serverIP}:${expressPort}/${clips[editIndex].id}`)
     }
 
-    const reClip = () => socket.emit('reClip', clips[editIndex])
+    const reClip = () => socket.emit('reClip', clips[editIndex], clip => {
+        redux(actions.updateClip(clip))
+    })
 
     if (clips[editIndex].clipUri == undefined) return (
         <TouchableOpacity style={[styles.controlButton, {backgroundColor: 'orange'}]} onPress={() => reClip()}>

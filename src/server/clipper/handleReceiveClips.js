@@ -12,8 +12,13 @@ const updateClip = (clip) => {
                 if (result.changes.length != 0 && updatedClip != undefined) {
                     const oldClip = result.changes[0].old_val
                     if (oldClip == null) {
-                        generateClip(updatedClip) //.then(updatedClipObject => resolve(updatedClipObject))
-                        user.addClip(updatedClip).then(() => resolve(updatedClip))
+                        generateClip(updatedClip)
+                        .then(object => {
+                            user.addClip(object)
+                            .then(() => {
+                                resolve(object)
+                            })
+                        })
                     }
                     else if(updatedClip.thumbnailTime != oldClip.thumbnailTime || updatedClip.thumbnailText != oldClip.thumbnailText) {
                         generateThumbnails(updatedClip).then(updatedClipObject => resolve(updatedClipObject))
