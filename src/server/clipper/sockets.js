@@ -5,7 +5,7 @@ const functions = require('../functions')
 const { updateClip, deleteClip, handlePendingClips } = require('./handleReceiveClips')
 const { updateVideoProgress, getClips } = require('./user')
 const generateClip = require('./generateClip')
-const { updateSourceVideo } = require('./youtube-dl')
+const { updateSourceVideo } = require('./youtube')
 
 const clipper = functions.getAppObject('clipper')
 

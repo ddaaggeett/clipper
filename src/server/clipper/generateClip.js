@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const youtube = require('./youtube-dl')
+const youtube = require('./youtube')
 const ffmpeg = require('./ffmpeg')
 const functions = require('../functions')
 
