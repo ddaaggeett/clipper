@@ -45,15 +45,19 @@ const initDB = () => {
     })
 }
 
-// TODO: this doesn't necessarily work. still continues to run sometimes.
-const rethinkdb = spawn('rethinkdb', [`--daemon`])
-rethinkdb.stdout.on('data', data => {
-    console.log(`\nRethinkDB output\n${data}`)
-    initDB()
-})
-rethinkdb.stderr.on('data', error => {
-    console.error(`\nERROR starting RethinkDB\n${error}`)
-})
+const init = () => {
+    const rethinkdb = spawn('rethinkdb', [`--daemon`])
+    rethinkdb.stdout.on('data', data => {
+        console.log(`\nRethinkDB output\n${data}`)
+        initDB()
+    })
+    rethinkdb.stderr.on('data', error => {
+        console.error(`\nERROR starting RethinkDB\n${error}`)
+        if (error.includes(`is already in use`)) {
+            restart()
+        }
+    })
+}
 
 const getPids = () => {
     return new Promise((resolve,reject) => {
@@ -80,6 +84,16 @@ const kill = () => {
         })
     })
 }
+
+const restart = () => {
+    kill()
+    .then(() => {
+        console.log(`\nRESTARTING RethinkDB`)
+        init()
+    })
+}
+
+init()
 
 module.exports = {
     kill,
