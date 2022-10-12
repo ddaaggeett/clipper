@@ -12,6 +12,25 @@ let rooms = []
 
 io.on('connection', (socket) => {
 
+    socket.on('find_users', (string, callback) => {
+        r.connect(dbConnxConfig).then(connection => {
+            r.table('users')
+            .filter(user => {
+                return user("name").match(`^${string}`);
+            }).run(connection)
+            .then(response => {
+                if (response._responses.length > 0) {
+                    const list = response._responses[0].r
+                    callback(list)
+                }
+            }).error(error => {
+                console.log(`\nfind users error\n${error}`)
+            })
+        }).error(error => {
+            console.log(`\ndb connection error\n${error}`)
+        })
+    })
+
     socket.on('message', message => {
         const { updatedRoom, updatedRooms } = addRoomMessage(message, rooms)
         rooms = updatedRooms

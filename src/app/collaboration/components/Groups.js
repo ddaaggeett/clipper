@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 const actions = require('../redux/actions/actionCreators')
 const { useGroupSession, joinRoom } = require('../hooks')
+import FindUser from './FindUser'
 
 export default () => {
 
@@ -13,6 +14,7 @@ export default () => {
         <View style={styles.session}>
             <CreateGroupSession />
             { rooms.length == 0 ? null : <SelectGroupSession /> }
+            <FindUser />
         </View>
     )
 }

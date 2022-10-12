@@ -67,3 +67,7 @@ export const joinRoom = () => {
 export const sendMessage = (message) => {
     socket.emit('message', message)
 }
+
+export const useSocket = () => {
+    return socket
+}
