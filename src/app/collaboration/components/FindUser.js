@@ -23,6 +23,7 @@ export default () => {
                 setUsers(users)
             })
         }
+        else setUsers([])
     }, [searchString])
 
 
@@ -70,8 +71,13 @@ const UserList = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+
     },
     textInput: {
+        flex: 1,
+        marginTop: 10,
+        padding: 6,
+        borderRadius: 4,
         borderColor: 'white',
         borderWidth: 1,
     },

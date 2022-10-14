@@ -14,6 +14,7 @@ export default () => {
         <View style={styles.session}>
             <CreateGroupSession />
             { rooms.length == 0 ? null : <SelectGroupSession /> }
+            <Text style={[styles.text, styles.or]}>OR</Text>
             <FindUser />
         </View>
     )
@@ -51,7 +52,7 @@ const SelectGroupSession = () => {
 
     return (
         <View style={styles.session}>
-            <Text style={[styles.sessionButton, styles.text]}>{`or join another:`}</Text>
+            <Text style={[styles.sessionButton, styles.text, styles.or]}>{`or join another:`}</Text>
             <View style={styles.sessionButtons}>{renderRoomSelections}</View>
         </View>
     )
@@ -78,12 +79,15 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderWidth: 1,
     },
+    or: {
+        marginTop: 10,
+        alignSelf: 'center'
+    },
     session: {
         flexDirection: 'column',
         margin: 3,
     },
     sessionButton: {
-        padding: 10,
     },
     sessionButtons: {
         flexDirection: 'column',
