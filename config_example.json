@@ -33,6 +33,7 @@
     "expressPort": 3316,
     "audioFileExt": "wav",
     "tables": {
+        "rooms": "rooms",
         "recordings": "recordings",
         "clips": "clips",
         "users": "users",

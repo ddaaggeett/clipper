@@ -1,3 +1,5 @@
+const { saveRoom, deleteRoom } = require('./db')
+
 const getRooms = (packet) => {
     return new Promise((resolve, reject) => {
         const user = packet.user
@@ -38,12 +40,21 @@ const leaveRoom = (user, rooms) => {
 
         if (updatedPrevRoomUsers.length == 0) {
 
+            deleteRoom(prevRoom)
+            .then(() => {
+            })
+
             rooms = [
                 ...rooms.slice(0, indexRoomLeaving),
                 ...rooms.slice(indexRoomLeaving + 1, rooms.length),
             ]
         }
         else {
+
+            saveRoom(prevRoom)
+            .then(storedRoom => {
+            })
+
             rooms = [
                 ...rooms.slice(0, indexRoomLeaving),
                 prevRoom,
@@ -93,6 +104,11 @@ const joinRoom = (rooms, room, user) => {
             ...rooms.slice(indexJoiningRoom + 1, rooms.length),
         ]
     }
+
+    saveRoom(updatedRoom)
+    .then(storedRoom => {
+    })
+
     updatedRooms = rooms
     return {updatedRooms, updatedRoom}
 }
