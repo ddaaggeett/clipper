@@ -5,6 +5,7 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
 const { updateRooms, addRoomMessage } = require('./rooms')
 const functions = require('../functions')
+const { listUsers } = require('./db')
 
 const collaboration = functions.getAppObject('collaboration')
 
@@ -13,22 +14,7 @@ let rooms = []
 io.on('connection', (socket) => {
 
     socket.on('find_users', (string, callback) => {
-        r.connect(dbConnxConfig).then(connection => {
-            r.table('users')
-            .filter(user => {
-                return user("name").match(`^${string}`);
-            }).run(connection)
-            .then(response => {
-                if (response._responses.length > 0) {
-                    const list = response._responses[0].r
-                    callback(list)
-                }
-            }).error(error => {
-                console.log(`\nfind users error\n${error}`)
-            })
-        }).error(error => {
-            console.log(`\ndb connection error\n${error}`)
-        })
+        listUsers(string).then(list => callback(list))
     })
 
     socket.on('message', message => {

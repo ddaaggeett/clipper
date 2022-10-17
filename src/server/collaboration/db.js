@@ -62,8 +62,30 @@ const deleteRoom = (room) => {
     })
 }
 
+const listUsers = (string) => {
+    return new Promise((resolve, reject) => {
+        r.connect(dbConnxConfig).then(connection => {
+            r.table('users')
+            .filter(user => {
+                return user("name").match(`^${string}`);
+            }).run(connection)
+            .then(response => {
+                if (response._responses.length > 0) {
+                    const list = response._responses[0].r
+                    resolve(list)
+                }
+            }).error(error => {
+                console.log(`\nfind users error\n${error}`)
+            })
+        }).error(error => {
+            console.log(`\ndb connection error\n${error}`)
+        })
+    })
+}
+
 module.exports = {
     getRooms,
     saveRoom,
     deleteRoom,
+    listUsers,
 }
