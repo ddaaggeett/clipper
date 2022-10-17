@@ -1,116 +1,84 @@
-const { saveRoom, deleteRoom } = require('./db')
+const { saveRoom, deleteRoom, getRooms } = require('./db')
 
 const updateRooms = (packet) => {
     return new Promise((resolve, reject) => {
         const user = packet.user
         let room = packet.room
-        let rooms = packet.rooms
-
-        const { roomsAfterLeaving, prevRoomID } = leaveRoom(user, rooms)
-
-        const {updatedRooms, updatedRoom} = joinRoom(roomsAfterLeaving, room, user)
-
-        resolve({
-            updatedRooms,
-            updatedRoom,
-            prevRoomID,
+        leaveRoom(user)
+        .then(prevRoomID => {
+            joinRoom(room, user)
+            .then(updatedRoom => {
+                resolve({
+                    updatedRoom,
+                    prevRoomID,
+                })
+            })
         })
     })
 }
 
-const leaveRoom = (user, rooms) => {
+const leaveRoom = (user) => {
+    return new Promise((resolve, reject) => {
+        getRooms().then(rooms => {
+            const { userNeedsToLeave, indexRoomLeaving, indexUserLeaving } = getLeavingRoomInfo(user, rooms)
+            let prevRoomID = null
+            if (userNeedsToLeave) { // leave a previous room
+                let prevRoom = rooms[indexRoomLeaving]
+                prevRoomID = prevRoom.id
+                const updatedPrevRoomUsers = [
+                    ...prevRoom.users.slice(0, indexUserLeaving),
+                    ...prevRoom.users.slice(indexUserLeaving + 1, prevRoom.users.length),
+                ]
+                prevRoom = {
+                    ...prevRoom,
+                    users: updatedPrevRoomUsers,
+                }
+                if (updatedPrevRoomUsers.length == 0) {
+                    deleteRoom(prevRoom)
+                    .then(() => {
+                        resolve(prevRoomID)
+                    })
+                }
+                else {
 
-    const { userNeedsToLeave, indexRoomLeaving, indexUserLeaving } = getLeavingRoomInfo(user, rooms)
-
-    let prevRoomID = null
-
-    if (userNeedsToLeave) { // leave a previous room
-
-        let prevRoom = rooms[indexRoomLeaving]
-        prevRoomID = prevRoom.id
-
-        const updatedPrevRoomUsers = [
-            ...prevRoom.users.slice(0, indexUserLeaving),
-            ...prevRoom.users.slice(indexUserLeaving + 1, prevRoom.users.length),
-        ]
-        prevRoom = {
-            ...prevRoom,
-            users: updatedPrevRoomUsers,
-        }
-
-        if (updatedPrevRoomUsers.length == 0) {
-
-            deleteRoom(prevRoom)
-            .then(() => {
-            })
-
-            rooms = [
-                ...rooms.slice(0, indexRoomLeaving),
-                ...rooms.slice(indexRoomLeaving + 1, rooms.length),
-            ]
-        }
-        else {
-
-            saveRoom(prevRoom)
-            .then(storedRoom => {
-            })
-
-            rooms = [
-                ...rooms.slice(0, indexRoomLeaving),
-                prevRoom,
-                ...rooms.slice(indexRoomLeaving + 1, rooms.length),
-            ]
-        }
-    }
-
-    const roomsAfterLeaving = rooms
-
-    return {roomsAfterLeaving, prevRoomID}
+                    saveRoom(prevRoom)
+                    .then(storedRoom => {
+                        resolve(prevRoomID)
+                    })
+                }
+            }
+            resolve(prevRoomID)
+        })
+    })
 }
 
-const joinRoom = (rooms, room, user) => {
-
-    const indexJoiningRoom = rooms.findIndex(item => item.id === room.id)
-    let updatedRoom
-    let updatedUsers
-
-    if (indexJoiningRoom == -1) {
-        updatedUsers = [
-            user,
-        ]
-        updatedRoom = {
-            ...room,
-            id: room.id,
-            users: updatedUsers,
-        }
-        rooms = [
-            ...rooms,
-            updatedRoom,
-        ]
-    }
-    else {
-        updatedUsers = [
-            ...rooms[indexJoiningRoom].users,
-            user,
-        ]
-        updatedRoom = {
-            ...room,
-            id: room.id,
-            users: updatedUsers,
-        }
-        rooms = [
-            ...rooms.slice(0, indexJoiningRoom),
-            updatedRoom,
-            ...rooms.slice(indexJoiningRoom + 1, rooms.length),
-        ]
-    }
-
-    saveRoom(updatedRoom)
-    .then(storedRoom => {
+const joinRoom = (room, user) => {
+    return new Promise((resolve, reject) => {
+        getRooms().then(rooms => {
+            const indexJoiningRoom = rooms.findIndex(item => item.id === room.id)
+            let updatedUsers
+            if (indexJoiningRoom == -1) {
+                updatedUsers = [
+                    user,
+                ]
+            }
+            else {
+                updatedUsers = [
+                    ...rooms[indexJoiningRoom].users,
+                    user,
+                ]
+            }
+            const updatedRoom = {
+                ...room,
+                id: room.id,
+                users: updatedUsers,
+            }
+            saveRoom(updatedRoom)
+            .then(storedRoom => {
+                resolve(storedRoom)
+            })
+        })
     })
-
-    updatedRooms = rooms
-    return {updatedRooms, updatedRoom}
 }
 
 const getLeavingRoomInfo = (user, rooms) => {

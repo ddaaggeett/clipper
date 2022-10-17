@@ -8,7 +8,11 @@ const getRooms = () => {
             r.table('rooms')
             .run(connection)
             .then(result => {
-                resolve(result._responses[0].r)
+                if (result._responses.length > 0) {
+                    const rooms = result._responses[0].r
+                    resolve(rooms)
+                }
+                else resolve([])
             })
             .error(error => {
                 console.log(`\nget rooms error\n${error}`)

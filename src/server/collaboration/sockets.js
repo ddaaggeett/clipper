@@ -5,7 +5,7 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
 const { updateRooms, addRoomMessage } = require('./rooms')
 const functions = require('../functions')
-const { listUsers } = require('./db')
+const { listUsers, getRooms } = require('./db')
 
 const collaboration = functions.getAppObject('collaboration')
 
@@ -21,26 +21,25 @@ io.on('connection', (socket) => {
         const { updatedRoom, updatedRooms } = addRoomMessage(message, rooms)
         rooms = updatedRooms
         io.to(message.roomID).emit('update_room', updatedRoom)
-        io.emit('broadcast_rooms_available', rooms) // TODO: socket.broadcast.emit instead?
-    })
-
-    socket.on('join_room', (packet) => {
-        socket.join(packet.room.id)
-        packet = {
-            ...packet,
-            rooms,
-        }
-        updateRooms(packet)
-        .then(({updatedRooms, updatedRoom, prevRoomID}) => {
-            if (prevRoomID) socket.leave(prevRoomID)
-            rooms = updatedRooms
-            io.to(packet.room.id).emit('update_room', updatedRoom)
+        getRooms().then(rooms => {
             io.emit('broadcast_rooms_available', rooms) // TODO: socket.broadcast.emit instead?
         })
     })
 
+    socket.on('join_room', (packet) => {
+        socket.join(packet.room.id)
+        updateRooms(packet)
+        .then(({updatedRoom, prevRoomID}) => {
+            if (prevRoomID) socket.leave(prevRoomID)
+            io.to(packet.room.id).emit('update_room', updatedRoom)
+            getRooms().then(rooms => {
+                io.emit('broadcast_rooms_available', rooms) // TODO: socket.broadcast.emit instead?
+            })
+        })
+    })
+
     socket.on('get_rooms_available', (callback) => {
-        callback(rooms)
+        getRooms().then(rooms => callback(rooms))
     })
 
     socket.on('disconnect', () => {
