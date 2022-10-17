@@ -1,6 +1,6 @@
 const { saveRoom, deleteRoom } = require('./db')
 
-const getRooms = (packet) => {
+const updateRooms = (packet) => {
     return new Promise((resolve, reject) => {
         const user = packet.user
         let room = packet.room
@@ -152,6 +152,6 @@ const addRoomMessage = (message, rooms) => {
 }
 
 module.exports = {
-    getRooms,
+    updateRooms,
     addRoomMessage,
 }

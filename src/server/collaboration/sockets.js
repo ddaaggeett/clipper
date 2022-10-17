@@ -3,7 +3,7 @@ const { dbConnxConfig } = require('../../../config')
 const app = require('../expressServer')
 const http = require('http').Server(app)
 const io = require('socket.io')(http, { cors: { origin: "*", methods: ["GET", "POST"] } })
-const { getRooms, addRoomMessage } = require('./rooms')
+const { updateRooms, addRoomMessage } = require('./rooms')
 const functions = require('../functions')
 
 const collaboration = functions.getAppObject('collaboration')
@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
             ...packet,
             rooms,
         }
-        getRooms(packet)
+        updateRooms(packet)
         .then(({updatedRooms, updatedRoom, prevRoomID}) => {
             if (prevRoomID) socket.leave(prevRoomID)
             rooms = updatedRooms
