@@ -2,14 +2,17 @@ import { useEffect, useState, useRef } from 'react'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { sendMessage } from '../hooks'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { StatusBar } from 'expo-status-bar';
 
 export default () => {
     return (
-        <View>
+        <SafeAreaView style={styles.container}>
+        <StatusBar style="light" />
             <RoomMembers />
             <MessageInput />
             <Messages />
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -100,6 +103,10 @@ const MessageInput = () => {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'black',
+    },
     messageInput: {
         flexDirection: 'row',
         padding: 5,

@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 const actions = require('../redux/actions/actionCreators')
 const { useGroupSession, joinRoom } = require('../hooks')
 import FindUser from './FindUser'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { StatusBar } from 'expo-status-bar';
 
 export default () => {
 
@@ -11,12 +13,15 @@ export default () => {
     const { rooms } = useSelector(state => state.collaboration)
 
     return (
+        <SafeAreaView style={styles.container}>
+        <StatusBar style="light" />
         <View style={styles.session}>
             <CreateGroupSession />
             { rooms.length == 0 ? null : <SelectGroupSession /> }
             <Text style={[styles.text, styles.or]}>OR</Text>
             <FindUser />
         </View>
+        </SafeAreaView>
     )
 }
 
@@ -74,10 +79,8 @@ const CreateGroupSession = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 2,
+        flex: 1,
         backgroundColor: '#000',
-        borderColor: 'white',
-        borderWidth: 1,
     },
     or: {
         marginTop: 10,

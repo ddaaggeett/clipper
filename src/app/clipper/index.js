@@ -16,7 +16,7 @@ export default () => {
         tabBarInactiveBackgroundColor: 'black',
         tabBarLabelPosition: 'beside-icon',
         tabBarLabelStyle:{fontSize:20,position:'absolute',color:'white'},
-        tabBarShowIcon: false,
+        tabBarShowIcon: false, // TODO: 
     }
     return (
         <Tab.Navigator screenOptions={{ headerShown: false }}>

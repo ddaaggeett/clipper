@@ -1,42 +1,44 @@
 import { useEffect, useState } from 'react'
 import { Platform, View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useSelector, useDispatch } from 'react-redux'
 import Messenger from './components/Messenger'
 import GroupSession from './components/Groups'
-import { StatusBar } from 'expo-status-bar'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default () => {
 
     const { room } = useSelector(state => state.collaboration)
 
-    if (Platform.OS === 'web') return (
-        <View style={styles.webcontainer}>
+    return (
+        <View style={styles.container}>
             <View style={[styles.column, styles.groups]} ><GroupSession /></View>
             { !room ? null : <View style={[styles.column, styles.messages]} ><Messenger /></View>}
         </View>
     )
-    else return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView>
-            <StatusBar style="light" />
+}
 
-            <View style={styles.container}>
-                <View style={[styles.column, styles.groups]} ><GroupSession /></View>
-                { !room ? null : <View style={[styles.column, styles.messages]} ><Messenger /></View>}
-            </View>
+const Tab = createBottomTabNavigator()
 
-            </ScrollView>
-        </SafeAreaView>
+export const CollabDrawer = () => {
+
+    const tabBarOptions = {
+        tabBarActiveBackgroundColor: '#222',
+        tabBarInactiveBackgroundColor: 'black',
+        tabBarLabelPosition: 'beside-icon',
+        tabBarLabelStyle:{fontSize:20,position:'absolute',color:'white'},
+        tabBarShowIcon: false, // TODO:
+    }
+    return (
+        <Tab.Navigator screenOptions={{ headerShown: false }}>
+            <Tab.Screen options={tabBarOptions} name="Groups" component={GroupSession} />
+            <Tab.Screen options={tabBarOptions} name="Messages" component={Messenger} />
+        </Tab.Navigator>
     )
 }
 
+
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#000',
-    },
-    webcontainer: {
         flexDirection: 'row',
         margin:5,
     },
