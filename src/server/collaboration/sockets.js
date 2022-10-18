@@ -9,8 +9,6 @@ const { listUsers, getRooms } = require('./db')
 
 const collaboration = functions.getAppObject('collaboration')
 
-let rooms = []
-
 io.on('connection', (socket) => {
 
     socket.on('find_users', (string, callback) => {
