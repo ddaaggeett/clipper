@@ -18,11 +18,12 @@ io.on('connection', (socket) => {
     })
 
     socket.on('message', message => {
-        const { updatedRoom, updatedRooms } = addRoomMessage(message, rooms)
-        rooms = updatedRooms
-        io.to(message.roomID).emit('update_room', updatedRoom)
-        getRooms().then(rooms => {
-            io.emit('broadcast_rooms_available', rooms) // TODO: socket.broadcast.emit instead?
+        addRoomMessage(message)
+        .then(updatedRoom => {
+            io.to(message.roomID).emit('update_room', updatedRoom)
+            getRooms().then(rooms => {
+                io.emit('broadcast_rooms_available', rooms) // TODO: socket.broadcast.emit instead?
+            })
         })
     })
 

@@ -1,4 +1,4 @@
-const { saveRoom, deleteRoom, getRooms } = require('./db')
+const { saveRoom, deleteRoom, getRooms, saveMessage } = require('./db')
 
 const updateRooms = (packet) => {
     return new Promise((resolve, reject) => {
@@ -102,21 +102,13 @@ const getLeavingRoomInfo = (user, rooms) => {
     return { userNeedsToLeave, indexRoomLeaving, indexUserLeaving }
 }
 
-const addRoomMessage = (message, rooms) => {
-    const roomIndex = rooms.findIndex(item => item.id == message.roomID)
-    const updatedRoom = {
-        ...rooms[roomIndex],
-        messages: [
-            ...rooms[roomIndex].messages,
-            message,
-        ]
-    }
-    const updatedRooms = [
-        ...rooms.slice(0, roomIndex),
-        updatedRoom,
-        ...rooms.slice(roomIndex + 1, rooms.length),
-    ]
-    return { updatedRoom, updatedRooms }
+const addRoomMessage = (message) => {
+    return new Promise((resolve, reject) => {
+        saveMessage(message)
+        .then(updatedRoom => {
+            resolve(updatedRoom)
+        })
+    })
 }
 
 module.exports = {

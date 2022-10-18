@@ -87,9 +87,37 @@ const listUsers = (string) => {
     })
 }
 
+const saveMessage = (message) => {
+    return new Promise((resolve, reject) => {
+        r.connect(dbConnxConfig).then(connection => {
+            r.table('rooms')
+            .get(message.roomID)('messages')
+            .append(message)
+            .run(connection)
+            .then(messages => {
+                r.table('rooms')
+                .get(message.roomID)
+                .update({messages}, { returnChanges: true })
+                .run(connection)
+                .then(result => {
+                    const updatedRoom = result.changes[0].new_val
+                    resolve(updatedRoom)
+                })
+            })
+            .error(error => {
+                console.log(`\nappend message error\n${error}`)
+            })
+        })
+        .error(error => {
+            console.log(`\ndb connection error\n${error}`)
+        })
+    })
+}
+
 module.exports = {
     getRooms,
     saveRoom,
     deleteRoom,
     listUsers,
+    saveMessage,
 }
