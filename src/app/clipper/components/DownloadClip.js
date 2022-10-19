@@ -14,7 +14,7 @@ export default () => {
     const redux = useDispatch()
 
     const downloadClip = () => {
-        if (Platform.OS === 'web') Linking.openURL(`http://${serverIP}:${expressPort}/${clips[editIndex].id}`)
+        Linking.openURL(`http://${serverIP}:${expressPort}/${clips[editIndex].id}`)
     }
 
     const reClip = () => socket.emit('reClip', clips[editIndex], clip => {
