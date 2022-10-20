@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, Dimensions, ScrollView, StyleSheet } from "react-native"
 import EditClipInfo from './EditClipInfo'
 import DeleteClip from './DeleteClip'
+import DownloadClip from './DownloadClip'
 import React, { useState, useEffect, useRef } from 'react'
 import YoutubePlayer from "react-native-youtube-iframe"
 import { useSelector, useDispatch } from 'react-redux'
@@ -30,6 +31,7 @@ export default (props) => {
                 clip={clip}
                 />
             <EditClipInfo />
+            <DownloadClip />
             <DeleteClip
                 saveAndExit={saveAndExit}
                 />
