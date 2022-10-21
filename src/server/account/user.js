@@ -1,41 +1,25 @@
 var r = require('rethinkdb')
 var { dbConnxConfig } = require('../../../config')
 
+const filterOutPW = (account) => {
+    return {
+        id: account.id,
+        email: account.email,
+        name: account.name,
+    }
+}
+
 const login = (loginInfo) => {
     return new Promise((resolve, reject) => {
         r.connect(dbConnxConfig).then(connection => {
             r.table('users').get(loginInfo.id).run(connection)
             .then(account => {
-                if (loginInfo.password === account.password) resolve(account)
+                if (loginInfo.password === account.password) {
+                    resolve(filterOutPW(account))
+                }
                 else resolve(null)
             })
             .catch(error => resolve(null))
-        })
-    })
-}
-
-const userLog = (user) => {
-    return new Promise((resolve,reject) => {
-        r.connect(dbConnxConfig).then(connection => {
-            r.table('users').insert(user, {
-                returnChanges: true,
-                conflict: "update"
-            }).run(connection).then(result => {
-                r.table('users').get(user.id).run(connection)
-                .then(userData => resolve(userData))
-                .catch(error => {
-                    console.log(`\nERROR getting user data\n${error}`)
-                    reject(error)
-                })
-            })
-            .catch(error => {
-                console.log(`\nERROR user data retrieval\n${error}`)
-                reject(error)
-            })
-        })
-        .catch(error => {
-            console.log(`\ndb connection error\n${error}`)
-            reject(error)
         })
     })
 }
@@ -47,7 +31,7 @@ const createAccount = (account) => {
             else r.connect(dbConnxConfig).then(connection => {
                 r.table('users').insert(account, { returnChanges: true }).run(connection).then(object => {
                     const account = object.changes[0].new_val
-                    resolve(account)
+                    resolve(filterOutPW(account))
                 })
             })
         })
@@ -67,6 +51,5 @@ const checkIfAccountExists = (userID) => {
 
 module.exports = {
     login,
-    userLog,
     createAccount
 }

@@ -7,19 +7,14 @@ const user = require('./user')
 const account = functions.getAppObject('account')
 
 io.on('connection', (socket) => {
-    socket.on('create account', (newUser, returnObject) => {
-        user.createAccount(newUser).then(account => {
-            returnObject(account)
-        })
-    })
-    socket.on('userLog', (log, sendBack) => {
-        user.userLog(log)
-        .then(userData => sendBack(userData))
+    socket.on('create account', (newUser, callback) => {
+        user.createAccount(newUser)
+        .then(account => callback(account))
         .catch(error => {})
     })
-    socket.on('login', (loginInfo, sendBack) => {
+    socket.on('login', (loginInfo, callback) => {
         user.login(loginInfo)
-        .then(account => sendBack(account))
+        .then(account => callback(account))
         .catch(error => {})
     })
 })
