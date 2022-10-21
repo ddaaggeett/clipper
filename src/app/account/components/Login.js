@@ -103,6 +103,7 @@ const SignInAccount = (props) => {
                     placeholder={"screen name"}
                     placeholderTextColor={"white"}
                     autoFocus={true}
+                    autoCapitalize={'none'}
                     />
                 <TextInput
                     style={styles.urlText}
@@ -111,6 +112,7 @@ const SignInAccount = (props) => {
                     placeholder={"password"}
                     placeholderTextColor={"white"}
                     secureTextEntry={true}
+                    autoCapitalize={'none'}
                     />
             </View>
             <View style={styles.contentRow}>

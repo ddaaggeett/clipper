@@ -21,6 +21,8 @@ const Tab = createBottomTabNavigator()
 
 export const CollabDrawer = () => {
 
+    const { room } = useSelector(state => state.collaboration)
+
     const tabBarOptions = {
         tabBarActiveBackgroundColor: '#222',
         tabBarInactiveBackgroundColor: 'black',
@@ -28,10 +30,15 @@ export const CollabDrawer = () => {
         tabBarLabelStyle:{fontSize:20,position:'absolute',color:'white'},
         tabBarShowIcon: false, // TODO:
     }
-    return (
+    if (room) return (
         <Tab.Navigator screenOptions={{ headerShown: false }}>
             <Tab.Screen options={tabBarOptions} name="Groups" component={GroupSession} />
             <Tab.Screen options={tabBarOptions} name="Messages" component={Messenger} />
+        </Tab.Navigator>
+    )
+    else return (
+        <Tab.Navigator screenOptions={{ headerShown: false }}>
+            <Tab.Screen options={tabBarOptions} name="Groups" component={GroupSession} />
         </Tab.Navigator>
     )
 }

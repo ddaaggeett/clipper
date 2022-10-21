@@ -11,6 +11,7 @@ const socket = io(`http://${serverIP}:${collaboration.socketPort}`)
 export const useGroupSession = () => {
 
     const redux = useDispatch()
+    const { user } = useSelector(state => state.account)
 
     useEffect(() => {
 
@@ -27,6 +28,10 @@ export const useGroupSession = () => {
         })
 
     }, [])
+
+    useEffect(() => {
+        redux(actions.updateRoom(null))
+    }, [user])
 
 }
 
