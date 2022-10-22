@@ -31,7 +31,7 @@ const RoomMembers = () => {
 
     return (
         <View style={styles.roomMembersRow}>
-            <Text style={styles.text}>{`Members in this group:  `}</Text>
+            <Text style={styles.text}>{`Group ${room.id} members: `}</Text>
             <View style={styles.names}>{renderRoomMembers(room.users)}</View>
         </View>
     )
@@ -40,14 +40,30 @@ const RoomMembers = () => {
 const Messages = () => {
 
     const { room } = useSelector(state => state.collaboration)
+    const { user } = useSelector(state => state.account)
 
-    const renderMessages = room.messages.map((message, key) => {
-        return <Text style={styles.text} key={key}>{`${message.userID} says: ${message.text}`}</Text>
+    const leftright = (userID) => {
+        if (userID === user.id) return { alignSelf: 'flex-end' }
+    }
+
+    const color = (userID) => {
+        if (userID === user.id) return { backgroundColor: '#202' }
+    }
+
+    const renderMessages = room.messages.slice(0).reverse().map((message, key) => {
+        return (
+            <View
+                style={[styles.message, leftright(message.userID)]}
+                key={key}
+                >
+                <Text style={[styles.text, styles.messageUser, leftright(message.userID)]}>{`${message.userID}: ${message.timestamp}`}</Text>
+                <Text style={[styles.text, styles.messageText, leftright(message.userID), color(message.userID)]}>{`${message.text}`}</Text>
+            </View>
+        )
     })
 
     return (
         <View style={styles.messages}>
-            <Text style={styles.text}>{`${room.id} messages`}</Text>
             { room.messages.length == 0 ? null : <View>{renderMessages}</View> }
         </View>
     )
@@ -144,5 +160,22 @@ const styles = StyleSheet.create({
     },
     messages: {
         margin: 10,
+        width: '65%',
+        color: 'white',
+    },
+    message: {
+        width: '60%',
+        marginBottom: 15,
+        alignSelf: 'flex-start',
+    },
+    messageUser: {
+        margin: 2,
+        alignSelf: 'flex-start',
+    },
+    messageText: {
+        backgroundColor: '#400',
+        padding: 15,
+        borderRadius: 10,
+        alignSelf: 'flex-start',
     },
 })
