@@ -37,6 +37,11 @@ export default () => {
             redux(actions.updateClips([]))
         }
     }, [])
+
+    useEffect(() => {
+        redux(actions.validateYoutubeID(false))
+        redux(actions.updateContentID(''))
+    }, [user])
 }
 
 export const useSocket = () => {
