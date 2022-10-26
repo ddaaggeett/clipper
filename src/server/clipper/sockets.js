@@ -11,12 +11,14 @@ const clipper = functions.getAppObject('clipper')
 
 io.on('connection', (socket) => {
     socket.on('videoProgress', videoObject => {
-        updateVideoProgress(videoObject).then(progressions => {
+        updateVideoProgress(videoObject)
+        .then(progressions => {
             socket.broadcast.emit('videoProgressions', progressions)
         })
     })
     socket.on('updateSourceVideo', (videoObject, returnToSender) => {
-        updateSourceVideo(videoObject).then(videoObject => {
+        updateSourceVideo(videoObject)
+        .then(videoObject => {
             // returnToSender(videoObject)
             // socket.broadcast.emit('updateSourceVideo',videoObject)
             io.emit('updateSourceVideo', videoObject)
@@ -24,25 +26,26 @@ io.on('connection', (socket) => {
     })
     socket.on('reClip', (clipObject, callback) => {
         generateClip(clipObject)
-        .then(object => {
-            callback(object)
+        .then(updatedClip => {
+            callback(updatedClip)
         })
     })
-    socket.on('updateClip', (clip, returnToSender) => {
-        updateClip(clip).then(updatedClip => {
-            returnToSender(updatedClip)
-            socket.broadcast.emit('updateClip',updatedClip)
+    socket.on('updateClip', (clip, callback) => {
+        updateClip(clip)
+        .then(updatedClip => {
+            callback(updatedClip)
         })
     })
-    socket.on('deleteClip', (clip, returnToSender) => {
-        deleteClip(clip).then(deletedClip => {
-            returnToSender(deletedClip)
-            socket.broadcast.emit('deleteClip',deletedClip)
+    socket.on('deleteClip', (clip, callback) => {
+        deleteClip(clip)
+        .then(deletedClip => {
+            callback(deletedClip)
         })
     })
-    socket.on('getUserClips', ({user, pendingClips}, sendBack) => {
+    socket.on('getUserClips', ({user, pendingClips}, callback) => {
         handlePendingClips(pendingClips).then(() => {
-            getClips(user.id).then(userClips => sendBack(userClips))
+            getClips(user.id)
+            .then(userClips => callback(userClips))
         })
     })
 })

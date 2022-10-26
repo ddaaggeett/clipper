@@ -6,8 +6,13 @@ import { StatusBar } from 'expo-status-bar';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator()
 import { SafeAreaView } from 'react-native-safe-area-context'
+import initApp from './hooks'
+
 
 export default () => {
+
+    initApp()
+
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar style="light" />
