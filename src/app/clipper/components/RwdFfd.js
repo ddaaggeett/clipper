@@ -1,38 +1,57 @@
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native"
-import React from 'react'
+import { useState } from 'react'
 
 export default (props) => {
 
+    const playerHeight = Dimensions.get('window').width * 9 / 16
     const seekInterval = 5
+    const margin = 35
+    const [height, setHeight] = useState(playerHeight - (margin * 2))
+    const [buttonBorderWidth, setButtonBorderWidth] = useState(0)
+    const [buttonBackgroundColor, setButtonBackgroundColor] = useState(0)
+
+    const handleButtonVisibility = (direction) => {
+        setButtonBorderWidth(1)
+        setButtonBackgroundColor('rgba(255,0,0,0.3)')
+        setTimeout(() => {
+            setButtonBorderWidth(0)
+            setButtonBackgroundColor()
+        }, 250)
+    }
 
     const rewind = () => {
+        handleButtonVisibility('rwd')
         props.player.current.getCurrentTime().then(time => {
             props.player.current.seekTo(time - seekInterval)
         })
     }
 
     const fastForward = () => {
+        handleButtonVisibility('ffd')
         props.player.current.getCurrentTime().then(time => {
             props.player.current.seekTo(time + seekInterval)
         })
     }
 
-    const playerHeight = Dimensions.get('window').width * 9 / 16
-    const margin = 60
-
-    const [height, setHeight] = React.useState(playerHeight - (margin * 2))
-
     return (
-        <View style={[styles.buttonContainer,{top:margin}]}>
+        <View style={[styles.buttonContainer]}>
             <TouchableOpacity
-                style={[styles.button,styles.rwd,{height}]}
+                style={[styles.button,styles.rwd,{
+                    height,
+                    borderWidth: buttonBorderWidth,
+                    backgroundColor: buttonBackgroundColor,
+                }]}
                 onPress={() => rewind()}>
-                <Text style={styles.text}>{`<<`}</Text>
+                {buttonBorderWidth == 0 ? null : <Text style={styles.text}>{`<<`}</Text>}
             </TouchableOpacity>
             <TouchableOpacity
-                style={[styles.button,styles.ffd,{height}]}
+                style={[styles.button,styles.ffd,{
+                    height,
+                    borderWidth: buttonBorderWidth,
+                    backgroundColor: buttonBackgroundColor,
+                }]}
                 onPress={() => fastForward()}>
-                <Text style={styles.text}>{`>>`}</Text>
+                {buttonBorderWidth == 0 ? null : <Text style={styles.text}>{`>>`}</Text>}
             </TouchableOpacity>
         </View>
     )
@@ -41,6 +60,7 @@ export default (props) => {
 const styles = StyleSheet.create({
     buttonContainer: {
         flex: 1,
+        top: 0,
         width: '100%',
         position: 'absolute',
         alignSelf: 'center',
@@ -48,10 +68,10 @@ const styles = StyleSheet.create({
     button: {
         flex: 1,
         position: 'absolute',
-        width:'40%',
-        borderWidth: 1,
+        width:'35%',
         borderColor: 'white',
-        backgroundColor: 'transparent',
+        borderRadius: 10,
+        justifyContent: 'space-around',
     },
     rwd: {
         left: 0,
@@ -62,5 +82,6 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 30,
         color: 'white',
+        alignSelf: 'center',
     },
 })
