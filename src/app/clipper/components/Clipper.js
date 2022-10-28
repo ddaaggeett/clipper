@@ -113,6 +113,12 @@ export default (props) => {
         }, 500)
     }
 
+    const handleEmbedError = (error) => {
+        if (error === 'embed_not_allowed') {
+            // TODO:
+        }
+    }
+
     if (Platform.OS === 'web') {
         if (!validYoutubeID) return null
         else return (
@@ -175,6 +181,7 @@ export default (props) => {
                     playbackRate={speed}
                     onPlaybackRateChange={() => setPlaying(true)}
                     onChangeState={handleChangeEvent}
+                    onError={handleEmbedError}
                     />
                 <RwdFfd
                     player={player}

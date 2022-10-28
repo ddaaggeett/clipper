@@ -13,7 +13,11 @@ export default (props) => {
 
     const handleGetPlayContent = (text) => {
         redux(actions.setEditIndex(null))
-        if (text.includes('https://www.youtube.com/watch?v=') || text.includes('https://youtu.be/')) {
+        if (
+            text.includes('youtube.com/watch?v=') ||
+            text.includes('https://youtu.be/') ||
+            text.includes('youtube.com/playlist?list=')
+        ) {
             redux(actions.validateYoutubeID(true))
             redux(actions.updateContentID(getContentID(text)))
         }
