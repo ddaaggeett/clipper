@@ -42,7 +42,7 @@ export const ClipInitOrDeleteLeft = (props) => {
 export const ClipInitOrDeleteRight = (props) => {
 
     const redux = useDispatch()
-    const { rightClipped, boundCount } = useSelector(state => state.clipper)
+    const { rightClipped, boundCount, rightCursor } = useSelector(state => state.clipper)
 
     const handleRightClip = () => {
         redux(actions.setHandlingRight(true))
@@ -53,6 +53,7 @@ export const ClipInitOrDeleteRight = (props) => {
     }
 
     const handleDeleteRightClip = () => {
+        props.player.current.seekTo(rightCursor)
         redux(actions.setHandlingRight(false))
         redux(actions.setRightClipped(false))
         redux(actions.setBoundCount(boundCount - 1))
