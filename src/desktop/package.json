@@ -1,0 +1,15 @@
+{
+  "name": "desktop",
+  "version": "0.0.0",
+  "description": "desktop application",
+  "main": "main.js",
+  "author": "Dave Daggett - david.g.daggett@gmail.com",
+  "license": "GPL-3.0",
+  "private": true,
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^23.1.0"
+  }
+}
