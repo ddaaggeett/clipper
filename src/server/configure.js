@@ -24,6 +24,7 @@ const settleIPConfig = () => {
     return new Promise((resolve,reject) => {
         exec('hostname -I | awk \'{print $1}\' | tr -d \'\n\'', (error, stdout, stderr) => {
             config.serverIP = stdout.toString()
+            console.log(`LOCAL IP = ${stdout.toString()}`)
             writeConfigFile(config).then(() => resolve())
         })
     })
